@@ -1,0 +1,60 @@
+{# BEGIN CART TWIG TEMPLATE #}
+{{ config.lang.email_text_cart|pad(60,"-"," ") }}
+
+{% for item in items %}
+{% if item.multiship >= 0 %}
+
+{% set shipto_label = config.lang.cart_shipto|raw ~ ": " ~ item.shipto %}
+{{ shipto_label|pad(40,"-"," ") }}
+
+{% endif %}
+{{ item.name }}
+{% for option in item.options %}
+  * {{ option.name|pad(15) }} {{ option.value }}
+{% endfor %}
+{% if item.code != '' %}
+  * {{ config.lang.cart_code|raw|pad(15) }} {{ item.code }}
+{% endif %}
+{% if item.category != 'DEFAULT' %}
+  * {{ config.lang.cart_category|raw|pad(15) }} {{ item.category }}
+{% endif %}
+{% if item.weight != 0 %}
+  * {{ config.lang.cart_weight|raw|pad(15) }} {{ item.weight }} {{ weight_uom }}
+{% endif %}
+{% if item.sub_frequency != '' %}
+  * {{ config.lang.cart_subscription_details|raw }}
+      - {{ config.lang.cart_frequency|raw|pad(11) }} {{ item.sub_frequency }}
+      - {{ config.lang.cart_start_date|raw|pad(11) }} {{ item.sub_startdate }}
+      - {{ config.lang.cart_next_date|raw|pad(11) }} {{ item.item.sub_nextdate }}
+{% if item.sub_enddate != "0000-00-00" %}
+      - {{ config.lang.cart_end_date|raw|pad(11) }} {{ item.sub_enddate }}
+{% endif %}
+{% endif %}
+  * {{ config.lang.cart_quantity|pad(15) }} {{ item.quantity|raw }}
+  * {{ config.lang.cart_price|raw|pad(20) }} {{ item.price|money_format }}{% if item.quantity > 1 %} ({{ item.price_each|money_format }} {{ config.lang.cart_each|raw }}){% endif %}
+
+
+{% endfor %}
+{{ config.lang.cart_subtotal|raw|pad(24) }} {{ total_item_price|money_format }}
+{% if has_future_products %}
+{{ config.lang.cart_future_subscriptions|raw|pad(24) }} {{ future_total_item_price|money_format }}
+{% endif %}
+{% for key,coupon in coupons %}
+{% set coupon_label = coupon.name ~ " (" ~ key ~ ")" %}
+{{ coupon_label|pad(24) }} {{ coupon.amount|money_format }}
+{% endfor %}
+{{ shipping_and_handling_label|raw|pad(24) }} {{ cart_total_shipping|money_format }}
+{% if has_future_products and show_future_shipping_and_handling %}
+{% set future_shipping_handling_label = lang.cart_future_subscriptions|raw ~ " " ~ shipping_and_handling_label|raw %}
+{{ future_shipping_handling_label|pad(24) }} {{ future_shipping_and_handling|money_format }}
+{% endif %}
+{% if has_taxes %}
+{% for tax in taxes %}
+{% if tax.amount > 0 %}
+{{ tax.description_text|raw|pad(24) }} {{ tax.amount|money_format }}
+{% endif %}
+{% endfor %}
+{% endif %}
+{{ config.lang.cart_order_total|raw|pad(24) }} {{ total_price|money_format }}
+
+{# END CART TWIG TEMPLATE #}

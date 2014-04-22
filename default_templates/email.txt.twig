@@ -1,0 +1,54 @@
+^^order_begin^^
+===========================================================
+YOUR {{ config.store_name|raw }} RECEIPT
+===========================================================
+
+Thank you for ordering from {{ config.store_name|raw }}.
+
+If you would like to update your payment card for future transactions, please use this link and enter your updated billing information: https://{{ config.store_domain }}/cart?cart=updateinfo.
+
+===========================================================
+
+{% include 'email_order_details.inc.txt.twig' %}
+
+{% if not is_updateinfo %}
+{% include 'cart.inc.txt.twig' %}
+{% endif %}
+^^order_end^^
+
+^^updateinfo_begin^^
+===========================================================
+YOUR {{ config.store_name|raw }}
+BILLING INFORMATION HAS BEEN UPDATED
+===========================================================
+Your billing information has been updated as displayed below.
+
+{% include 'email_order_details.inc.txt.twig' %}
+
+^^updateinfo_end^^
+
+^^subscription_cancel_begin^^
+===========================================================
+{{ config.store_name|raw }}
+SUBSCRIPTION CANCELLATION CONFIRMATION
+===========================================================
+
+This email is confirmation that the subscription listed below will be canceled and not billed further.
+
+{% include 'email_order_details.inc.txt.twig' %}
+{% include 'cart.inc.txt.twig' %}
+
+^^subscription_cancel_end^^
+
+^^subscription_modification_begin^^
+===========================================================
+{{ config.store_name|raw }}
+SUBSCRIPTION MODIFICATION CONFIRMATION
+===========================================================
+
+This email is confirmation that the subscription listed below has been modified.
+
+{% include 'email_order_details.inc.txt.twig' %}
+{% include 'cart.inc.txt.twig' %}
+
+^^subscription_modification_end^^

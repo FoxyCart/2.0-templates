@@ -1,0 +1,69 @@
+{% set field_name = address.prefix~'_'~location_type %}
+{% set show_field = true %}
+{% set field_optional_placeholder = '' %}
+{% if address.type == 'billing' %}
+    {% set field_config = config.template_config.custom_checkout_field_requirements[address.type~'_'~location_type] %}
+    {% set field_optional_placeholder = (field_config == 'optional') ? config.lang.checkout_optional : '' %}
+    {% set field_config = (field_config != 'hidden') %}
+{% endif %}
+{% if show_field %}
+    {% set locations = config.locations %}
+    {% set region_lang = "checkout_country" %}
+    {% set country_code = address.country %}
+    {% if location_type == "region" %}
+        {% if country_code %}
+            {% set region_lang = "checkout_location_"~locations[country_code]['r']['lang'] %}
+            {% set locations = locations[country_code]['r']['options'] %}
+        {% else %}
+            {% set locations = [] %}
+            {% set region_lang = "checkout_location_state" %}
+        {% endif %}
+    {% endif %}
+    {% if locations|length > 0 %}
+        <select class="form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" data-fc-required="true" name="{{ field_name }}">
+            <option value=""></option>
+            {# Join filter is returning error, buggy? #}
+            {% for c in locations %}
+                {% if location_type == "country" %}
+                    <option
+                        value="{{ c.cc2 }}"
+                        data-relevancy-booster="{{ c.boost }}"
+                        data-alternative-spellings="{{ c.cc2 }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
+                        {% if c.cc2 == address[location_type] %}selected{% endif %}
+                    >{{ c.cn }}</option>
+                {% else %}
+                    <option
+                        value="{{ c.c }}"
+                        data-relevancy-booster="{{ c.boost }}"
+                        data-alternative-spellings="{{ c.c }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
+                        {% if address[location_type] in [c.c, c.n] %}selected{% endif %}
+                    >{{ c.n }}</option>
+                {% endif %}
+            {% endfor %}
+        </select>
+    {% else %}
+        <input
+            data-fc-id="{{ field_name }}"
+            name="{{ field_name }}"
+            value="{{ address[location_type~'_name'] or address[location_type] }}"
+            type="text"
+            data-fc-required="false"
+            placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"
+            class="form-control fc-location"
+            data-fc-error-class="invalid" />
+    {% endif %}
+    {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+    {# TODO: stuff the errors array #}
+    {#
+    {% if _context[address.prefix~'_'~location_type~'_is_empty'] %}
+    <div class="alert alert-danger">
+        {{ config.lang['checkout_error_'~location_type]|raw }}
+    </div>
+    {% endif %}
+    #}
+    {% if error_string %}
+    <div class="alert alert-danger">
+        {{ error_string }}
+    </div>
+    {% endif %}
+{% endif %}

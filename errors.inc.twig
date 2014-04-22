@@ -1,0 +1,42 @@
+{% set has_messages = (messages.errors|length > 0 or messages.warnings|length > 0 or messages.info|length > 0) %}
+{% set has_page_errors = false %}
+{% if has_messages and messages.errors|length > 0 %}
+    {% for error in messages.errors if error['message'] != '' %}
+        {% set has_page_errors = true %}
+    {% endfor %}
+{% endif %}
+{% if has_page_errors or (messages.warnings|length + messages.info|length) > 0 %}
+<div class="fc-message-container">
+    {% if messages.errors|length > 0 %}
+        <div class="alert alert-danger">
+            <h2>{{ config.lang.checkout_error_title }}</h2>
+            <!-- <p class="alert-more">More information on this issue</p> -->
+            <ul>
+            {% for error in messages.errors if error['message'] != '' %}
+                <li>{{ error['message']|raw }}</li>
+            {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+    {% if messages.warnings|length > 0 %}
+        <div class="alert alert-warning">
+            <h2>{{ config.lang.checkout_warning }}</h2>
+            <!-- <p class="alert-more">More information on this issue</p> -->
+            <ul>
+        {% for warning in messages.warnings %}
+            <li>{{ warning['message']|raw }}</li>
+        {% endfor %}
+        </ul></div>
+    {% endif %}
+    {% if messages.info|length > 0 %}
+        <div class="alert alert-info">
+            <h2>{{ config.lang.checkout_info_title }}</h2>
+            <!-- <p class="alert-more">More information on this issue</p> -->
+            <ul>
+        {% for info in messages.info %}
+            <li>{{ info['message']|raw }}</li>
+        {% endfor %}
+        </ul></div>
+    {% endif %}
+</div>
+{% endif %}

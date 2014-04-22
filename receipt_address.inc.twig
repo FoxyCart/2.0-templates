@@ -1,0 +1,63 @@
+<div class="form-group">
+    <label class="control-label col-sm-4">{{ config.lang.checkout_name|raw }}</label>
+    <div class="col-sm-8">
+        <p class="form-control-static">{{ address.first_name }} {{ address.last_name }}</p>
+    </div>
+</div>
+{% if address.company %}
+    <div class="form-group">
+        <label class="control-label col-sm-4">{{ config.lang.checkout_company|raw }}</label>
+        <div class="col-sm-8">
+            <p class="form-control-static">{{ address.company }}</p>
+        </div>
+    </div>
+{% endif %}
+
+<div class="form-group fc-receipt-address-block">
+<label class="control-label col-sm-4">{{ config.lang.checkout_address|raw }}</label>
+<div class="col-sm-8">
+    <p class="form-control-static">{{ address.address1 }}</p>
+</div>
+</div>
+<div class="form-group">
+    {% if address.address2 %}
+        <div class="col-sm-8 col-sm-push-4">
+            <p class="form-control-static">{{ address.address2 }}</p>
+        </div>
+    {% endif %}
+</div>
+{% if address.country == 'US' %}
+<div class="form-group">
+    <div class="col-sm-8 col-sm-push-4">
+        <p class="form-control-static">{{ address.city }}{% if address.region %}, {{ address.region }}{% endif %} {{ address.postal_code }}</p>
+    </div>
+</div>
+{% else %}{# Generic address format #}
+<div class="form-group">
+    <label class="control-label col-sm-4">{{ config.lang.checkout_city|raw }}</label>
+    <div class="col-sm-8">
+        <p class="form-control-static">{{ address.city }}</p>
+    </div>
+</div>
+    {% if address.region %}
+    <div class="form-group">
+        <label class="control-label col-sm-4">{{ address.region_label }}</label>
+        <div class="col-sm-8">
+            <p class="form-control-static">{{ address.region }}</p>
+        </div>
+    </div>
+    {% endif %}
+<div class="form-group">
+    <label class="control-label col-sm-4">{{ config.lang.checkout_postal_code|raw }}</label>
+    <div class="col-sm-8">
+        <p class="form-control-static">{{ address.postal_code }}</p>
+    </div>
+</div>
+{% endif %}
+
+<div class="form-group">
+<label class="control-label col-sm-4">{{ config.lang.checkout_country|raw }}</label>
+<div class="col-sm-8">
+    <p class="form-control-static">{{ address.country_name }}</p>
+</div>
+</div>

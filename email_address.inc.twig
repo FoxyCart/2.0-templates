@@ -1,0 +1,18 @@
+{{ address.first_name }} {{ address.last_name }}<br />
+{% if address.company != '' %}
+    {{ address.company }}<br />
+{% endif %}
+{{ address.address1 }}<br />
+{% if  address.address2 != '' %}
+    {{ address.address2 }}<br />
+{% endif %}
+{% if address.country_name == 'United States' %}
+{{ address.city }}, {{ address.region }} {{ address.postal_code }}<br />
+{% else %}
+{{ address.city }}<br/>
+{% if address.region != '' %}
+{{ address.region }}<br/>
+{% endif %}
+{{ address.postal_code }}<br />
+{% endif %}
+{{ address.country_name }}<br /><br />

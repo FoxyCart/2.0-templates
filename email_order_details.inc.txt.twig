@@ -1,0 +1,151 @@
+{# BEGIN EMAIL ORDER DETAILS TWIG TEMPLATE #}
+{% if not is_updateinfo %}
+{% if has_downloadables %}
+{{ config.lang.email_text_downloadable_products|raw|pad(60,"-"," ") }}
+
+{{ text_downloadable_links|raw }}
+
+{% endif %}
+{{ config.lang.email_text_order_summary|raw|pad(60,"-"," ") }}
+
+  * {{ config.lang.email_order_number|raw|pad(20) }} {{ order_id }}
+  * {{ config.lang.checkout_date|raw|pad(20) }} {{ checkout_date }}
+{% if purchase_order != '' %}
+  * {{ config.lang.checkout_purchase_order|raw|pad(20) }} {{ purchase_order }}
+{% endif %}
+{% if payment_type == 'plastic' %}
+  * {{ config.lang.checkout_card_number|raw|pad(20) }} {{ cc_number_masked }} ({{ cc_type }})
+{% endif %}
+  * {{ config.lang.email_order_total|raw|pad(20) }} {{ order_total }}
+{% if has_live_rate_shippable_products and not has_multiship %}
+  * {{ config.lang.email_shipping|raw|pad(20) }} {{ shipping_service_description }}
+{% endif %}
+{% if custom_fields|length > 0 %}
+
+{% for key,custom_field in custom_fields %}
+    {% if not custom_field.is_hidden %}
+  * {{ key|pad(20) }} {{ custom_field.value }}
+    {% endif %}
+{% endfor %}
+{% endif %}
+{% endif %}
+
+
+{{ config.lang.email_text_purchasing_information|raw|pad(60,"-"," ") }}
+
+{{ config.lang.email_email|raw }}:
+    {{ email }}
+
+{{ config.lang.email_billing_address|raw }}:
+    {{ first_name }} {{ last_name }}
+{% if company != '' %}
+    {{ company }}
+{% endif %}
+    {{ address1 }}
+{% if address2 != '' %}
+    {{ address2 }}
+{% endif %}
+    {{ city }}, {{ region }} {{ postal_code }}
+    {{ country_name }}
+{% if geoip != '' %}
+    {{ geoip }}
+{% endif %}
+{% if phone != '' %}
+    {{ phone }}
+{% endif %}
+
+{% if has_multiship %}
+{% for multiship in multiship_data %}
+{{ config.lang.email_ship_to|raw }}: {{ multiship.address_name }}
+    {{ multiship.first_name }} {{ multiship.last_name }}
+{% if multiship.company != '' %}
+    {{ multiship.company }}
+{% endif %}
+    {{ multiship.address1 }}
+{% if multiship.address2 != '' %}
+    {{ multiship.address2 }}
+{% endif %}
+    {{ multiship.city }}, {{ multiship.region }} {{ multiship.postal_code }}
+    {{ multiship.country_name }}
+{% if multiship.phone != '' %}
+    {{ multiship.phone }}
+{% endif %}
+
+{% if multiship.custom_fields|length > 0 %}
+{% for key,custom_field in multiship.custom_fields %}
+    {% if not custom_field.is_hidden %}
+  * {{ key|pad(20) }}: {{ custom_field.value }}
+    {% endif %}
+{% endfor %}
+
+{% endif %}
+{% if not is_updateinfo %}
+    {{ config.lang.email_subtotal|raw }}: {{ multiship.total_price_item_price|money_format }}
+{% endif %}
+{% if has_live_rate_shippable_products %}
+    {{ multiship.shipping_service_description }}: {{ multiship.total_price_shipping|money_format }}
+{% else %}
+{% if has_shippable_products %}
+    {{ shipping_and_handling_label|raw }}: {{ multiship.total_price_shipping|money_format }}
+{% endif %}
+{% endif %}
+{% if not is_updateinfo %}
+    {{ config.lang.email_tax|raw }}: {{ multiship.total_price_tax|money_format }}
+    {{ config.lang.email_group_total|raw }}: {{ multiship.total_price|money_format }}
+{% endif %}
+
+{% endfor %}
+{% else %}
+{% if use_alternate_shipping_address or has_shippable_products %}
+{{ config.lang.email_shipping_address|raw }}:
+{% if use_alternate_shipping_address %}
+    {{ shipping_first_name }} {{ shipping_last_name }}
+{% if shipping_company != '' %}
+    {{ shipping_company }}
+{% endif %}
+    {{ shipping_address1 }}
+{% if shipping_address2 != '' %}
+    {{ shipping_address2 }}
+{% endif %}
+    {{ shipping_city }}, {{ shipping_region }} {{ shipping_postal_code }}
+    {{ shipping_country_name }}
+{% if shipping_phone != '' %}
+    {{ shipping_phone }}
+{% endif %}
+{% else %}
+    {{ first_name }} {{ last_name }}
+{% if company != '' %}
+    {{ company }}
+{% endif %}
+    {{ address1 }}
+{% if address2 != '' %}
+    {{ address2 }}
+{% endif %}
+    {{ city }}, {{ region }} {{ postal_code }}
+    {{ country_name }}
+{% if phone != '' %}
+    {{ phone }}
+{% endif %}
+{% endif %}
+{% endif %}
+
+{% endif %}
+
+{% if subscriptions|length > 0 and not is_subscription_cancel %}
+{{ config.lang.email_text_manage_subscriptions|raw|pad(60,"-"," ") }}
+
+{{ config.lang.email_text_subscription_instructions|raw }}
+
+{% for subscription in subscriptions %}
+{{ subscription.description }}
+
+{{ subscription.text_links|raw }}
+{% if not loop.last %}
+
+----------------------------------------
+{% endif %}
+
+{% endfor %}
+
+{% endif %}
+{# END EMAIL ORDER DETAILS TWIG TEMPLATE #}
