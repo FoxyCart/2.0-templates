@@ -75,7 +75,7 @@
 					</div>
 				</div>
 				{% endif %}
-				{% if payment_type == 'plastic' %}
+				{% if payment_type == 'plastic' and cc_number_masked != '' %}
 				<div class="form-group">
 					<label class="control-label col-sm-4">{{ config.lang.checkout_card_number|raw }}</label>
 					<div class="col-sm-8">
@@ -105,7 +105,7 @@
 		<fieldset>
 			<legend>{{ config.lang.checkout_billing_information|raw }}</legend>
 
-				{% include "receipt_address.inc.twig" with {'address': billing_address} %}
+				{% include "address.receipt.inc.twig" with {'address': billing_address} %}
 				<div class="form-group fc-receipt-email">
 			        <label class="control-label col-sm-4">{{ config.lang.checkout_email|raw }}</label>
 			        <div class="col-sm-8">
@@ -133,14 +133,14 @@
 				    <div class="form-group fc-receipt-shipping-detail">
 			              <label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method|raw }}</label>
 			              <div class="col-sm-8">
-			                <p class="form-control-static">{{ shipping_service_description }}</p>
+			                <p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
 			              </div>
 				    </div>
 
 				    {% if use_alternate_shipping_address %}
-						{% include "receipt_address.inc.twig" with {'address': shipping_address} %}
+						{% include "address.receipt.inc.twig" with {'address': shipping_address} %}
 				    {% else %}
-						{% include "receipt_address.inc.twig" with {'address': billing_address} %}
+						{% include "address.receipt.inc.twig" with {'address': billing_address} %}
 				    {% endif %}
 				</fieldset>
 				</form>
@@ -153,7 +153,7 @@
 			<form class="form-horizontal fc-receipt-multiship" role="form"{% if loop.first %} id="fc-receipt-multiship-first"{% endif %}>
 			<fieldset>
 				<legend>{{ config.lang.checkout_shipto|raw }}<span class="fc_shipto_name">{{ multiship.address_name }}</span></legend>
-				{% include "receipt_address.inc.twig" with {'address': multiship} %}
+				{% include "address.receipt.inc.twig" with {'address': multiship} %}
 
 				{% if multiship_data|length > 1 %}
 					<div class="form-group fc-receipt-shipping-detail">
@@ -168,14 +168,14 @@
 							<p class="form-control-static">{{ multiship.total_shipping|money_format }}</p>
 						</div>
 					</div>
-				{% if has_taxes %}
+					{% if has_taxes %}
 					<div class="form-group fc-receipt-shipping-detail">
 						<label class="control-label col-sm-4">{{ config.lang.checkout_shipment_tax|raw }}</label>
 						<div class="col-sm-8">
-							<p class="form-control-static">{{ multiship.total_price_total|money_format }}</p>
+							<p class="form-control-static">{{ multiship.total_tax|money_format }}</p>
 						</div>
 					</div>
-				{% endif %}
+					{% endif %}
 					<div class="form-group fc-receipt-shipping-detail">
 						<label class="control-label col-sm-4">{{ config.lang.checkout_shipment_total|raw }}</label>
 						<div class="col-sm-8">
@@ -183,12 +183,14 @@
 						</div>
 					</div>
 				{% else %}
+					{% if multiship.has_live_rate_shippable_products %}
 					<div class="form-group fc-receipt-shipping-detail">
 						<label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method|raw }}</label>
 						<div class="col-sm-8">
-							<p class="form-control-static">{{ shipping_service_description }}</p>
+							<p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
 						</div>
 					</div>
+					{% endif %}
 				{% endif %}
 			</fieldset>
 			</form>

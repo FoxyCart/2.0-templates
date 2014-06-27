@@ -1,26 +1,29 @@
 {% set field_name = address.prefix~'_'~location_type %}
 {% set show_field = true %}
+{% set field_config = "required" %}
 {% set field_optional_placeholder = '' %}
 {% if address.type == 'billing' %}
     {% set field_config = config.template_config.custom_checkout_field_requirements[address.type~'_'~location_type] %}
     {% set field_optional_placeholder = (field_config == 'optional') ? config.lang.checkout_optional : '' %}
-    {% set field_config = (field_config != 'hidden') %}
+    {% set show_field = (field_config != 'hidden') %}
 {% endif %}
 {% if show_field %}
     {% set locations = config.locations %}
     {% set region_lang = "checkout_country" %}
     {% set country_code = address.country %}
+    {% set required_attr = (field_config == "required") ? "data-fc-required" : "" %}
     {% if location_type == "region" %}
         {% if country_code %}
             {% set region_lang = "checkout_location_"~locations[country_code]['r']['lang'] %}
             {% set locations = locations[country_code]['r']['options'] %}
+            {% set required_attr = (locations[country_code]['r']['req']) ? "data-fc-required" : "" %}
         {% else %}
             {% set locations = [] %}
             {% set region_lang = "checkout_location_state" %}
         {% endif %}
     {% endif %}
     {% if locations|length > 0 %}
-        <select class="form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" data-fc-required="true" name="{{ field_name }}">
+        <select class="form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" {{ required_attr }} name="{{ field_name }}">
             <option value=""></option>
             {# Join filter is returning error, buggy? #}
             {% for c in locations %}
@@ -47,10 +50,9 @@
             name="{{ field_name }}"
             value="{{ address[location_type~'_name'] or address[location_type] }}"
             type="text"
-            data-fc-required="false"
+            {{ required_attr }}
             placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"
-            class="form-control fc-location"
-            data-fc-error-class="invalid" />
+            class="form-control fc-location" />
     {% endif %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     {# TODO: stuff the errors array #}

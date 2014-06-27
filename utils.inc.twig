@@ -1,3 +1,11 @@
+{% macro get_info_string(context, info) %}
+{# don't indent as it will return a non-empty string #}
+{# even if there's no error #}
+{% for info_entry in info if info_entry.context == context %}
+<p>{{ info_entry.message }}</p>
+{% endfor %}
+{% endmacro %}
+
 {% macro get_error_string(field_name, errors) %}
 {# don't indent as it will return a non-empty string #}
 {# even if there's no error #}
@@ -6,30 +14,46 @@
 {% endfor %}
 {% endmacro %}
 
-{% macro shipping_results(address) %}
-<div class="form-group">
-    <div class="radio-group col-md-10 col-md-offset-1">
+{% macro shipping_results(address, grid_class, errors, lang) %}
+{% set field_name = 'shipping_service_id' %}
+{% set description_field_name = 'shipping_service_description' %}
+{% if address.prefix != 'shipping' %}
+    {% set field_name = address.prefix~'_'~field_name %}
+    {% set description_field_name = address.prefix~'_'~description_field_name %}
+{% endif %}
+{% set error_string = _self.get_error_string(field_name, errors) %}
+{% if address.shipping_results|length > 0 %}
+<div class="form-group{% if error_string %} has-error{% endif %}">
+    <div class="radio-group {{ grid_class }}">
         {% for rate in address.shipping_results %}
         {# <div class="shipping-rate radio active"> #}
-        <div class="shipping-rate radio{% if rate.service_id == address.shipping_service_id %} active{% endif %}">
-            <label for="shipping_service_id_{{ rate.service_id }}">
+        <div class="shipping-rate radio {% if rate.service_id == address.shipping_service_id %}fc-active{% endif %}">
+            <label for="{{ field_name }}_{{ rate.service_id }}">
                 <input
-                    id="shipping_service_id_{{ rate.service_id }}"
+                    id="{{ field_name }}_{{ rate.service_id }}"
                     type="radio"
-                    {% if address.prefix == 'shipping' %}
-                    name="shipping_service_id"
-                    {% else %}
-                    name="{{ address.prefix }}_shipping_service_id"
-                    {% endif %}
+                    name="{{ field_name }}"
                     value="{{ rate.service_id }}"
                     {{ checked(rate.service_id, address.shipping_service_id) }}
-                />{{ rate.method }} {{ rate.service_name }}
-                <span>{{ rate.price|money_format }}</span>
+                /><div class="fc-shipping-service">{{ rate.method }} {{ rate.service_name }}</div>
+                <div class="fc-shipping-rate">{{ rate.price|money_format }}</div>
             </label>
         </div>
         {% endfor %}
+	{% if error_string %}
+        <div class="alert alert-danger">
+            {{ lang.checkout_select_shipping_option }}
+        </div>
+	{% endif %}
     </div>
 </div>
+{% endif %}
+<input
+    id="{{ description_field_name }}"
+    type="hidden"
+    name="{{ description_field_name }}"
+    value="{{ address.shipping_service_description }}"
+/>
 {% endmacro %}
 
 {% macro use_different_addresses(use_different_addresses, lang) %}

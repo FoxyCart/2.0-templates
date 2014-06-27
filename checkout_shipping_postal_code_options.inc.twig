@@ -1,8 +1,0 @@
-<select class="form-control">
-    {% for city_option in shipping_city_options %}
-    <option data-city="{{ city_option.city }}" data-region="{{ city_option.region }}">
-        {{ city_option.city }}, {{ city_option.region }}
-    </option>
-    {% endfor %}
-    <option value="">{{ config.lang.checkout_location_other }}</option>
-</select>

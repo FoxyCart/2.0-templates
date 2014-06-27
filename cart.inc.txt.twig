@@ -37,7 +37,7 @@
 {% endfor %}
 {{ config.lang.cart_subtotal|raw|pad(24) }} {{ total_item_price|money_format }}
 {% if has_future_products %}
-{{ config.lang.cart_future_subscriptions|raw|pad(24) }} {{ future_total_item_price|money_format }}
+{{ config.lang.cart_future_subscriptions|raw|pad(24) }} {{ total_future_item_price|money_format }}
 {% endif %}
 {% for key,coupon in coupons %}
 {% set coupon_label = coupon.name ~ " (" ~ key ~ ")" %}
@@ -55,6 +55,6 @@
 {% endif %}
 {% endfor %}
 {% endif %}
-{{ config.lang.cart_order_total|raw|pad(24) }} {{ total_price|money_format }}
+{{ config.lang.cart_order_total|raw|pad(24) }} {{ total_order|money_format }}
 
 {# END CART TWIG TEMPLATE #}

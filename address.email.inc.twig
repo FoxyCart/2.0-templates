@@ -1,0 +1,29 @@
+{% if address.first_name != '' %}{{ address.first_name }}{% endif %}{% if address.last_name != '' %} {{ address.last_name }}{% endif %}<br />
+{% if address.company != '' %}
+    {{ address.company }}<br />
+{% endif %}
+{% if  address.address1 != '' %}
+    {{ address.address1 }}<br />
+{% endif %}
+{% if  address.address2 != '' %}
+    {{ address.address2 }}<br />
+{% endif %}
+{% if address.country_name == 'United States' %}
+    {{ address.city }}, {{ address.region }} {{ address.postal_code }}<br />
+{% else %}
+{% if address.city != '' %}
+    {{ address.city }}<br/>
+{% endif %}
+{% if address.region != '' %}
+    {{ address.region }}<br/>
+{% endif %}
+{% if address.postal_code != '' %}
+    {{ address.postal_code }}<br />
+{% endif %}
+{% endif %}
+{% if address.country_name != '' %}
+    {{ address.country_name }}<br /><br />
+{% endif %}
+{% if address.phone != '' %}
+    {{ address.phone }}
+{% endif %}

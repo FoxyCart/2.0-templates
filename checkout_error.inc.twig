@@ -1,8 +1,0 @@
-<div id="TODO" class="fc_error_session">
-    {% for error in messages.errors %}
-        {{ config.lang[error.context]|raw }}
-        <p>
-            <a href="{{ store_url }}">{{ config.store_name }}</a>
-        </p>
-    {% endfor %}
-</div>

@@ -1,7 +1,7 @@
 {# Postal Code Madness begins here #}
 {#
 TODO:
-Be sure to reimplement the template_config stuff for showing and hiding fields. Examples can be found in checkout_address_entry.inc.twig
+Be sure to reimplement the template_config stuff for showing and hiding fields. Examples can be found in address.checkout.inc.twig
 #}
 
 {% set country_current = address.country %}
@@ -11,13 +11,13 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
 
 {# If postalcode search is supported for the current country, display postalcode first, then city/state options after. #}
 {% if country_supports_postalcode_search %}
-<div class="form-group fc-form-group-multiple-inline">
-    {% set field_name = address.prefix~"_postal_code" %}
-    {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-    <div class="col-xs-4 {% if error_string %} has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
+{% set field_name = address.prefix~"_postal_code" %}
+{% set error_string = utils.get_error_string(field_name, messages.errors) %}
+<div class="form-group fc-form-group-multiple-inline {% if error_string %} has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
+    <div class="col-xs-4">
         {# TODO: change the type to phone if country has numeric postcodes (like US) #}
         {# TODO: change placeholder text #}
-        <label for="{{ field_name }}" class="semantic-only">{{ getPostalCodeLabel(address.country) }}</label>
+        <label for="{{ field_name }}" class="sr-only">{{ getPostalCodeLabel(address.country) }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
@@ -25,11 +25,11 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
             placeholder="{{ getPostalCodeLabel(address.country) }}"
             autocomplete="{{ address.type }} postal-code"
             class="form-control form-control-postcode"
-            data-fc-error-class="invalid" />
+            />
         {# TODO: handle error validation by updating the JSON error messages directly #}
         {#
         {% if _context[address.prefix~'_postal_code_is_empty'] %}
-        <div class="alert alert-danger fc-error-postcode-empty">
+        <div class="alert alert-danger">
             {{ config.lang.checkout_error_postal_code|raw }}
         </div>
         {% endif %}
@@ -49,12 +49,12 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         #}
 
         {% if _context[address.prefix~'_postal_code_in_progress'] %}
-        Loading... {# TODO: config.lang this, and style it. #}
+        <p class="fc-postal-code-loading">Loading...</p> {# TODO: config.lang this, and style it. #}
         {% elseif address.city_options|length > 0 %}
         {% set field_name = address.prefix~"_city_options" %}
         <div data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-            <label for="{{ field_name }}" class="semantic-only">{{ config.lang.checkout_location_province }}</label>
-            <select class="form-control" id="{{ field_name }}" data-fc-id="{{ field_name }}" data-fc-error-class="invalid">
+            <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_location_province }}</label>
+            <select class="form-control" id="{{ field_name }}" data-fc-id="{{ field_name }}">
                 {% for city_option in address.city_options %}
                 {% set city_option_value = formatCityOption(city_option) %}
                 <option
@@ -73,11 +73,19 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
             </select>
         </div>
         {% else %}
-        <p class="fc-submit-postal-code form-control-static" data-fc-error-for="{{ field_name }}" data-fc-error-class="invalid">
+        <p class="fc-submit-postal-code form-control-static">
             <button type="button" data-fc-id="submit-{{ address.prefix }}-postal-code" class="btn btn-default">{{ config.lang.checkout_submit_postal_code }}</button>
         </p>
         {% endif %}
     </div>
+
+    {% if error_string %}
+        <div class="col-xs-10">
+            <div class="alert alert-danger">
+                {{ config.lang.cart_error_postal_code }}
+            </div>
+        </div>
+    {% endif %}
 </div>
 {% endif %}
 
@@ -87,21 +95,14 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
     {% set field_name = address.prefix~"_city" %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     <div class="col-xs-6 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-        <label for="{{ field_name }}" class="semantic-only">{{ config.lang.checkout_city }}</label>
+        <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_city }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
             value="{{ address.city }}"
             placeholder="{{ config.lang.checkout_city }}"
             autocomplete="{{ address.type }} locality"
-            class="form-control"
-            data-fc-error-class="invalid" />
-        {% if error_string %}
-        <div class="alert alert-danger">
-            {# TODO: stuff and use error_string instead here? #}
-            {{ config.lang.checkout_error_city|raw }}
-        </div>
-        {% endif %}
+            class="form-control" />
     </div>
     <div class="col-xs-6" data-fc-container-for="{{ address.prefix }}_region">
         <!-- TODO: change placeholder based on country -->
@@ -124,7 +125,7 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     <div class="col-xs-4 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
         <!-- TODO: change the type to phone if country has numeric postcodes (like US) -->
-        <label for="{{ field_name }}" class="semantic-only">{{ config.lang.checkout_location_zipcode }}</label>
+        <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_location_zipcode }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
@@ -135,7 +136,7 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         {# TODO: handle error validation by updating the JSON error messages directly #}
         {#
         {% if _context[address.prefix~'_postal_code_is_empty'] %}
-        <div class="alert alert-danger fc-error-postcode-empty">
+        <div class="alert alert-danger">
             {{ config.lang.checkout_error_postal_code|raw }}
         </div>
         {% endif %}
@@ -145,11 +146,6 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         </div>
         {% endif %}
         #}
-        {% if error_string %}
-        <div class="alert alert-danger">
-            {{ error_string }}
-        </div>
-        {% endif %}
     </div>
     <div class="col-xs-8">
         {% include "regions.inc.twig" with {'location_type': 'country'} %}

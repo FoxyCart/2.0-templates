@@ -1,0 +1,210 @@
+<!-- begin cart output -->
+<!--  <div id="fc_cart_container"><div id="fc_cart_container_inner">  -->
+    <table class="transactionCart" cellspacing="0" cellpadding="0">
+        <thead>
+            <tr>
+            {% if has_product_images %}
+                <th><span>{{ config.lang.cart_image|raw }}</span></th>
+            {% endif %}
+                <th><span>{{ config.lang.cart_item|raw }}</span></th>
+                <th><span>{{ config.lang.cart_quantity|raw }}</span></th>
+                <th><span>{{ config.lang.cart_price|raw }}</span></th>
+            </tr>
+        </thead>
+        <tfoot>
+        {% if has_future_products %}
+            <tr>
+                <td colspan="{{ colspan }}" style="text-align: center;"><h5>{{ config.lang.cart_todays_charge }}</h5></td>
+            </tr>
+        {% endif %}
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal|raw }}:</td>
+                <td class="fc_col2">{{ total_item_price|money_format }}</td>
+            </tr>
+        {% if has_shippable_products %}
+            {% set shipping_service_label = shipping_and_handling_label %}
+            {% if shipping_address.shipping_service_id != 0 and shipping_address.shipping_service_description %}
+                {% set shipping_service_label = shipping_address.shipping_service_description %}
+            {% endif %}
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label|raw }}:</td>
+                <td class="fc_col2">{{ total_shipping|money_format }}</td>
+            </tr>
+        {% endif %}   
+    {% if coupons|length > 0 %}
+        {% for key,coupon in coupons %}
+            <tr class="fc_cart_foot_discount">
+                <td class="fc_col1" colspan="{{ colspan-1 }}">
+                    {{ coupon.name }}: {{ key }}
+                </td>
+                <td class="fc_col2">
+                    <span class="fc_discount">{{ coupon.amount|money_format }}</span>
+                </td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+
+    {% if has_taxes %}
+        {% for tax in shipping_address.taxes %}
+            <tr class="fc_cart_foot_tax">
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):</td>
+                <td class="fc_col2">{{ tax.amount|money_format }}</td>
+            </tr>
+        {% endfor %}
+    {% endif %}
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_order_total|raw }}:</td>
+                <td class="fc_col2">{{ total_order|money_format }}</td>
+            </tr>
+    {% if has_future_products %}
+            <tr>
+                <td colspan="{{ colspan }}" style="text-align: center;">
+                    <h5>
+                    {% if future_subscription_totals_by_date|length > 1 %}
+                    {{ config.lang.cart_future_charges }}
+                    {% else %}
+                    {{ config.lang.cart_future_charge }}
+                    {% endif %}
+                    </h5>
+                </td>
+            </tr>
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal }}:</td>
+                <td class="fc_col2">{{ total_future_item_price|money_format }}</td>
+            </tr>
+            {% if has_future_shipping %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label }}:</td>
+                    <td class="fc_col2">{{ total_future_shipping|money_format }}</td>
+                </tr>
+            {% endif %}
+            {% if has_taxes %}
+            {# TODO: test and verify future taxes work as expected... My hunch is they do not. #}
+            {% for tax in shipping_address.taxes %}
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">
+                    {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
+                </td>
+                <td class="fc_col2">
+                    {{ tax.amount|money_format }}
+                </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            {% for key,coupon in future_coupons %}
+            <tr>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ coupon.name }}: {{ coupon.code }}</td>
+                <td class="fc_col2">{{ coupon.amount|money_format }}</td>
+            </tr>
+            {% endfor %}
+
+            {% for key, subscription_item_total in future_subscription_totals_by_date %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">
+                        {{ key|date("F jS, Y") }} Total:
+                    </td>
+                    <td class="fc_col2">
+                        {{ subscription_item_total.total|money_format }}
+                    </td>
+                </tr>
+            {% endfor %}
+    {% endif %}
+        </tfoot>
+{% if not has_multiship %}
+    <tbody>
+{% endif %}
+{% for item in items %}
+        {% if item.multiship >= 0 %}
+        {% if item.multiship > 0 %}
+        </tbody>
+        {% endif %}
+        <tbody class="fc_ship_to">
+            <tr>
+                <th class="fc_shipto" colspan="{{ colspan }}">
+                    {{ config.lang.cart_shipto|raw }}: {{ item.shipto }}
+                </th>
+            </tr>
+        {% endif %}
+        {% if item.item_number == items|length %}
+            <tr id="product_{{ item.id }}" class="fc_cart_item fc_cart_item_last">
+        {% else %}
+            <tr id="product_{{ item.id }}" class="fc_cart_item">
+        {% endif %}
+            {% if has_product_images %}
+                <td class="fc_cart_item_image">
+                {% if item.image != '' %}
+                {% if item.url != '' %}
+                    <a href="{{ item.url }}" target="_top" alt="{{ item.alt_name }}">
+                {% endif %}
+                    <img class="fc_cart_thumbnail" src="{{ item.image }}" />
+                {% if item.url != '' %}
+                    </a>
+                {% endif %}
+                {% endif %}
+                </td>
+            {% endif %}
+                <td class="fc_cart_item_details">
+                    {{ item.downloadable_details_html|raw }}
+                    <span class="fc_cart_item_name">{{ item.name }}</span>
+                {% if item.options|length > 0 or item.code != '' or item.category != 'DEFAULT' or item.weight != 0 or item.sub_frequency != '' %}
+                    <ul class="fc_cart_item_options">
+                    {% for option in item.options %}
+                        <li class="fc_cart_item_option fc_cart_item_{{ option.class }}">
+                            <span class="fc_cart_item_option_name">{{ option.name }}</span><span class="fc_cart_item_option_separator">:</span>
+                            <span class="fc_cart_item_option_value">{{ option.value }}</span>
+                        </li>
+                    {% endfor %}
+                    {% if item.code != '' %}
+                        <li class="fc_cart_item_option fc_cart_item_code">
+                        {{ config.lang.cart_code|raw }}: {{ item.code }}
+                        </li>
+                    {% endif %}
+                    {% if item.category != 'DEFAULT' %}
+                        <li class="fc_cart_item_option fc_cart_category_code">
+                        {{ config.lang.cart_category|raw }}: {{ item.category }}
+                        </li>
+                    {% endif %}
+                    {% if item.weight != 0 %}
+                        <li class="fc_cart_item_option fc_cart_item_weight">
+                        {{ config.lang.cart_weight|raw }}: {{ item.weight }} <span class="fc_uom_weight">{{ weight_uom }}</span>
+                        </li>
+                    {% endif %}
+                    {% if item.sub_frequency != '' %}
+                        <li class="fc_cart_item_option fc_cart_item_subscription_details">
+                            {{ config.lang.cart_subscription_details|raw }}
+                            <ul>
+                                <li class="fc_cart_item_option fc_cart_item_sub_frequency">
+                                    <span class="fc_cart_item_option_name">{{ config.lang.cart_frequency|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_frequency }}</span>
+                                </li>
+                                <li class="fc_cart_item_option fc_cart_item_sub_startdate">
+                                    <span class="fc_cart_item_option_name">{{ config.lang.cart_start_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_startdate }}</span>
+                                </li>
+                                <li class="fc_cart_item_option fc_cart_item_sub_nextdate">
+                                    <span class="fc_cart_item_option_name">{{ config.lang.cart_next_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_nextdate }}</span>
+                                </li>
+                            {% if item.sub_enddate != "0000-00-00" %}
+                                <li class="fc_cart_item_option fc_cart_item_sub_enddate">
+                                    <span class="fc_cart_item_option_name">{{ config.lang.cart_end_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_enddate }}</span>
+                                </li>
+                            {% endif %}
+                            </ul>
+                        </li>
+                    {% endif %}
+                    </ul>
+                {% endif %}
+                </td>
+                <td class="fc_cart_item_quantity">
+                    {{ item.quantity }}
+                </td>
+                <td class="fc_cart_item_price">
+                    <span class="fc_cart_item_price_total">{{ item.price|money_format }}</span>
+                    {% if item.quantity > 1 %}
+                    <span class="fc_cart_item_price_each"> ({{ item.price_each|money_format }} {{ config.lang.cart_each|raw }})</span>
+                    {% endif %}
+                </td>
+            </tr>
+{% endfor %}
+        </tbody>
+    </table>
+<!--  </div></div>  --><!-- #fc_cart_container_inner, #fc_cart_container -->
+<!-- end cart output -->

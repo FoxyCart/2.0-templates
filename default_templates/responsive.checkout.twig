@@ -12,25 +12,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
 
     <!-- TODO: Load the CSS based on the template config. -->
-    <link href="/static/frameworks/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/static/fonts/font-awesome-3.1.2/css/font-awesome.min.css" rel="stylesheet">
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome-ie7.min.css">
-    <![endif]-->
+    <link href="/static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.css" rel="stylesheet">
     <link href="/static/themes/responsive/styles.css" rel="stylesheet" media="screen">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
 </head>
 <body>
+<!-- has to be here because of chrome bug -->
+    {% include 'svg.inc.twig' %}
 
-{% import "utils.inc.twig" as utils %}
-{% if not has_valid_domain_and_session %}
-    {% include 'checkout_error.inc.twig' %}
-{% else %}
+    {% import "utils.inc.twig" as utils %}
     {% use 'checkout.inc.twig' %}
-
     {{ block('checkout') }}
-{% endif %}
 
 
     <!-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.1/jquery.min.js"></script> -->
@@ -39,12 +32,13 @@
     <!--<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>-->
 
 
-    <!-- TODO: Load the following based on the template config. -->
-    <script src="/static/frameworks/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+    <!-- TODO: Load the following based on the template config.
+    <script src="/static/frameworks/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 
 
     <!-- TODO: Determine if the following is required. Probably not. -->
     <!-- Add media query support to IE8 and prior. https://github.com/scottjehl/Respond -->
     <!--[if lt IE 8]><script src="js/respond.min.js"></script><![endif]-->
+    <!-- FC footer script insertion -->{{ fc_footer_content|raw }}<!-- /FC footer scripts -->
 </body>
 </html>

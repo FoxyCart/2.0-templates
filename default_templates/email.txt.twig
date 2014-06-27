@@ -1,54 +1,132 @@
-^^order_begin^^
 ===========================================================
-YOUR {{ config.store_name|raw }} RECEIPT
+{% if is_updateinfo %}
+{{ config.lang.email_subject_updateinfo|upper }}
+{% elseif is_subscription_modification %}
+{{ config.lang.email_subject_subscription_updated|upper }}
+{% elseif is_subscription_cancel %}
+{{ config.lang.email_subject_subscription_cancelled|upper }}
+{% else %}
+{{ config.lang.checkout_receipt|upper }}
+{% endif  %}
 ===========================================================
 
-Thank you for ordering from {{ config.store_name|raw }}.
+{{ config.lang.email_view_in_your_browser }}: {{ receipt_url }}
 
-If you would like to update your payment card for future transactions, please use this link and enter your updated billing information: https://{{ config.store_domain }}/cart?cart=updateinfo.
+{% if is_order %}
+{{ config.lang.email_text_message_order }} https://{{ config.store_domain }}/cart?cart=updateinfo
+{% endif %}
+{% if is_updateinfo %}
+{{ config.lang.email_message_updateinfo }}
+{% endif %}
+{% if is_subscription_cancel %}
+{{ config.lang.email_message_subscription_cancel }}
+{% endif %}
+{% if is_subscription_modification %}
+{{ conig.lang.email_message_subscription_modification }}
+{% endif %}
 
 ===========================================================
 
-{% include 'email_order_details.inc.txt.twig' %}
+{% if not is_updateinfo %}
+{% if has_downloadables %}
+{{ config.lang.email_text_downloadable_products|pad(60,"-"," ") }}
+
+{{ text_downloadable_links }}
+
+{% endif %} {# has downloads #}
+{{ config.lang.email_text_order_summary|pad(60,"-"," ") }}
+
+  * {{ config.lang.checkout_merchant|pad(20) }} {{ config.store_name }}
+  * {% if is_order %}{{ config.lang.email_order_number|pad(20) }}{% else %}{{ config.lang.email_reference_number|pad(20) }}{% endif  %} {{ order_id }}
+  * {{ config.lang.checkout_date|pad(20) }} {{ checkout_date }}
+{% if purchase_order != '' %}
+  * {{ config.lang.checkout_purchase_order|pad(20) }} {{ purchase_order }}
+{% endif %}
+{% if payment_type == 'plastic' %}
+  * {{ config.lang.checkout_card_number|pad(20) }} {{ cc_number_masked }} ({{ cc_type }})
+{% endif %}
+  * {{ config.lang.cart_order_total|pad(20) }} {{ total_order|money_format }}
+{% if has_live_rate_shippable_products and not has_multiship %}
+  * {{ config.lang.email_shipping|pad(20) }} {{ shipping_address.shipping_service_description }}
+{% endif %}
+{% if custom_fields|length > 0 %}
+
+{% for key,custom_field in custom_fields %}
+    {% if not custom_field.is_hidden %}
+  * {{ key|pad(20) }} {{ custom_field.value }}
+    {% endif %}
+{% endfor %}
+{% endif %} {# has custom fields #}
+{% endif %} {# is not update info #}
+
+
+{{ config.lang.email_text_purchasing_information|pad(60,"-"," ") }}
+
+{{ config.lang.email_email }}:
+    {{ customer_email }}
+
+{{ config.lang.email_billing_address }}:
+{% include "address.email.inc.txt.twig" with {'address': billing_address} %}
+{% if geoip != '' %}
+    {{ geoip }}
+{% endif %}
+{% if has_multiship %}
+{% for multiship in multiship_data %}
+{{ config.lang.email_ship_to }}: {{ multiship.address_name }}
+{% include "address.email.inc.txt.twig" with {'address': multiship} %}
+
+{% if multiship.custom_fields|length > 0 %}
+{% for key,custom_field in multiship.custom_fields %}
+    {% if not custom_field.is_hidden %}
+  * {{ key|pad(20) }}: {{ custom_field.value }}
+    {% endif %}
+{% endfor %} {# multiship #}
+{% endif %} {# has multiship custom fields #}
+{% if not is_updateinfo %}
+    {{ config.lang.cart_subtotal }}: {{ multiship.total_price_item_price|money_format }}
+{% endif %}
+{% if has_live_rate_shippable_products %}
+    {{ multiship.shipping_service_description }}: {{ multiship.total_price_shipping|money_format }}
+{% else %}
+{% if has_shippable_products %}
+    {{ shipping_and_handling_label }}: {{ multiship.total_price_shipping|money_format }}
+{% endif %}
+{% endif %}
+{% if not is_updateinfo %}
+    {{ config.lang.email_tax }}: {{ multiship.total_price_tax|money_format }}
+    {{ config.lang.email_group_total }}: {{ multiship.total_price|money_format }}
+{% endif %}
+{% endfor %} {# multishp for loop #}
+{% else %} {# multiship #}
+{% if use_alternate_shipping_address or has_shippable_products %}
+
+{{ config.lang.email_shipping_address }}:
+{% if use_alternate_shipping_address %}
+{% include "address.email.inc.txt.twig" with {'address': shipping_address} %}
+{% else %}
+{% include "address.email.inc.txt.twig" with {'address': billing_address} %}
+{% endif %}
+{% endif %} {# has shippable products #}
+{% endif %} {# not multiship #}
+
+{% if subscriptions|length > 0 and not is_subscription_cancel %}
+{{ config.lang.email_text_manage_subscriptions|pad(60,"-"," ") }}
+
+{{ config.lang.email_text_subscription_instructions }}
+
+{% for subscription in subscriptions %}
+{{ subscription.description }}
+
+{{ subscription.text_links }}
+{% if not loop.last %}
+
+----------------------------------------
+{% endif %}
+
+{% endfor %} {# subscirption loop #}
+
+{% endif %} {# has subscriptions #}
 
 {% if not is_updateinfo %}
 {% include 'cart.inc.txt.twig' %}
 {% endif %}
-^^order_end^^
-
-^^updateinfo_begin^^
-===========================================================
-YOUR {{ config.store_name|raw }}
-BILLING INFORMATION HAS BEEN UPDATED
-===========================================================
-Your billing information has been updated as displayed below.
-
-{% include 'email_order_details.inc.txt.twig' %}
-
-^^updateinfo_end^^
-
-^^subscription_cancel_begin^^
-===========================================================
-{{ config.store_name|raw }}
-SUBSCRIPTION CANCELLATION CONFIRMATION
-===========================================================
-
-This email is confirmation that the subscription listed below will be canceled and not billed further.
-
-{% include 'email_order_details.inc.txt.twig' %}
-{% include 'cart.inc.txt.twig' %}
-
-^^subscription_cancel_end^^
-
-^^subscription_modification_begin^^
-===========================================================
-{{ config.store_name|raw }}
-SUBSCRIPTION MODIFICATION CONFIRMATION
-===========================================================
-
-This email is confirmation that the subscription listed below has been modified.
-
-{% include 'email_order_details.inc.txt.twig' %}
-{% include 'cart.inc.txt.twig' %}
-
-^^subscription_modification_end^^
