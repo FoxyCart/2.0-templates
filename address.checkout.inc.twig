@@ -193,7 +193,7 @@
         {% if address.shipping_results|length > 0 %}
             {# TODO: move it to the language file #}
             <h4>{{ config.lang.checkout_shipping_methods_for }}<span>{{ address.address_name }}</span></h4>
-            {{ utils.shipping_results(address, '', messages.errors, config.lang) }}
+            {{ utils.shipping_results(address, 'col-md-10 col-md-offset-1', messages.errors, config.lang) }}
         {% endif %}
         <input
             id="{{ address.prefix }}_shipping_total"

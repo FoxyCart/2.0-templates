@@ -81,7 +81,6 @@
         <div class="row fc-cart-container">
         <div class="col-xs-12">
         {% if not is_updateinfo %} {# show cart unless they're updating billing info #}
-           {% set cart_total_shipping = receipt_shipping_total %}
            {% use 'cart.inc.twig' %}
            <div class="col-xs-12">
                 <div class="fc-cart-title">
@@ -109,11 +108,6 @@
         </div>
     </div>
     </div> <!-- /container -->
-    <!-- FC footer script insertion -->{{ fc_footer_content|raw }}<!-- /FC footer scripts -->
-    
-    {% if first_receipt_display %}{# TODO: maybe move this to </body> #}
-        {# If you have a system (affiliate, analytics) that doesn't handle duplicating data well, put that code in here #}
-        {{ config.template_config.custom_script_values.conversion|raw }}
-    {% endif %}
+    <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
 </body>
 </html>

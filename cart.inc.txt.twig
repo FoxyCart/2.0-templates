@@ -43,7 +43,7 @@
 {% set coupon_label = coupon.name ~ " (" ~ key ~ ")" %}
 {{ coupon_label|pad(24) }} {{ coupon.amount|money_format }}
 {% endfor %}
-{{ shipping_and_handling_label|raw|pad(24) }} {{ cart_total_shipping|money_format }}
+{{ shipping_and_handling_label|raw|pad(24) }} {{ total_shipping|money_format }}
 {% if has_future_products and show_future_shipping_and_handling %}
 {% set future_shipping_handling_label = lang.cart_future_subscriptions|raw ~ " " ~ shipping_and_handling_label|raw %}
 {{ future_shipping_handling_label|pad(24) }} {{ future_shipping_and_handling|money_format }}

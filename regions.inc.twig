@@ -9,13 +9,15 @@
 {% endif %}
 {% if show_field %}
     {% set locations = config.locations %}
+    {% set locations_filter = (address.type == 'billing') ? config.locations_billing : config.locations_shipping %}
     {% set region_lang = "checkout_country" %}
-    {% set country_code = address.country %}
+    {% set country_code = ((address.country not in locations_filter|keys) or ((address.country in locations_filter|keys) and (locations_filter[address.country] != "*"))) ? address.country : false %}
     {% set required_attr = (field_config == "required") ? "data-fc-required" : "" %}
     {% if location_type == "region" %}
         {% if country_code %}
             {% set region_lang = "checkout_location_"~locations[country_code]['r']['lang'] %}
             {% set locations = locations[country_code]['r']['options'] %}
+            {% set locations_filter = (country_code in locations_filter|keys) ? locations_filter[country_code] : [] %}
             {% set required_attr = (locations[country_code]['r']['req']) ? "data-fc-required" : "" %}
         {% else %}
             {% set locations = [] %}
@@ -28,19 +30,23 @@
             {# Join filter is returning error, buggy? #}
             {% for c in locations %}
                 {% if location_type == "country" %}
-                    <option
-                        value="{{ c.cc2 }}"
-                        data-relevancy-booster="{{ c.boost }}"
-                        data-alternative-spellings="{{ c.cc2 }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
-                        {% if c.cc2 == address[location_type] %}selected{% endif %}
-                    >{{ c.cn }}</option>
+                    {% if (c.cc2 not in locations_filter|keys) or ((c.cc2 in locations_filter|keys) and (locations_filter[c.cc2] != "*")) %}
+                        <option
+                            value="{{ c.cc2 }}"
+                            data-relevancy-booster="{{ c.boost }}"
+                            data-alternative-spellings="{{ c.cc2 }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
+                            {% if c.cc2 == address[location_type] %}selected{% endif %}
+                        >{{ c.cn }}</option>
+                    {% endif %}
                 {% else %}
-                    <option
-                        value="{{ c.c }}"
-                        data-relevancy-booster="{{ c.boost }}"
-                        data-alternative-spellings="{{ c.c }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
-                        {% if address[location_type] in [c.c, c.n] %}selected{% endif %}
-                    >{{ c.n }}</option>
+                    {% if (locations_filter != "*") and (c.c not in locations_filter) %}
+                        <option
+                            value="{{ c.c }}"
+                            data-relevancy-booster="{{ c.boost }}"
+                            data-alternative-spellings="{{ c.c }}{% for alt in c.alt %}||{{ alt }}{% endfor %}"
+                            {% if address[location_type] in [c.c, c.n] %}selected{% endif %}
+                        >{{ c.n }}</option>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
         </select>

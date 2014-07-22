@@ -1,238 +1,223 @@
 
 {% block receipt %}
-		{% block messaging %}
-			{% if is_updateinfo or is_subscription_cancel or payment_is_pending or show_message_for_testing %}
-			<div id="fc-message-container">
-				{% if show_message_for_testing %}  {# TODO: test different messages #}
-				<div class="alert alert-info">
-					This is an example informational message.
-				</div>
-				{% endif %}
+        {% block messaging %}
+            {% if is_updateinfo or is_subscription_cancel or payment_is_pending or show_message_for_testing %}
+            <div id="fc-message-container">
+                {% if show_message_for_testing %}  {# TODO: test different messages #}
+                <div class="alert alert-info">
+                    This is an example informational message.
+                </div>
+                {% endif %}
 
-				{% if is_updateinfo %}
-				<div class="alert alert-info">
-					{{ config.lang.checkout_updateinfo_completed|raw }}
-				</div>
-				{% endif %}
+                {% if is_updateinfo %}
+                <div class="alert alert-info">
+                    {{ config.lang.checkout_updateinfo_completed|raw }}
+                </div>
+                {% endif %}
 
-				{% if is_subscription_cancel %}
-				<div class="alert alert-info">
-					{{ config.lang.checkout_subscription_cancel_completed|raw }}
-				</div>
-				{% endif %}
+                {% if is_subscription_cancel %}
+                <div class="alert alert-info">
+                    {{ config.lang.checkout_subscription_cancel_completed|raw }}
+                </div>
+                {% endif %}
 
-				{% if payment_is_pending %}
-				<div class="alert alert-info">
-					{{ config.lang.checkout_payment_pending|raw }}
-				</div>
-				{% endif %}
-			</div>
-			{% endif %}
-		{% endblock messaging %}
+                {% if payment_is_pending %}
+                <div class="alert alert-info">
+                    {{ config.lang.checkout_payment_pending|raw }}
+                </div>
+                {% endif %}
+            </div>
+            {% endif %}
+        {% endblock messaging %}
 
-		{% block downloadable_links %}
-			{% if has_downloadables %}
-			<div id="fc_receipt_download_links_container" class="fc_fieldset_container ">
-				<fieldset id="fc_receipt_download_links">
-					<legend>{{ checkout_download_links|raw }}</legend>
-					<div class="fc_inner">
-						<ol id="fc_receipt_download_links_list">
-							{{ html_downloadable_links|raw }}
-						</ol>
-						<span class="fc_clear">&nbsp;</span>
-					</div><!-- .fc_inner -->
-				</fieldset><!-- #fc_receipt_download_links -->
-				<span class="fc_clear">&nbsp;</span>
-			</div><!-- #fc_receipt_download_links_container -->
-			{% endif %}
-		{% endblock downloadable_links %}
-
-
+        {% block downloadable_links %}
+            {% if has_downloadables %}
+            <div id="fc_receipt_download_links_container" class="fc_fieldset_container ">
+                    <fieldset id="fc_receipt_download_links">
+                    <legend>{{ config.lang.checkout_download_links }}</legend>
+                    <div class="fc_inner">
+                        <ol id="fc_receipt_download_links_list">
+                            {{ html_downloadable_links|raw }}
+                        </ol>
+                        <span class="fc_clear">&nbsp;</span>
+                    </div><!-- .fc_inner -->
+                </fieldset><!-- #fc_receipt_download_links -->
+                <span class="fc_clear">&nbsp;</span>
+            </div><!-- #fc_receipt_download_links_container -->
+            {% endif %}
+        {% endblock downloadable_links %}
 
 
-		{% block general_information %}
-		<form class="form-horizontal fc-receipt-general" role="form">
-			<fieldset>
-				<legend>{{ config.lang.checkout_general_information|raw }}</legend>
-				<div class="form-group fc-receipt-merchant">
-				   <label class="control-label col-sm-4">{{ config.lang.checkout_merchant|raw }}</label>
 
-					<div class="col-sm-8">
-						<p class="form-control-static">{{ config.store_name|raw }}</p>
-					</div>
-				</div>
-				<div class="form-group">
-					<label class="control-label col-sm-4">{{ config.lang.checkout_order_id|raw }}</label>
-					<div class="col-sm-8">
-					   <p class="form-control-static">{{ order_id }}</p>
-					</div>
-				</div>
-				{% if purchase_order != '' %}
-				<div class="form-group">
-					<label class="control-label col-sm-4">{{ config.lang.checkout_purchase_order|raw }}</label>
-					<div class="col-sm-8">
-						<p class="form-control-static">{{ purchase_order }}</p>
-					</div>
-				</div>
-				{% endif %}
-				{% if payment_type == 'plastic' and cc_number_masked != '' %}
-				<div class="form-group">
-					<label class="control-label col-sm-4">{{ config.lang.checkout_card_number|raw }}</label>
-					<div class="col-sm-8">
-						<p class="form-control-static">{{ cc_number_masked }} ({{ cc_type }})</p>
-					</div>
-				</div>
-				{% endif %}
 
-				<div class="form-group">
-					<label class="control-label col-sm-4">{{ config.lang.checkout_date|raw }}</label>
-					<div class="col-sm-8">
-						<p class="form-control-static">{{ checkout_date }}</p>
-					</div>
-				</div>
-				<div class="form-group fc-receipt-processor-response">
-					<label class="control-label col-sm-4">{{ config.lang.checkout_processor_response|raw }}</label>
-					<div class="col-sm-8">
-						<p class="form-control-static">{{ processor_response }}</p>
-					</div>
-				</div>
-			</fieldset><!-- #fc_receipt_general -->
-		</form>
-		{% endblock general_information %}
+        {% block general_information %}
+        <form class="form-horizontal fc-receipt-general" role="form">
+            <fieldset>
+                <legend>{{ config.lang.checkout_general_information }}</legend>
+                <div class="form-group fc-receipt-merchant">
+                   <label class="control-label col-sm-4">{{ config.lang.checkout_merchant }}</label>
 
-		{% block billing_information %}
-		<form class="form-horizontal" role="form" id="fc-receipt-billing">
-		<fieldset>
-			<legend>{{ config.lang.checkout_billing_information|raw }}</legend>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ config.store_name|raw }}</p>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_order_id }}</label>
+                    <div class="col-sm-8">
+                       <p class="form-control-static">{{ order_id }}</p>
+                    </div>
+                </div>
+                {% if purchase_order != '' %}
+                <div class="form-group">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_purchase_order }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ purchase_order }}</p>
+                    </div>
+                </div>
+                {% endif %}
+                {% if payment_type == 'plastic' and cc_number_masked != '' %}
+                <div class="form-group">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_card_number }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ cc_number_masked }} ({{ cc_type }})</p>
+                    </div>
+                </div>
+                {% endif %}
 
-				{% include "address.receipt.inc.twig" with {'address': billing_address} %}
-				<div class="form-group fc-receipt-email">
-			        <label class="control-label col-sm-4">{{ config.lang.checkout_email|raw }}</label>
-			        <div class="col-sm-8">
-			            <p class="form-control-static">{{ customer_email }}</p>
-			        </div>
-			    </div>
-		        {% if checkout_phone != '' %}
-		        <div class="form-group">
-		            <label class="control-label col-sm-4">{{ config.lang.checkout_phone|raw }}</label>
-		            <div class="col-sm-8">
-		                <p class="form-control-static">{{ checkout_phone }}</p>
-		            </div>
-		        </div>
-		        {% endif %}
-		</fieldset>
-		</form>
-		{% endblock billing_information %}
+                <div class="form-group">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_date }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ checkout_date }}</p>
+                    </div>
+                </div>
+                <div class="form-group fc-receipt-processor-response">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_processor_response }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ processor_response }}</p>
+                    </div>
+                </div>
+            </fieldset><!-- #fc_receipt_general -->
+        </form>
+        {% endblock general_information %}
 
-		{% if not has_multiship %}
-			{% if use_alternate_shipping_address or has_shippable_products %}
-			{% block shipping_address %}
-				<form class="form-horizontal" role="form" id="fc-receipt-shipping">
-				<fieldset>
-					<legend>{{ config.lang.receipt_shipping_information|raw }}</legend>
-				    <div class="form-group fc-receipt-shipping-detail">
-			              <label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method|raw }}</label>
-			              <div class="col-sm-8">
-			                <p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
-			              </div>
-				    </div>
+        {% block billing_information %}
+        <form class="form-horizontal" role="form" id="fc-receipt-billing">
+        <fieldset>
+            <legend>{{ config.lang.checkout_billing_information }}</legend>
 
-				    {% if use_alternate_shipping_address %}
-						{% include "address.receipt.inc.twig" with {'address': shipping_address} %}
-				    {% else %}
-						{% include "address.receipt.inc.twig" with {'address': billing_address} %}
-				    {% endif %}
-				</fieldset>
-				</form>
-			{% endblock shipping_address %}
-			{% endif %}
+                {% include "address.receipt.inc.twig" with {'address': billing_address} %}
+                <div class="form-group fc-receipt-email">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_email }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ customer_email }}</p>
+                    </div>
+                </div>
+        </fieldset>
+        </form>
+        {% endblock billing_information %}
 
-		{% else %}{# has_multiship #}
-			{% block multiship_addresses %}
-			{% for multiship in multiship_data %}
-			<form class="form-horizontal fc-receipt-multiship" role="form"{% if loop.first %} id="fc-receipt-multiship-first"{% endif %}>
-			<fieldset>
-				<legend>{{ config.lang.checkout_shipto|raw }}<span class="fc_shipto_name">{{ multiship.address_name }}</span></legend>
-				{% include "address.receipt.inc.twig" with {'address': multiship} %}
+        {% if not has_multiship %}
+            {% if use_alternate_shipping_address or has_shippable_products %}
+            {% block shipping_address %}
+                <form class="form-horizontal" role="form" id="fc-receipt-shipping">
+                <fieldset>
+                    <legend>{{ config.lang.receipt_shipping_information }}</legend>
+                    <div class="form-group fc-receipt-shipping-detail">
+                          <label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method|raw }}</label>
+                          <div class="col-sm-8">
+                            <p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
+                          </div>
+                    </div>
 
-				{% if multiship_data|length > 1 %}
-					<div class="form-group fc-receipt-shipping-detail">
-						<label class="control-label col-sm-4">{{ config.lang.checkout_subtotal|raw }}</label>
-						<div class="col-sm-8">
-							<p class="form-control-static">{{ multiship.total_item_price|money_format }}</p>
-						</div>
-					</div>
-					<div class="form-group fc-receipt-shipping-detail">
-						<label class="control-label col-sm-4">{{ multiship.shipping_service_description }}</label>
-						<div class="col-sm-8">
-							<p class="form-control-static">{{ multiship.total_shipping|money_format }}</p>
-						</div>
-					</div>
-					{% if has_taxes %}
-					<div class="form-group fc-receipt-shipping-detail">
-						<label class="control-label col-sm-4">{{ config.lang.checkout_shipment_tax|raw }}</label>
-						<div class="col-sm-8">
-							<p class="form-control-static">{{ multiship.total_tax|money_format }}</p>
-						</div>
-					</div>
-					{% endif %}
-					<div class="form-group fc-receipt-shipping-detail">
-						<label class="control-label col-sm-4">{{ config.lang.checkout_shipment_total|raw }}</label>
-						<div class="col-sm-8">
-							<p class="form-control-static">{{ multiship.total_price|money_format }}</p>
-						</div>
-					</div>
-				{% else %}
-					{% if multiship.has_live_rate_shippable_products %}
-					<div class="form-group fc-receipt-shipping-detail">
-						<label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method|raw }}</label>
-						<div class="col-sm-8">
-							<p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
-						</div>
-					</div>
-					{% endif %}
-				{% endif %}
-			</fieldset>
-			</form>
-			{% endfor %}
-			{% endblock multiship_addresses %}
-		{% endif %}{# not has_multiship #}
+                    {% if use_alternate_shipping_address %}
+                        {% include "address.receipt.inc.twig" with {'address': shipping_address} %}
+                    {% else %}
+                        {% include "address.receipt.inc.twig" with {'address': billing_address} %}
+                    {% endif %}
+                </fieldset>
+                </form>
+            {% endblock shipping_address %}
+            {% endif %}
+
+        {% else %}{# has_multiship #}
+            {% block multiship_addresses %}
+            {% for multiship in multiship_data %}
+            <form class="form-horizontal fc-receipt-multiship" role="form"{% if loop.first %} id="fc-receipt-multiship-first"{% endif %}>
+            <fieldset>
+                <legend>{{ config.lang.checkout_shipto }}<span class="fc_shipto_name">{{ multiship.address_name }}</span></legend>
+                {% include "address.receipt.inc.twig" with {'address': multiship} %}
+
+                {% if multiship_data|length > 1 %}
+                    <div class="form-group fc-receipt-shipping-detail">
+                        <label class="control-label col-sm-4">{{ config.lang.checkout_subtotal }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{ multiship.total_item_price|money_format }}</p>
+                        </div>
+                    </div>
+                    <div class="form-group fc-receipt-shipping-detail">
+                        <label class="control-label col-sm-4">{{ multiship.shipping_service_description }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{ multiship.total_shipping|money_format }}</p>
+                        </div>
+                    </div>
+                    {% if has_taxes %}
+                    <div class="form-group fc-receipt-shipping-detail">
+                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_tax }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{ multiship.total_tax|money_format }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="form-group fc-receipt-shipping-detail">
+                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_total }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{ multiship.total_price|money_format }}</p>
+                        </div>
+                    </div>
+                {% else %}
+                    {% if multiship.has_live_rate_shippable_products %}
+                    <div class="form-group fc-receipt-shipping-detail">
+                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method }}</label>
+                        <div class="col-sm-8">
+                            <p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                {% endif %}
+            </fieldset>
+            </form>
+            {% endfor %}
+            {% endblock multiship_addresses %}
+        {% endif %}{# not has_multiship #}
 
 
 {% block custom_fields %}
 {% if has_visible_custom_fields %}
-	<form class="form-horizontal" role="form" id="fc-receipt-additional-info">
-	<fieldset>
-		<legend>{{ config.lang.checkout_additional_information|raw }}</legend>
+    <form class="form-horizontal" role="form" id="fc-receipt-additional-info">
+    <fieldset>
+        <legend>{{ config.lang.checkout_additional_information }}</legend>
 
-	{% for key,custom_field in custom_fields %}
-		{% if not custom_field.is_hidden %}
-		  <div class="form-group">
-			<label class="control-label col-sm-4">{{ key|replace({'_': ' '})|title }}</label>
-			<div class="col-sm-8">
-				<p class="form-control-static">{{ custom_field.value }}</p>
-			</div>
-		  </div>
-		{% endif %}
-	{% endfor %}
+    {% for key,custom_field in custom_fields %}
+        {% if not custom_field.is_hidden %}
+          <div class="form-group">
+            <label class="control-label col-sm-4">{{ key|replace({'_': ' '})|title }}</label>
+            <div class="col-sm-8">
+                <p class="form-control-static">{{ custom_field.value }}</p>
+            </div>
+          </div>
+        {% endif %}
+    {% endfor %}
 
-	</fieldset>
-	</form>
+    </fieldset>
+    </form>
 {% endif %}
 {% endblock custom_fields %}
 
 
 {% block receipt_links %}
-	<a id="fc_receipt_print_link" class="btn btn-default" href="#" onclick="window.print(); return false;">{{ config.lang.checkout_print_this_page|raw }}</a>
-	<a id="fc_receipt_continue_link" class="btn btn-default" href="{{ continue_url }}">{{ config.lang.checkout_continue_to|raw }}{{ config.store_name|raw }}</a>
+    <a id="fc_receipt_print_link" class="btn btn-default" href="#" onclick="window.print(); return false;">{{ config.lang.checkout_print_this_page }}</a>
+    <a id="fc_receipt_continue_link" class="btn btn-default" href="{{ continue_url }}">{{ config.lang.checkout_continue_to }}{{ config.store_name|raw }}</a>
 {% endblock receipt_links %}
-
-
-
-{% if first_receipt_display %}
-	^^receipt_only^^
-{% endif %}
-
 
 
 {% endblock receipt %}

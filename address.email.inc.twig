@@ -22,8 +22,12 @@
 {% endif %}
 {% endif %}
 {% if address.country_name != '' %}
-    {{ address.country_name }}<br /><br />
+    {{ address.country_name }}<br />
+{% endif %}
+{% if geoip != '' %}
+    {{ geoip }}<br />
 {% endif %}
 {% if address.phone != '' %}
-    {{ address.phone }}
+    {{ address.phone }}<br />
 {% endif %}
+<br />

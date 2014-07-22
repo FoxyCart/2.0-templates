@@ -67,9 +67,6 @@
 
 {{ config.lang.email_billing_address }}:
 {% include "address.email.inc.txt.twig" with {'address': billing_address} %}
-{% if geoip != '' %}
-    {{ geoip }}
-{% endif %}
 {% if has_multiship %}
 {% for multiship in multiship_data %}
 {{ config.lang.email_ship_to }}: {{ multiship.address_name }}

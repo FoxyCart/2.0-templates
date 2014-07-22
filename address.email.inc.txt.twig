@@ -24,3 +24,9 @@
 {% if address.country_name != '' %}
     {{ address.country_name }}
 {% endif %}
+{% if geoip != '' %}
+    {{ geoip }}
+{% endif %}
+{% if address.phone != '' %}
+    {{ address.phone }}
+{% endif %}

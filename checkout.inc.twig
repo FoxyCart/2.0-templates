@@ -95,41 +95,6 @@ TODO:
         </div><!-- data-fc-id="required-hidden-fields" -->
 
 
-{#
-BLOCK: login_register
-
-Possible States:
-customer_is_authenticated (bool)
-    Default false.
-    True if valid SSO token is passed through.
-    Docs: http://wiki.foxycart.com/static/redirect/sso
-    Source: Serverside.
-    we can deal with exact URLs later, but i'm ok with the redirects for now.
-    Is not going to change on the client side, right? Maybe this is the difference between a "state" and a config parameter?
-    oh… … sec… i see what you're saying. i think it should be documented because it's important, but we should put another note in these docs about it.
-
-email_is_valid
-email_is_not_valid
-    Default undefined
-    Description: Email syntax check.
-    Source: Clientside and serverside.
-
-email_is_found
-email_is_not_found
-    Default undefined
-    Description: Email is found in the db (from a previous transaction or if the user was previously created via the API).
-    Source: Clientside and serverside.
-
-
-Ok, so, I think it should go in terms of this:
-* Serverside stuff that precedes / determines what clientside "states" are even possible.
-* If success state
-* Elseif failure state
-* Optional: Else default.
-And each state that necessarily precedes another state goes first. So email_is_valid has to come before email_is_found. It has to be valid to be found.
-
-
-#}
 
 <div data-fc-id="block-login-register">
 {% block login_register %}
@@ -207,7 +172,7 @@ And each state that necessarily precedes another state goes first. So email_is_v
                                 <p>{{ config.lang.checkout_error_incorrect_password|raw }}</p>
                             </div>
                             {% endif %}
-                            {% if password_reminded %}
+                            {% if temporary_password_sent %}
                             <div class="alert alert-info">
                                 <p>{{ config.lang.checkout_password_sent_to }} {{ customer_email }}{{ config.lang.checkout_password_sent_check_spam }}</p>
                             </div>
@@ -422,8 +387,8 @@ And each state that necessarily precedes another state goes first. So email_is_v
 
             <div class="form-group" data-fc-id="fc-payment-method-plastic-new" data-fc-error-for="cc_number cc_exp_month cc_exp_year cc_cvv2" data-fc-error-class="has-error">
                 <div id="fc-payment-method-plastic-new" class="fc-payment-method col-md-8 col-md-offset-3">
-                    <div class="{% if payment_method_input_type == 'radio' or has_saved_cc %}radio{% endif %}{% if payment_method_type == 'plastic_new' %} checkbox fc-active{% endif %}">
-                        <label for="fc_payment_method_plastic_new" class="fc-input-title {% if has_saved_cc == false %}fc-no-input-title{% endif %}">
+                    <div class="{% if payment_method_input_type == 'radio' or has_saved_cc %}radio{% endif %} {% if payment_method_type == 'plastic_new' %}radio fc-active{% endif %}">
+                        <label for="fc_payment_method_plastic_new" class="fc-input-title {% if payment_method_input_type != 'radio' %}fc-no-input-title{% endif %}">
                             <!-- TODO: need to set the fc_payment_method=plastic for this -->
                             <!-- TODO: What's the payment_method_type doing in this context? Used for hard errors? -->
                             <input type="{{ payment_method_input_type }}"
@@ -443,7 +408,7 @@ And each state that necessarily precedes another state goes first. So email_is_v
                         {% endif %}
                         </label>
                         {% if payment_method_type == 'plastic_new' %}
-                        <div class="form-group fc-form-group-multiple-inline {% if cc_number_error_string %}has-error{% endif %}" data-fc-error-for="cc_number" data-fc-error-class="has-error">
+                        <div class="form-group fc-form-group-multiple-inline {% if cc_number_error_string %}has-error{% endif %}" data-fc-error-for="cc_number" data-fc-error-class="has-error,has-success">
                             <label class="control-label text-right sr-only" for="cc_number">{{ config.lang.checkout_card_number }}</label>
                             <div class="col-sm-11 col-xs-12">
                                 <input type="tel"
@@ -463,7 +428,7 @@ And each state that necessarily precedes another state goes first. So email_is_v
                             <label class="col-xs-2 visible-xs control-label" for="cc_cvv2">{{ config.lang.checkout_cart_verification_code|raw }}</label>
                             {% set field_name = 'cc_exp_month' %}
                             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-                            <div id="fc-payment-method-plastic-expires-month" class="col-xs-5 col-sm-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
+                            <div id="fc-payment-method-plastic-expires-month" class="col-xs-5 col-sm-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error,has-success">
                                 <select class="form-control" name="cc_exp_month" id="cc_exp_month" autocomplete="cc-exp-month" >
                                     <option value="">{{ config.lang.cart_month|raw }}</option>
                                     {% for month in config.cc_expiration_months %}
@@ -475,7 +440,7 @@ And each state that necessarily precedes another state goes first. So email_is_v
                             </div>
                             {% set field_name = 'cc_exp_year' %}
                             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-                            <div id="fc-payment-method-plastic-expires-year" class="col-xs-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
+                            <div id="fc-payment-method-plastic-expires-year" class="col-xs-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error,has-success">
                                 <select class="form-control" name="cc_exp_year" id="cc_exp_year" autocomplete="cc-exp-year" >
                                     <option value="">{{ config.lang.cart_year|raw }}</option>
                                     {% for year in config.cc_expiration_years %}
@@ -488,7 +453,7 @@ And each state that necessarily precedes another state goes first. So email_is_v
 
                             {% set field_name = 'cc_cvv2' %}
                             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-                            <div id="fc-payment-method-plastic-csc" class="col-xs-3 col-sm-2 {% if error_string %}has-error{%endif %}" data-fc-error-for="cc_cvv2" data-fc-error-class="has-error">
+                            <div id="fc-payment-method-plastic-csc" class="col-xs-3 col-sm-2 {% if error_string %}has-error{%endif %}" data-fc-error-for="cc_cvv2" data-fc-error-class="has-error,has-success">
                                 <input type="tel"
                                     id="cc_cvv2"
                                     name="cc_cvv2"
@@ -616,7 +581,10 @@ And each state that necessarily precedes another state goes first. So email_is_v
     {% block additional_fields %}
         <fieldset id="fc-additional-fields">
             <legend><span class="hidden-xs"></span> {{ config.lang.checkout_almost_done }}</legend>
-            {# TODO: other config options like TOS, email subscribe, etc. #}
+            
+            {% if config.template_config.custom_script_values.checkout_fields %}
+                {% include template_from_string(config.template_config.custom_script_values.checkout_fields) %}
+            {% endif %}
 
             {% if config.template_config.tos_checkbox_settings.usage != "none" %}
             {# ToDo: Needs to take into account if the field is required or optional #}
