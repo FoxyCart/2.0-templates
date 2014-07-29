@@ -57,7 +57,7 @@ TODO:
     {% block noscript_warning %}
     <noscript>
         <div id="fc-noscript-errors" class="alert alert-danger">
-            <h2>{{ config.lang.checkout_warning|raw }}</h2>
+            <h2>{{ config.lang.checkout_warning }}</h2>
             <p>{{ config.lang.checkout_no_javascript_message|raw }}</p>
         </div><!-- #fc-noscript-errors -->
     </noscript>
@@ -138,9 +138,14 @@ TODO:
                         <div class="alert alert-info">
                             {{ config.lang.checkout_instructions_email_checking }}
                         </div>
+                        <div class="spinner">
+                          <div class="bounce1"></div>
+                          <div class="bounce2"></div>
+                          <div class="bounce3"></div>
+                        </div>
                     {% elseif email_is_found %}
                         <div class="alert alert-success{% if authentication_is_not_successful %} has-error{% endif %}" data-fc-error-for="customer_password" data-fc-error-class="has-error" data-fc-messaging-for="customer_email">
-                            <p>{{ config.lang.checkout_as_returning_customer|raw }}</p>
+                            <p>{{ config.lang.checkout_as_returning_customer }}</p>
                             <div class="input-group">
                                 <label for="customer_password" class="sr-only">{{ config.lang.checkout_password }}</label>
                                 <input type="password"
@@ -151,25 +156,30 @@ TODO:
                                     autocomplete="current-password"
                                     class="form-control" />
                                 <span class="input-group-btn">
-                                    <button class="btn btn-default" data-fc-id="sign-in" type="button">{{ config.lang.checkout_sign_in|raw }}</button>
+                                    <button class="btn btn-default" data-fc-id="sign-in" type="button">{{ config.lang.checkout_sign_in }}</button>
                                 </span>
                             </div>
                             {% if authentication_is_in_progress %}
                             <div class="alert alert-info">
-                                <p>{{ config.lang.checkout_loading|raw }}</p>
+                                <p>{{ config.lang.checkout_loading }}</p>
+                            </div>
+                            <div class="spinner">
+                              <div class="bounce1"></div>
+                              <div class="bounce2"></div>
+                              <div class="bounce3"></div>
                             </div>
                             {% endif %}
                             {% if authentication_is_successful %}
                             <div class="alert alert-success">
                                 {% if force_password_reset %}
-                                <p>{{ config.lang.checkout_found_customer_force_password_reset|raw }}</p>
+                                <p>{{ config.lang.checkout_found_customer_force_password_reset }}</p>
                                 {% else %}
-                                <p>{{ config.lang.checkout_found_customer_info_logged_in|raw }}</p>
+                                <p>{{ config.lang.checkout_found_customer_info_logged_in }}</p>
                                 {% endif %}
                             </div>
                             {% elseif authentication_is_not_successful %}
                             <div class="alert alert-danger">
-                                <p>{{ config.lang.checkout_error_incorrect_password|raw }}</p>
+                                <p>{{ config.lang.checkout_error_incorrect_password }}</p>
                             </div>
                             {% endif %}
                             {% if temporary_password_sent %}
@@ -192,18 +202,18 @@ TODO:
                             {% if authentication_is_successful %}
                                 {% if change_password == false %}
                                 <li class="pull-left">
-                                    <small class="pull-left"><button data-fc-id="change-password" type="button" class="btn btn-link">{{ config.lang.checkout_change_my_password|raw }}</button></small>
+                                    <small class="pull-left"><button data-fc-id="change-password" type="button" class="btn btn-link">{{ config.lang.checkout_change_my_password }}</button></small>
                                 </li>
                                 {% endif %}
                             {% else %}
-                                {% if change_password == false %}
+                                {% if change_password == false and temporary_password_sent == false %}
                                 <li class="pull-left">
-                                    <small class="pull-left"><button data-fc-id="reset-password" type="button" class="btn btn-link">{{ config.lang.checkout_email_my_password|raw }}</button></small>
+                                    <small class="pull-left"><button data-fc-id="reset-password" type="button" class="btn btn-link">{{ config.lang.checkout_email_my_password }}</button></small>
                                 </li>
                                 {% endif %}
                                 {% if is_updateinfo == false and has_subscriptions == false and checkout_type != 'account_only' %}
                                 <li class="pull-right">
-                                    <small class="pull-right"><button data-fc-id="checkout-as-guest" type="button" class="btn btn-link">{{ config.lang.checkout_as_guest|raw }}</button></small>
+                                    <small class="pull-right"><button data-fc-id="checkout-as-guest" type="button" class="btn btn-link">{{ config.lang.checkout_as_guest }}</button></small>
                                 </li>
                                 {% endif %}
                             {% endif %}
@@ -221,7 +231,7 @@ TODO:
                 {% endif %}
             {% else %}
                 <div class="alert alert-danger">
-                {{ config.lang.checkout_error_email|raw }}
+                {{ config.lang.checkout_error_email }}
                 </div>
             {% endif %}
         {% else %}{# customer_is_authenticated #}
@@ -230,7 +240,7 @@ TODO:
             {# Why do we need a hidden email field below?
             If we use it for setting the email, it's unsafe. #}
             <input type="hidden" name="customer_email" id="customer_email" value="{{ customer_email }}" />
-            {{ config.lang.checkout_sso_already_logged_in|raw }}
+            {{ config.lang.checkout_sso_already_logged_in }}
         {% endif %}
 
             </div>
@@ -277,6 +287,13 @@ TODO:
     {# SHIPPING METHOD ===================================================== #}
     {% if not has_multiship %}
     <div data-fc-id="block-shipping-results">
+        {% if loading_shipping_results %}
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+        {% endif %}
         {% if shipping_address.shipping_results|length > 0 %}
         <fieldset data-fc-id="shipping-results">
             <legend><span class="hidden-xs"></span> {{ config.lang.checkout_shipping_method }}</legend>
@@ -341,7 +358,7 @@ TODO:
                             {% else %}
                                 <span class="fc-payment-method-logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/visa.png" alt="visa" /></span>
                             {% endif %}
-                            {{ config.lang.checkout_use_saved_payment_info|raw }}
+                            {{ config.lang.checkout_use_saved_payment_info }}
                             <span class="fc-payment-method-plastic-saved text-muted" data-fc-id="masked-card">{{ cc_number_masked }}</span>
                             <input type="hidden" name="cc_number_masked" id="cc_number_masked" value="{{ cc_number_masked }}" />
                             <input type="hidden" name="cc_exp_year_saved" id="cc_exp_year_saved" value="{{ cc_exp_year }}" />
@@ -375,7 +392,7 @@ TODO:
                         {% endif %}
 
                         <div class="alert alert-danger {{ error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="show,hidden">
-                            {{ config.lang.checkout_error_verification_code|raw }}
+                            {{ config.lang.checkout_error_verification_code }}
                         </div>
                     </div>
                 </div>
@@ -404,7 +421,7 @@ TODO:
                         {% endfor %}
                         {% if has_saved_cc %}
                         {# Show the text only when there's a saved card #}
-                        {{ config.lang.checkout_enter_new_card|raw }}
+                        {{ config.lang.checkout_enter_new_card }}
                         {% endif %}
                         </label>
                         {% if payment_method_type == 'plastic_new' %}
@@ -423,14 +440,14 @@ TODO:
                             </div>
                         </div>
                         <div class="form-group fc-form-group-multiple-inline">
-                            <label class="col-xs-9 col-sm-3 control-label" for="cc_exp_month">{{ config.lang.checkout_expiration|raw }}</label>
-                            <label class="sr-only" for="cc_exp_year">{{ config.lang.cart_year|raw }}</label>
-                            <label class="col-xs-2 visible-xs control-label" for="cc_cvv2">{{ config.lang.checkout_cart_verification_code|raw }}</label>
+                            <label class="col-xs-9 col-sm-3 control-label" for="cc_exp_month">{{ config.lang.checkout_expiration }}</label>
+                            <label class="sr-only" for="cc_exp_year">{{ config.lang.cart_year }}</label>
+                            <label class="col-xs-2 visible-xs control-label" for="cc_cvv2">{{ config.lang.checkout_cart_verification_code }}</label>
                             {% set field_name = 'cc_exp_month' %}
                             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
                             <div id="fc-payment-method-plastic-expires-month" class="col-xs-5 col-sm-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error,has-success">
                                 <select class="form-control" name="cc_exp_month" id="cc_exp_month" autocomplete="cc-exp-month" >
-                                    <option value="">{{ config.lang.cart_month|raw }}</option>
+                                    <option value="">{{ config.lang.cart_month }}</option>
                                     {% for month in config.cc_expiration_months %}
                                     <option value="{{ month.value }}" {{ selected(cc_exp_month, month.value) }}>
                                         {{ month.name }}
@@ -442,7 +459,7 @@ TODO:
                             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
                             <div id="fc-payment-method-plastic-expires-year" class="col-xs-3 {% if error_string %}has-error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error,has-success">
                                 <select class="form-control" name="cc_exp_year" id="cc_exp_year" autocomplete="cc-exp-year" >
-                                    <option value="">{{ config.lang.cart_year|raw }}</option>
+                                    <option value="">{{ config.lang.cart_year }}</option>
                                     {% for year in config.cc_expiration_years %}
                                     <option value="{{ year }}" {{ selected(cc_exp_year, year) }}>
                                         {{ year }}
@@ -468,10 +485,10 @@ TODO:
                         {% endif %}
                     </div>
                     <div class="alert alert-danger {{ cvv2_error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2" data-fc-error-class="show,hidden">
-                        {{ config.lang.checkout_error_verification_code|raw }}
+                        {{ config.lang.checkout_error_verification_code }}
                     </div>
                     <div class="alert alert-danger {{ cc_number_error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_number" data-fc-error-class="show,hidden">
-                        {{ config.lang.checkout_error_card_number|raw }}
+                        {{ config.lang.checkout_error_card_number }}
                     </div>
                 </div>
             </div>
@@ -537,7 +554,7 @@ TODO:
                                 name="fc_payment_method"
                                 value="purchase_order"
                                 autocomplete="off"/>
-                            {{ config.lang.checkout_pay_with_purchase_order|raw }}
+                            {{ config.lang.checkout_pay_with_purchase_order }}
                         </label>
                         {% if payment_method_type == 'purchase_order' %}
                         <div class="form-group">
@@ -616,7 +633,7 @@ TODO:
                             <input type="checkbox"
                                 name="newsletter_subscribe"
                                 value="1" />
-                            {{ config.lang.checkout_newsletter_subscribe|raw }}
+                            {{ config.lang.checkout_newsletter_subscribe }}
                         </label>
                     </div>
                 </div>
@@ -714,6 +731,13 @@ TODO:
             </div>
             {% endif %}
         </div>
+        {% if loading_submit %}
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
+        {% endif %}
     {% endblock submit_button %}
     </div><!-- data-fc-id="block-submit-button" -->
 

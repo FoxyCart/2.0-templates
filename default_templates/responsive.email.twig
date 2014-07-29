@@ -544,9 +544,9 @@
                                                             {# End block product_options #}
                                                             </div>
                                                         </td>
-                                                        <td width="70" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{% if item.quantity > 1 %}{{ item.price_each|money_format }}&nbsp;&times;{% endif %}</td>
+                                                        <td width="70" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{% if item.quantity > 1 %}{{ item.price_each|money_format }}&nbsp;&times;{% if (((item.price_each * 10000) % 100) != 0) %}...<br />{{ item.price_each }}{% endif %}{% endif %}</td>
                                                         <td width="20" class="fc-cart-qty" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 0;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: center;">{{ item.quantity }}</td>
-                                                        <td width="{{ price_width }}" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{{ item.price|money_format }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{{ item.price|money_format }}{% if (((item.price * 10000) % 100) != 0) %}...<br />{{ item.price }}{% endif %}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -617,7 +617,7 @@
                                                                         {{ key|date("F jS, Y") }}
                                                                     </td>
                                                                     <td class="fc-cart-total-value">
-                                                                        {{ subscription_item_total|money_format }}
+                                                                        {{ subscription_item_total.total|money_format }}
                                                                     </td>
                                                                 </tr>
                                                             {% endfor %}

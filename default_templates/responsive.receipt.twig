@@ -13,7 +13,7 @@
 
     <!-- TODO: Load the CSS based on the template config. -->
     <link href="/static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="/static/themes/responsive/styles.css" rel="stylesheet">
+    <link href="//cdn.foxycart.com/{{ config.store_domain|replace({'.foxycart.com': ''}) }}/responsive_styles.css" rel="stylesheet">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
 </head>
@@ -84,7 +84,7 @@
            {% use 'cart.inc.twig' %}
            <div class="col-xs-12">
                 <div class="fc-cart-title">
-                    <h2>{{ config.lang.cart_caption|raw }}</h2>
+                    <h2>{{ config.lang.cart_caption }}</h2>
                     <p class="lead fc-order-quantity">
                         <span>{{ item_count }}</span>
                         <span>{% if item_count == 1 %}{{ config.lang.cart_item|lower }}{% else %}{{ config.lang.cart_items|lower }}{% endif %}</span>

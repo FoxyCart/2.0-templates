@@ -11,19 +11,19 @@
 
                 {% if is_updateinfo %}
                 <div class="alert alert-info">
-                    {{ config.lang.checkout_updateinfo_completed|raw }}
+                    {{ config.lang.checkout_updateinfo_completed }}
                 </div>
                 {% endif %}
 
                 {% if is_subscription_cancel %}
                 <div class="alert alert-info">
-                    {{ config.lang.checkout_subscription_cancel_completed|raw }}
+                    {{ config.lang.checkout_subscription_cancel_completed }}
                 </div>
                 {% endif %}
 
                 {% if payment_is_pending %}
                 <div class="alert alert-info">
-                    {{ config.lang.checkout_payment_pending|raw }}
+                    {{ config.lang.checkout_payment_pending }}
                 </div>
                 {% endif %}
             </div>

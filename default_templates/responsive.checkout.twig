@@ -13,7 +13,7 @@
 
     <!-- TODO: Load the CSS based on the template config. -->
     <link href="/static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="/static/themes/responsive/styles.css" rel="stylesheet" media="screen">
+    <link href="//cdn.foxycart.com/{{ config.store_domain|replace({'.foxycart.com': ''}) }}/responsive_styles.css" rel="stylesheet" media="screen">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
 </head>

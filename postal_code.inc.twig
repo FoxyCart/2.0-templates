@@ -30,12 +30,12 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         {#
         {% if _context[address.prefix~'_postal_code_is_empty'] %}
         <div class="alert alert-danger">
-            {{ config.lang.checkout_error_postal_code|raw }}
+            {{ config.lang.checkout_error_postal_code }}
         </div>
         {% endif %}
         {% if _context[address.prefix~'_postal_code_is_incorrect'] %}
         <div class="alert alert-danger">
-            {{ config.lang.checkout_error_invalid_postal_code|raw }}
+            {{ config.lang.checkout_error_invalid_postal_code }}
         </div>
         {% endif %}
         #}
@@ -49,7 +49,14 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         #}
 
         {% if _context[address.prefix~'_postal_code_in_progress'] %}
-        <p class="fc-postal-code-loading">Loading...</p> {# TODO: config.lang this, and style it. #}
+        <p class="fc-postal-code-loading">
+            {{ config.lang.checkout_loading }}
+            <div class="spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+        </p>
         {% elseif address.city_options|length > 0 %}
         {% set field_name = address.prefix~"_city_options" %}
         <div data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
@@ -137,12 +144,12 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
         {#
         {% if _context[address.prefix~'_postal_code_is_empty'] %}
         <div class="alert alert-danger">
-            {{ config.lang.checkout_error_postal_code|raw }}
+            {{ config.lang.checkout_error_postal_code }}
         </div>
         {% endif %}
         {% if _context[address.prefix~'_postal_code_is_incorrect'] %}
         <div class="alert alert-danger">
-            {{ config.lang.checkout_error_invalid_postal_code|raw }}
+            {{ config.lang.checkout_error_invalid_postal_code }}
         </div>
         {% endif %}
         #}

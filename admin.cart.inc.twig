@@ -197,9 +197,9 @@
                     {{ item.quantity }}
                 </td>
                 <td class="fc_cart_item_price">
-                    <span class="fc_cart_item_price_total">{{ item.price|money_format }}</span>
+                    <span class="fc_cart_item_price_total">{{ item.price|money_format }}{% if (((item.price * 10000) % 100) != 0) %}...<br />{{ item.price }}{% endif %}</span>
                     {% if item.quantity > 1 %}
-                    <span class="fc_cart_item_price_each"> ({{ item.price_each|money_format }} {{ config.lang.cart_each|raw }})</span>
+                    <span class="fc_cart_item_price_each"> ({{ item.price_each|money_format }} {{ config.lang.cart_each|raw }}){% if (((item.price_each * 10000) % 100) != 0) %}...<br />{{ item.price_each }}{% endif %}</span>
                     {% endif %}
                 </td>
             </tr>

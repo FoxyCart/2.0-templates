@@ -14,7 +14,7 @@
         </div>
         <div class="fc-fixed-button-right">
             <a class="btn btn-primary btn-block fc-btn-action" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top">
-                {{ config.lang.cart_checkout|raw }}
+                {{ config.lang.cart_checkout }}
                 <svg class="fc-svg-icon">
                     <use xlink:href="#fa-caret-right" />
                 </svg>
@@ -48,7 +48,7 @@
 {% block noscript_warning %}
     <noscript>
         <div id="fc-noscript-errors" class="alert alert-danger">
-            <h2>{{ config.lang.cart_warning|raw }}:</h2>
+            <h2>{{ config.lang.cart_warning }}:</h2>
             <p>{{ config.lang.cart_no_javascript_message|raw }}</p>
         </div>{# #fc-noscript-errors #}
     </noscript>
@@ -230,21 +230,21 @@
 
                                 {% if item.code != '' and show_product_code %}
                                 <li class="fc-cart-item-option-code">
-                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_code|raw }}</span>:
+                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_code }}</span>:
                                     <span class="fc-cart-item-option-value">{{ item.code }}</span>
                                 </li>
                                 {% endif %}
 
                                 {% if item.category != 'DEFAULT' and show_product_category %}
                                 <li class="fc-cart-item-option-category">
-                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_category|raw }}</span>:
+                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_category }}</span>:
                                     <span class="fc-cart-item-option-value">{{ item.category }}</span>
                                 </li>
                                 {% endif %}
 
                                 {% if item.weight != 0 and show_product_weight %}
                                 <li class="fc-cart-item-option-weight">
-                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_weight|raw }}</span>:
+                                    <span class="fc-cart-item-option-name">{{ config.lang.cart_weight }}</span>:
                                     <span class="fc-cart-item-option-value">{{ item.weight }} <span class="fc-cart-item-option-value-unit">{{ config.weight_uom }}</span></span>
                                 </li>
                                 {% endif %}
@@ -254,20 +254,20 @@
                                     {{ config.lang.cart_subscription_details|raw }}
                                     <ul>
                                         <li class="fc-cart-item-option-subscription-frequency">
-                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_frequency|raw }}</span>:
+                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_frequency }}</span>:
                                             <span class="fc-cart-item-option-value">{{ item.sub_frequency }}</span>
                                         </li>
                                         <li class="fc-cart-item-option-subscription-startdate">
-                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_start_date|raw }}</span>:
+                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_start_date }}</span>:
                                             <span class="fc-cart-item-option-value">{{ item.sub_startdate }}</span>
                                         </li>
                                         <li class="fc-cart-item-option-subscription-nextdate">
-                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_next_date|raw }}</span>:
+                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_next_date }}</span>:
                                             <span class="fc-cart-item-option-value">{{ item.sub_nextdate }}</span>
                                         </li>
                                     {% if item.sub_enddate != "0000-00-00" %}
                                         <li class="fc-cart-item-option-subscription-enddate">
-                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_end_date|raw }}</span>:
+                                            <span class="fc-cart-item-option-name">{{ config.lang.cart_end_date }}</span>:
                                             <span class="fc-cart-item-option-value">{{ item.sub_enddate }}</span>
                                         </li>
                                     {% endif %}
@@ -278,7 +278,7 @@
                                 <li class="fc-cart-item-actions">
                                     <ul class="list-inline">
                                         <li class="close">
-                                            <a href="#" title="{{ config.lang.cart_remove_item|raw }}" data-fc-id="item-remove-link" data-fc-item-id="{{ item.id }}">Remove product</a>
+                                            <a href="#" title="{{ config.lang.cart_remove_item }}" data-fc-id="item-remove-link" data-fc-item-id="{{ item.id }}">Remove product</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -292,14 +292,14 @@
                         <div class="row">
                             <div class="fc-cart-item-total col-sm-4 col-sm-push-8">
                                 <p>
-                                    {{ item.price|money_format }}
+                                    {{ item.price|money_format }}{% if (((item.price * 10000) % 100) != 0) %}...<br />{{ item.price }}{% endif %}
                                 </p>
                             </div>
 
                             <div class="fc-cart-item-price col-sm-4 col-sm-pull-4">
                                 {% if item.quantity != 1 %}
                                 <p>
-                                    {{ item.price_each|money_format }}
+                                    {{ item.price_each|money_format }}{% if (((item.price_each * 10000) % 100) != 0) %}...<br />{{ item.price_each }}{% endif %}
                                     <small>
                                         {{ config.lang.cart_each }}
                                     </small>
@@ -314,6 +314,13 @@
                                 {% else %}
                                 <p>{{ config.lang.cart_qty }}: {{ item.quantity }}</p>
                                 {% endif %}
+                                {% if loading_quantity %}
+                                <div class="spinner">
+                                  <div class="bounce1"></div>
+                                  <div class="bounce2"></div>
+                                  <div class="bounce3"></div>
+                                </div>
+                                {% endif %}                                
                             </div>
                         </div>
                     </div>
@@ -359,6 +366,13 @@
 
                     <div data-fc-id="block-shipping-results">
                     {% block shipping_results %}
+                        {% if loading_shipping_results %}
+                            <div class="spinner">
+                              <div class="bounce1"></div>
+                              <div class="bounce2"></div>
+                              <div class="bounce3"></div>
+                            </div>
+                        {% endif %}
                         {{ utils.shipping_results(shipping_address, "col-md-12", messages.errors, config.lang) }}
                         {% set error_string = utils.get_error_string('shipping-results',messages.errors) %}
                         {% if error_string %}
@@ -427,6 +441,14 @@
                         <span class="input-group-btn">
                             <button class="btn btn-default" type="button" data-fc-id="add-coupon-button">{{ config.lang.cart_apply }}</button>
                         </span>
+                    </div>
+                    {% endif %}
+
+                    {% if loading_coupons %}
+                    <div class="spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
                     </div>
                     {% endif %}
 
@@ -524,6 +546,13 @@
                     <table>
                         <tbody data-fc-id="taxes">
                         {% block taxes %}
+                        {% if loading_taxes %}
+                            <div class="spinner">
+                              <div class="bounce1"></div>
+                              <div class="bounce2"></div>
+                              <div class="bounce3"></div>
+                            </div>
+                        {% endif %}
                         {% if has_multiship %}
                             {% if context == 'checkout' %}
                                 {% for multiship in multiship_data %}
@@ -561,7 +590,7 @@
                     <table>
                         <tr class="fc-cart-total-final">
                             <td>
-                                {{ config.lang.cart_order_total|raw }}:
+                                {{ config.lang.cart_order_total }}:
                             </td>
                             <td class="fc-cart-total-value">
                                 {{ total_order|money_format }}
@@ -673,7 +702,7 @@
 
                 {% block order_payment_action_checkout %}
                 <p class="text-center fc-payment-action-checkout">
-                    <a class="btn btn-primary fc-checkout-link" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top"><svg class="fc-svg-icon"><use xlink:href="#fa-lock" /></svg> {{ config.lang.cart_checkout|raw }}</a>
+                    <a class="btn btn-primary fc-checkout-link" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top"><svg class="fc-svg-icon"><use xlink:href="#fa-lock" /></svg> {{ config.lang.cart_checkout }}</a>
                 </p>
                 {% endblock order_payment_action_checkout %}
 
@@ -683,7 +712,7 @@
                     {% if show_paypal_express_payment_option %}
                     <p class="text-center fc-payment-action-or">—{{ config.lang.cart_or }}—</p>
                     <p class="text-center fc-payment-action-paypal-express-checkout">
-                        <a href="https://{{ config.store_domain }}/checkout?ThisAction=paypal_express&{{ session_name }}={{ session_id }}" target="_top">
+                        <a data-fc-id="paypal-link" href="https://{{ config.store_domain }}/checkout?ThisAction=paypal_express&{{ session_name }}={{ session_id }}" target="_top">
                             <img src="{{ config.paypal_checkout_button_url }}" alt="{{ config.lang.cart_payment_method_paypal_express }}" />
                         </a>
                     </p>
@@ -694,14 +723,10 @@
 
                 {% block order_payment_action_amazon %}
                 {% if total_order > 0 %}
-                    {#
-                    amazon_fps_button_requires_tax_calculation
-                    amazon_fps_button_requires_shipping_calculation
-                    #}
                     {% if show_amazon_fps_payment_option %}
                     <p class="text-center fc-payment-action-or">—{{ config.lang.cart_or }}—</p>
                     <p class="text-center fc-payment-action-amazon-fps">
-                        <a href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&fc_payment_method=amazon_fps&{{ session_name }}={{ session_id }}" id="fc-amazon-fps-link" target="_top">
+                        <a data-fc-id="amazon-fps-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&fc_payment_method=amazon_fps&{{ session_name }}={{ session_id }}" target="_top">
                             <img src="https://cdn.foxycart.com/static/images/payment_logos/amazon.png" />
                         </a>
                     </p>
