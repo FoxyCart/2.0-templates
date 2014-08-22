@@ -114,14 +114,14 @@
     <tbody>
 {% endif %}
 {% for item in items %}
-        {% if item.multiship >= 0 %}
+        {% if has_multiship and item.multiship >= 0 %}
         {% if item.multiship > 0 %}
         </tbody>
         {% endif %}
         <tbody class="fc_ship_to">
             <tr>
                 <th class="fc_shipto" colspan="{{ colspan }}">
-                    {{ config.lang.cart_shipto|raw }}: {{ item.shipto }}
+                    {{ config.lang.cart_shipto }}{{ item.shipto }}
                 </th>
             </tr>
         {% endif %}

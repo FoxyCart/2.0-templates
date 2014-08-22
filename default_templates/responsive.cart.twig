@@ -11,17 +11,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
 
-    <!-- TODO: Load the CSS based on the template config. -->
-    <link href="/static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.css" rel="stylesheet">
-    <!-- <link href="/static/fonts/font-awesome-3.1.2/css/font-awesome.min.css" rel="stylesheet"> -->
-    <!--[if IE 7]>
-    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome-ie7.min.css">
-    <![endif]-->
     <link href="//cdn.foxycart.com/{{ config.store_domain|replace({'.foxycart.com': ''}) }}/responsive_styles.css" rel="stylesheet">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
 </head>
-<body class="fc-cart-fullpage" data-fc-context='{"cart_is_fullpage":true}'>
+<body class="fc-context--cart-fullpage" data-fc-context='{"cart_is_fullpage":true}'>
     <!-- has to be here because of chrome bug -->
     {% include 'svg.inc.twig' %}
 
@@ -30,14 +24,10 @@
         {% include 'cart.inc.twig' %}
     </div>
 
-    <!-- TODO: Load the following based on the template config.
-    <script src="/static/frameworks/bootstrap/3.0.0/js/bootstrap.min.js"></script> -->
 
-
-    <!-- TODO: Determine if the following is required. Probably not. -->
+    <!-- TODO: IE8 support -->
     <!-- Add media query support to IE8 and prior. https://github.com/scottjehl/Respond -->
     <!--[if lt IE 8]><script src="js/respond.min.js"></script><![endif]-->
     <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
-
 </body>
 </html>

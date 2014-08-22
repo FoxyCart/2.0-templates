@@ -1,25 +1,29 @@
 <fieldset class="fc-address-entry">
-    <legend><span class="hidden-xs"></span>
+    <legend><span class="fc-section-counter"></span>
     {% if address.address_name %}
-        {{ config.lang['checkout_shipto'] }} {{ address.address_name }}
+        {{ config.lang['cart_shipto'] }}{{ address.address_name }}
     {% else %}
         {{ config.lang['checkout_'~address.type~'_address'] }}
     {% endif %}
     </legend>
 
-    {% if address.type == 'billing' and multiship_data|length > 1 %}
-        <label>
-            {{ config.lang.checkout_multiship_use_address }}
-            <select data-fc-id="billing-address-select">
-                <option value="">{{ config.lang.checkout_multiship_new_address }}</option>
-                {% for multiship in multiship_data %}
-                <option
-                    value="{{ multiship.number }}"
-                    {{ selected(multiship.address_name, address.address_source) }}
-                    >{{ multiship.address_name }}</option>
-                {% endfor %}
-            </select>
-        </label>
+    {% if address.type == 'billing' and has_multiship %}
+        <div class="fc-form-group--multiship-select fc-form-group">
+            <label class="fc-form-label fc-container__grid--label--multiship-select" for="multiship_address_select">
+                {{ config.lang.checkout_multiship_use_address }}
+            </label>
+            <div class="fc-container__grid--input--multiship-select">
+                <select class="fc-form-control fc-form-control--multiship-select" data-fc-id="multiship-address-select" id="multiship_address_select">
+                    <option value="">{{ config.lang.checkout_multiship_new_address }}</option>
+                    {% for multiship in multiship_data %}
+                    <option
+                        value="{{ multiship.number }}"
+                        {{ selected(multiship.address_name, address.address_source) }}
+                        >{{ multiship.address_name }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
     {% endif %}
 
     {% set show_first_name = true %}
@@ -36,41 +40,40 @@
     {% endif %}
 
     {% if show_first_name or show_last_name %}
-        {% set multiple_inline_css = 'fc-form-group-multiple-inline' %}
+        {% set multiple_inline_css = 'fc-form-group--multiple-inline' %}
         {% if not (show_first_name and show_last_name) %}
             {% set multiple_inline_css = '' %}
         {% endif %}
 
-    <div class="form-group {{ multiple_inline_css }}">
+    <div class="fc-form-group {{ multiple_inline_css }}">
         {% set field_name = address.prefix~'_first_name' %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-        <p class="col-sm-3 hidden-xs control-label">{{ config.lang.checkout_name }}</p>
+        <label class="fc-container__grid--label--name fc-form-label">{{ config.lang.checkout_name }}</label>
         {% if show_first_name %}
-        {# <div class="col-xs-6 col-sm-4{% if error_string %} has-error{% endif %}"> #}
-        <div class="col-xs-6 col-sm-4 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error" >
-            <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_first_name }}</label>
+        <div class="fc-container__grid--input--first-name {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error" >
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-first-name">{{ config.lang.checkout_first_name }}</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
                 value="{{ address.first_name }}"
                 placeholder="{{ config.lang.checkout_first_name }}{{ first_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} given-name"
-                class="form-control" />
+                class="fc-form-control fc-form-control--{{ address.prefix }}-first-name" />
         </div>
         {% endif %}
 
         {% if show_last_name %}
         {% set field_name = address.prefix~"_last_name" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-        <div class="col-xs-6 col-sm-4 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-            <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_last_name }}</label>
+        <div class="fc-container__grid--input--last-name {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-last-name">{{ config.lang.checkout_last_name }}</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
                 value="{{ address.last_name }}"
                 placeholder="{{ config.lang.checkout_last_name }}{{ last_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} family-name"
-                class="form-control"/>
+                class="fc-form-control fc-form-control--{{ address.prefix }}-last-name"/>
         </div>
         {% endif %}
     </div>
@@ -83,41 +86,40 @@
     {% set phone_optional_placeholder = (phone == 'optional') ? config.lang.checkout_optional : '' %}
     {% set company_optional_placeholder = (company == 'optional') ? config.lang.checkout_optional : '' %}
 
-    {% set phone_offset = (company != 'hidden') ? '' : 'col-sm-offset-3' %}
     {% set multiple_inline_css = '' %}
     {% if company != "hidden" and phone != "hidden" %}
-        {% set multiple_inline_css = 'fc-form-group-multiple-inline' %}
+        {% set multiple_inline_css = 'fc-form-group--multiple-inline' %}
     {% endif %}
 
     {% if company != "hidden" or phone != "hidden" %}
-    <div class="form-group {{ multiple_inline_css }}">
+    <div class="fc-form-group fc-address-entry__phone-and-company-container {{ multiple_inline_css }}">
         {% if company != "hidden" %}
             {% set field_name = address.prefix~"_company" %}
             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-            <div class="col-xs-6 col-sm-4 col-sm-offset-3 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-                <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_company }}</label>
+            <div class="fc-container__grid--input--company {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-company">{{ config.lang.checkout_company }}</label>
                 <input type="text"
                     id="{{ field_name }}"
                     name="{{ field_name }}"
                     value="{{ address.company }}"
                     placeholder="{{ config.lang.checkout_company }}{{ company_optional_placeholder }}"
                     autocomplete="{{ address.type }} organization"
-                    class="form-control" />
+                    class="fc-form-control fc-form-control--{{ address.prefix }}-company" />
             </div>
         {% endif %}
 
         {% if phone != "hidden" %}
             {% set field_name = address.prefix~"_phone" %}
             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-            <div class="col-xs-6 col-sm-4 {{ phone_offset }} {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-                <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_phone }}</label>
+            <div class="fc-container__grid--input--phone {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-phone">{{ config.lang.checkout_phone }}</label>
                 <input type="text"
                     id="{{ field_name }}"
                     name="{{ field_name }}"
                     value="{{ address.phone }}"
                     placeholder="{{ config.lang.checkout_phone }}{{ phone_optional_placeholder }}"
                     autocomplete="{{ address.type }} tel"
-                    class="form-control" />
+                    class="fc-form-control fc-form-control--{{ address.prefix }}-phone" />
             </div>
         {% endif %}
     </div>
@@ -140,25 +142,25 @@
     {% endif %}
 
     {% if show_address1 or show_address2 %}
-        {% set multiple_inline_css = 'fc-form-group-multiple-inline' %}
+        {% set multiple_inline_css = 'fc-form-group--multiple-inline' %}
         {% if not (show_address1 and show_address2) %}
             {% set multiple_inline_css = '' %}
         {% endif %}
-    <div class="form-group {{ multiple_inline_css }}">
+    <div class="fc-form-group fc-address-entry__address-container {{ multiple_inline_css }}">
 
-        <label class="col-sm-3 hidden-xs control-label">{{ config.lang.checkout_address }}</label>
+        <label class="fc-form-label fc-form-label--{{ address.prefix }}-address1 fc-container__grid--label--address">{{ config.lang.checkout_address }}</label>
         {% if show_address1 %}
         {% set field_name = address.prefix~"_address1" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-        <div class="col-xs-8 col-sm-5 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-            <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_address }} 1</label>
+        <div class="fc-container__grid--input--address1 {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address }} 1</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
                 value="{{ address.address1 }}"
                 placeholder="{{ config.lang.checkout_address1 }}{{ address1_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line1"
-                class="form-control" />
+                class="fc-form-control fc-form-control--{{ address.prefix }}-address1" />
         </div>
         {% endif %}
 
@@ -166,15 +168,15 @@
         {% if show_address2 %}
         {% set field_name = address.prefix~"_address2" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-        <div class="col-xs-4 col-sm-3 {% if error_string %}has-error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="has-error">
-            <label for="{{ field_name }}" class="sr-only">{{ config.lang.checkout_address }} 2</label>
+        <div class="fc-container__grid--label--address2 {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address }} 2</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
                 value="{{ address.address2 }}"
                 placeholder="{{ config.lang.checkout_address2 }}{{ address2_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line2"
-                class="form-control" />
+                class="fc-form-control fc-form-control--{{ address.prefix }}-address2" />
         </div>
         {% endif %}
 
@@ -182,19 +184,27 @@
     {% endif %}
 
     {# The following includes the postalcode, city+state, and country inputs. #}
-    <div class="form-group fc-form-group-container">
-        <div class="col-sm-8 col-sm-offset-3">
+    <div class="fc-form-group fc-form-group--postal-code">
+        <div class="fc-container-checkout__grid--postal-code">
             {% include 'postal_code.inc.twig' %}
         </div>
     </div>
 
-    {% if address.type == 'shipping' and multiship_data|length > 1 %}
-        <div data-fc-id="block-{{ address.prefix }}-results">
+    {% if address.type == 'shipping' and has_multiship %}
+        <div data-fc-id="block-{{ address.prefix }}-results" class="fc-shipping-results">
         {% if address.shipping_results|length > 0 %}
             {# TODO: move it to the language file #}
-            <h4>{{ config.lang.checkout_shipping_methods_for }}<span>{{ address.address_name }}</span></h4>
-            {{ utils.shipping_results(address, 'col-md-10 col-md-offset-1', messages.errors, config.lang) }}
+            <div class="fc-shipping-results__header">
+                <h4>{{ config.lang.checkout_shipping_methods_for }} {{ address.address_name }}</h4>
+            </div>
+            {{ utils.shipping_results(address, 'fc-input-group--full-page', messages.errors, config.lang) }}
         {% endif %}
+        <input
+            id="{{ address.prefix }}_subtotal"
+            type="hidden"
+            name="{{ address.prefix }}_subtotal"
+            value="{{ address.total_item_price }}"
+        />
         <input
             id="{{ address.prefix }}_shipping_total"
             type="hidden"
@@ -215,7 +225,7 @@
         />
         {% set error_string = utils.get_error_string('shipping-results',messages.errors) %}
         {% if error_string %}
-        <div class="alert alert-danger">
+        <div class="fc-alert fc-alert--danger">
             {{ error_string }}
         </div>
         {% endif %}

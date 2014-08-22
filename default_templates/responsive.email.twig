@@ -322,15 +322,6 @@
                                             {% else %}
                                                 <table cellspacing="0" cellpadding="0" align="left" class="fc-column" id="fc-shipping-information" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;margin-bottom: 40px;">
                                                 {% for multiship in multiship_data %}
-                                                    {% if multiship_data|length <= 1 %}
-                                                        {% if multiship.has_shipping_or_handling_cost %}
-                                                        <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                                            <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                                                <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_shipping_method }}:</h3> {{ multiship.shipping_service_description }}
-                                                            </td>
-                                                        </tr>
-                                                        {% endif %}
-                                                    {% else %}
                                                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_shipto }}<span class="fc_shipto_name" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ multiship.address_name }}</span></h3>
@@ -351,7 +342,6 @@
                                                             <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                          </td>
                                                     </tr>
-                                                    {% endif %}
                                                 {% endfor %}
                                                 </table>
                                             {% endif %}
@@ -454,9 +444,9 @@
 
                                                 <tbody style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;border-top: 10px solid #ffffff;">
                                                 {% for item in items %}
-                                                {% if item.multiship != "-1" %}
+                                                {% if has_multiship and item.multiship != "-1" %}
                                                     <tr class="fc-cart-shipto-label" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                                        <td colspan="5" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 0;border-bottom: 1px solid #eeeeee;vertical-align: top;border-top: 2px solid #cccccc;padding-top: 20px;padding-bottom: 10px;">{{ config.lang.cart_shipto }}: <strong style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ item.shipto }}</strong></td>
+                                                        <td colspan="5" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 0;border-bottom: 1px solid #eeeeee;vertical-align: top;border-top: 2px solid #cccccc;padding-top: 20px;padding-bottom: 10px;">{{ config.lang.cart_shipto }}<strong style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ item.shipto }}</strong></td>
                                                     </tr>
                                                 {% endif %}
                                                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">

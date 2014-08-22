@@ -14,7 +14,7 @@
 {% endfor %}
 {% endmacro %}
 
-{% macro shipping_results(address, grid_class, errors, lang) %}
+{% macro shipping_results(address, context_class, errors, lang) %}
 {% set field_name = 'shipping_service_id' %}
 {% set description_field_name = 'shipping_service_description' %}
 {% if address.prefix != 'shipping' %}
@@ -23,25 +23,26 @@
 {% endif %}
 {% set error_string = _self.get_error_string(field_name, errors) %}
 {% if address.shipping_results|length > 0 %}
-<div class="form-group{% if error_string %} has-error{% endif %}">
-    <div class="radio-group {{ grid_class }}">
+<div class="fc-form-group fc-shipping-rates{% if error_string %} fc-alert-container--error{% endif %}">
+    <div class="fc-input-group-container--radios {{ context_class }}">
         {% for rate in address.shipping_results %}
         {# <div class="shipping-rate radio active"> #}
-        <div class="shipping-rate radio {% if rate.service_id == address.shipping_service_id %}fc-active{% endif %}">
-            <label for="{{ field_name }}_{{ rate.service_id }}">
+        <div class="fc-shipping-rates__rate fc-input-group-container--radio {% if rate.service_id == address.shipping_service_id %}fc-input-group-container--active{% endif %}">
+            <label for="{{ field_name }}_{{ rate.service_id }}" class="fc-form-label fc-form-label--shipping-rate">
                 <input
                     id="{{ field_name }}_{{ rate.service_id }}"
                     type="radio"
                     name="{{ field_name }}"
                     value="{{ rate.service_id }}"
+                    class="fc-form-control--shipping-rate"
                     {{ checked(rate.service_id, address.shipping_service_id) }}
-                /><div class="fc-shipping-service">{{ rate.method }} {{ rate.service_name }}</div>
-                <div class="fc-shipping-rate">{{ rate.price|money_format }}</div>
+                /><div class="fc-shipping-rates__rate__name">{{ rate.method }} {{ rate.service_name }}</div>
+                <div class="fc-shipping-rates__rate__value">{{ rate.price|money_format }}</div>
             </label>
         </div>
         {% endfor %}
     {% if error_string %}
-        <div class="alert alert-danger">
+        <div class="fc-alert fc-alert--danger">
             {{ lang.checkout_select_shipping_option }}
         </div>
     {% endif %}
@@ -57,10 +58,10 @@
 {% endmacro %}
 
 {% macro use_different_addresses(use_different_addresses, lang) %}
-<div class="form-group">
-    <div class="col-sm-8 col-sm-offset-3">
-        <div class="checkbox">
-            <label for="use_different_addresses">
+<div class="fc-form-group fc-checkout__section--customer-billing-address__use-different-address">
+    <div class="fc-container__grid--use-different-address">
+        <div class="fc-input-group-container--checkbox">
+            <label for="use_different_addresses" class="fc-form-label fc-form-label--different-address">
                 <input type="checkbox"
                     id="use_different_addresses"
                     name="use_different_addresses"

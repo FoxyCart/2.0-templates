@@ -4,7 +4,7 @@
 {% for item in items %}
 {% if item.multiship >= 0 %}
 
-{% set shipto_label = config.lang.cart_shipto ~ ": " ~ item.shipto %}
+{% set shipto_label = config.lang.cart_shipto ~ item.shipto %}
 {{ shipto_label|pad(40,"-"," ") }}
 
 {% endif %}
@@ -31,7 +31,7 @@
 {% endif %}
 {% endif %}
   * {{ config.lang.cart_quantity|pad(15) }} {{ item.quantity }}
-  * {{ config.lang.cart_price|pad(20) }} {{ item.price|money_format }}{% if item.quantity > 1 %} ({{ item.price_each|money_format }} {{ config.lang.cart_each }}{% if (((item.price_each * 10000) % 100) != 0) %}... {{ item.price_each }}{% endif %}){% endif %}
+  * {{ config.lang.cart_price|pad(20) }} {{ item.price|money_format }}{% if item.quantity > 1 and item.price_each > 0 %} ({{ item.price_each|money_format }} {{ config.lang.cart_each }}{% if (((item.price_each * 10000) % 100) != 0) %}... {{ item.price_each }}{% endif %}){% endif %}
 
 
 {% endfor %}

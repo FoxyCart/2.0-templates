@@ -25,7 +25,7 @@
         {% endif %}
     {% endif %}
     {% if locations|length > 0 %}
-        <select class="form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" {{ required_attr }} name="{{ field_name }}">
+        <select class="fc-form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" {{ required_attr }} name="{{ field_name }}">
             <option value=""></option>
             {# Join filter is returning error, buggy? #}
             {% for c in locations %}
@@ -58,7 +58,7 @@
             type="text"
             {{ required_attr }}
             placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"
-            class="form-control fc-location" />
+            class="fc-form-control fc-location" />
     {% endif %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     {# TODO: stuff the errors array #}
@@ -70,7 +70,7 @@
     {% endif %}
     #}
     {% if error_string %}
-    <div class="alert alert-danger">
+    <div class="fc-alert fc-alert--danger">
         {{ error_string }}
     </div>
     {% endif %}

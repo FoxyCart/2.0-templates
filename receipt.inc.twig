@@ -146,44 +146,32 @@
             <fieldset>
                 <legend>{{ config.lang.checkout_shipto }}<span class="fc_shipto_name">{{ multiship.address_name }}</span></legend>
                 {% include "address.receipt.inc.twig" with {'address': multiship} %}
-
-                {% if multiship_data|length > 1 %}
-                    <div class="form-group fc-receipt-shipping-detail">
-                        <label class="control-label col-sm-4">{{ config.lang.checkout_subtotal }}</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">{{ multiship.total_item_price|money_format }}</p>
-                        </div>
+                <div class="form-group fc-receipt-shipping-detail">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_subtotal }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ multiship.total_item_price|money_format }}</p>
                     </div>
-                    <div class="form-group fc-receipt-shipping-detail">
-                        <label class="control-label col-sm-4">{{ multiship.shipping_service_description }}</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">{{ multiship.total_shipping|money_format }}</p>
-                        </div>
+                </div>
+                <div class="form-group fc-receipt-shipping-detail">
+                    <label class="control-label col-sm-4">{{ multiship.shipping_service_description }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ multiship.total_shipping|money_format }}</p>
                     </div>
-                    {% if has_taxes %}
-                    <div class="form-group fc-receipt-shipping-detail">
-                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_tax }}</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">{{ multiship.total_tax|money_format }}</p>
-                        </div>
+                </div>
+                {% if has_taxes %}
+                <div class="form-group fc-receipt-shipping-detail">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_tax }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ multiship.total_tax|money_format }}</p>
                     </div>
-                    {% endif %}
-                    <div class="form-group fc-receipt-shipping-detail">
-                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_total }}</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">{{ multiship.total_price|money_format }}</p>
-                        </div>
-                    </div>
-                {% else %}
-                    {% if multiship.has_live_rate_shippable_products %}
-                    <div class="form-group fc-receipt-shipping-detail">
-                        <label class="control-label col-sm-4">{{ config.lang.checkout_shipping_method }}</label>
-                        <div class="col-sm-8">
-                            <p class="form-control-static">{{ shipping_address.shipping_service_description }}</p>
-                        </div>
-                    </div>
-                    {% endif %}
+                </div>
                 {% endif %}
+                <div class="form-group fc-receipt-shipping-detail">
+                    <label class="control-label col-sm-4">{{ config.lang.checkout_shipment_total }}</label>
+                    <div class="col-sm-8">
+                        <p class="form-control-static">{{ multiship.total_price|money_format }}</p>
+                    </div>
+                </div>
             </fieldset>
             </form>
             {% endfor %}
