@@ -4,24 +4,26 @@
 {% block cart %}
 
 {% if context == 'cart' %}
-    <div class="fc-sidecart-only-fixed">
+    {% include 'svg.inc.twig' %}
+
+    <nav class="fc-sidecart-only-fixed" role="navigation">
         {# block sidecart_top_fixed_actions #}
-        <div class="fc-fixed-button-left hidden-xs">
-            <a data-fc-sidecart-dismiss  class="btn btn-default btn-block fc-btn-action">
-                <svg class="fc-svg-icon">
+        <div class="fc-fixed-button-left">
+            <a data-fc-sidecart-dismiss  class="fc-sidecart-button fc-btn-action">
+                <svg class="fc-svg-icon" role="presentation" title="Checkout Icon">
                     <use xlink:href="#fa-caret-left" />
-                </svg>Keep Shopping</a>
+                </svg><span class="fc-fixed-button-left--text">{{ config.lang.cart_keep_shopping }}</span></a>
         </div>
         <div class="fc-fixed-button-right">
-            <a class="btn btn-primary btn-block fc-btn-action" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top">
+            <a class="fc-sidecart-button fc-btn-action" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top">
                 {{ config.lang.cart_checkout }}
-                <svg class="fc-svg-icon">
+                <svg class="fc-svg-icon" role="presentation" title="Checkout Icon">
                     <use xlink:href="#fa-caret-right" />
                 </svg>
             </a>
         </div>
         {# endblock sidecart_top_fixed_actions #}
-    </div>
+    </nav>
 {% endif %}
 
 <div id="fc-cart" {% if context == 'cart' %}class="fc-container"{% endif %}>
@@ -63,7 +65,7 @@
 {% endif %}
 
 <div id="{{ container_id }}">
-    <div class="fc-cart__header fc-container__row">
+    <header class="fc-cart__header fc-container__row" role="banner">
         {% if not is_updateinfo %}
         <div class="fc-cart__title fc-container__grid">
             {% block cart_title %}
@@ -87,7 +89,7 @@
             {% block continue_shopping %}
             {% if cart_cancel_and_continue_link != '' %}
                 <a href="{{ cart_cancel_and_continue_link }}" class="fc-button fc-button--cancel">
-                    <svg class="fc-svg-icon fc-icon-small">
+                    <svg class="fc-svg-icon fc-icon-small" role="presentation" title="Back Arrows">
                         <use xlink:href="#fa-angle-double-left" />
                     </svg>
                     {{ config.lang.cart_cancel_and_continue|raw }}
@@ -96,13 +98,13 @@
             {% endblock continue_shopping %}
         </div>
         {% endif %}
-    </div>
+    </header>
 
     {% if not is_updateinfo %}
 
     {# TODO: Not sure if this should be a config. setting or if it's ok just setting it in context. #}
     {% if cart_is_fullpage %}
-    <div class="fc-cart-container fc-cart__main fc-container__row">
+    <div class="fc-cart-container fc-cart__main fc-container__row" role="main">
     {% else %}
     <div class="fc-container__row fc-cart-container">
     {% endif %}
@@ -125,7 +127,7 @@
             {% if context == 'cart' %}
                 {% include 'errors.inc.twig' %}
 
-                {% if items|length == 0 %}
+                {% if item_count == 0 %}
                     <div class="fc-messages">
                         <div class="fc-messages__empty-notification">
                             <a href="{{ cart_cancel_and_continue_link }}">{{ config.lang.cart_empty }}</a>
@@ -175,10 +177,18 @@
                 </div>
                 {% endif %}
 
+                {# bug in twig.js keeps us from just setting a variable. hopefully this is resolved eventually #}
+                <div class="fc-container__row fc-cart__item {% if item.parent_code %}fc-cart__item--child-product{% elseif item.is_parent %}fc-cart__item--parent-product{% endif %} {% if loop.last %}fc-cart__item--last{% endif %}" {% if item.code != '' %}data-item-code="{{ item.code|escape('html_attr') }}" {% endif %}>
 
-                {# TODO: remove the hard-coded style below for bundles and add something better. #}
-                <div class="fc-container__row fc-cart__item {% if loop.last %}fc-cart__item--last{% endif %}" {% if item.parent_code != '' %}style="padding: 15px 15px 15px 35px; border-bottom: inherit; background-color: #eeeeee;"{% endif %}>
-
+                {% if loading_quantity %}
+                    <div class="fc-cart__item--updating">
+                        <div class="fc-spinner">
+                          <div class="bounce1"></div>
+                          <div class="bounce2"></div>
+                          <div class="bounce3"></div>
+                        </div>
+                    </div>
+                {% endif %}
                     <div class="fc-cart__item__details-and-image">
                         {% if has_product_images %}
                         <div class="fc-cart__item__image">
@@ -306,15 +316,8 @@
                                     {% else %}
                                     <p>{{ config.lang.cart_qty }}: {{ item.quantity }}</p>
                                     {% endif %}
-                                    {% if loading_quantity %}
-                                    <div class="fc-spinner">
-                                      <div class="bounce1"></div>
-                                      <div class="bounce2"></div>
-                                      <div class="bounce3"></div>
-                                    </div>
-                                    {% endif %}
                                 {% else %}
-                                    <p>{{ item.quantity }}</p>
+                                    <p>{{ config.lang.cart_qty }}: {{ item.quantity }}</p>
                                 {% endif %}
                             </div>
                         </div>
@@ -355,9 +358,24 @@
             {% if context == 'cart' and not has_multiship %}
                 {% if show_address_entry %}
                 <div class="fc-address-entry">
-                    <h4><svg class="fc-svg-icon fc-icon-large"><use xlink:href="#fa-truck" /></svg> {{ config.lang.cart_calculate_shipping }}</h4>
+                    <h4>
+                        <svg class="fc-svg-icon fc-icon-large" role="presentation">
+                        {% if shipping_address.has_live_rate_shippable_products %}
+                            <use xlink:href="#fa-truck" /></svg> {{ config.lang.cart_calculate_shipping }}
+                        {% else %}
+                            <use xlink:href="#fa-bank" /></svg> {{ config.lang.cart_calculate_taxes }}
+                        {% endif %}
+                    </h4>
 
                     {% include 'postal_code.inc.twig' with {'address': shipping_address} %}
+
+                    {% if shipping_address.has_live_rate_shippable_products == false %}
+                        <div class="fc-transaction__ui">
+                            <button class="fc-transaction__ui__button fc-button" type="button" data-fc-id="change-address-button">
+                                {{ config.lang.cart_calculate }}
+                            </button>
+                        </div>
+                    {% endif %}
 
                     <div data-fc-id="block-shipping-results">
                     {% block shipping_results %}
@@ -388,7 +406,7 @@
             <h3 class="fc-transaction__header">{{ config.lang.cart_order_summary }}</h3>
 
             <ul class="fc-transaction">
-                {% if has_shippable_products or has_taxes or has_discounts %}
+                {% if shipping_address.has_shippable_products or has_taxes or has_discounts %}
                 <li class="fc-transaction__subtotal fc-transaction__section">
                     {# TODO: the below condition needs to actually work (if it doesn't). #}
                     {% if has_future_products %}<h5>{{ config.lang.cart_todays_charge }}</h5>{% endif %}
@@ -465,7 +483,7 @@
                                 {% if enable_coupon_controls %}
                                 <span class="fc-action--close">
                                     <a href="https://{{ config.store_domain }}{{ config.post_url }}?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
-                                        <svg class="fc-svg-icon"><use xlink:href="#fa-times-circle" /></svg>
+                                        <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
                                     </a>
                                 </span>
                                 {% endif %}
@@ -478,7 +496,7 @@
                 </li>
                 {% endif %}
 
-                {% if has_shippable_products %}
+                {% if shipping_address.has_shippable_products %}
                 <li class="fc-transaction__shipping fc-transaction__section">
                     {% if context == 'cart' and not has_multiship %}
                         <div class="fc-transaction__ui">
@@ -533,14 +551,25 @@
 
                 {% if has_taxes %}
                 <li class="fc-transaction__taxes fc-transaction__section">
-                    {% if not (context == 'cart' and has_multiship) %}
+                {% set show_tax_header = false %}
+                {% if has_multiship %}
+                    {% for multiship in multiship_data %}
+                        {% if multiship.taxes|length > 0 %}
+                            {% set show_tax_header = true %}
+                        {% endif %}
+                    {% endfor %}
+                {% else %}
+                    {% if shipping_address.taxes|length > 0 %}
+                        {% set show_tax_header = true %}
+                    {% endif %}
+                {% endif %}
+                {% if context == 'receipt' %}
+                    {% set show_tax_header = false %}
+                {% endif %}
+                    {% if show_tax_header %}
                     <div class="fc-transaction__ui">
                         <h5 class="fc-transaction__ui__header">{{ config.lang.cart_tax }}</h5>
                     </div>
-                    {% endif %}
-                    <table>
-                        <tbody data-fc-id="taxes" class="fc-subtotal--taxes">
-                        {% block taxes %}
                         {% if loading_taxes %}
                             <div class="fc-spinner">
                               <div class="bounce1"></div>
@@ -548,6 +577,10 @@
                               <div class="bounce3"></div>
                             </div>
                         {% endif %}
+                    {% endif %}
+                    <table>
+                        <tbody data-fc-id="taxes" class="fc-subtotal--taxes">
+                        {% block taxes %}
                         {% if has_multiship %}
                             {% if context == 'checkout' %}
                                 {% for multiship in multiship_data %}
@@ -562,6 +595,16 @@
                                     </tr>
                                     {% endfor %}
                                 {% endfor %}
+                            {% endif %}
+                            {% if context == 'receipt' %}
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label">
+                                        {{ config.lang.cart_tax }}
+                                    </td>
+                                    <td class="fc-subtotal__value">
+                                        {{ total_tax|money_format }}
+                                    </td>
+                                </tr>
                             {% endif %}
                         {% else %}
                             {% for tax in shipping_address.taxes %}
@@ -595,10 +638,9 @@
                 </li>
             </ul>
 
-            {# TODO: style it up and hide by default #}
-            {% if context != "receipt" and has_multiship %}
+            {% if context == "checkout" and has_multiship %}
             <div class="fc-transaction fc-transaction--multiship">
-                <button type="button" class="fc-button fc-transaction__ui__toggle" data-fc-id="button-toggle-multiship-details">Details</button>
+                <button type="button" class="fc-button fc-transaction__ui__toggle" data-fc-id="button-toggle-multiship-details">{{ config.lang.cart_details }}</button>
                 {% for multiship in multiship_data %}
                 <div class="fc-transaction__ui">
                     <h5 class="fc-transaction__ui__header">{{ config.lang.cart_shipto }}{{ multiship.address_name }}
@@ -631,80 +673,63 @@
 
             {% if has_future_products and not is_subscription_cancel %}
             {% block future_products %}
-            <ul class="fc-transaction fc-transaction--future">
-                {# TODO: the <li> and <h5>'s need classes #}
-                <li>
-                    {% if future_subscription_totals_by_date|length > 1 %}
-                    <h5 class="fc-transaction__ui__header">{{ config.lang.cart_future_charges }}</h5>
-                    {% else %}
-                    <h5 class="fc-transaction__ui__header">{{ config.lang.cart_future_charge }}</h5>
-                    {% endif %}
-                </li>
-                {% set has_future_subs_details = false %}
+            <div class="fc-transaction fc-transaction--future">
+                {% set has_future_subscription_details = false %}
                 {% if has_future_shipping or future_coupons|length > 0 or has_taxes %}
-                    {% set has_future_subs_details = true %}
-                <li class="fc-transaction--future__details{% if config.with_controls %} fc-hidden{% endif %}" data-fc-id="future-cart-display">
-                    <table>
-                        {% if has_future_shipping or future_coupons|length > 0 or has_taxes %}
-                        <tr class="fc-subtotal--row fc-transaction--future__subtotal">
-                            <td class="fc-subtotal__label">{{ config.lang.cart_subtotal }}</td>
-                            <td class="fc-subtotal__value">{{ total_future_item_price|money_format }}</td>
-                        </tr>
-                        {% endif %}
-                        {% if has_future_shipping %}
-                        <tr class="fc-subtotal--row fc-transaction--future__shipping">
-                            <td class="fc-subtotal__label">{{ shipping_service_label }}</td>
-                            <td class="fc-subtotal__value">{{ total_future_shipping|money_format }}</td>
-                        </tr>
-                        {% endif %}
-                        {% if has_taxes %}
-                        {# TODO: test and verify future taxes work as expected... My hunch is they do not. #}
-                        {% for tax in shipping_address.taxes %}
-                        <tr class="fc-subtotal--row fc-transaction--future__taxes">
-                            <td class="fc-subtotal__label">
-                                {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
-                            </td>
-                            <td class="fc-subtotal__value">
-                                {{ tax.amount|money_format }}
-                            </td>
-                        </tr>
-                        {% endfor %}
-                        {% endif %}
-                        {% for key,coupon in future_coupons %}
-                        <tr class="fc-subtotal--row fc-transaction--future__discounts">
-                            <td class="fc-subtotal__label">{{ coupon.name }}: {{ coupon.code }}</td>
-                            <td class="fc-subtotal__label">{{ coupon.amount|money_format }}</td>
-                        </tr>
-                        {% endfor %}
-                    </table>
-                </li>
+                    {% set has_future_subscription_details = true %}
                 {% endif %}
-                <li class="fc-transaction--future__summary">
-                    <table>
+                {% if (context == "cart" or context == "checkout") and has_future_subscription_details %}
+                <button type="button" class="fc-button fc-transaction__ui__toggle" data-fc-id="button-toggle-future-subscription-details">{{ config.lang.cart_details }}</button>
+                {% endif %}
+                    <h5 class="fc-transaction__ui__header">
+                    {% if future_subscription_totals_by_date|length > 1 %}
+                        {{ config.lang.cart_future_charges }}
+                    {% else %}
+                        {{ config.lang.cart_future_charge }}
+                    {% endif %}
+                    </h5>
                     {% for key, subscription_item_total in future_subscription_totals_by_date %}
-                        <tr class="fc-subtotal--row">
-                            <td class="fc-subtotal__label">
-                                {{ key|date("F jS, Y") }}
-                            </td>
-                            <td class="fc-subtotal__value">
-                                {{ subscription_item_total.total|money_format }}
-                            </td>
-                        </tr>
+                        <div class="fc-transaction__ui">
+                            <h5 class="fc-transaction__ui__header">{{ key|date("F jS, Y") }}
+                                <span class="fc-transaction__ui__header__value">{{ subscription_item_total.total|money_format }}</span>
+                            </h5>
+                        {% if has_future_subscription_details and show_future_subscriptions_details %}
+                            <table>
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label"> {{ config.lang.cart_subtotal }}: </td>
+                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_item_price|money_format }} </td>
+                                </tr>
+                                {% for key,coupon in future_coupons %}
+                                <tr class="fc-subtotal--row fc-transaction--future__discounts">
+                                    <td class="fc-subtotal__label">{{ coupon.name }}: {{ coupon.code }}</td>
+                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
+                                </tr>
+                                {% endfor %}
+                                {% if has_future_shipping %}
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label"> {{ shipping_service_label }}: </td>
+                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_shipping|money_format }} </td>
+                                </tr>
+                                {% endif %}
+                                {% if has_taxes %}
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label"> {{ config.lang.cart_tax }}: </td>
+                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_tax|money_format }} </td>
+                                </tr>
+                                {% endif %}
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label"> {{ config.lang.cart_total }}: </td>
+                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total|money_format }} </td>
+                                </tr>
+                            </table>
+                        {% endif %}
+                        </div>
                     {% endfor %}
-                    </table>
-                </li>
-            </ul>
-
-            {% if config.with_controls and is_subscription_cancel == false and has_future_subs_details %}
-            <div class="fc-transaction--future__summary--toggle fc-container__row transaction__ui">
-                <a class="fc-button fc-transaction__ui__toggle" href="#" data-fc-id="toggle-future-card-display-link" data-fc-lang-cart-hide-details="{{ config.lang.cart_hide_details }}" data-fc-lang-cart-show-details="{{ config.lang.cart_show_details }}">{{ config.lang.cart_show_details }}</a>
             </div>
-            {% endif %}
             {% endblock future_products %}
             {% endif %}
             {% endblock order_totals %}
             </div><!-- data-fc-id="block-order-totals" -->
-
 
 
             {% block order_payment_actions %}
@@ -714,7 +739,7 @@
 
                 {% block order_payment_action_checkout %}
                 <p class="fc-action--payment--checkout">
-                    <a class="fc-action--checkout--button" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top"><svg class="fc-svg-icon"><use xlink:href="#fa-lock" /></svg> {{ config.lang.cart_checkout }}</a>
+                    <a class="fc-action--checkout--button" href="https://{{ config.store_domain }}/checkout?{{ session_name }}={{ session_id }}" target="_top"><svg class="fc-svg-icon" role="presentation" title="Security Icon"><use xlink:href="#fa-lock" /></svg> {{ config.lang.cart_checkout }}</a>
                 </p>
                 {% endblock order_payment_action_checkout %}
 

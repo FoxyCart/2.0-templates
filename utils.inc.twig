@@ -16,10 +16,8 @@
 
 {% macro shipping_results(address, context_class, errors, lang) %}
 {% set field_name = 'shipping_service_id' %}
-{% set description_field_name = 'shipping_service_description' %}
 {% if address.prefix != 'shipping' %}
     {% set field_name = address.prefix~'_'~field_name %}
-    {% set description_field_name = address.prefix~'_'~description_field_name %}
 {% endif %}
 {% set error_string = _self.get_error_string(field_name, errors) %}
 {% if address.shipping_results|length > 0 %}
@@ -49,12 +47,6 @@
     </div>
 </div>
 {% endif %}
-<input
-    id="{{ description_field_name }}"
-    type="hidden"
-    name="{{ description_field_name }}"
-    value="{{ address.shipping_service_description }}"
-/>
 {% endmacro %}
 
 {% macro use_different_addresses(use_different_addresses, lang) %}

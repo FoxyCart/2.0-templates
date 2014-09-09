@@ -61,14 +61,6 @@
             class="fc-form-control fc-location" />
     {% endif %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-    {# TODO: stuff the errors array #}
-    {#
-    {% if _context[address.prefix~'_'~location_type~'_is_empty'] %}
-    <div class="alert alert-danger">
-        {{ config.lang['checkout_error_'~location_type] }}
-    </div>
-    {% endif %}
-    #}
     {% if error_string %}
     <div class="fc-alert fc-alert--danger">
         {{ error_string }}

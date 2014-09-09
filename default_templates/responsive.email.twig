@@ -112,7 +112,7 @@
                             <table cellspacing="0" cellpadding="0" align="left" id="fc-subject" class="fc-column" style="margin: 0;padding: 0px 30px;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;height: 100px;line-height: 100px;text-align: right;color: #cccccc;font-size: 20px;text-shadow: 1px 1px 0px #ffffff;filter: dropshadow(color=#ffffff, offx=1, offy=1);">
                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                        {% if is_updateinfo %}{# TODO: these need to be language strings #}
+                                        {% if is_updateinfo %}
                                             {{ config.lang.email_subject_updateinfo }}
                                         {% elseif is_subscription_modification %}
                                             {{ config.lang.email_subject_subscription_updated }}
@@ -182,8 +182,14 @@
                                                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
 
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_html_downloadable_products }}</h3>
-                                                            <ol class="fc-download-links" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;margin-top: 4px;margin-left: 20px;">
-                                                                {{ html_downloadable_links|raw }}
+                                                            <ol class="fc-download-links" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;margin-top: 4px;margin-bottom:20px;margin-left: 20px;">
+                                                                {% for item in downloadable_links %}
+                                                                <li class="fc-list--downloadables__item">
+                                                                    {% if item.url %}<a href="{{ item.url }}">{% endif %}
+                                                                        {{ item.name }}
+                                                                    {% if item.url %}</a>{% endif %}
+                                                                </li>
+                                                                {% endfor %}
                                                             </ol>
 
                                                         </td>
@@ -234,12 +240,12 @@
                                                                     <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endif %}
 
-                                                                    {% if purchase_order != '' %}
+                                                                    {% if purchase_order %}
                                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_purchase_order }}</h3>
                                                                         {{ purchase_order }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endif %}
 
-                                                                    {% if has_shippable_products and not has_multiship %}
+                                                                    {% if shipping_address.has_shippable_products and not has_multiship %}
                                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_shipping }}</h3>
                                                                         {{ shipping_address.shipping_service_description }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endif %}
@@ -276,13 +282,15 @@
 
                                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                        {% if not (config.template_config.custom_checkout_field_requirements['billing_first_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_last_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address1'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address2'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_city'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_region'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_postal_code'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_country'] == 'hidden') %}
                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_billing_address }}</h3>
                                                         {% include "address.email.inc.twig" with {'address': billing_address} %}
+                                                        {% endif %}
 
                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_email }}</h3>
                                                         {{ customer_email }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
 
-                                                        {% if billing_address.phone != '' %}
+                                                        {% if billing_address.phone %}
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_phone }}</h3>
                                                             {{ billing_address.phone }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         {% endif %}
@@ -293,7 +301,7 @@
 
                                             <!-- SHIPPING INFORMATION -->
                                             {% if not has_multiship %}
-                                                {% if use_alternate_shipping_address or has_shippable_products %}
+                                                {% if shipping_address.has_shippable_products %}
                                                 <table cellspacing="0" cellpadding="0" align="left" class="fc-column" id="fc-shipping-information" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;margin-bottom: 40px;">
                                                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -304,13 +312,9 @@
                                                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_shipping_address }}</h3>
-                                                            {% if use_alternate_shipping_address %}
-                                                                {% include "address.email.inc.twig" with {'address': shipping_address} %}
-                                                            {% else %}
-                                                                {% include "address.email.inc.twig" with {'address': billing_address} %}
-                                                            {% endif %}
+                                                            {% include "address.email.inc.twig" with {'address': shipping_address} %}
 
-                                                        {% if shipping_address.phone != '' %}
+                                                        {% if shipping_address.phone %}
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_phone }}</h3>
                                                             {{ shipping_address.phone }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         {% endif %}
@@ -332,8 +336,10 @@
                                                             {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
 
                                                             {% if has_taxes %}
-                                                                {{ config.lang.checkout_shipment_tax }}:
-                                                                {{ multiship.total_price_total|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {% for tax in multiship.taxes %}
+                                                                    {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax }}:
+                                                                    {{ tax.amount|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {% endfor %}
                                                             {% endif %}
 
                                                             {{ config.lang.checkout_shipment_total }}: {{ multiship.total_price|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -412,22 +418,33 @@
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_subtotal }}:</td>
                                                         <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_item_price|money_format }}</td>
                                                     </tr>
-                                                    {% if has_shippable_products %}
+                                                    {% if shipping_address.has_shippable_products %}
                                                     <tr id="fc-cart-shipping" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_shipping_and_handling }}</td>
                                                         <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
                                                     </tr>
                                                     {% endif %}
-                                                    {% for tax in taxes %}
-                                                    <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
-                                                        <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
-                                                            {{ tax.name }} (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ tax.rate }}</span>%):
-                                                        </td>
-                                                        <td class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
-                                                            {{ tax.amount|money_format }}
-                                                        </td>
-                                                    </tr>
-                                                    {% endfor %}
+                                                    {% if has_multiship %}
+                                                        <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
+                                                            <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
+                                                                {{ config.lang.cart_tax }}
+                                                            </td>
+                                                            <td class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
+                                                                {{ total_tax|money_format }}
+                                                            </td>
+                                                        </tr>
+                                                    {% else %}
+                                                        {% for tax in shipping_address.taxes %}
+                                                        <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
+                                                            <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
+                                                                {{ tax.name }} (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ tax.rate }}</span>%):
+                                                            </td>
+                                                            <td class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
+                                                                {{ tax.amount|money_format }}
+                                                            </td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    {% endif %}
                                                     {% for key,coupon in coupons %}
                                                     <tr class="fc-cart-total-discount {% if not coupon.is_applied %}fc-cart-total-discount-inactive{% endif %}" data-fc-coupon-container-id="{{ coupon.id }}" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;color: #267d00;">
                                                         <td class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
@@ -483,7 +500,7 @@
                                                                 </li>
                                                                 {% endfor %}
 
-                                                                {% if item.code != '' and show_product_code %}
+                                                                {% if item.code and show_product_code %}
                                                                 <li class="fc-cart-item-option-code">
                                                                     <span class="fc-cart-item-option-name">{{ config.lang.cart_code }}</span>:
                                                                     <span class="fc-cart-item-option-value">{{ item.code }}</span>
@@ -504,7 +521,7 @@
                                                                 </li>
                                                                 {% endif %}
 
-                                                                {% if item.sub_frequency != '' %}
+                                                                {% if item.sub_frequency %}
                                                                 <li class="fc-cart-item-option-subscription-details">
                                                                     {{ config.lang.cart_subscription_details }}
                                                                     <ul style="padding-left:1em;">
@@ -579,16 +596,27 @@
                                                                 {% endif %}
                                                                 {% if has_taxes %}
                                                                 {# TODO: test and verify future taxes work as expected... My hunch is they do not. #}
-                                                                {% for tax in shipping_address.taxes %}
-                                                                <tr class="fc-cart-total-taxes">
-                                                                    <td class="fc-cart-total-label">
-                                                                        {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
-                                                                    </td>
-                                                                    <td class="fc-cart-total-value">
-                                                                        {{ tax.amount|money_format }}
-                                                                    </td>
-                                                                </tr>
-                                                                {% endfor %}
+                                                                    {% if has_multiship %}
+                                                                        <tr class="fc-cart-total-taxes">
+                                                                            <td class="fc-cart-total-label">
+                                                                                {{ config.lang.cart_tax }}
+                                                                            </td>
+                                                                            <td class="fc-cart-total-value">
+                                                                                {{ total_tax|money_format }}
+                                                                            </td>
+                                                                        </tr>
+                                                                    {% else %}
+                                                                        {% for tax in shipping_address.taxes %}
+                                                                        <tr class="fc-cart-total-taxes">
+                                                                            <td class="fc-cart-total-label">
+                                                                                {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
+                                                                            </td>
+                                                                            <td class="fc-cart-total-value">
+                                                                                {{ tax.amount|money_format }}
+                                                                            </td>
+                                                                        </tr>
+                                                                        {% endfor %}
+                                                                    {% endif %}
                                                                 {% endif %}
                                                                 {% for key,coupon in future_coupons %}
                                                                 <tr class="fc-cart-total-discounts">

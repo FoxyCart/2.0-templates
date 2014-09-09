@@ -31,7 +31,11 @@
 {% if has_downloadables %}
 {{ config.lang.email_text_downloadable_products|pad(60,"-"," ") }}
 
-{{ text_downloadable_links }}
+{% for item in downloadable_links %}
+{{ item.name }}
+  -> {{ item.url }}
+{% endfor %}
+
 
 {% endif %} {# has downloads #}
 {{ config.lang.email_text_order_summary|pad(60,"-"," ") }}
@@ -46,7 +50,7 @@
   * {{ config.lang.checkout_card_number|pad(20) }} {{ cc_number_masked }} ({{ cc_type }})
 {% endif %}
   * {{ config.lang.cart_order_total|pad(20) }} {{ total_order|money_format }}
-{% if has_live_rate_shippable_products and not has_multiship %}
+{% if shipping_address.has_live_rate_shippable_products and not has_multiship %}
   * {{ config.lang.email_shipping|pad(20) }} {{ shipping_address.shipping_service_description }}
 {% endif %}
 {% if custom_fields|length > 0 %}
@@ -65,10 +69,13 @@
 {{ config.lang.email_email }}:
     {{ customer_email }}
 
+{% if not (config.template_config.custom_checkout_field_requirements['billing_first_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_last_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address1'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address2'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_city'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_region'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_postal_code'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_country'] == 'hidden') %}
 {{ config.lang.email_billing_address }}:
 {% include "address.email.inc.txt.twig" with {'address': billing_address} %}
+{% endif %}
 {% if has_multiship %}
 {% for multiship in multiship_data %}
+
 {{ config.lang.email_ship_to }}: {{ multiship.address_name }}
 {% include "address.email.inc.txt.twig" with {'address': multiship} %}
 
@@ -77,32 +84,30 @@
     {% if not custom_field.is_hidden %}
   * {{ key|pad(20) }}: {{ custom_field.value }}
     {% endif %}
-{% endfor %} {# multiship #}
-{% endif %} {# has multiship custom fields #}
+{% endfor %}{# multiship #}
+{% endif %}{# has multiship custom fields #}
 {% if not is_updateinfo %}
-    {{ config.lang.cart_subtotal }}: {{ multiship.total_price_item_price|money_format }}
+    {{ config.lang.cart_subtotal }}: {{ multiship.total_item_price|money_format }}
 {% endif %}
-{% if has_live_rate_shippable_products %}
-    {{ multiship.shipping_service_description }}: {{ multiship.total_price_shipping|money_format }}
+{% if multiship.has_live_rate_shippable_products %}
+    {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}
 {% else %}
-{% if has_shippable_products %}
-    {{ shipping_and_handling_label }}: {{ multiship.total_price_shipping|money_format }}
+{% if multiship.has_shippable_products %}
+    {{ shipping_and_handling_label }}: {{ multiship.total_shipping|money_format }}
 {% endif %}
 {% endif %}
 {% if not is_updateinfo %}
-    {{ config.lang.email_tax }}: {{ multiship.total_price_tax|money_format }}
+{% for tax in multiship.taxes %}
+    {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax }}: {{ tax.amount|money_format }}
+{% endfor %}
     {{ config.lang.email_group_total }}: {{ multiship.total_price|money_format }}
 {% endif %}
-{% endfor %} {# multishp for loop #}
-{% else %} {# multiship #}
-{% if use_alternate_shipping_address or has_shippable_products %}
+{% endfor %}{# multishp for loop #}
+{% else %}{# multiship #}
+{% if shipping_address.has_shippable_products %}
 
 {{ config.lang.email_shipping_address }}:
-{% if use_alternate_shipping_address %}
 {% include "address.email.inc.txt.twig" with {'address': shipping_address} %}
-{% else %}
-{% include "address.email.inc.txt.twig" with {'address': billing_address} %}
-{% endif %}
 {% endif %} {# has shippable products #}
 {% endif %} {# not multiship #}
 

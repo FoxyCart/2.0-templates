@@ -21,7 +21,7 @@
                 <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal|raw }}:</td>
                 <td class="fc_col2">{{ total_item_price|money_format }}</td>
             </tr>
-        {% if has_shippable_products %}
+        {% if shipping_address.has_shippable_products %}
             {% set shipping_service_label = shipping_and_handling_label %}
             {% if shipping_address.shipping_service_id != 0 and shipping_address.shipping_service_description %}
                 {% set shipping_service_label = shipping_address.shipping_service_description %}

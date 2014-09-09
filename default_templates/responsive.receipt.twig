@@ -1,113 +1,29 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html id="fc" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html id="fc" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html id="fc" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html id="fc" class="no-js"> <!--<![endif]-->
+<html id="fc">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-    <title>{{ config.store_name }} Secure Checkout</title>
+    <title>{{ config.store_name }} Receipt</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
 
-    <!-- TODO: Load the CSS based on the template config. -->
-    <link href="/static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.css" rel="stylesheet">
-    <link href="//cdn.foxycart.com/{{ config.store_domain|replace({'.foxycart.com': ''}) }}/responsive_styles.css" rel="stylesheet">
+    <link href="{{ config.css_file }}" rel="stylesheet" media="all">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
 </head>
 <body>
-    <!-- has to be here because of chrome bug -->
+<!-- has to be here because of chrome bug -->
     {% include 'svg.inc.twig' %}
-
-    <div class="container fc-receipt-container">
-    <div class="row panel">
 
     {% import "utils.inc.twig" as utils %}
     {% use 'receipt.inc.twig' %}
-    {% use 'cart.inc.twig' %} {# NOTE: this will not use blocks from your customized cart include #}
+    {{ block('receipt') }}
 
-    {% block receipt %}
-      <div class="col-sm-8 col-xs-12">
-    {% block print_logo %}
-            <div class="fc-print-logo hidden">
-                {% if config.store_logo_url %}
-                <img src="{{ config.cache_path }}{{ config.store_logo_url }}" class="img-responsive" alt="{{ config.store_name }}">
-                {% else %}
-                <h1>{{ config.store_name }}</h1>
-                {% endif %}
-                {{ config.store_url }}
-                {{ receipt_url }}
-            </div>
-    {% endblock %}
-        {{ block('messaging') }} {# UpdateInfo, Subscription Cancel #}
-        {{ block('downloadable_links') }}{# Downloadable product links #}
-        {{ block('general_information') }}{# Processor response and date #}
-        {#{{ block('order_information') }}{# Order total costs, subtotals, and payment info  NO LONGER NEEDED #}
-        {{ block('billing_information') }}{# Billing name and address #}
 
-        {% if not has_multiship %}
-            {% if use_alternate_shipping_address or has_shippable_products %}
-                 {{ block('shipping_address') }}
-            {% endif %}
-        {% else %}
-            {{ block('multiship_addresses') }}
-        {% endif %}
-
-        {{ block('custom_fields') }}
-
-        <div class="panel hidden-xs fc-print-continue-links">
-            {{ block('receipt_links') }}{# print, continue links #}
-        </div>
-
-      </div>
-
-    {% endblock receipt %}
-
-    {% block sidebar %}
-    <div class="col-sm-4 col-xs-12 fc-sidebar">
-        <div class="hidden-xs">
-        {% block logo %}
-            {% if config.store_logo_url %}
-                <img id="fc-logo" src="{{ config.cache_path }}{{ config.store_logo_url }}" class="img-responsive" alt="{{ store_name }}">
-            {% else %}
-                <h1 id="fc-logotype">{{ config.store_name }}</h1>
-            {% endif %}
-        {% endblock logo %}
-        </div>
-
-        <div id="fc-cart-container-non-responsive">
-        <div class="row fc-cart-container">
-        <div class="col-xs-12">
-        {% if not is_updateinfo %} {# show cart unless they're updating billing info #}
-           {% use 'cart.inc.twig' %}
-           <div class="col-xs-12">
-                <div class="fc-cart-title">
-                    <h2>{{ config.lang.cart_caption }}</h2>
-                    <p class="lead fc-order-quantity">
-                        <span>{{ item_count }}</span>
-                        <span>{% if item_count == 1 %}{{ config.lang.cart_item|lower }}{% else %}{{ config.lang.cart_items|lower }}{% endif %}</span>
-                        {{ config.lang.receipt_items_purchased }}
-                    </p>
-                </div>
-            </div>
-           {{ block('cart_items_divs') }}
-           {{ block('order_totals') }}
-        {% endif %}
-       </div>
-       </div>
-       </div>
-    </div>
-    {% endblock sidebar %}
-
-    </div><!-- /row -->
-    <div class="row fc-print-continue-links">
-        <div class="col-xs-12 visible-xs">
-            {{ block('receipt_links') }}{# print, continue links for small screens #}
-        </div>
-    </div>
-    </div> <!-- /container -->
+    <!-- TODO: IE8 support -->
+    <!-- Add media query support to IE8 and prior. https://github.com/scottjehl/Respond -->
+    <!--[if lt IE 8]><script src="js/respond.min.js"></script><![endif]-->
     <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
 </body>
 </html>

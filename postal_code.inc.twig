@@ -1,11 +1,30 @@
 {# Postal Code Madness begins here #}
-{#
-TODO:
-Be sure to reimplement the template_config stuff for showing and hiding fields. Examples can be found in address.checkout.inc.twig
-#}
-
 {% set country_current = address.country %}
 {% set country_supports_postalcode_search = config.locations[country_current].pc.search %}
+{% set show_country = true %}
+{% set show_postal_code = true %}
+{% set show_city = true %}
+{% set show_region = true %}
+{% set postal_code_optional_placeholder = '' %}
+{% set city_optional_placeholder = '' %}
+{% set region_optional_placeholder = '' %}
+{% set country_config = config.template_config.custom_checkout_field_requirements['billing_country'] %}
+{% set postal_code_config = config.template_config.custom_checkout_field_requirements['billing_postal_code'] %}
+{% set city_config = config.template_config.custom_checkout_field_requirements['billing_city'] %}
+{% set region_config = config.template_config.custom_checkout_field_requirements['billing_region'] %}
+{% if address.type == 'billing' %}
+    {% set show_country = (country_config != 'hidden') %}
+    {% set postal_code_optional_placeholder = (postal_code_config == 'optional') ? config.lang.checkout_optional : '' %}
+    {% set show_postal_code = (postal_code_config != 'hidden') %}
+    {% set city_optional_placeholder = (city_config == 'optional') ? config.lang.checkout_optional : '' %}
+    {% set show_city = (city_config != 'hidden') %}
+    {% set region_optional_placeholder = (region_config == 'optional') ? config.lang.checkout_optional : '' %}
+    {% set show_region = (region_config != 'hidden') %}
+{% endif %}
+{% if config.template_config.postal_code_lookup.usage == 'none' or show_postal_code == false %}
+    {% set country_supports_postalcode_search = false %}
+{% endif %}
+
 {% set postal_search_button = "--with-search" %}
 
 {# Used to set border-radius on zip-input #}
@@ -20,32 +39,18 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
 {% if country_supports_postalcode_search %}
 {% set field_name = address.prefix~"_postal_code" %}
 {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-<div class="fc-form-group fc-form-group--multiple-inline {% if error_string %} fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+<div class="fc-form-group fc-form-group--multiple-inline{% if address.city_options|length > 0 %}{% else %} fc-container--postal-code-actions--search{% endif %} {% if error_string %} fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
     <div class="fc-container__grid--postal-code">
         {# TODO: change the type to phone if country has numeric postcodes (like US) #}
-        {# TODO: change placeholder text #}
         <label for="{{ field_name }}" class="fc-form-label--postal-code">{{ getPostalCodeLabel(address.country) }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
             value="{{address.postal_code }}"
-            placeholder="{{ getPostalCodeLabel(address.country) }}"
+            placeholder="{{ getPostalCodeLabel(address.country) }}{{ postal_code_optional_placeholder }}"
             autocomplete="{{ address.type }} postal-code"
             class="fc-form-control fc-form-control--postal-code fc-form-control--postal-code{{postal_search_button}} "
             />
-        {# TODO: handle error validation by updating the JSON error messages directly #}
-        {#
-        {% if _context[address.prefix~'_postal_code_is_empty'] %}
-        <div class="alert alert-danger">
-            {{ config.lang.checkout_error_postal_code }}
-        </div>
-        {% endif %}
-        {% if _context[address.prefix~'_postal_code_is_incorrect'] %}
-        <div class="alert alert-danger">
-            {{ config.lang.checkout_error_invalid_postal_code }}
-        </div>
-        {% endif %}
-        #}
     </div>
     <div class="fc-container__grid--postal-code-actions" data-fc-id="block-{{ address.prefix }}-postal-code-actions">
         {#
@@ -98,7 +103,11 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
     {% if error_string %}
         <div class="fc-container__grid--postal-code-errors">
             <div class="fc-alert fc-alert--danger">
-                {{ config.lang.cart_error_postal_code }}
+                {% if error_string == '<p>invalid</p>' %}
+                    {{ config.lang.cart_error_postal_code_lookup }}
+                {% else %}
+                    {{ config.lang.cart_error_postal_code }}
+                {% endif %}
             </div>
         </div>
     {% endif %}
@@ -107,23 +116,27 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
 
 {# If the postalcode->city+region lookup doesn't yield results, or if the customer selects "other", display visible inputs. Else, they're hidden and populated from javascript and the postalcode lookup functionality. #}
 {% if _context['show_'~address.prefix~'_city_inputs'] or not country_supports_postalcode_search %}
-<div class="fc-form-group fc-form-group--multiple-inline fc-postal-code__manual-inputs">
+<div class="fc-form-group {% if show_city and show_region %}fc-form-group--multiple-inline {% endif %}fc-postal-code__manual-inputs">
     {% set field_name = address.prefix~"_city" %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+    {% if show_city %}
     <div class="fc-container__grid--city {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
         <label for="{{ field_name }}" class="fc-form-label--city">{{ config.lang.checkout_city }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
             value="{{ address.city }}"
-            placeholder="{{ config.lang.checkout_city }}"
+            placeholder="{{ config.lang.checkout_city }}{{ city_optional_placeholder }}"
             autocomplete="{{ address.type }} locality"
             class="fc-form-control fc-form-control--city" />
     </div>
+    {% endif %}
+    {% if show_region %}
     <div class="fc-container__grid--region" data-fc-container-for="{{ address.prefix }}_region">
         <!-- TODO: change placeholder based on country -->
         {% include "regions.inc.twig" with {'location_type': 'region'} %}
     </div>
+    {% endif %}
 </div>
 {% else %}
     <input type="hidden"
@@ -136,9 +149,10 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
 
 {# If postalcode search is _not_ supported for the current country, display city+region text inputs first, then postalcode + country second. #}
 {% if not country_supports_postalcode_search %}
-<div class="fc-form-group fc-form-group--multiple-inline fc-postal-code-entry__without-search">
+<div class="fc-form-group {% if show_country and show_postal_code %}fc-form-group--multiple-inline{% endif %} fc-postal-code-entry__without-search">
     {% set field_name = address.prefix~"_postal_code" %}
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+    {% if show_postal_code %}
     <div class="fc-container__grid--postal-code  {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
         <!-- TODO: change the type to phone if country has numeric postcodes (like US) -->
         <label for="{{ field_name }}" class="fc-form-label--postal-code">{{ config.lang.checkout_location_zipcode }}</label>
@@ -146,30 +160,20 @@ Be sure to reimplement the template_config stuff for showing and hiding fields. 
             id="{{ field_name }}"
             name="{{ field_name }}"
             value="{{ address.postal_code }}"
-            placeholder="{{ config.lang.checkout_location_zipcode }}"
+            placeholder="{{ getPostalCodeLabel(address.country) }}{{ postal_code_optional_placeholder }}"
             autocomplete="{{ address.type }} postal-code"
             class="fc-form-control fc-form-control--postal-code" />
-        {# TODO: handle error validation by updating the JSON error messages directly #}
-        {#
-        {% if _context[address.prefix~'_postal_code_is_empty'] %}
-        <div class="alert alert-danger">
-            {{ config.lang.checkout_error_postal_code }}
-        </div>
-        {% endif %}
-        {% if _context[address.prefix~'_postal_code_is_incorrect'] %}
-        <div class="alert alert-danger">
-            {{ config.lang.checkout_error_invalid_postal_code }}
-        </div>
-        {% endif %}
-        #}
     </div>
+    {% endif %}
+    {% if show_country %}
     <div class="fc-container__grid--region">
         {% include "regions.inc.twig" with {'location_type': 'country'} %}
     </div>
+    {% endif %}
 </div>
 {% endif %}
 
-{% if country_supports_postalcode_search %}
+{% if country_supports_postalcode_search and show_country %}
 <div class="fc-form-group fc-postal-code-entry__with-search">
     <div class=" fc-container__grid--region" data-fc-container-for="{{ address.prefix }}_country">
         {% include "regions.inc.twig" with {'location_type': 'country' } %}

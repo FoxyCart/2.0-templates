@@ -200,6 +200,12 @@
             {{ utils.shipping_results(address, 'fc-input-group--full-page', messages.errors, config.lang) }}
         {% endif %}
         <input
+            id="{{ address.prefix }}_shipping_service_description"
+            type="hidden"
+            name="{{ address.prefix }}_shipping_service_description"
+            value="{{ address.shipping_service_description }}"
+        />
+        <input
             id="{{ address.prefix }}_subtotal"
             type="hidden"
             name="{{ address.prefix }}_subtotal"
@@ -215,7 +221,7 @@
             id="{{ address.prefix }}_tax_total"
             type="hidden"
             name="{{ address.prefix }}_tax_total"
-            value="{{ address.checkout_total_tax }}"
+            value="{{ address.total_tax }}"
         />
         <input
             id="{{ address.prefix }}_total"
@@ -231,10 +237,4 @@
         {% endif %}
         </div>
     {% endif %}
-
-    {# TODO: figure the following out
-    <button id="fc-btn-continue-to-billing" type="button" class="btn btn-default btn-block visible-xs">{{ config.lang.checkout_continue_to }} {{ config.lang.checkout_billing_address }}</button>
-    <button id="fc-btn-continue-to-{{ address.type }}-method" type="button" class="btn btn-default btn-block visible-xs">{{ config.lang.checkout_continue_to }} {{ config.lang['checkout_'~address.type~'_method'] }}</button>
-    <button id="fc-btn-continue-to-" type="button" class="btn btn-default btn-block visible-xs">{{ config.lang.checkout_continue_to }} {{ config.lang.checkout_payment_method }}</button>
-    #}
 </fieldset>

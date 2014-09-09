@@ -49,11 +49,13 @@
 {{ future_shipping_handling_label|pad(24) }} {{ future_shipping_and_handling|money_format }}
 {% endif %}
 {% if has_taxes %}
-{% for tax in taxes %}
-{% if tax.amount > 0 %}
-{{ tax.description_text|pad(24) }} {{ tax.amount|money_format }}
-{% endif %}
+{% if has_multiship %}
+{{ config.lang.cart_tax|pad(24) }} {{ total_tax|money_format }}
+{% else %}
+{% for tax in shipping_address.taxes %}
+{{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|pad(24) }} {{ tax.amount|money_format }}
 {% endfor %}
+{% endif %}
 {% endif %}
 {{ config.lang.cart_order_total|pad(24) }} {{ total_order|money_format }}
 

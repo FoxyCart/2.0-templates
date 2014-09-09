@@ -1,32 +1,60 @@
-    {{ address.first_name }} {{ address.last_name }}
-{% if address.company != '' %}
+{% set show_address1 = true %}
+{% set show_address2 = true %}
+{% set show_city = true %}
+{% set show_region = true %}
+{% set show_postal_code = true %}
+{% set show_country = true %}
+{% if address.type == 'billing' %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_address1'] == 'hidden' %}
+        {% set show_address1 = false %}
+    {% endif %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_address2'] == 'hidden' %}
+        {% set show_address2 = false %}
+    {% endif %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_city'] == 'hidden' %}
+        {% set show_city = false %}
+    {% endif %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_region'] == 'hidden' %}
+        {% set show_region = false %}
+    {% endif %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_postal_code'] == 'hidden' %}
+        {% set show_postal_code = false %}
+    {% endif %}
+    {% if config.template_config.custom_checkout_field_requirements['billing_country'] == 'hidden' %}
+        {% set show_country = false %}
+    {% endif %}
+{% endif %}
+{% if address.first_name or address.last_name %}
+    {% if address.first_name %}{{ address.first_name }}{% endif %}{% if address.last_name %} {{ address.last_name }}{% endif %}
+{% endif %}
+{% if address.company %}
     {{ address.company }}
 {% endif %}
-{% if  address.address1 != '' %}
+{% if address.address1 and show_address1 %}
     {{ address.address1 }}
 {% endif %}
-{% if  address.address2 != '' %}
+{% if address.address2 and show_address2 %}
     {{ address.address2 }}
 {% endif %}
 {% if address.country_name == 'United States' %}
-    {{ address.city }}, {{ address.region }} {{ address.postal_code }}
+    {% if address.city and show_city %}{{ address.city }}{% endif %}{% if address.region and show_region %}{% if address.city and show_city %}, {% endif %}{{ address.region }}{% endif %}{% if address.postal_code and show_postal_code %} {{ address.postal_code }}{% endif %}
 {% else %}
-{% if address.city != '' %}
+{% if address.city and show_city %}
     {{ address.city }}
 {% endif %}
-{% if address.region != '' %}
+{% if address.region and show_region %}
     {{ address.region }}
 {% endif %}
-{% if address.postal_code != '' %}
+{% if address.postal_code and show_postal_code %}
     {{ address.postal_code }}
 {% endif %}
 {% endif %}
-{% if address.country_name != '' %}
+{% if address.country_name and show_country %}
     {{ address.country_name }}
 {% endif %}
-{% if geoip != '' %}
+{% if geoip %}
     {{ geoip }}
 {% endif %}
-{% if address.phone != '' %}
+{% if address.phone %}
     {{ address.phone }}
 {% endif %}

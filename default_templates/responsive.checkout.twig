@@ -1,19 +1,28 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]>      <html id="fc" class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html id="fc" class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html id="fc" class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html id="fc" class="no-js"> <!--<![endif]-->
+<html id="fc">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
     <title>{{ config.store_name }} Secure Checkout</title>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimal-ui">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimal-ui">
 
-    <link href="//cdn.foxycart.com/{{ config.store_domain|replace({'.foxycart.com': ''}) }}/responsive_styles.css" rel="stylesheet" media="screen">
+    <!--[if lt IE 9 ]>
+        <script type="text/javascript">
+            var IEElms = ['article', 'aside', 'header', 'main', 'nav', 'section'];
+            for (var i = 0; i < IEElms.length; i++) {
+                document.createElement(IEElms[i]);
+            };
+        </script>
+    <![endif]-->
+
+    <link href="{{ config.css_file }}" rel="stylesheet" media="screen">
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
+    <!--[if lt IE 9 ]>
+        <script src="//{{ config.store_domain }}/static/scripts/respond/respond.1.4.2.js" charset="utf-8"></script>
+    <![endif]-->
 </head>
 <body>
 <!-- has to be here because of chrome bug -->
@@ -24,9 +33,6 @@
     {{ block('checkout') }}
 
 
-    <!-- TODO: IE8 support -->
-    <!-- Add media query support to IE8 and prior. https://github.com/scottjehl/Respond -->
-    <!--[if lt IE 8]><script src="js/respond.min.js"></script><![endif]-->
     <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
 </body>
 </html>
