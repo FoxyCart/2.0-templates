@@ -292,7 +292,7 @@
                             <div class="fc-cart__item__total">
                                 {% if item.parent_code == '' or (item.parent_code != '' and item.price > 0) %}
                                 <p>
-                                    {{ item.price|money_format }}{% if (((item.price * 1000) % 10) != 0) %}...<br />{{ item.price }}{% endif %}
+                                    {{ item.price|money_format }}{% if (((item.price * 1000) % 10) != 0) %}<span title="{{ item.price }}">…</span>{% endif %}
                                 </p>
                                 {% endif %}
                             </div>
@@ -300,7 +300,7 @@
                             <div class="fc-cart__item__price">
                                 {% if item.quantity != 1 %}
                                 <p class="fc-cart__item__price__each">
-                                    {{ item.price_each|money_format }}{% if (((item.price_each * 1000) % 10) != 0) %}…{{ item.price_each }}{% endif %}
+                                    {{ item.price_each|money_format }}{% if (((item.price_each * 1000) % 10) != 0) %}<span title="{{ item.price_each }}">…</span>{% endif %}
                                     <small>
                                         {{ config.lang.cart_each }}
                                     </small>
