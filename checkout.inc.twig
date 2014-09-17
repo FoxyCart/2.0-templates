@@ -297,9 +297,9 @@ TODO:
     {% endif %}
 
     {# SHIPPING METHOD ===================================================== #}
-    {% if shipping_address.has_live_rate_shippable_products or shipping_address.shipping_results|length > 0 %}
-        {% if not has_multiship %}
+    {% if shipping_address.has_shippable_products and not has_multiship %}
         <section data-fc-id="block-shipping-results" class="fc-checkout__section--shipping-results">
+        {% if shipping_address.has_live_rate_shippable_products or shipping_address.shipping_results|length > 0 %}
             <fieldset data-fc-id="shipping-results">
                 <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_shipping_method }}</legend>
 
@@ -325,19 +325,18 @@ TODO:
                 </div>
                 {% endif %}
             </fieldset>
-            <input
-                id="shipping_service_description"
-                type="hidden"
-                name="shipping_service_description"
-                value="{{ shipping_address.shipping_service_description }}"
-            />
-            {% if config.template_config.custom_script_values.multiship_checkout_fields %}
-                {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
-            {% endif %}
-        </section><!-- data-fc-id="block-shipping-results" -->
         {% endif %}
+        <input
+            id="shipping_service_description"
+            type="hidden"
+            name="shipping_service_description"
+            value="{{ shipping_address.shipping_service_description }}"
+        />
+        {% if config.template_config.custom_script_values.multiship_checkout_fields %}
+            {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
+        {% endif %}
+        </section><!-- data-fc-id="block-shipping-results" -->
     {% endif %}
-
 
 
     {# PAYMENT METHOD ===================================================== #}
