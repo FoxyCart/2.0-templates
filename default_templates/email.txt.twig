@@ -56,9 +56,9 @@
 {% if custom_fields|length > 0 %}
 
 {% for key,custom_field in custom_fields %}
-    {% if not custom_field.is_hidden %}
-  * {{ key|pad(20) }} {{ custom_field.value }}
-    {% endif %}
+{% if not custom_field.is_hidden %}
+  * {{ key|pad(20)|replace({'_': ' '})|title }} {{ custom_field.value }}
+{% endif %}
 {% endfor %}
 {% endif %} {# has custom fields #}
 {% endif %} {# is not update info #}
@@ -81,9 +81,9 @@
 
 {% if multiship.custom_fields|length > 0 %}
 {% for key,custom_field in multiship.custom_fields %}
-    {% if not custom_field.is_hidden %}
-  * {{ key|pad(20) }}: {{ custom_field.value }}
-    {% endif %}
+{% if not custom_field.is_hidden %}
+  {{ key|pad(20)|replace({'_': ' '})|title }} {{ custom_field.value }}
+{% endif %}
 {% endfor %}{# multiship #}
 {% endif %}{# has multiship custom fields #}
 {% if not is_updateinfo %}

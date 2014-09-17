@@ -331,6 +331,9 @@ TODO:
                 name="shipping_service_description"
                 value="{{ shipping_address.shipping_service_description }}"
             />
+            {% if config.template_config.custom_script_values.multiship_checkout_fields %}
+                {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
+            {% endif %}
         </section><!-- data-fc-id="block-shipping-results" -->
         {% endif %}
     {% endif %}

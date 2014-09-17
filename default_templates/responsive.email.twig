@@ -331,6 +331,14 @@
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_shipto }}<span class="fc_shipto_name" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ multiship.address_name }}</span></h3>
                                                             {% include "address.email.inc.twig" with {'address': multiship} %}
 
+                                                            {% if multiship.custom_fields %}
+                                                                {% for key,custom_field in multiship.custom_fields %}
+                                                                {% if not custom_field.is_hidden %}
+                                                                    <strong class="fc-custom-field" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;">{{ key|replace({'_': ' '})|title }}:</strong> {{ custom_field.value }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            {% endif %}
+
                                                             {{ config.lang.checkout_subtotal }}: {{ multiship.total_item_price|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
 
                                                             {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
