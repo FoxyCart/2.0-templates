@@ -89,10 +89,10 @@
 {% if not is_updateinfo %}
     {{ config.lang.cart_subtotal }}: {{ multiship.total_item_price|money_format }}
 {% endif %}
-{% if multiship.has_live_rate_shippable_products %}
+{% if multiship.has_shippable_products %}
+{% if multiship.shipping_service_description %}
     {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}
 {% else %}
-{% if multiship.has_shippable_products %}
     {{ shipping_and_handling_label }}: {{ multiship.total_shipping|money_format }}
 {% endif %}
 {% endif %}
@@ -100,7 +100,7 @@
 {% for tax in multiship.taxes %}
     {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax }}: {{ tax.amount|money_format }}
 {% endfor %}
-    {{ config.lang.email_group_total }}: {{ multiship.total_price|money_format }}
+    {{ config.lang.checkout_shipment_total }}: {{ multiship.total_price|money_format }}
 {% endif %}
 {% endfor %}{# multishp for loop #}
 {% else %}{# multiship #}
