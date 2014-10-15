@@ -7,25 +7,6 @@
     {% endif %}
     </legend>
 
-    {% if address.type == 'billing' and has_multiship %}
-        <div class="fc-form-group--multiship-select fc-form-group">
-            <label class="fc-form-label fc-container__grid--label--multiship-select" for="multiship_address_select">
-                {{ config.lang.checkout_multiship_use_address }}
-            </label>
-            <div class="fc-container__grid--input--multiship-select">
-                <select class="fc-form-control fc-form-control--multiship-select" data-fc-id="multiship-address-select" id="multiship_address_select">
-                    <option value="">{{ config.lang.checkout_multiship_new_address }}</option>
-                    {% for multiship in multiship_data %}
-                    <option
-                        value="{{ multiship.number }}"
-                        {{ selected(multiship.address_name, address.address_source) }}
-                        >{{ multiship.address_name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-        </div>
-    {% endif %}
-
     {% set show_first_name = true %}
     {% set show_last_name = true %}
     {% set first_name_optional_placeholder = '' %}
@@ -193,10 +174,18 @@
     {% if address.type == 'shipping' and has_multiship %}
         <div data-fc-id="block-{{ address.prefix }}-results" class="fc-shipping-results">
         {% if address.shipping_results|length > 0 %}
-            {# TODO: move it to the language file #}
-            <div class="fc-shipping-results__header">
-                <h4>{{ config.lang.checkout_shipping_methods_for }} {{ address.address_name }}</h4>
+        <div class="fc-shipping-results__header">
+            <h4>{{ config.lang.checkout_shipping_methods_for }} {{ address.address_name }}</h4>
+        </div>
+        {% endif %}
+        {% if address.loading_shipping_results %}
+            <div class="fc-spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
             </div>
+        {% endif %}
+        {% if address.shipping_results|length > 0 %}
             {{ utils.shipping_results(address, 'fc-input-group--full-page', messages.errors, config.lang) }}
         {% endif %}
         <input
@@ -229,7 +218,7 @@
             name="{{ address.prefix }}_total"
             value="{{ address.total_price }}"
         />
-        {% set error_string = utils.get_error_string('shipping-results',messages.errors) %}
+        {% set error_string = utils.get_error_string(address.prefix~'-results',messages.errors) %}
         {% if error_string %}
         <div class="fc-alert fc-alert--danger">
             {{ error_string }}

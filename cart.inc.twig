@@ -110,7 +110,7 @@
     {% endif %}
         {% block cart_form_start %}
         {% if config.with_controls %}
-        <form id="fc-cart-form" action="https://{{ config.store_domain }}{{ config.post_url }}" method="post">
+        <form id="fc-cart-form" action="https://{{ config.store_domain }}/cart" method="post">
             {% block cart_hidden_inputs %}
             <input type="hidden" name="cart" value="update" />
             <input type="hidden" name="item_count" value="{{ items|length }}" />
@@ -355,7 +355,7 @@
 
             <div data-fc-id="block-address-entry">
             {% block address_entry %}
-            {% if context == 'cart' and not has_multiship %}
+            {% if context == 'cart' and not has_multiple_addresses %}
                 {% if show_address_entry %}
                 <div class="fc-address-entry">
                     <h4>
@@ -379,7 +379,7 @@
 
                     <div data-fc-id="block-shipping-results">
                     {% block shipping_results %}
-                        {% if loading_shipping_results %}
+                        {% if shipping_address.loading_shipping_results %}
                             <div class="fc-spinner">
                               <div class="bounce1"></div>
                               <div class="bounce2"></div>
@@ -482,7 +482,7 @@
                                 {{ coupon.name }}: {{ key }}
                                 {% if enable_coupon_controls %}
                                 <span class="fc-action--close">
-                                    <a href="https://{{ config.store_domain }}{{ config.post_url }}?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
+                                    <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
                                         <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
                                     </a>
                                 </span>
@@ -498,7 +498,7 @@
 
                 {% if shipping_address.has_shippable_products %}
                 <li class="fc-transaction__shipping fc-transaction__section">
-                    {% if context == 'cart' and not has_multiship %}
+                    {% if context == 'cart' and not has_multiple_addresses %}
                         <div class="fc-transaction__ui">
                             <h5 class="fc-transaction__ui__header">{{ config.lang.cart_shipping_to }}</h5>
                             {% if shipping_address.country and shipping_address.city and show_address_entry == false %}
@@ -552,7 +552,7 @@
                 {% if has_taxes %}
                 <li class="fc-transaction__taxes fc-transaction__section">
                 {% set show_tax_header = false %}
-                {% if has_multiship %}
+                {% if has_multiple_addresses %}
                     {% for multiship in multiship_data %}
                         {% if multiship.taxes|length > 0 %}
                             {% set show_tax_header = true %}
@@ -581,7 +581,7 @@
                     <table>
                         <tbody data-fc-id="taxes" class="fc-subtotal--taxes">
                         {% block taxes %}
-                        {% if has_multiship %}
+                        {% if has_multiple_addressesship %}
                             {% if context == 'checkout' %}
                                 {% for multiship in multiship_data %}
                                     {% for tax in multiship.taxes %}
@@ -638,7 +638,7 @@
                 </li>
             </ul>
 
-            {% if context == "checkout" and has_multiship %}
+            {% if context == "checkout" and has_multiple_addresses %}
             <div class="fc-transaction fc-transaction--multiship">
                 <button type="button" class="fc-button fc-transaction__ui__toggle" data-fc-id="button-toggle-multiship-details">{{ config.lang.cart_details }}</button>
                 {% for multiship in multiship_data %}

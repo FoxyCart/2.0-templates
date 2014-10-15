@@ -64,7 +64,7 @@ TODO:
     {% endblock noscript_warning %}
 
 
-    <form method="post" class="fc-checkout__main__form" data-fc-id="checkout-form" action="https://{{ config.store_domain }}{{ config.post_url }}" role="form">
+    <form method="post" class="fc-checkout__main__form" data-fc-id="checkout-form" action="https://{{ config.store_domain }}/checkout" role="form">
         {# A trap to catch webkit's overagressive autofill. #}
         <div style="position: absolute; top: -100px; opacity: 0;"><input type="text" name="email_dummy" data-fc-dummy tabindex="-1"/><input type="password" name="password_dummy" data-fc-dummy tabindex="-1"/></div>
 
@@ -106,7 +106,7 @@ TODO:
             {% set message_class = 'fc-alert-container--info' %}
         {% elseif email_is_valid and email_is_found %}
             {% set message_class = 'fc-alert-container--success' %}
-        {% elseif not email_is_valid %}
+        {% elseif (email_check_timeout or not email_is_valid) %}
             {% set message_class = 'fc-alert-container--error' %}
         {% else %}
             {% set message_class = '' %}
@@ -143,7 +143,6 @@ TODO:
                               <div class="bounce3"></div>
                             </div>
                         </div>
-
                     {% elseif email_is_found %}
                         <div class="fc-alert fc-alert--success{% if authentication_is_not_successful %} fc-alert-container--error{% endif %}" data-fc-error-for="customer_password" data-fc-error-class="fc-alert-container--error" data-fc-messaging-for="customer_email">
                             <p>{{ config.lang.checkout_as_returning_customer }}</p>
@@ -230,6 +229,10 @@ TODO:
                             <p>{{ config.lang.checkout_updateinfo_email_not_found }}</p>
                         </div>
                         {% endif %}
+                    {% elseif email_check_timeout %}
+                        <div class="fc-alert fc-alert--danger">
+                            <button data-fc-id="checkout-timeout-retry-link" type="button" class="fc-button-link">{{ config.lang.checkout_check_email_timeout }}</button>
+                        </div>
                     {% endif %}
                     {# email not found, do nothing #}
                 {% endif %}
@@ -267,19 +270,15 @@ TODO:
         {% block customer_shipping %}
             {% if not has_multiship %}
                 {% include "address.checkout.inc.twig" with {'address': shipping_address} %}
-                {% if show_billing_address %}
-                    {{ utils.use_different_addresses(use_different_addresses, config.lang) }}
-                {% else %}
-                    <input type="hidden" id="use_different_addresses" name="use_different_addresses" value="0" />
-                {% endif %}
             {% else %}
                 {% for multiship in multiship_data %}
                     {% include 'address.checkout.inc.twig' with {'address': multiship} %}
-                    {% if MULTISHIP_PREVIOUSLY_USED_SHIPTOS_EXIST %}
-                        {# previously used addresses select box #}
-                    {% endif %}
-                    {# Subtotal (shipto subtotal + shipping + tax) #}
                 {% endfor %}
+            {% endif %}
+            {% if show_billing_address and multiship_show_use_different_addresses %}
+                {{ utils.use_different_addresses(use_different_addresses, config.lang) }}
+            {% else %}
+                <input type="hidden" id="use_different_addresses" name="use_different_addresses" value="0" />
             {% endif %}
         {% endblock customer_shipping %}
         </section><!-- data-fc-id="block-customer-shipping" -->
@@ -289,7 +288,7 @@ TODO:
     {% if show_billing_address %}
     <section data-fc-id="block-customer-billing" class="fc-checkout__section--customer-billing-address">
     {% block customer_billing %}
-        {% if use_alternate_shipping_address or not shipping_address.has_shippable_products or has_multiship %}
+        {% if use_alternate_shipping_address or not shipping_address.has_shippable_products %}
             {% include "address.checkout.inc.twig" with {'address': billing_address} %}
         {% endif %}
     {% endblock customer_billing %}
@@ -303,7 +302,7 @@ TODO:
             <fieldset data-fc-id="shipping-results">
                 <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_shipping_method }}</legend>
 
-                {% if loading_shipping_results %}
+                {% if shipping_address.loading_shipping_results %}
                     <div class="fc-spinner">
                       <div class="bounce1"></div>
                       <div class="bounce2"></div>
