@@ -20,10 +20,9 @@
     {% use 'receipt.inc.twig' %}
     {{ block('receipt') }}
 
-
-    <!-- TODO: IE8 support -->
-    <!-- Add media query support to IE8 and prior. https://github.com/scottjehl/Respond -->
-    <!--[if lt IE 8]><script src="js/respond.min.js"></script><![endif]-->
+    <!--[if lt IE 9 ]>
+        <script src="{{ config.cdn_static_path }}scripts/respond/respond.1.4.2.js" charset="utf-8"></script>
+    <![endif]-->
     <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
 </body>
 </html>
