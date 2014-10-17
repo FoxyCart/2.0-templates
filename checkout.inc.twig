@@ -117,14 +117,14 @@ TODO:
             <div class="fc-container__grid--input--customer-email{% if error_string %} fc-alert-container--error{% endif %}" data-fc-error-for="customer_email" data-fc-error-class="fc-alert-container--error">
         {% if not customer_is_authenticated %}
             {# Not SSO authenticated #}
-            <label for="customer_email" class="fc-form-label--customer-email">{{ config.lang.email_email }}</label>
+            <label for="customer_email" class="fc-form-label fc-form-label--customer-email">{{ config.lang.email_email }}</label>
             <input type="email"
                 id="customer_email"
                 name="customer_email"
                 value="{{ customer_email }}"
                 placeholder="{{ config.lang.email_email }}"
                 autocomplete="off"
-                class="fc-form-control"
+                class="fc-form-control fc-form-control--customer-email"
                 {% if is_subscription_cancel %}
                 disabled
                 {% endif %}
@@ -147,7 +147,7 @@ TODO:
                         <div class="fc-alert fc-alert--success{% if authentication_is_not_successful %} fc-alert-container--error{% endif %}" data-fc-error-for="customer_password" data-fc-error-class="fc-alert-container--error" data-fc-messaging-for="customer_email">
                             <p>{{ config.lang.checkout_as_returning_customer }}</p>
                             <div class="fc-input-group">
-                                <label for="customer_password" class="fc-form-label--customer-password">{{ config.lang.checkout_password }}</label>
+                                <label for="customer_password" class="fc-form-label fc-form-label--customer-password">{{ config.lang.checkout_password }}</label>
                                 <input type="password"
                                     id="customer_password"
                                     name="customer_password"
@@ -367,9 +367,9 @@ TODO:
                                 autocomplete="off"
                                 class="fc-form-control--plastic-saved--checkbox fc-form-control"/>
                             {% if cc_type %}
-                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
+                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
                             {% else %}
-                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/visa.png" alt="visa" /></span>
                             {% endif %}
                             {{ config.lang.checkout_use_saved_payment_info }}
                             <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ cc_number_masked }}</span>
@@ -431,12 +431,12 @@ TODO:
                         {% for card_type in config.template_config.supported_payment_cards %}
                             <span class="fc-checkout__section--payment__method__logo
                             fc-checkout__section--payment__method__logo--{{ card_type }}">
-                                <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ card_type }}.png" alt="{{ card_type }}" />
+                                <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="//cdn.foxycart.com/static/images/payment_logos/{{ card_type }}.png" alt="{{ card_type }}" />
                             </span>
                         {% endfor %}
                         {% if has_saved_cc %}
                         {# Show the text only when there's a saved card #}
-                        {{ config.lang.checkout_enter_new_card }}
+                        <span class="fc-form-label--plastic-new__text">{{ config.lang.checkout_enter_new_card }}</span>
                         {% endif %}
                         </label>
                         {% if payment_method_type == 'plastic_new' %}
@@ -673,7 +673,7 @@ TODO:
 
                         {% elseif has_subscriptions == false %}
 
-                        <label data-fc-id="account-creation-label" class="fc-input-group-container__title fc-form-label">
+                        <label data-fc-id="account-creation-label" class="fc-input-group-container__title fc-form-label fc-form-label--create-account">
                             <input
                                 type="checkbox"
                                 name="create_account"
@@ -682,13 +682,13 @@ TODO:
                                 class="fc-form-control fc-form-control--create-account"
                                 {% if create_account %}checked{% endif %}
                                 />
-                            {{ config.lang.checkout_create_an_account }}
+                            <span class="fc-form-label--create-account--wrapper">{{ config.lang.checkout_create_an_account }}</span>
                         </label>
 
                         {% endif %}
 
                         {% if has_subscriptions or create_account or change_password or force_password_reset or checkout_type == 'account_only' %}
-                        <div class="fc-form-group">
+                        <div class="fc-form-group fc-form-group--create-account">
                             <p>{{ config.lang.checkout_no_account_enter_password }}</p>
                             {% if force_password_reset %}
                                 {# put some text here...? #}

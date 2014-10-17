@@ -166,7 +166,7 @@
     </div>
     {% endif %}
     {% if show_country %}
-    <div class="fc-container__grid--region">
+    <div class="fc-container__grid--country">
         {% include "regions.inc.twig" with {'location_type': 'country'} %}
     </div>
     {% endif %}
@@ -175,7 +175,7 @@
 
 {% if country_supports_postalcode_search and show_country %}
 <div class="fc-form-group fc-postal-code-entry__with-search">
-    <div class=" fc-container__grid--region" data-fc-container-for="{{ address.prefix }}_country">
+    <div class=" fc-container__grid--country" data-fc-container-for="{{ address.prefix }}_country">
         {% include "regions.inc.twig" with {'location_type': 'country' } %}
     </div>
 </div>
