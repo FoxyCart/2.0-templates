@@ -367,9 +367,9 @@ TODO:
                                 autocomplete="off"
                                 class="fc-form-control--plastic-saved--checkbox fc-form-control"/>
                             {% if cc_type %}
-                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
+                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
                             {% else %}
-                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/visa.png" alt="visa" /></span>
+                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
                             {% endif %}
                             {{ config.lang.checkout_use_saved_payment_info }}
                             <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ cc_number_masked }}</span>
@@ -431,7 +431,7 @@ TODO:
                         {% for card_type in config.template_config.supported_payment_cards %}
                             <span class="fc-checkout__section--payment__method__logo
                             fc-checkout__section--payment__method__logo--{{ card_type }}">
-                                <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="//cdn.foxycart.com/static/images/payment_logos/{{ card_type }}.png" alt="{{ card_type }}" />
+                                <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ card_type }}.png" alt="{{ card_type }}" />
                             </span>
                         {% endfor %}
                         {% if has_saved_cc %}
