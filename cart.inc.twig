@@ -348,7 +348,7 @@
                 {% if config.store_logo_url %}
                 <img id="fc-logo" class="fc-logo__image" src="{{ config.cache_path }}{{ config.store_logo_url }}" alt="{{ config.store_name }}">
                 {% else %}
-                <h1 id="fc-logotype" class="fc-logo__text">{{ config.store_name }}</h1>
+                <h1 id="fc-logotype" class="fc-logotype">{{ config.store_name }}</h1>
                 {% endif %}
             </div>
             {% endblock logo %}
