@@ -243,11 +243,13 @@ TODO:
             {% endif %}
         {% else %}{# customer_is_authenticated #}
             {# Is SSO authenticated, email is readonly #}
-            {{ customer_email }}
             {# Why do we need a hidden email field below?
             If we use it for setting the email, it's unsafe. #}
             <input type="hidden" name="customer_email" id="customer_email" value="{{ customer_email }}" />
-            {{ config.lang.checkout_sso_already_logged_in }}
+            <div class="fc-alert fc-alert--success">
+                <p>{{ customer_email }}</p>
+                <p>{{ config.lang.checkout_sso_already_logged_in }}</p>
+            </div>
         {% endif %}
 
             </div>
