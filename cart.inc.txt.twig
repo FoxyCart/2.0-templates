@@ -1,6 +1,15 @@
 {# BEGIN CART TWIG TEMPLATE #}
 {{ config.lang.email_text_cart|pad(60,"-"," ") }}
-
+{% set show_product_options = true %}
+{% set show_product_weight = true %}
+{% set show_product_category = true %}
+{% set show_product_code = true %}
+{% if config.template_config.cart_display_config.usage != "none" %}
+    {%- set show_product_options = config.template_config.cart_display_config.show_product_options -%}
+    {%- set show_product_weight = config.template_config.cart_display_config.show_product_weight -%}
+    {%- set show_product_category = config.template_config.cart_display_config.show_product_category -%}
+    {%- set show_product_code = config.template_config.cart_display_config.show_product_code -%}
+{% endif %}
 {% for item in items %}
 {% if item.multiship >= 0 %}
 
@@ -9,23 +18,25 @@
 
 {% endif %}
 {{ item.name }}
+{% if show_product_options %}
 {% for option in item.options %}
   * {{ option.name|pad(15) }} {{ option.value }}
 {% endfor %}
-{% if item.code != '' %}
+{% endif %}
+{% if item.code != '' and show_product_code %}
   * {{ config.lang.cart_code|pad(15) }} {{ item.code }}
 {% endif %}
-{% if item.category != 'DEFAULT' %}
+{% if item.category != 'DEFAULT' and show_product_category %}
   * {{ config.lang.cart_category|pad(15) }} {{ item.category }}
 {% endif %}
-{% if item.weight != 0 %}
+{% if item.weight != 0 and show_product_weight %}
   * {{ config.lang.cart_weight|pad(15) }} {{ item.weight }} {{ weight_uom }}
 {% endif %}
 {% if item.sub_frequency != '' %}
   * {{ config.lang.cart_subscription_details }}
       - {{ config.lang.cart_frequency|pad(11) }} {{ item.sub_frequency }}
       - {{ config.lang.cart_start_date|pad(11) }} {{ item.sub_startdate }}
-      - {{ config.lang.cart_next_date|pad(11) }} {{ item.item.sub_nextdate }}
+      - {{ config.lang.cart_next_date|pad(11) }} {{ item.sub_nextdate }}
 {% if item.sub_enddate != "0000-00-00" %}
       - {{ config.lang.cart_end_date|pad(11) }} {{ item.sub_enddate }}
 {% endif %}
