@@ -42,7 +42,7 @@
 <div class="fc-form-group fc-form-group--multiple-inline{% if address.city_options|length > 0 %}{% else %} fc-container--postal-code-actions--search{% endif %} {% if error_string %} fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
     <div class="fc-container__grid--postal-code">
         {# TODO: change the type to phone if country has numeric postcodes (like US) #}
-        <label for="{{ field_name }}" class="fc-form-label--postal-code">{{ getPostalCodeLabel(address.country) }}</label>
+        <label for="{{ field_name }}" class="fc-form-label fc-form-label--postal-code">{{ getPostalCodeLabel(address.country) }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
@@ -74,7 +74,7 @@
         {% elseif address.city_options|length > 0 %}
         {% set field_name = address.prefix~"_city_options" %}
         <div class="fc-postal-code-entry__city-state-options" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-            <label for="{{ field_name }}" class="fc-form-label--city-options">{{ config.lang.checkout_location_province }}</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--city-options">{{ config.lang.checkout_location_province }}</label>
             <select class="fc-form-control fc-form-control--city-options" id="{{ field_name }}" data-fc-id="{{ field_name }}">
                 {% for city_option in address.city_options %}
                 {% set city_option_value = formatCityOption(city_option) %}
@@ -121,7 +121,7 @@
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     {% if show_city %}
     <div class="fc-container__grid--city {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-        <label for="{{ field_name }}" class="fc-form-label--city">{{ config.lang.checkout_city }}</label>
+        <label for="{{ field_name }}" class="fc-form-label fc-form-label--city">{{ config.lang.checkout_city }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
@@ -155,7 +155,7 @@
     {% if show_postal_code %}
     <div class="fc-container__grid--postal-code  {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
         <!-- TODO: change the type to phone if country has numeric postcodes (like US) -->
-        <label for="{{ field_name }}" class="fc-form-label--postal-code">{{ config.lang.checkout_location_zipcode }}</label>
+        <label for="{{ field_name }}" class="fc-form-label fc-form-label--postal-code">{{ config.lang.checkout_location_zipcode }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
