@@ -348,7 +348,7 @@ TODO:
             <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_payment_method }}</legend>
 
             {% if payment_info_required %}
-            <svg id="fc-icon-lock-large" class="fc-svg-icon hidden-xs hidden-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock-large" /></svg>
+            <svg id="fc-icon-lock-large" class="fc-svg-icon fc-svg-icon--lock hidden-xs hidden-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock-large" /></svg>
             {% endif %}
 
             {% if config.supports_pay_with_plastic and payment_info_required %}
@@ -380,9 +380,9 @@ TODO:
                             <input type="hidden" name="cc_exp_month_saved" id="cc_exp_month_saved" value="{{ cc_exp_month }}" />
                         </label>
 
-                        <svg class="fc-svg-icon visible-xs visible-sm" title="Secured Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
 
                         {% if payment_method_type == "plastic_saved" %}
+                            <svg class="fc-svg-icon fc-svg-icon--lock visible-xs visible-sm" title="Secured Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
                             <div class="fc-form-group">
                                 <label for="" class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration }}</label>
                                 <div class="fc-container__static--plastic-saved-expiration ">
@@ -452,7 +452,7 @@ TODO:
                                     placeholder="{{ config.lang.checkout_card_number }}"
                                     autocomplete="cc-number"
                                     class="fc-form-control fc-form-control--new-cc-number" />
-                                <svg class="fc-svg-icon fc-cc-icon visible-xs visible-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
+                                <svg class="fc-svg-icon fc-svg-icon--lock fc-cc-icon visible-xs visible-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
                             </div>
                         </div>
                         <div class="fc-form-group fc-form-group-multiple-inline">
@@ -676,7 +676,7 @@ TODO:
 
                         {% elseif has_subscriptions == false %}
 
-                        <label data-fc-id="account-creation-label" class="fc-input-group-container__title fc-form-label fc-form-label--create-account">
+                        <label data-fc-id="account-creation-label" class="fc-input-group-container__title fc-form-label">
                             <input
                                 type="checkbox"
                                 name="create_account"
@@ -685,13 +685,13 @@ TODO:
                                 class="fc-form-control fc-form-control--create-account"
                                 {% if create_account %}checked{% endif %}
                                 />
-                            <span class="fc-form-label--create-account--wrapper">{{ config.lang.checkout_create_an_account }}</span>
+                            {{ config.lang.checkout_create_an_account }}
                         </label>
 
                         {% endif %}
 
                         {% if has_subscriptions or create_account or change_password or force_password_reset or checkout_type == 'account_only' %}
-                        <div class="fc-form-group fc-form-group--create-account">
+                        <div class="fc-form-group">
                             <p>{{ config.lang.checkout_no_account_enter_password }}</p>
                             {% if force_password_reset %}
                                 {# put some text here...? #}
