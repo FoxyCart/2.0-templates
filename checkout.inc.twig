@@ -622,11 +622,13 @@ TODO:
                 {% include template_from_string(config.template_config.custom_script_values.checkout_fields) %}
             {% endif %}
 
-            {% if config.template_config.tos_checkbox_settings.usage != "none" %}
-            {# ToDo: Needs to take into account if the field is required or optional #}
+            {% if config.template_config.tos_checkbox_settings.usage != "none" and config.template_config.tos_checkbox_settings.url != '' %}
             <div class="fc-form-group">
                 {% set field_name = 'tos_agreement' %}
-                {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                {% set error_string = '' %}
+                {% if config.template_config.tos_checkbox_settings.usage == "required" %}
+                    {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                {% endif %}
                 <div class="fc-checkout__additional-field--tos {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
                     <div class="fc-input-group-container fc-input-group-container--checkbox">
                         <label class="fc-input-group-container__title fc-form-label fc-form-label--tos">
