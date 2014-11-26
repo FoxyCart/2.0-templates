@@ -19,6 +19,17 @@
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
     <!--[if lt IE 9 ]>
         <script src="{{ config.cdn_static_path }}scripts/respond/respond.1.4.2.js" charset="utf-8"></script>
+        <style>
+            #fc label.fc-form-label--with-placeholder {
+                display:block !important;
+                left:0 !important;
+                width:auto !important;
+                height:50px !important;
+                clip:auto !important;
+                position:relative !important;
+                text-align:left !important;
+            }
+        </style>
     <![endif]-->
 </head>
 <body class="fc-context--cart-fullpage" data-fc-context='{"cart_is_fullpage":true}'>
