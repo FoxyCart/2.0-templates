@@ -312,8 +312,14 @@ TODO:
                     </div>
                 {% endif %}
 
+                {% set id_error_string = utils.get_error_string('shipping_service_id', messages.errors) %}
+
                 {% if shipping_address.shipping_results|length > 0 %}
                     {{ utils.shipping_results(shipping_address, "fc-input-group--full-page", messages.errors, config.lang) }}
+                {% elseif id_error_string %}
+                    <div class="fc-alert fc-alert--danger">
+                        {{ config.lang.checkout_update_shipping_message }}
+                    </div>
                 {% else %}
                     <h5 class="fc_checkout__shipping-results__help-text">{{ config.lang.checkout_update_shipping_message }}</h5>
                 {% endif %}
@@ -325,6 +331,7 @@ TODO:
                     {{ error_string }}
                 </div>
                 {% endif %}
+
             </fieldset>
         {% endif %}
         <input
