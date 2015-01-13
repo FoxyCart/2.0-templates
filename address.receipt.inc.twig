@@ -34,7 +34,7 @@
 {% endif %}
 {% if (show_first_name or show_last_name) and (address.first_name or address.last_name) %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--name">
-    <label class="fc-form-label fc-container__grid--static-label--name">{{ config.lang.checkout_name }}</label>
+    <label class="fc-form-label fc-container__grid--static-label--name">{{ config.lang.checkout_name|raw }}</label>
     <div class="fc-container__grid--static-input--name">
         <p class="fc-form-control--static">{{ address.first_name }} {{ address.last_name }}</p>
     </div>
@@ -43,7 +43,7 @@
 
 {% if address.company %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--company">
-    <label class="fc-form-label fc-container__grid--static-label--company">{{ config.lang.checkout_company }}</label>
+    <label class="fc-form-label fc-container__grid--static-label--company">{{ config.lang.checkout_company|raw }}</label>
     <div class="fc-container__grid--static-input--company">
         <p class="fc-form-control--static">{{ address.company }}</p>
     </div>
@@ -52,7 +52,7 @@
 
 {% if (show_address1 or show_address2 or show_city or show_region or show_postal_code) and (address.city or address.region or address.postal_code or address.address1 or address.address2) %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--address">
-    <label class="fc-form-label fc-container__grid--static-label--address">{{ config.lang.checkout_address }}</label>
+    <label class="fc-form-label fc-container__grid--static-label--address">{{ config.lang.checkout_address|raw }}</label>
     {% if (show_address1 or show_address2) and (address.address1 or address.address2) %}
     <div class="fc-container__grid--static-input--address">
         <p class="fc-form-control--static">
@@ -77,7 +77,7 @@
 
 {% if show_country %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--country">
-    <label class="fc-form-label fc-container__grid--static-label--country">{{ config.lang.checkout_country }}</label>
+    <label class="fc-form-label fc-container__grid--static-label--country">{{ config.lang.checkout_country|raw }}</label>
     <div class="fc-container__grid--static-input--country">
         <p class="fc-form-control--static">{{ address.country_name }}</p>
     </div>
@@ -86,7 +86,7 @@
 
 {% if address.phone %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--phone">
-    <label class="fc-form-label fc-container__grid--static-label--phone">{{ config.lang.checkout_phone }}</label>
+    <label class="fc-form-label fc-container__grid--static-label--phone">{{ config.lang.checkout_phone|raw }}</label>
     <div class="fc-container__grid--static-input--phone">
         <p class="fc-form-control--static">{{ address.phone }}</p>
     </div>

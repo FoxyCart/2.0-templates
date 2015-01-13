@@ -41,7 +41,7 @@
         {% endfor %}
     {% if error_string %}
         <div class="fc-alert fc-alert--danger">
-            {{ lang.checkout_select_shipping_option }}
+            {{ lang.checkout_select_shipping_option|raw }}
         </div>
     {% endif %}
     </div>
@@ -59,7 +59,7 @@
                     name="use_different_addresses"
                     value="1"
                     {{ checked(use_different_addresses) }} />
-                {{ lang.checkout_use_billing_address }}
+                {{ lang.checkout_use_billing_address|raw }}
             </label>
         </div>
     </div>

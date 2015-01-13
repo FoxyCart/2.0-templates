@@ -1,35 +1,35 @@
 ===========================================================
 {% if is_updateinfo %}
-{{ config.lang.email_subject_updateinfo|upper }}
+{{ config.lang.email_subject_updateinfo|upper|raw }}
 {% elseif is_subscription_modification %}
-{{ config.lang.email_subject_subscription_updated|upper }}
+{{ config.lang.email_subject_subscription_updated|upper|raw }}
 {% elseif is_subscription_cancel %}
-{{ config.lang.email_subject_subscription_cancelled|upper }}
+{{ config.lang.email_subject_subscription_cancelled|upper|raw }}
 {% else %}
-{{ config.lang.checkout_receipt|upper }}
+{{ config.lang.checkout_receipt|upper|raw }}
 {% endif  %}
 ===========================================================
 
-{{ config.lang.email_view_in_your_browser }}: {{ receipt_url }}
+{{ config.lang.email_view_in_your_browser|raw }}: {{ receipt_url }}
 
 {% if is_order %}
-{{ config.lang.email_text_message_order }} https://{{ config.store_domain }}/cart?cart=updateinfo
+{{ config.lang.email_text_message_order|raw }} https://{{ config.store_domain }}/cart?cart=updateinfo
 {% endif %}
 {% if is_updateinfo %}
-{{ config.lang.email_message_updateinfo }}
+{{ config.lang.email_message_updateinfo|raw }}
 {% endif %}
 {% if is_subscription_cancel %}
-{{ config.lang.email_message_subscription_cancel }}
+{{ config.lang.email_message_subscription_cancel|raw }}
 {% endif %}
 {% if is_subscription_modification %}
-{{ conig.lang.email_message_subscription_modification }}
+{{ conig.lang.email_message_subscription_modification|raw }}
 {% endif %}
 
 ===========================================================
 
 {% if not is_updateinfo %}
 {% if has_downloadables %}
-{{ config.lang.email_text_downloadable_products|pad(60,"-"," ") }}
+{{ config.lang.email_text_downloadable_products|pad(60,"-"," ")|raw }}
 
 {% for item in downloadable_links %}
 {{ item.name }}
@@ -38,20 +38,20 @@
 
 
 {% endif %} {# has downloads #}
-{{ config.lang.email_text_order_summary|pad(60,"-"," ") }}
+{{ config.lang.email_text_order_summary|pad(60,"-"," ")|raw }}
 
-  * {{ config.lang.checkout_merchant|pad(20) }} {{ config.store_name }}
-  * {% if is_order %}{{ config.lang.email_order_number|pad(20) }}{% else %}{{ config.lang.email_reference_number|pad(20) }}{% endif  %} {{ order_id }}
-  * {{ config.lang.checkout_date|pad(20) }} {{ checkout_date }}
+  * {{ config.lang.checkout_merchant|pad(20)|raw }} {{ config.store_name }}
+  * {% if is_order %}{{ config.lang.email_order_number|pad(20)|raw }}{% else %}{{ config.lang.email_reference_number|pad(20) }}{% endif  %} {{ order_id }}
+  * {{ config.lang.checkout_date|pad(20)|raw }} {{ checkout_date }}
 {% if purchase_order != '' %}
-  * {{ config.lang.checkout_purchase_order|pad(20) }} {{ purchase_order }}
+  * {{ config.lang.checkout_purchase_order|pad(20)|raw }} {{ purchase_order }}
 {% endif %}
 {% if payment_type == 'plastic' %}
-  * {{ config.lang.checkout_card_number|pad(20) }} {{ cc_number_masked }} ({{ cc_type }})
+  * {{ config.lang.checkout_card_number|pad(20)|raw }} {{ cc_number_masked }} ({{ cc_type }})
 {% endif %}
-  * {{ config.lang.cart_order_total|pad(20) }} {{ total_order|money_format }}
+  * {{ config.lang.cart_order_total|pad(20)|raw }} {{ total_order|money_format }}
 {% if shipping_address.has_live_rate_shippable_products and not has_multiship %}
-  * {{ config.lang.email_shipping|pad(20) }} {{ shipping_address.shipping_service_description }}
+  * {{ config.lang.email_shipping|pad(20)|raw }} {{ shipping_address.shipping_service_description }}
 {% endif %}
 {% if custom_fields|length > 0 %}
 
@@ -64,19 +64,19 @@
 {% endif %} {# is not update info #}
 
 
-{{ config.lang.email_text_purchasing_information|pad(60,"-"," ") }}
+{{ config.lang.email_text_purchasing_information|pad(60,"-"," ")|raw }}
 
-{{ config.lang.email_email }}:
+{{ config.lang.email_email|raw }}:
     {{ customer_email }}
 
 {% if not (config.template_config.custom_checkout_field_requirements['billing_first_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_last_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address1'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address2'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_city'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_region'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_postal_code'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_country'] == 'hidden') %}
-{{ config.lang.email_billing_address }}:
+{{ config.lang.email_billing_address|raw }}:
 {% include "address.email.inc.txt.twig" with {'address': billing_address} %}
 {% endif %}
 {% if has_multiship %}
 {% for multiship in multiship_data %}
 
-{{ config.lang.email_ship_to }}: {{ multiship.address_name }}
+{{ config.lang.email_ship_to|raw }}: {{ multiship.address_name }}
 {% include "address.email.inc.txt.twig" with {'address': multiship} %}
 
 {% if multiship.custom_fields|length > 0 %}
@@ -87,7 +87,7 @@
 {% endfor %}{# multiship #}
 {% endif %}{# has multiship custom fields #}
 {% if not is_updateinfo %}
-    {{ config.lang.cart_subtotal }}: {{ multiship.total_item_price|money_format }}
+    {{ config.lang.cart_subtotal|raw }}: {{ multiship.total_item_price|money_format }}
 {% endif %}
 {% if multiship.has_shippable_products %}
 {% if multiship.shipping_service_description %}
@@ -98,23 +98,23 @@
 {% endif %}
 {% if not is_updateinfo %}
 {% for tax in multiship.taxes %}
-    {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax }}: {{ tax.amount|money_format }}
+    {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|raw }}: {{ tax.amount|money_format }}
 {% endfor %}
-    {{ config.lang.checkout_shipment_total }}: {{ multiship.total_price|money_format }}
+    {{ config.lang.checkout_shipment_total|raw }}: {{ multiship.total_price|money_format }}
 {% endif %}
 {% endfor %}{# multishp for loop #}
 {% else %}{# multiship #}
 {% if shipping_address.has_shippable_products %}
 
-{{ config.lang.email_shipping_address }}:
+{{ config.lang.email_shipping_address|raw }}:
 {% include "address.email.inc.txt.twig" with {'address': shipping_address} %}
 {% endif %} {# has shippable products #}
 {% endif %} {# not multiship #}
 
 {% if subscriptions|length > 0 and not is_subscription_cancel %}
-{{ config.lang.email_text_manage_subscriptions|pad(60,"-"," ") }}
+{{ config.lang.email_text_manage_subscriptions|pad(60,"-"," ")|raw }}
 
-{{ config.lang.email_text_subscription_instructions }}
+{{ config.lang.email_text_subscription_instructions|raw }}
 
 {% for subscription in subscriptions %}
 {{ subscription.description }}

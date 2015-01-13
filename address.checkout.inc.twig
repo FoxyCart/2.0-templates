@@ -29,10 +29,10 @@
     <div class="fc-form-group {{ multiple_inline_css }}">
         {% set field_name = address.prefix~'_first_name' %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-        <label class="fc-container__grid--label--name fc-form-label">{{ config.lang.checkout_name }}</label>
+        <label class="fc-container__grid--label--name fc-form-label">{{ config.lang.checkout_name|raw }}</label>
         {% if show_first_name %}
         <div class="fc-container__grid--input--first-name {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error" >
-            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-first-name">{{ config.lang.checkout_first_name }}</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-first-name">{{ config.lang.checkout_first_name|raw }}</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
@@ -47,7 +47,7 @@
         {% set field_name = address.prefix~"_last_name" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
         <div class="fc-container__grid--input--last-name {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-last-name">{{ config.lang.checkout_last_name }}</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-last-name">{{ config.lang.checkout_last_name|raw }}</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
@@ -78,7 +78,7 @@
             {% set field_name = address.prefix~"_company" %}
             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
             <div class="fc-container__grid--input--company {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-company">{{ config.lang.checkout_company }}</label>
+                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-company">{{ config.lang.checkout_company|raw }}</label>
                 <input type="text"
                     id="{{ field_name }}"
                     name="{{ field_name }}"
@@ -93,7 +93,7 @@
             {% set field_name = address.prefix~"_phone" %}
             {% set error_string = utils.get_error_string(field_name, messages.errors) %}
             <div class="fc-container__grid--input--phone {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-phone">{{ config.lang.checkout_phone }}</label>
+                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-phone">{{ config.lang.checkout_phone|raw }}</label>
                 <input type="text"
                     id="{{ field_name }}"
                     name="{{ field_name }}"
@@ -129,12 +129,12 @@
         {% endif %}
     <div class="fc-form-group fc-address-entry__address-container {{ multiple_inline_css }}">
 
-        <label class="fc-form-label fc-form-label--{{ address.prefix }}-address1 fc-container__grid--label--address">{{ config.lang.checkout_address }}</label>
+        <label class="fc-form-label fc-form-label--{{ address.prefix }}-address1 fc-container__grid--label--address">{{ config.lang.checkout_address|raw }}</label>
         {% if show_address1 %}
         {% set field_name = address.prefix~"_address1" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
         <div class="fc-container__grid--input--address1 {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address }} 1</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address|raw }} 1</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
@@ -150,7 +150,7 @@
         {% set field_name = address.prefix~"_address2" %}
         {% set error_string = utils.get_error_string(field_name, messages.errors) %}
         <div class="fc-container__grid--label--address2 {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address }} 2</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-address1">{{ config.lang.checkout_address|raw }} 2</label>
             <input type="text"
                 id="{{ field_name }}"
                 name="{{ field_name }}"
@@ -175,7 +175,7 @@
         <div data-fc-id="block-{{ address.prefix }}-results" class="fc-shipping-results">
         {% if address.shipping_results|length > 0 %}
         <div class="fc-shipping-results__header">
-            <h4>{{ config.lang.checkout_shipping_methods_for }} {{ address.address_name }}</h4>
+            <h4>{{ config.lang.checkout_shipping_methods_for|raw }} {{ address.address_name }}</h4>
         </div>
         {% endif %}
         {% if address.loading_shipping_results %}

@@ -1,5 +1,5 @@
 {# BEGIN CART TWIG TEMPLATE #}
-{{ config.lang.email_text_cart|pad(60,"-"," ") }}
+{{ config.lang.email_text_cart|pad(60,"-"," ")|raw }}
 {% set show_product_options = true %}
 {% set show_product_weight = true %}
 {% set show_product_category = true %}
@@ -14,7 +14,7 @@
 {% if item.multiship >= 0 %}
 
 {% set shipto_label = config.lang.cart_shipto ~ item.shipto %}
-{{ shipto_label|pad(40,"-"," ") }}
+{{ shipto_label|pad(40,"-"," ")|raw }}
 
 {% endif %}
 {{ item.name }}
@@ -24,31 +24,31 @@
 {% endfor %}
 {% endif %}
 {% if item.code != '' and show_product_code %}
-  * {{ config.lang.cart_code|pad(15) }} {{ item.code }}
+  * {{ config.lang.cart_code|pad(15)|raw }} {{ item.code }}
 {% endif %}
 {% if item.category != 'DEFAULT' and show_product_category %}
-  * {{ config.lang.cart_category|pad(15) }} {{ item.category }}
+  * {{ config.lang.cart_category|pad(15)|raw }} {{ item.category }}
 {% endif %}
 {% if item.weight != 0 and show_product_weight %}
-  * {{ config.lang.cart_weight|pad(15) }} {{ item.weight }} {{ weight_uom }}
+  * {{ config.lang.cart_weight|pad(15)|raw }} {{ item.weight }} {{ weight_uom }}
 {% endif %}
 {% if item.sub_frequency != '' %}
-  * {{ config.lang.cart_subscription_details }}
-      - {{ config.lang.cart_frequency|pad(11) }} {{ item.sub_frequency }}
-      - {{ config.lang.cart_start_date|pad(11) }} {{ item.sub_startdate }}
-      - {{ config.lang.cart_next_date|pad(11) }} {{ item.sub_nextdate }}
+  * {{ config.lang.cart_subscription_details|raw }}
+      - {{ config.lang.cart_frequency|pad(11)|raw }} {{ item.sub_frequency }}
+      - {{ config.lang.cart_start_date|pad(11)|raw }} {{ item.sub_startdate }}
+      - {{ config.lang.cart_next_date|pad(11)|raw }} {{ item.sub_nextdate }}
 {% if item.sub_enddate != "0000-00-00" %}
-      - {{ config.lang.cart_end_date|pad(11) }} {{ item.sub_enddate }}
+      - {{ config.lang.cart_end_date|pad(11)|raw }} {{ item.sub_enddate }}
 {% endif %}
 {% endif %}
-  * {{ config.lang.cart_quantity|pad(15) }} {{ item.quantity }}
-  * {{ config.lang.cart_price|pad(20) }} {{ item.price|money_format }}{% if item.quantity > 1 and item.price_each > 0 %} ({{ item.price_each|money_format }} {{ config.lang.cart_each }}{% if (((item.price_each * 10000) % 100) != 0) %}... {{ item.price_each }}{% endif %}){% endif %}
+  * {{ config.lang.cart_quantity|pad(15)|raw }} {{ item.quantity }}
+  * {{ config.lang.cart_price|pad(20)|raw }} {{ item.price|money_format }}{% if item.quantity > 1 and item.price_each > 0 %} ({{ item.price_each|money_format }} {{ config.lang.cart_each|raw }}{% if (((item.price_each * 10000) % 100) != 0) %}... {{ item.price_each }}{% endif %}){% endif %}
 
 
 {% endfor %}
-{{ config.lang.cart_subtotal|pad(24) }} {{ total_item_price|money_format }}
+{{ config.lang.cart_subtotal|pad(24)|raw }} {{ total_item_price|money_format }}
 {% if has_future_products %}
-{{ config.lang.cart_future_subscriptions|pad(24) }} {{ total_future_item_price|money_format }}
+{{ config.lang.cart_future_subscriptions|pad(24)|raw }} {{ total_future_item_price|money_format }}
 {% endif %}
 {% for key,coupon in coupons %}
 {% set coupon_label = coupon.name ~ " (" ~ key ~ ")" %}
@@ -57,17 +57,17 @@
 {{ shipping_and_handling_label|pad(24) }} {{ total_shipping|money_format }}
 {% if has_future_products and show_future_shipping_and_handling %}
 {% set future_shipping_handling_label = lang.cart_future_subscriptions ~ " " ~ shipping_and_handling_label %}
-{{ future_shipping_handling_label|pad(24) }} {{ future_shipping_and_handling|money_format }}
+{{ future_shipping_handling_label|pad(24)|raw }} {{ future_shipping_and_handling|money_format }}
 {% endif %}
 {% if has_taxes %}
 {% if has_multiship %}
-{{ config.lang.cart_tax|pad(24) }} {{ total_tax|money_format }}
+{{ config.lang.cart_tax|pad(24)|raw }} {{ total_tax|money_format }}
 {% else %}
 {% for tax in shipping_address.taxes %}
-{{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|pad(24) }} {{ tax.amount|money_format }}
+{{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|pad(24)|raw }} {{ tax.amount|money_format }}
 {% endfor %}
 {% endif %}
 {% endif %}
-{{ config.lang.cart_order_total|pad(24) }} {{ total_order|money_format }}
+{{ config.lang.cart_order_total|pad(24)|raw }} {{ total_order|money_format }}
 
 {# END CART TWIG TEMPLATE #}

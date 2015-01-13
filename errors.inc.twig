@@ -9,7 +9,7 @@
 <div class="fc-messages">
     {% if messages.errors|length > 0 %}
         <div class="fc-alert fc-alert--danger">
-            <h2>{{ config.lang.checkout_error_title }}</h2>
+            <h2>{{ config.lang.checkout_error_title|raw }}</h2>
             <!-- <p class="fc-alert--more">More information on this issue</p> -->
             <ul>
             {% for error in messages.errors if error['message'] != '' %}
@@ -20,7 +20,7 @@
     {% endif %}
     {% if messages.warnings|length > 0 %}
         <div class="fc-alert fc-alert--warning">
-            <h2>{{ config.lang.checkout_warning }}</h2>
+            <h2>{{ config.lang.checkout_warning|raw }}</h2>
             <!-- <p class="fc-alert--more">More information on this issue</p> -->
             <ul>
         {% for warning in messages.warnings %}
@@ -30,7 +30,7 @@
     {% endif %}
     {% if messages.info|length > 0 %}
         <div class="fc-alert fc-alert--info">
-            <h2>{{ config.lang.checkout_info_title }}</h2>
+            <h2>{{ config.lang.checkout_info_title|raw }}</h2>
             <!-- <p class="fc-alert--more">More information on this issue</p> -->
             <ul>
         {% for info in messages.info %}

@@ -14,7 +14,7 @@
         <tfoot>
         {% if has_future_products %}
             <tr>
-                <td colspan="{{ colspan }}" style="text-align: center;"><h5>{{ config.lang.cart_todays_charge }}</h5></td>
+                <td colspan="{{ colspan }}" style="text-align: center;"><h5>{{ config.lang.cart_todays_charge|raw }}</h5></td>
             </tr>
         {% endif %}
             <tr>
@@ -61,15 +61,15 @@
                 <td colspan="{{ colspan }}" style="text-align: center;">
                     <h5>
                     {% if future_subscription_totals_by_date|length > 1 %}
-                    {{ config.lang.cart_future_charges }}
+                    {{ config.lang.cart_future_charges|raw }}
                     {% else %}
-                    {{ config.lang.cart_future_charge }}
+                    {{ config.lang.cart_future_charge|raw }}
                     {% endif %}
                     </h5>
                 </td>
             </tr>
             <tr>
-                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal }}:</td>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal|raw }}:</td>
                 <td class="fc_col2">{{ total_future_item_price|money_format }}</td>
             </tr>
             {% if has_future_shipping %}
@@ -121,7 +121,7 @@
         <tbody class="fc_ship_to">
             <tr>
                 <th class="fc_shipto" colspan="{{ colspan }}">
-                    {{ config.lang.cart_shipto }}{{ item.shipto }}
+                    {{ config.lang.cart_shipto|raw }}{{ item.shipto }}
                 </th>
             </tr>
         {% endif %}

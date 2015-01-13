@@ -57,13 +57,13 @@
         <!-- TODO: How to get something like: -->
         <!-- "Enter [ZIP | postal] code for city and [state | province | county | canton]." -->
         <!-- without tying checkout.js to the DOM? -->
-        <!-- {{ config.lang.checkout_location_zipcode }} {{ config.lang.checkout_location_postalcode }} {{ config.lang.checkout_location_state }} {{ config.lang.checkout_location_canton }} {{ config.lang.checkout_location_county }} {{ config.lang.checkout_location_province }} -->
+        <!-- {{ config.lang.checkout_location_zipcode|raw }} {{ config.lang.checkout_location_postalcode|raw }} {{ config.lang.checkout_location_state|raw }} {{ config.lang.checkout_location_canton|raw }} {{ config.lang.checkout_location_county|raw }} {{ config.lang.checkout_location_province|raw }} -->
         #}
 
         {% if _context[address.prefix~'_postal_code_in_progress'] %}
         <div class="fc-postal-code-entry__loading">
             <p class="fc-postal-code-entry__loading__text">
-                {{ config.lang.checkout_loading }}
+                {{ config.lang.checkout_loading|raw }}
             </p>
             <div class="fc-spinner">
               <div class="bounce1"></div>
@@ -74,7 +74,7 @@
         {% elseif address.city_options|length > 0 %}
         {% set field_name = address.prefix~"_city_options" %}
         <div class="fc-postal-code-entry__city-state-options" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-            <label for="{{ field_name }}" class="fc-form-label fc-form-label--city-options">{{ config.lang.checkout_location_province }}</label>
+            <label for="{{ field_name }}" class="fc-form-label fc-form-label--city-options">{{ config.lang.checkout_location_province|raw }}</label>
             <select class="fc-form-control fc-form-control--city-options" id="{{ field_name }}" data-fc-id="{{ field_name }}">
                 {% for city_option in address.city_options %}
                 {% set city_option_value = formatCityOption(city_option) %}
@@ -89,13 +89,13 @@
                 <option
                     {{ selected('', address.city_option_selected) }}
                     value="">
-                    {{ config.lang.checkout_location_other }}
+                    {{ config.lang.checkout_location_other|raw }}
                 </option>
             </select>
         </div>
         {% else %}
         <p class="fc-postal-code-entry__submit"> {# form-control-static #}
-            <button type="button" data-fc-id="submit-{{ address.prefix }}-postal-code" class="fc-button">{{ config.lang.checkout_submit_postal_code }}</button>
+            <button type="button" data-fc-id="submit-{{ address.prefix }}-postal-code" class="fc-button">{{ config.lang.checkout_submit_postal_code|raw }}</button>
         </p>
         {% endif %}
     </div>
@@ -104,9 +104,9 @@
         <div class="fc-container__grid--postal-code-errors">
             <div class="fc-alert fc-alert--danger">
                 {% if error_string == '<p>invalid</p>' %}
-                    {{ config.lang.cart_error_postal_code_lookup }}
+                    {{ config.lang.cart_error_postal_code_lookup|raw }}
                 {% else %}
-                    {{ config.lang.cart_error_postal_code }}
+                    {{ config.lang.cart_error_postal_code|raw }}
                 {% endif %}
             </div>
         </div>
@@ -121,7 +121,7 @@
     {% set error_string = utils.get_error_string(field_name, messages.errors) %}
     {% if show_city %}
     <div class="fc-container__grid--city {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-        <label for="{{ field_name }}" class="fc-form-label fc-form-label--city">{{ config.lang.checkout_city }}</label>
+        <label for="{{ field_name }}" class="fc-form-label fc-form-label--city">{{ config.lang.checkout_city|raw }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"
@@ -155,7 +155,7 @@
     {% if show_postal_code %}
     <div class="fc-container__grid--postal-code  {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
         <!-- TODO: change the type to phone if country has numeric postcodes (like US) -->
-        <label for="{{ field_name }}" class="fc-form-label fc-form-label--postal-code">{{ config.lang.checkout_location_zipcode }}</label>
+        <label for="{{ field_name }}" class="fc-form-label fc-form-label--postal-code">{{ config.lang.checkout_location_zipcode|raw }}</label>
         <input type="text"
             id="{{ field_name }}"
             name="{{ field_name }}"

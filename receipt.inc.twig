@@ -19,13 +19,13 @@
             <div class="fc-container__grid--receipt--transaction-subject">
                 <h3>
                 {% if is_updateinfo %}
-                    {{ config.lang.email_subject_updateinfo }}
+                    {{ config.lang.email_subject_updateinfo|raw }}
                 {% elseif is_subscription_modification %}
-                    {{ config.lang.email_subject_subscription_updated }}
+                    {{ config.lang.email_subject_subscription_updated|raw }}
                 {% elseif is_subscription_cancel %}
-                    {{ config.lang.email_subject_subscription_cancelled }}
+                    {{ config.lang.email_subject_subscription_cancelled|raw }}
                 {% else %}
-                    {{ config.lang.checkout_receipt }}: #{{ order_id }}
+                    {{ config.lang.checkout_receipt|raw }}: #{{ order_id }}
                 {% endif  %}
                 </h3>
             </div>
@@ -40,21 +40,21 @@
         <div id="fc-messages" class="fc-receipt__section">
             {% if is_updateinfo %}
             <div class="fc-alert fc-alert--success">
-                {{ config.lang.checkout_updateinfo_completed }}
+                {{ config.lang.checkout_updateinfo_completed|raw }}
             </div>
             {% elseif is_subscription_cancel %}
             <div class="fc-alert fc-alert--success">
-                {{ config.lang.checkout_subscription_cancel_completed }}
+                {{ config.lang.checkout_subscription_cancel_completed|raw }}
             </div>
             {% else %}
             <div class="fc-alert fc-alert--success">
-                {{ config.lang.receipt_message_order }}
+                {{ config.lang.receipt_message_order|raw }}
             </div>
             {% endif %}
 
             {% if payment_is_pending %}
             <div class="fc-alert fc-alert--info">
-                {{ config.lang.checkout_payment_pending }}
+                {{ config.lang.checkout_payment_pending|raw }}
             </div>
             {% endif %}
         </div>
@@ -65,9 +65,9 @@
             {% if has_downloadables %}
             <div id="fc-receipt__section--downloadables" class="fc-receipt__section">
                 <fieldset>
-                    <legend>{{ config.lang.checkout_download_links }}</legend>
+                    <legend>{{ config.lang.checkout_download_links|raw }}</legend>
                     <div class="fc-form-group fc-form-group--static fc-form-group--receipt--downloadables">
-                        <label class="fc-form-label fc-container__grid--static-label--downloadables">{{ config.lang.checkout_download_links }}</label>
+                        <label class="fc-form-label fc-container__grid--static-label--downloadables">{{ config.lang.checkout_download_links|raw }}</label>
                         <div class="fc-container__grid--static-input--downloadables">
                             <ul fc-list="fc-list fc-list--downloadables">
                                 {% for item in downloadable_links %}
@@ -88,10 +88,10 @@
             <div id="fc-receipt__section--print-and-continue" class="fc-receipt__section">
                 <ul class="fc-list fc-list--inline">
                     <li class="fc-receipt-action fc-receipt-action--continue">
-                        <a class="fc-button" href="{{ continue_url }}">{{ config.lang.checkout_continue_to }}{{ config.store_name }}</a>
+                        <a class="fc-button" href="{{ continue_url }}">{{ config.lang.checkout_continue_to|raw }}{{ config.store_name }}</a>
                     </li>
                     <li class="fc-receipt-action fc-receipt-action--print">
-                        <a class="fc-button" href="#" onclick="window.print(); return false;">{{ config.lang.checkout_print_this_page }}</a>
+                        <a class="fc-button" href="#" onclick="window.print(); return false;">{{ config.lang.checkout_print_this_page|raw }}</a>
                     </li>
                 </ul>
             </div>
@@ -104,22 +104,22 @@
 {% block general_information %}
     <div id="fc-receipt__section--general-information" class="fc-receipt__section">
         <fieldset>
-            <legend>{{ config.lang.checkout_general_information }}</legend>
+            <legend>{{ config.lang.checkout_general_information|raw }}</legend>
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--store-name">
-               <label class="fc-form-label fc-container__grid--static-label--store-name">{{ config.lang.checkout_merchant }}</label>
+               <label class="fc-form-label fc-container__grid--static-label--store-name">{{ config.lang.checkout_merchant|raw }}</label>
                 <div class="fc-container__grid--static-input--store-name">
                     <p class="fc-form-control--static">{{ config.store_name }}</p>
                 </div>
             </div>
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--order-id">
-                <label class="fc-form-label fc-container__grid--static-label--order-id">{{ config.lang.checkout_order_id }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--order-id">{{ config.lang.checkout_order_id|raw }}</label>
                 <div class="fc-container__grid--static-input--order-id">
                    <p class="fc-form-control--static">{{ order_id }}</p>
                 </div>
             </div>
             {% if purchase_order %}
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--purchase-order">
-                <label class="fc-form-label fc-container__grid--static-label--purchase-order">{{ config.lang.checkout_purchase_order }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--purchase-order">{{ config.lang.checkout_purchase_order|raw }}</label>
                 <div class="fc-container__grid--static-input--purchase-order">
                     <p class="fc-form-control--static">{{ purchase_order }}</p>
                 </div>
@@ -127,7 +127,7 @@
             {% endif %}
             {% if payment_type == 'plastic' and cc_number_masked %}
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--credit-card">
-                <label class="fc-form-label fc-container__grid--static-label--credit-card">{{ config.lang.checkout_card_number }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--credit-card">{{ config.lang.checkout_card_number|raw }}</label>
                 <div class="fc-container__grid--static-input--credit-card">
                     <p class="fc-form-control--static">{{ cc_number_masked }} ({{ cc_type }})</p>
                 </div>
@@ -135,13 +135,13 @@
             {% endif %}
 
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--date">
-                <label class="fc-form-label fc-container__grid--static-label--date">{{ config.lang.checkout_date }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--date">{{ config.lang.checkout_date|raw }}</label>
                 <div class="fc-container__grid--static-input--date">
                     <p class="fc-form-control--static">{{ checkout_date }}</p>
                 </div>
             </div>
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--processor-response">
-                <label class="fc-form-label fc-container__grid--static-label--processor-response">{{ config.lang.checkout_processor_response }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--processor-response">{{ config.lang.checkout_processor_response|raw }}</label>
                 <div class="fc-container__grid--static-input--processor-response">
                     <p class="fc-form-control--static">{{ processor_response }}</p>
                 </div>
@@ -154,11 +154,11 @@
 {% block billing_information %}
     <div id="fc-receipt__section--billing-information" class="fc-receipt__section">
         <fieldset>
-            <legend>{{ config.lang.checkout_billing_information }}</legend>
+            <legend>{{ config.lang.checkout_billing_information|raw }}</legend>
 
             {% include "address.receipt.inc.twig" with {'address': billing_address} %}
             <div class="fc-form-group fc-receipt-email">
-                <label class="fc-form-label fc-container__grid--static-label--email">{{ config.lang.email_email }}</label>
+                <label class="fc-form-label fc-container__grid--static-label--email">{{ config.lang.email_email|raw }}</label>
                 <div class="fc-container__grid--static-input--email">
                     <p class="fc-form-control--static">{{ customer_email }}</p>
                 </div>
@@ -173,7 +173,7 @@
     {% block shipping_address %}
     <div id="fc-receipt__section--shipping-information" class="fc-receipt__section">
         <fieldset>
-            <legend>{{ config.lang.receipt_shipping_information }}</legend>
+            <legend>{{ config.lang.receipt_shipping_information|raw }}</legend>
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--shipping-method">
                 <label class="fc-form-label fc-container__grid--static-label--shipping-method">{{ config.lang.checkout_shipping_method|raw }}</label>
                 <div class="fc-container__grid--static-input--shipping-method">
@@ -195,7 +195,7 @@
         <div class="fc-receipt__section--multiship-shipping-information fc-receipt__section">
             <fieldset>
                 <legend>
-                    {{ config.lang.cart_shipto }}
+                    {{ config.lang.cart_shipto|raw }}
                     <span class="fc_shipto_name">{{ multiship.address_name }}</span>
                 </legend>
 
@@ -215,7 +215,7 @@
                 {% endif %}
 
                 <div class="fc-form-group fc-form-group--inline">
-                    <label class="fc-form-label fc-container__grid--static-label--multiship-price">{{ config.lang.checkout_subtotal }}</label>
+                    <label class="fc-form-label fc-container__grid--static-label--multiship-price">{{ config.lang.checkout_subtotal|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-price">
                         <p class="fc-form-control--static">{{ multiship.total_item_price|money_format }}</p>
                     </div>
@@ -230,7 +230,7 @@
                     {% for tax in multiship.taxes %}
                     <div class="fc-form-group fc-form-group--inline">
                         <label class="fc-form-label fc-container__grid--static-label--multiship-tax">
-                            {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%) {{ config.lang.cart_tax }}
+                            {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%) {{ config.lang.cart_tax|raw }}
                         </label>
                         <div class="fc-container__grid--static-input--multiship-tax">
                             <p class="fc-form-control--static">{{ tax.amount|money_format }}</p>
@@ -239,7 +239,7 @@
                     {% endfor %}
                 {% endif %}
                 <div class="fc-form-group fc-form-group--inline">
-                    <label class="fc-form-label fc-container__grid--static-label--multiship-total">{{ config.lang.checkout_shipment_total }}</label>
+                    <label class="fc-form-label fc-container__grid--static-label--multiship-total">{{ config.lang.checkout_shipment_total|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-total">
                         <p class="fc-form-control--static">{{ multiship.total_price|money_format }}</p>
                     </div>
@@ -256,7 +256,7 @@
 {% if has_visible_custom_fields %}
     <div id="fc-receipt__section--custom-fields" class="fc-receipt__section">
         <fieldset>
-            <legend>{{ config.lang.checkout_additional_information }}</legend>
+            <legend>{{ config.lang.checkout_additional_information|raw }}</legend>
 
             {% for key,custom_field in custom_fields %}
             {% if not custom_field.is_hidden %}
