@@ -644,12 +644,13 @@ TODO:
                 <div class="fc-checkout__additional-field--tos {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
                     <div class="fc-input-group-container fc-input-group-container--checkbox">
                         <label class="fc-input-group-container__title fc-form-label fc-form-label--tos">
+                            <input type="hidden" name="tos_agreement" value="false" />
                             <input type="checkbox"
                                 id="tos_agreement"
                                 name="tos_agreement"
                                 value="true"
                                 class="fc-form-control fc-form-control--tos"
-                                {{ checked(tos_agreement == "true") }} />
+                                {{ checked(tos_agreement == 'true') }} />
                             {{ config.lang.checkout_tos|replace({
                                 '{{url}}': config.template_config.tos_checkbox_settings.url
                             })|raw }}
@@ -664,10 +665,12 @@ TODO:
                 <div class="fc-checkout__additional-field--subscribe">
                     <div class="fc-input-group-container fc-input-group-container--checkbox">
                         <label class="fc-input-group-container__title fc-form-label fc-form-label--subscribe">
+                            <input type="hidden" name="newsletter_subscribe" value="0" />
                             <input type="checkbox"
                                 name="newsletter_subscribe"
                                 value="1"
-                                class="fc-form-control fc-form-control--subscribe" />
+                                class="fc-form-control fc-form-control--subscribe"
+                                {{ checked(newsletter_subscribe == '1') }} />
                             {{ config.lang.checkout_newsletter_subscribe|raw }}
                         </label>
                     </div>
