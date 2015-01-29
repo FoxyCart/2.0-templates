@@ -479,7 +479,8 @@
                         {% for key,coupon in coupons %}
                         <tr class="fc-subtotal--row {# if not coupon.is_applied %}fc-subtotal--row--inactive{% endif #}" data-fc-coupon-container-id="{{ coupon.id }}">
                             <td class="fc-subtotal__label">
-                                {{ coupon.name }}: {{ key }}
+                                <span class="fc-coupon__name">{{ coupon.name }}</span>:
+                                <span class="fc-coupon__code">{{ key }}</span>
                                 {% if enable_coupon_controls %}
                                 <span class="fc-action--close">
                                     <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
