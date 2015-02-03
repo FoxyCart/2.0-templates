@@ -320,7 +320,7 @@ TODO:
                     <div class="fc-alert fc-alert--danger">
                         {{ config.lang.checkout_update_shipping_message|raw }}
                     </div>
-                {% else %}
+                {% elseif shipping_address.loading_shipping_results == false %}
                     <h5 class="fc_checkout__shipping-results__help-text">{{ config.lang.checkout_update_shipping_message|raw }}</h5>
                 {% endif %}
 
