@@ -17,8 +17,8 @@
     {% include 'svg.inc.twig' %}
 
     {% import "utils.inc.twig" as utils %}
-    {% use 'receipt.inc.twig' %}
-    {{ block('receipt') }}
+    {% embed 'receipt.inc.twig' %}
+    {% endembed %}
 
     <!--[if lt IE 9 ]>
         <script src="{{ config.cdn_static_path }}scripts/respond/respond.1.4.2.js" charset="utf-8"></script>

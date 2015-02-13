@@ -40,9 +40,8 @@
     {% include 'svg.inc.twig' %}
 
     {% import "utils.inc.twig" as utils %}
-    {% use 'checkout.inc.twig' %}
-    {{ block('checkout') }}
-
+    {% embed 'checkout.inc.twig' %}
+    {% endembed %}
 
     <!-- FC footer script insertion -->{% include template_from_string(fc_footer_content) %}<!-- /FC footer scripts -->
     <!--[if lt IE 10 ]>

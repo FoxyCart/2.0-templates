@@ -36,7 +36,8 @@
 
     {% set cart_is_fullpage = true %}
     <div data-fc-container="cart">
-        {% include 'cart.inc.twig' %}
+        {% embed 'cart.inc.twig' %}
+        {% endembed %}
     </div>
 
 
