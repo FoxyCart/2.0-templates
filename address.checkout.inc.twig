@@ -106,29 +106,6 @@
     </div>
     {% endif %}
 
-    {% set tax_id = config.template_config.custom_checkout_field_requirements['billing_tax_id'] %}
-    {% set tax_id_optional_placeholder = (tax_id == 'optional') ? config.lang.checkout_optional : '' %}
-
-    {% if tax_id != "hidden" %}
-        {% if address.type == 'billing' or (address.type == 'shipping' and not use_alternate_shipping_address) %}
-        <div class="fc-form-group fc-address-entry__tax-id-container">
-            {% set field_name = address.prefix~"_tax_id" %}
-            {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-            <label class="fc-container__grid--label--tax-id fc-form-label">{{ config.lang.checkout_tax_id }}</label>
-            <div class="fc-container__grid--input--tax-id {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
-                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-tax-id">{{ config.lang.checkout_tax_id }}</label>
-                <input type="text"
-                    id="{{ field_name }}"
-                    name="{{ field_name }}"
-                    value="{{ address.tax_id }}"
-                    placeholder="{{ config.lang.checkout_tax_id }}{{ tax_id_optional_placeholder }}"
-                    autocomplete="{{ address.type }} organization"
-                    class="fc-form-control fc-form-control--{{ address.prefix }}-tax-id" />
-            </div>
-        </div>
-        {% endif %}
-    {% endif %}
-
     {% set show_address1 = true %}
     {% set show_address2 = true %}
 

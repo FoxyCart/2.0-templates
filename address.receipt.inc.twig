@@ -32,10 +32,6 @@
         {% set show_country = false %}
     {% endif %}
 {% endif %}
-{% set show_tax_id = false %}
-{% if config.template_config.custom_checkout_field_requirements['billing_tax_id'] != 'hidden' %}
-    {% set show_tax_id = true %}
-{% endif %}
 {% if (show_first_name or show_last_name) and (address.first_name or address.last_name) %}
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--name">
     <label class="fc-form-label fc-container__grid--static-label--name">{{ config.lang.checkout_name|raw }}</label>
@@ -50,15 +46,6 @@
     <label class="fc-form-label fc-container__grid--static-label--company">{{ config.lang.checkout_company|raw }}</label>
     <div class="fc-container__grid--static-input--company">
         <p class="fc-form-control--static">{{ address.company }}</p>
-    </div>
-</div>
-{% endif %}
-
-{% if show_tax_id and address.tax_id %}
-<div class="fc-form-group fc-form-group--static fc-form-group--receipt--tax-id">
-    <label class="fc-form-label fc-container__grid--static-label--tax-id">{{ config.lang.checkout_tax_id }}</label>
-    <div class="fc-container__grid--static-input--tax-id">
-        <p class="fc-form-control--static">{{ address.tax_id }}</p>
     </div>
 </div>
 {% endif %}
