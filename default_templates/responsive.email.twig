@@ -234,7 +234,7 @@
                                                         <table cellspacing="0" cellpadding="0" align="left" class="fc-column" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;">
                                                             <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                                                    {% if payment_type == 'plastic' %}
+                                                                    {% if payment_type == 'plastic' and cc_number_masked %}
                                                                     <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_payment_method|raw }}</h3>
                                                                     <div class="fc-payment_method" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;margin-top: -9px;letter-spacing: 1px;">{{ cc_number_masked }} {% if cc_type|lower in ['amex','discover', 'maestro', 'mastercard', 'solo', 'switch', 'visa'] %}<img src="https://{{ config.store_domain }}/static/images/payment_logos/email/{{cc_type|lower}}.png" width="35" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 100%;position: relative;top: 6px;">{% endif %}</div>
                                                                     <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">

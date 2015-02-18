@@ -46,7 +46,7 @@
 {% if purchase_order != '' %}
   * {{ config.lang.checkout_purchase_order|pad(20)|raw }} {{ purchase_order }}
 {% endif %}
-{% if payment_type == 'plastic' %}
+{% if payment_type == 'plastic' and cc_number_masked %}
   * {{ config.lang.checkout_card_number|pad(20)|raw }} {{ cc_number_masked }} ({{ cc_type }})
 {% endif %}
   * {{ config.lang.cart_order_total|pad(20)|raw }} {{ total_order|money_format }}
