@@ -39,6 +39,7 @@
                 value="{{ address.first_name }}"
                 placeholder="{{ config.lang.checkout_first_name }}{{ first_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} given-name"
+                {% if first_name == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-first-name" />
         </div>
         {% endif %}
@@ -54,6 +55,7 @@
                 value="{{ address.last_name }}"
                 placeholder="{{ config.lang.checkout_last_name }}{{ last_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} family-name"
+                {% if last_name == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-last-name"/>
         </div>
         {% endif %}
@@ -85,6 +87,7 @@
                     value="{{ address.company }}"
                     placeholder="{{ config.lang.checkout_company }}{{ company_optional_placeholder }}"
                     autocomplete="{{ address.type }} organization"
+                    {% if company == 'required' %}data-fc-required{% endif %}
                     class="fc-form-control fc-form-control--{{ address.prefix }}-company" />
             </div>
         {% endif %}
@@ -100,10 +103,42 @@
                     value="{{ address.phone }}"
                     placeholder="{{ config.lang.checkout_phone }}{{ phone_optional_placeholder }}"
                     autocomplete="{{ address.type }} tel"
+                    {% if phone == 'required' %}data-fc-required{% endif %}
                     class="fc-form-control fc-form-control--{{ address.prefix }}-phone" />
             </div>
         {% endif %}
     </div>
+    {% endif %}
+
+    {% set tax_id = config.template_config.custom_checkout_field_requirements['billing_tax_id'] %}
+    {% set tax_id_optional_placeholder = (tax_id == 'optional') ? config.lang.checkout_optional : '' %}
+
+    {% if tax_id != "hidden" %}
+        {% if (address.type == 'billing' and not use_alternate_shipping_address) or address.type == 'shipping' %}
+        <div class="fc-form-group fc-address-entry__tax-id-container">
+            {% set field_name = address.prefix~"_tax_id" %}
+            {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+            <label class="fc-container__grid--label--tax-id fc-form-label">{{ config.lang.checkout_tax_id }}</label>
+            <div class="fc-container__grid--input--tax-id {% if error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+                <label for="{{ field_name }}" class="fc-form-label fc-form-label--{{ address.prefix }}-tax-id">{{ config.lang.checkout_tax_id }}</label>
+                <input type="text"
+                    id="{{ field_name }}"
+                    name="{{ field_name }}"
+                    value="{{ address.tax_id }}"
+                    placeholder="{{ config.lang.checkout_tax_id }}{{ tax_id_optional_placeholder }}"
+                    autocomplete="{{ address.type }} organization"
+                     {% if tax_id == 'required' %}data-fc-required{% endif %}
+                    class="fc-form-control fc-form-control--{{ address.prefix }}-tax-id" />
+            </div>
+        </div>
+        {% endif %}
+    {% else %}
+        <input
+            id="{{ address.prefix }}_tax_id"
+            type="hidden"
+            name="{{ address.prefix }}_tax_id"
+            value="{{ address.tax_id }}"
+        />
     {% endif %}
 
     {% set show_address1 = true %}
@@ -141,6 +176,7 @@
                 value="{{ address.address1 }}"
                 placeholder="{{ config.lang.checkout_address1 }}{{ address1_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line1"
+                {% if address1 == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-address1" />
         </div>
         {% endif %}
@@ -157,6 +193,7 @@
                 value="{{ address.address2 }}"
                 placeholder="{{ config.lang.checkout_address2 }}{{ address2_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line2"
+                {% if address2 == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-address2" />
         </div>
         {% endif %}

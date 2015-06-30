@@ -128,12 +128,12 @@
             value="{{ address.city }}"
             placeholder="{{ config.lang.checkout_city }}{{ city_optional_placeholder }}"
             autocomplete="{{ address.type }} locality"
+            {% if city_config == 'required' %}data-fc-required{% endif %}
             class="fc-form-control fc-form-control--city" />
     </div>
     {% endif %}
     {% if show_region %}
     <div class="fc-container__grid--region" data-fc-container-for="{{ address.prefix }}_region">
-        <!-- TODO: change placeholder based on country -->
         {% include "regions.inc.twig" with {'location_type': 'region'} %}
     </div>
     {% endif %}
@@ -162,6 +162,7 @@
             value="{{ address.postal_code }}"
             placeholder="{{ getPostalCodeLabel(address.country) }}{{ postal_code_optional_placeholder }}"
             autocomplete="{{ address.type }} postal-code"
+            {% if postal_code_config == 'required' %}data-fc-required{% endif %}
             class="fc-form-control fc-form-control--postal-code" />
     </div>
     {% endif %}

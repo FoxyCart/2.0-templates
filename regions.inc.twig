@@ -24,10 +24,12 @@
             {% set region_lang = "checkout_location_state" %}
         {% endif %}
     {% endif %}
+
+    <label for="{{ field_name }}" class="fc-form-label fc-form-label--region">{{ config.lang[region_lang]|raw }}</label>
+
     {% if locations|length > 0 %}
         <select class="fc-form-control fc-location" data-fc-default-value="{{ address[location_type] }}" data-fc-id="{{ field_name }}" {{ required_attr }} name="{{ field_name }}">
             <option value=""></option>
-            {# Join filter is returning error, buggy? #}
             {% for c in locations %}
                 {% if location_type == "country" %}
                     {% if (c.cc2 not in locations_filter|keys) or ((c.cc2 in locations_filter|keys) and (locations_filter[c.cc2] != "*")) %}

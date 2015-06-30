@@ -331,6 +331,11 @@
                                                             <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_shipto|raw }}<span class="fc_shipto_name" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ multiship.address_name }}</span></h3>
                                                             {% include "address.email.inc.twig" with {'address': multiship} %}
 
+                                                            {% if multiship.phone %}
+                                                                <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_phone|raw }}</h3>
+                                                                {{ multiship.phone }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                            {% endif %}
+
                                                             {% if multiship.custom_fields %}
                                                                 {% for key,custom_field in multiship.custom_fields %}
                                                                 {% if not custom_field.is_hidden %}
@@ -594,74 +599,51 @@
                                                     {% else %}
                                                     <h5>{{ config.lang.cart_future_charge|raw }}</h5>
                                                     {% endif %}
-                                                    <ul style="padding-left:1em;">
-                                                        {% set has_future_subs_details = false %}
-                                                        {% if has_future_shipping or future_coupons|length > 0 or has_taxes %}
-                                                            {% set has_future_subs_details = true %}
-                                                        <li class="fc-cart-total{% if config.with_controls %} hidden{% endif %}" data-fc-id="future-cart-display">
-                                                            <table style="display:inline-table">
-                                                                {% if has_future_shipping or future_coupons|length > 0 or has_taxes %}
-                                                                <tr class="fc-cart-total-subtotal">
-                                                                    <td class="fc-cart-total-label">{{ config.lang.cart_subtotal|raw }}</td>
-                                                                    <td class="fc-cart-total-value">{{ total_future_item_price|money_format }}</td>
-                                                                </tr>
-                                                                {% endif %}
-                                                                {% if has_future_shipping %}
-                                                                <tr class="fc-cart-total-shipping">
-                                                                    <td class="fc-cart-total-label">{{ config.lang.cart_shipping_and_handling|raw }}</td>
-                                                                    <td class="fc-cart-total-value">{{ total_future_shipping|money_format }}</td>
-                                                                </tr>
-                                                                {% endif %}
-                                                                {% if has_taxes %}
-                                                                {# TODO: test and verify future taxes work as expected... My hunch is they do not. #}
-                                                                    {% if has_multiship %}
-                                                                        <tr class="fc-cart-total-taxes">
-                                                                            <td class="fc-cart-total-label">
-                                                                                {{ config.lang.cart_tax|raw }}
-                                                                            </td>
-                                                                            <td class="fc-cart-total-value">
-                                                                                {{ total_tax|money_format }}
-                                                                            </td>
-                                                                        </tr>
-                                                                    {% else %}
-                                                                        {% for tax in shipping_address.taxes %}
-                                                                        <tr class="fc-cart-total-taxes">
-                                                                            <td class="fc-cart-total-label">
-                                                                                {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
-                                                                            </td>
-                                                                            <td class="fc-cart-total-value">
-                                                                                {{ tax.amount|money_format }}
-                                                                            </td>
-                                                                        </tr>
-                                                                        {% endfor %}
-                                                                    {% endif %}
-                                                                {% endif %}
-                                                                {% for key,coupon in future_coupons %}
-                                                                <tr class="fc-cart-total-discounts">
-                                                                    <td class="fc-cart-total-label">{{ coupon.name }}: {{ coupon.code }}</td>
-                                                                    <td class="fc-cart-total-value">{{ coupon.amount|money_format }}</td>
-                                                                </tr>
-                                                                {% endfor %}
-                                                            </table>
-                                                        </li>
-                                                        {% endif %}
-                                                        <li class="fc-cart-total-final">
-                                                            <table style="display:inline-table">
-                                                            {% for key, subscription_item_total in future_subscription_totals_by_date %}
-                                                                <tr class="fc-cart-total-final">
-                                                                    <td class="fc-cart-total-label">
-                                                                        {{ key|date("F jS, Y") }}
-                                                                    </td>
-                                                                    <td class="fc-cart-total-value">
-                                                                        {{ subscription_item_total.total|money_format }}
-                                                                    </td>
-                                                                </tr>
-                                                            {% endfor %}
-                                                            </table>
-                                                        </li>
-                                                    </ul>
-                                                    {# End block future_products #}
 
+                                                    {% set has_future_subscription_details = false %}
+                                                    {% if has_future_shipping or future_coupons|length > 0 or has_future_taxes %}
+                                                        {% set has_future_subscription_details = true %}
+                                                    {% endif %}
+                                                        <ul style="padding-left:1em;">
+                                                        {% for key, subscription_item_total in future_subscription_totals_by_date %}
+                                                                <li class="fc-cart-total" data-fc-id="future-cart-display">
+                                                                    <table style="display:inline-table">
+                                                                    <tr class="fc-cart-total-subtotal">
+                                                                        <td class="fc-cart-total-label"> {{ key|date("F jS, Y") }} </td>
+                                                                        <td class="fc-cart-total-value"> {{ subscription_item_total.total|money_format }} </td>
+                                                                    </tr>
+                                                            {% if has_future_subscription_details %}
+                                                                    <tr class="fc-cart-total-subtotal">
+                                                                        <td class="fc-cart-total-label"> {{ config.lang.cart_subtotal|raw }}: </td>
+                                                                        <td class="fc-cart-total-value"> {{ subscription_item_total.total_item_price|money_format }} </td>
+                                                                    </tr>
+                                                                    {% for key,coupon in future_coupons %}
+                                                                    <tr class="fc-cart-total-discounts">
+                                                                        <td class="fc-cart-total-label"> {{ coupon.name }}: {{ key }} </td>
+                                                                        <td class="fc-cart-total-value"> {{ coupon.amount|money_format }} </td>
+                                                                    </tr>
+                                                                    {% endfor %}
+                                                                    {% if has_future_shipping %}
+                                                                    <tr class="fc-cart-total-shipping">
+                                                                        <td class="fc-cart-total-label"> {{ shipping_address.future_shipping_service_description }}: </td>
+                                                                        <td class="fc-cart-total-value"> {{ subscription_item_total.total_shipping|money_format }} </td>
+                                                                    </tr>
+                                                                    {% endif %}
+                                                                    {% if has_future_taxes %}
+                                                                    <tr class="fc-cart-total-taxes">
+                                                                        <td class="fc-cart-total-label"> {{ config.lang.cart_tax|raw }}: </td>
+                                                                        <td class="fc-cart-total-value"> {{ subscription_item_total.total_tax|money_format }} </td>
+                                                                    </tr>
+                                                                    {% endif %}
+                                                                    <tr class="fc-cart-total-subtotal">
+                                                                        <td class="fc-subtotal__label"> {{ config.lang.cart_total|raw }}: </td>
+                                                                        <td class="fc-subtotal__value"> {{ subscription_item_total.total|money_format }} </td>
+                                                                    </tr>
+                                                                    </table>
+                                                                </li>
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        </ul>
                                                     </td>
                                                 </tr>
                                             </tbody>

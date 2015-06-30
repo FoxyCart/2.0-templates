@@ -45,12 +45,19 @@
     {% endif %}
 
     {% if has_taxes %}
-        {% for tax in shipping_address.taxes %}
+        {% if has_multiple_addresses %}
             <tr class="fc_cart_foot_tax">
-                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):</td>
-                <td class="fc_col2">{{ tax.amount|money_format }}</td>
+                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_tax|raw }}</td>
+                <td class="fc_col2">{{ total_tax|money_format }}</td>
             </tr>
-        {% endfor %}
+        {% else %}
+            {% for tax in shipping_address.taxes %}
+                <tr class="fc_cart_foot_tax">
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):</td>
+                    <td class="fc_col2">{{ tax.amount|money_format }}</td>
+                </tr>
+            {% endfor %}
+        {% endif %}
     {% endif %}
             <tr>
                 <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_order_total|raw }}:</td>
@@ -68,37 +75,30 @@
                     </h5>
                 </td>
             </tr>
-            <tr>
-                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal|raw }}:</td>
-                <td class="fc_col2">{{ total_future_item_price|money_format }}</td>
-            </tr>
-            {% if has_future_shipping %}
-                <tr>
-                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label }}:</td>
-                    <td class="fc_col2">{{ total_future_shipping|money_format }}</td>
-                </tr>
-            {% endif %}
-            {% if has_taxes %}
-            {# TODO: test and verify future taxes work as expected... My hunch is they do not. #}
-            {% for tax in shipping_address.taxes %}
-            <tr>
-                <td class="fc_col1" colspan="{{ colspan-1 }}">
-                    {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
-                </td>
-                <td class="fc_col2">
-                    {{ tax.amount|money_format }}
-                </td>
-            </tr>
-            {% endfor %}
-            {% endif %}
-            {% for key,coupon in future_coupons %}
-            <tr>
-                <td class="fc_col1" colspan="{{ colspan-1 }}">{{ coupon.name }}: {{ coupon.code }}</td>
-                <td class="fc_col2">{{ coupon.amount|money_format }}</td>
-            </tr>
-            {% endfor %}
 
             {% for key, subscription_item_total in future_subscription_totals_by_date %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_subtotal|raw }}:</td>
+                    <td class="fc_col2">{{ subscription_item_total.total_item_price|money_format }}</td>
+                </tr>
+                {% for key,coupon in future_coupons %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ coupon.name }}: {{ coupon.code }}</td>
+                    <td class="fc_col2">{{ coupon.amount|money_format }}</td>
+                </tr>
+                {% endfor %}
+                {% if has_future_shipping %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label }}:</td>
+                    <td class="fc_col2">{{ subscription_item_total.total_shipping|money_format }}</td>
+                </tr>
+                {% endif %}
+                {% if has_future_taxes %}
+                <tr>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ config.lang.cart_tax|raw }}:</td>
+                    <td class="fc_col2">{{ subscription_item_total.total_tax|money_format }}</td>
+                </tr>
+                {% endif %}
                 <tr>
                     <td class="fc_col1" colspan="{{ colspan-1 }}">
                         {{ key|date("F jS, Y") }} Total:

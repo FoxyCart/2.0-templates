@@ -72,12 +72,18 @@
 {% if not (config.template_config.custom_checkout_field_requirements['billing_first_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_last_name'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address1'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_address2'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_city'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_region'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_postal_code'] == 'hidden' and config.template_config.custom_checkout_field_requirements['billing_country'] == 'hidden') %}
 {{ config.lang.email_billing_address|raw }}:
 {% include "address.email.inc.txt.twig" with {'address': billing_address} %}
+{% if billing_address.phone %}
+  {{ config.lang.checkout_phone }}: {{ billing_address.phone }}
+{% endif %} {# billing_address.phone #}
 {% endif %}
 {% if has_multiship %}
 {% for multiship in multiship_data %}
 
 {{ config.lang.email_ship_to|raw }}: {{ multiship.address_name }}
 {% include "address.email.inc.txt.twig" with {'address': multiship} %}
+{% if multiship.phone %}
+  {{ config.lang.checkout_phone }}: {{ multiship.phone }}
+{% endif %} {# multiship.phone #}
 
 {% if multiship.custom_fields|length > 0 %}
 {% for key,custom_field in multiship.custom_fields %}
@@ -108,6 +114,9 @@
 
 {{ config.lang.email_shipping_address|raw }}:
 {% include "address.email.inc.txt.twig" with {'address': shipping_address} %}
+{% if shipping_address.phone %}
+  {{ config.lang.checkout_phone }}: {{ shipping_address.phone }}
+{% endif %} {# shipping_address.phone #}
 {% endif %} {# has shippable products #}
 {% endif %} {# not multiship #}
 

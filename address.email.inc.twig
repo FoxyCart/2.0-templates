@@ -30,6 +30,9 @@
 {% if address.company %}
     {{ address.company }}<br />
 {% endif %}
+{% if address.tax_id != '' and config.template_config.custom_checkout_field_requirements['billing_tax_id'] != 'hidden' %}
+    {{ config.lang.checkout_tax_id }}: {{ address.tax_id }}<br />
+{% endif %}
 {% if  address.address1 and show_address1 %}
     {{ address.address1 }}<br />
 {% endif %}
@@ -54,8 +57,5 @@
 {% endif %}
 {% if geoip %}
     {{ geoip }}<br />
-{% endif %}
-{% if address.phone %}
-    {{ address.phone }}<br />
 {% endif %}
 <br />

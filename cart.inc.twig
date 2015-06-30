@@ -75,7 +75,6 @@
                     {% if item_count == 1 %}
                         {% set temp_lang_cart_items = config.lang.cart_item|raw %}
                     {% endif %}
-                    {# TODO: update language here when cart updates. #}
                     <span data-fc-order-quantity-integer="fc-order-quantity-integer">{{ item_count }}</span>
                     <span data-fc-lang-cart-item="{{ config.lang.cart_item }}" data-fc-lang-cart-items="{{ config.lang.cart_items }}">{{ temp_lang_cart_items|lower }}</span>
                     {{ config.lang.cart_in_your_order|raw }}
@@ -102,7 +101,6 @@
 
     {% if not is_updateinfo %}
 
-    {# TODO: Not sure if this should be a config. setting or if it's ok just setting it in context. #}
     {% if cart_is_fullpage %}
     <div class="fc-cart-container fc-cart__main fc-container__row" role="main">
     {% else %}
@@ -330,7 +328,6 @@
 
             {% set info_string = utils.get_info_string('quantity', messages.info) %}
             {% if info_string and context != 'cart' %}
-                {# TODO: fix the styling for the line below #}
                 <div class="alert" style="color: transparent;">
                 {{ info_string }}
                 </div>
@@ -408,7 +405,6 @@
             <ul class="fc-transaction">
                 {% if shipping_address.has_shippable_products or has_taxes or has_discounts %}
                 <li class="fc-transaction__subtotal fc-transaction__section">
-                    {# TODO: the below condition needs to actually work (if it doesn't). #}
                     {% if has_future_products %}<h5>{{ config.lang.cart_todays_charge|raw }}</h5>{% endif %}
                     <table>
                         <tr class="fc-subtotal--row">
@@ -676,7 +672,7 @@
             {% block future_products %}
             <div class="fc-transaction fc-transaction--future">
                 {% set has_future_subscription_details = false %}
-                {% if has_future_shipping or future_coupons|length > 0 or has_taxes %}
+                {% if has_future_shipping or future_coupons|length > 0 or has_future_taxes %}
                     {% set has_future_subscription_details = true %}
                 {% endif %}
                 {% if (context == "cart" or context == "checkout") and has_future_subscription_details %}
@@ -702,17 +698,17 @@
                                 </tr>
                                 {% for key,coupon in future_coupons %}
                                 <tr class="fc-subtotal--row fc-transaction--future__discounts">
-                                    <td class="fc-subtotal__label">{{ coupon.name }}: {{ coupon.code }}</td>
+                                    <td class="fc-subtotal__label">{{ coupon.name }}: {{ key }}</td>
                                     <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
                                 </tr>
                                 {% endfor %}
                                 {% if has_future_shipping %}
                                 <tr class="fc-subtotal--row">
-                                    <td class="fc-subtotal__label"> {{ shipping_service_label }}: </td>
+                                    <td class="fc-subtotal__label"> {{ shipping_address.future_shipping_service_description }}: </td>
                                     <td class="fc-subtotal__value"> {{ subscription_item_total.total_shipping|money_format }} </td>
                                 </tr>
                                 {% endif %}
-                                {% if has_taxes %}
+                                {% if has_future_taxes %}
                                 <tr class="fc-subtotal--row">
                                     <td class="fc-subtotal__label"> {{ config.lang.cart_tax|raw }}: </td>
                                     <td class="fc-subtotal__value"> {{ subscription_item_total.total_tax|money_format }} </td>
@@ -759,18 +755,18 @@
                 {% endblock order_payment_action_paypal_express %}
 
 
-                {% block order_payment_action_amazon %}
+                {% block order_payment_options %}
                 {% if total_order > 0 %}
-                    {% if show_amazon_fps_payment_option %}
+                    {% for gateway in order_payment_options %}
                     <p class="fc-action--payment--or">—{{ config.lang.cart_or|raw }}—</p>
-                    <p class="fc-action--payment--amazon-fps">
-                        <a data-fc-id="amazon-fps-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&fc_payment_method=amazon_fps&{{ session_name }}={{ session_id }}" target="_top">
-                            <img src="https://cdn.foxycart.com/static/images/payment_logos/amazon.png" />
+                    <p class="fc-action--payment--{{ gateway.name_dashed }}">
+                        <a data-fc-id="{{ gateway }}-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&amp;fc_payment_method={{ gateway.name }}&amp;{{ session_name }}={{ session_id }}" target="_top">
+                            <img src="{{ gateway.logo_url }}" />
                         </a>
                     </p>
-                    {% endif %}
+                    {% endfor %}
                 {% endif %}
-                {% endblock order_payment_action_amazon %}
+                {% endblock order_payment_options %}
 
 
             {% endif %}{# items|length > 0 #}
