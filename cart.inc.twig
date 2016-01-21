@@ -756,16 +756,16 @@
 
 
                 {% block order_payment_options %}
-                {% if total_order > 0 %}
+                {% if payment_info_required %}
                     {% for gateway in order_payment_options %}
                     <p class="fc-action--payment--or">—{{ config.lang.cart_or|raw }}—</p>
                     <p class="fc-action--payment--{{ gateway.name_dashed }}">
-                        <a data-fc-id="{{ gateway }}-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&amp;fc_payment_method={{ gateway.name }}&amp;{{ session_name }}={{ session_id }}" target="_top">
+                        <a data-fc-id="{{ gateway.name_dashed }}-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&amp;fc_payment_method={{ gateway.name }}&amp;{{ session_name }}={{ session_id }}" target="_top">
                             <img src="{{ gateway.logo_url }}" />
                         </a>
                     </p>
                     {% endfor %}
-                {% endif %}
+                {% endif %}{# payment_info_required #}
                 {% endblock order_payment_options %}
 
 

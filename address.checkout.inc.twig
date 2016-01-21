@@ -264,7 +264,7 @@
         </div>
 
         {% if address.custom_fields_template %}
-            {% include template_from_string(address.custom_fields_template) %}
+            {% include template_from_string(address.custom_fields_template) with address %}
         {% endif %}
 
     {% endif %}

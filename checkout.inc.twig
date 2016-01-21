@@ -570,7 +570,7 @@ CONVENTIONS:
                     {% endfor %}
                 {% endif %}{# not is_updateinfo and payment_info_required #}
 
-                {% if config.supports_purchase_order and not is_updateinfo %}
+                {% if config.supports_purchase_order and not is_updateinfo and payment_info_required %}
                 <div class="fc-form-group" data-fc-error-for="purchase_order" data-fc-error-class="fc-alert-container--error">
                     <div id="fc-payment-method-purchase-order" class="fc-container__grid--payment-method fc-payment-method--purchase-order">
                         {% set po_error_string = utils.get_error_string('purchase_order', messages.errors) %}
@@ -607,7 +607,7 @@ CONVENTIONS:
                         </div>
                     </div>
                 </div>
-                {% endif %}{# config.supports_purchase_order and not is_updateinfo #}
+                {% endif %}{# config.supports_purchase_order and not is_updateinfo and payment_info_required #}
 
                 {% if not payment_info_required %}
                 <div class="fc-form-group">
