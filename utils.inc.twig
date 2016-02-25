@@ -2,7 +2,7 @@
 {# don't indent as it will return a non-empty string #}
 {# even if there's no error #}
 {% for info_entry in info if info_entry.context == context %}
-<p>{{ info_entry.message }}</p>
+<p>{{ info_entry.message|raw }}</p>
 {% endfor %}
 {% endmacro %}
 
@@ -10,7 +10,7 @@
 {# don't indent as it will return a non-empty string #}
 {# even if there's no error #}
 {% for error in errors if error.context == field_name %}
-<p>{{ error.message }}</p>
+<p>{{ error.message|raw }}</p>
 {% endfor %}
 {% endmacro %}
 

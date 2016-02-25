@@ -1,6 +1,8 @@
 ===========================================================
 {% if is_updateinfo %}
 {{ config.lang.email_subject_updateinfo|upper|raw }}
+{% elseif is_subscription_dunning_reminder %}
+    {{ config.lang.email_subject_subscription_past_due|upper|raw }}
 {% elseif is_subscription_modification %}
 {{ config.lang.email_subject_subscription_updated|upper|raw }}
 {% elseif is_subscription_cancel %}
@@ -10,30 +12,45 @@
 {% endif  %}
 ===========================================================
 
+{% if not is_subscription_dunning_reminder %}
 {{ config.lang.email_view_in_your_browser|raw }}: {{ receipt_url }}
 
+{% endif  %}
 {% if is_order %}
 {{ config.lang.email_text_message_order|raw }} https://{{ config.store_domain }}/cart?cart=updateinfo
+{% elseif is_subscription_dunning_reminder %}
+{% set sub = subscriptions|first %}
+{% if sub %}
+{{ config.lang.email_text_message_subscription_dunning_reminder|replace({
+'{{ sub_token_url }}': sub.sub_token_url
+})|replace(
+{
+'{{ days_since_first_failed_transaction }}': days_since_first_failed_transaction
+})|raw }}
 {% endif %}
-{% if is_updateinfo %}
+{% elseif is_updateinfo %}
 {{ config.lang.email_message_updateinfo|raw }}
-{% endif %}
-{% if is_subscription_cancel %}
+{% elseif is_subscription_cancel %}
+{% if is_subscription_dunning_cancellation %}
+{{ config.lang.email_message_subscription_dunning_cancel|raw }}
+{% else %}
 {{ config.lang.email_message_subscription_cancel|raw }}
 {% endif %}
-{% if is_subscription_modification %}
+{% elseif is_subscription_modification %}
 {{ conig.lang.email_message_subscription_modification|raw }}
 {% endif %}
 
 ===========================================================
 
 {% if not is_updateinfo %}
-{% if has_downloadables %}
+{% if has_downloadables and is_subscription_cancel == false %}
 {{ config.lang.email_text_downloadable_products|pad(60,"-"," ")|raw }}
 
 {% for item in downloadable_links %}
 {{ item.name }}
+{% if item.url %}
   -> {{ item.url }}
+{% endif %}
 {% endfor %}
 
 

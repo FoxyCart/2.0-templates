@@ -338,6 +338,12 @@ CONVENTIONS:
             name="shipping_service_description"
             value="{{ shipping_address.shipping_service_description }}"
         />
+        <input
+            id="shipping_service_signature"
+            type="hidden"
+            name="shipping_service_signature"
+            value="{{ shipping_address.shipping_service_signature }}"
+        />
         {% if config.template_config.custom_script_values.multiship_checkout_fields %}
             {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
         {% endif %}
@@ -661,6 +667,33 @@ CONVENTIONS:
                     </div>
                 </div>
             </div>
+            {% endif %}
+
+            {% if customer_in_the_eu and config.template_config.eu_secure_data_transfer_consent.usage != "none" %}
+                {% set field_name = 'secure_data_transfer_consent' %}
+                {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                <div class="fc-form-group" data-fc-container="secure-transfer" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error">
+                    <div class="fc-checkout__additional-field--secure-transfer">
+                        <div class="fc-input-group-container fc-input-group-container--checkbox fc-input-group-container--active">
+                            <label data-fc-id="secure-transfer-label" class="fc-input-group-container__title fc-form-label fc-form-label--secure-transfer">
+                                <input type="hidden" name="secure_data_transfer_consent" value="false" />
+                                <input type="checkbox"
+                                    id="secure_data_transfer_consent"
+                                    name="secure_data_transfer_consent"
+                                    value="true"
+                                    data-fc-required
+                                    class="fc-form-control fc-form-control--secure-transfer"
+                                    {{ checked(secure_data_transfer_consent == 'true') }} />
+                                {{ config.lang.checkout_secure_data_transfer_consent_display }}
+                            </label>
+                            <div class="fc-form-group">
+                                <p>
+                                    {{ config.lang.checkout_secure_data_transfer_consent }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             {% endif %}
 
             {% if config.template_config.newsletter_subscribe.usage != "none" %}

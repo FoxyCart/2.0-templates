@@ -74,6 +74,7 @@
             <div class="fc-content" style="margin: 0 auto;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 600px;display: block;">
 
                 <!-- LINKS -->
+                {% if not is_subscription_dunning_reminder %}
                 <table cellspacing="0" cellpadding="0" id="fc-links" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-top: 20px;margin-bottom: 10px;text-shadow: 1px 1px 0px #ffffff;filter: dropshadow(color=#ffffff, offx=1, offy=1);">
                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -89,6 +90,7 @@
                         </td>
                     </tr>
                 </table>
+                {% endif %}
                 <!-- /LINKS -->
 
                 <!-- HEADER -->
@@ -114,6 +116,8 @@
                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                         {% if is_updateinfo %}
                                             {{ config.lang.email_subject_updateinfo|raw }}
+                                        {% elseif is_subscription_dunning_reminder %}
+                                            {{ config.lang.email_subject_subscription_past_due|raw }}
                                         {% elseif is_subscription_modification %}
                                             {{ config.lang.email_subject_subscription_updated|raw }}
                                         {% elseif is_subscription_cancel %}
@@ -147,36 +151,42 @@
                                             <table cellspacing="0" cellpadding="0" id="fc-message" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;">
                                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-
+                                                        <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;margin-bottom: 30px;">
                                                         {% if is_order %}
-                                                            <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;margin-bottom: 30px;">
-                                                                {{ config.lang.email_html_message_order|replace({
-                                                                '{{ config.store_domain }}': config.store_domain
+                                                            {{ config.lang.email_html_message_order|replace({
+                                                            '{{ config.store_domain }}': config.store_domain
+                                                            })|raw }}
+                                                        {% elseif is_subscription_dunning_reminder %}
+                                                            {% set sub = subscriptions|first %}
+                                                            {% if sub %}
+                                                                {{ config.lang.email_html_message_subscription_dunning_reminder|replace({
+                                                                '{{ sub_token_url }}': sub.sub_token_url
+                                                                })|replace(
+                                                                {
+                                                                '{{ days_since_first_failed_transaction }}': days_since_first_failed_transaction
                                                                 })|raw }}
-                                                            </p>
+                                                            {% endif %}
                                                         {% elseif is_updateinfo %}
-                                                            <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;margin-bottom: 30px;">
-                                                                {{ config.lang.email_message_updateinfo|replace({
-                                                                '{{ config.store_domain }}': config.store_domain
-                                                                })|raw }}
-                                                            </p>
+                                                            {{ config.lang.email_message_updateinfo|replace({
+                                                            '{{ config.store_domain }}': config.store_domain
+                                                            })|raw }}
                                                         {% elseif is_subscription_modification %}
-                                                            <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;margin-bottom: 30px;">
-                                                                {{ config.lang.email_message_subscription_modification|raw }}
-                                                            </p>
+                                                            {{ config.lang.email_message_subscription_modification|raw }}
                                                         {% elseif is_subscription_cancel %}
-                                                            <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;margin-bottom: 30px;">
+                                                            {% if is_subscription_dunning_cancellation %}
+                                                                {{ config.lang.email_message_subscription_dunning_cancel|raw }}
+                                                            {% else %}
                                                                 {{ config.lang.email_message_subscription_cancel|raw }}
-                                                            </p>
+                                                            {% endif %}
                                                         {% endif  %}
-
+                                                            </p>
                                                    </td>
                                                 </tr>
                                             </table>
                                             <!-- /MESSAGE -->
 
                                             <!-- DOWNLOADABLES -->
-                                            {% if has_downloadables %}
+                                            {% if has_downloadables and is_subscription_cancel == false %}
                                                 <table cellspacing="0" cellpadding="0" id="fc-downloadables" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;">
                                                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">

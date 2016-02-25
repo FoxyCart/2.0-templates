@@ -133,7 +133,8 @@
     </div>
     {% endif %}
     {% if show_region %}
-    <div class="fc-container__grid--region" data-fc-container-for="{{ address.prefix }}_region">
+    {% set error_string = utils.get_error_string(address.prefix~'_region', messages.errors) %}
+    <div class="fc-container__grid--region {% if error_string %}fc-alert-container--error{% endif %}" data-fc-container-for="{{ address.prefix }}_region">
         {% include "regions.inc.twig" with {'location_type': 'region'} %}
     </div>
     {% endif %}
@@ -167,7 +168,8 @@
     </div>
     {% endif %}
     {% if show_country %}
-    <div class="fc-container__grid--country">
+    {% set error_string = utils.get_error_string(address.prefix~'_country', messages.errors) %}
+    <div class="fc-container__grid--country {% if error_string %}fc-alert-container--error{% endif %}">
         {% include "regions.inc.twig" with {'location_type': 'country'} %}
     </div>
     {% endif %}
@@ -176,7 +178,8 @@
 
 {% if country_supports_postalcode_search and show_country %}
 <div class="fc-form-group fc-postal-code-entry__with-search">
-    <div class=" fc-container__grid--country" data-fc-container-for="{{ address.prefix }}_country">
+    {% set error_string = utils.get_error_string(address.prefix~'_country', messages.errors) %}
+    <div class=" fc-container__grid--country {% if error_string %}fc-alert-container--error{% endif %}" data-fc-container-for="{{ address.prefix }}_country">
         {% include "regions.inc.twig" with {'location_type': 'country' } %}
     </div>
 </div>

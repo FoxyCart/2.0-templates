@@ -62,10 +62,4 @@
             placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"
             class="fc-form-control fc-location" />
     {% endif %}
-    {% set error_string = utils.get_error_string(field_name, messages.errors) %}
-    {% if error_string %}
-    <div class="fc-alert fc-alert--danger">
-        {{ error_string }}
-    </div>
-    {% endif %}
 {% endif %}

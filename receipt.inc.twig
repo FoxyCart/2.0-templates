@@ -62,7 +62,7 @@
 
         <div id="fc-receipt__section--actions" class="fc-receipt__section">
             {% block downloadable_links %}
-            {% if has_downloadables %}
+            {% if has_downloadables and is_subscription_cancel == false %}
             <div id="fc-receipt__section--downloadables" class="fc-receipt__section">
                 <fieldset>
                     <legend>{{ config.lang.checkout_download_links|raw }}</legend>
