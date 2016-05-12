@@ -74,9 +74,9 @@ CONVENTIONS:
             <input type="hidden" id="email_is_found" name="email_is_found" value="{{ email_is_found ? 1 : 0 }}" />
 
             {% if auth_token_is_valid %}
-                <input type="hidden" id="fc_auth_token" name="fc_auth_token" value="{{ fc_auth_token }}" />
+                <input type="hidden" id="foxy_auth_token" name="foxy_auth_token" value="{{ foxy_auth_token }}" />
                 <input type="hidden" id="timestamp" name="timestamp" value="{{ timestamp }}" />
-                <input type="hidden" id="fc_customer_id" name="fc_customer_id" value="{{ fc_customer_id }}" />
+                <input type="hidden" id="foxy_customer_id" name="foxy_customer_id" value="{{ foxy_customer_id }}" />
             {% endif %}
 
             {# preserve paypal express variables #}
@@ -337,12 +337,6 @@ CONVENTIONS:
             type="hidden"
             name="shipping_service_description"
             value="{{ shipping_address.shipping_service_description }}"
-        />
-        <input
-            id="shipping_service_signature"
-            type="hidden"
-            name="shipping_service_signature"
-            value="{{ shipping_address.shipping_service_signature }}"
         />
         {% if config.template_config.custom_script_values.multiship_checkout_fields %}
             {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
@@ -842,10 +836,12 @@ CONVENTIONS:
 
 {% endif %}
 
-
-
     </form>
     </div>{# #fc-main #}
+
+{% if config.supports_address_validation %}
+    {% include 'address.validation.inc.twig' %}
+{% endif %}
 
 </div><!-- #fc-checkout__main -->
 </div><!-- .fc-container -->

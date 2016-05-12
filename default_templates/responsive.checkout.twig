@@ -17,7 +17,9 @@
         </script>
     <![endif]-->
 
-    <link href="{{ config.css_file }}" rel="stylesheet" media="screen">
+    {% for css_file_href in config.css_files %}
+    <link href="{{ css_file_href }}" rel="stylesheet" media="screen">
+    {% endfor %}
 
     <!-- FC script insertion -->{{ fc_header_content|raw }}<!-- /FC script insertion -->
     <!--[if lt IE 9 ]>

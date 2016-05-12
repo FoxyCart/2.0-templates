@@ -1,0 +1,80 @@
+<div data-fc-id="block-address-validation-modal" style="display:none;">
+{% block address_validation_modal %}
+    <div class="fc-modal">
+    {% if loading_address_validation %}
+        <div class="fc-alert fc-alert--info">
+            <h2>
+                <svg class="fc-svg-icon fc-icon-large" role="presentation">
+                    <use xlink:href="#fa-map-marker" />
+                </svg>
+                {{ config.lang.checkout_address_validation_heading }}
+            </h2>
+            <p>{{ config.lang.checkout_address_validation_loading }}</p>
+            <div class="fc-spinner">
+              <div class="bounce1"></div>
+              <div class="bounce2"></div>
+              <div class="bounce3"></div>
+            </div>
+        </div>
+    {% elseif address_validation_successful %}
+        <div class="fc-alert fc-alert--success">
+            <h2>
+                <svg class="fc-svg-icon fc-icon-large" role="presentation">
+                    <use xlink:href="#fa-map-marker" />
+                </svg>
+                {{ config.lang.checkout_address_validation_heading }}
+            </h2>
+            <p>{{ config.lang.checkout_address_validation_success }}</p>
+            <div class="fc-container__row">
+                <div class="fc-address-validation--suggested">
+                    <address>
+                        <span class="fc-address-validation__address1 {{ utils.address_changed(address_being_validated.address1, address_validation_update.address1) }}">{{ address_validation_update.address1 }}</span>
+                        {% if address_validation_update.address2 %}
+                            <span class="fc-address-validation__address2 {{ utils.address_changed(address_being_validated.address2, address_validation_update.address2) }}">{{ address_validation_update.address2 }}</span>
+                        {% endif %}
+                        <span class="fc-address-validation__city {{ utils.address_changed(address_being_validated.city, address_validation_update.city) }}">{{ address_validation_update.city }}</span>,
+                        <span class="fc-address-validation__region {{ utils.address_changed(address_being_validated.region, address_validation_update.region) }}">{{ address_validation_update.region }}</span>
+                        <span class="fc-address-validation__postal-code {{ utils.address_changed(address_being_validated.postal_code, address_validation_update.postal_code) }}">{{ address_validation_update.postal_code }}</span>
+                        <span class="fc-address-validation__country {{ utils.address_changed(address_being_validated.country, address_validation_update.country) }}">
+                            <img src="//cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_validation_update.country|lower }}.png" />
+                            {{ address_validation_update.country }}
+                        </span>
+                        <button id="fc-address-validation__button--accept" data-modal-action="accept" class="fc-button fc-button--submit">{{ config.lang.checkout_address_validation_accept }}</button>
+                    </address>
+                </div>
+                <div class="fc-address-validation--original">
+                    <address>
+                        <span class="fc-address-validation__address1">{{ address_being_validated.address1 }}</span>
+                        {% if address_being_validated.address2 %}
+                            <span class="fc-address-validation__address2">{{ address_being_validated.address2 }}</span>
+                        {% endif %}
+                        <span class="fc-address-validation__city">{{ address_being_validated.city }}</span>,
+                        <span class="fc-address-validation__region">{{ address_being_validated.region }}</span>
+                        <span class="fc-address-validation__postal-code">{{ address_being_validated.postal_code }}</span>
+                        <span class="fc-address-validation__country">
+                            <img src="//cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_being_validated.country|lower }}.png" />
+                            {{ address_being_validated.country }}
+                        </span>
+                        <button id="fc-address-validation__button--cancel" data-modal-action="cancel" class="fc-button fc-button--cancel">{{ config.lang.checkout_address_validation_reject }}</button>
+                    </address>
+                </div>
+            </div>
+        </div>
+    {% else %}
+        <div class="fc-alert fc-alert--danger">
+            <h2>
+                <svg class="fc-svg-icon fc-icon-large" role="presentation">
+                    <use xlink:href="#fa-map-marker" />
+                </svg>
+                {{ config.lang.checkout_address_validation_heading }}
+            </h2>
+            <p>{{ config.lang.checkout_address_validation_failure }}</p>
+
+            <div class="fc-input-group__button">
+                <button id="fc-address-validation__button--cancel" data-modal-action="cancel" class="fc-button fc-button--cancel">{{ config.lang.checkout_ok }}</button>
+            </div>
+        </div>
+    {% endif %}
+    </div>
+{% endblock address_validation_modal %}
+</div>

@@ -224,18 +224,14 @@
         {% endif %}
         {% if address.shipping_results|length > 0 %}
             {{ utils.shipping_results(address, 'fc-input-group--full-page', messages.errors, config.lang) }}
+        {% elseif address.loading_shipping_results == false %}
+            <h5 class="fc_checkout__shipping-results__help-text">{{ config.lang.checkout_update_shipping_message|raw }}</h5>
         {% endif %}
         <input
             id="{{ address.prefix }}_shipping_service_description"
             type="hidden"
             name="{{ address.prefix }}_shipping_service_description"
             value="{{ address.shipping_service_description }}"
-        />
-        <input
-            id="{{ address.prefix }}_shipping_service_signature"
-            type="hidden"
-            name="{{ address.prefix }}_shipping_service_signature"
-            value="{{ address.shipping_service_signature }}"
         />
         <input
             id="{{ address.prefix }}_subtotal"

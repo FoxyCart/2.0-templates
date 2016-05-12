@@ -65,3 +65,7 @@
     </div>
 </div>
 {% endmacro %}
+
+{% macro address_changed(original, suggested) %}
+{% set address_validation_changed = '' %}{% if original != suggested %}fc-address-validation--changed{% endif %}
+{% endmacro %}
