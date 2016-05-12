@@ -1,0 +1,120 @@
+.fc-foxycomplete {
+    position:relative;
+}
+.fc-foxycomplete-list {
+    background-color: #fff;
+    border: 1px solid #777;
+    display: block;
+    list-style-type: none;
+    margin: 0;
+    max-height:200px;
+    padding: 0px;
+    position: absolute;
+    overflow:auto;
+
+    li {
+        border-top: 1px solid #aaa;
+        cursor: pointer;
+        width:100%;
+        padding:0;
+        margin:0;
+    }
+
+    li:first-child {
+        border-top: none;
+    }
+
+    // relates to the currently selected element
+    .active{
+        background-color: #eef;
+    }
+
+    li{
+        p {
+            font-size:14px;
+            margin: 0;
+            padding: 5px 7px;
+        }
+        .matchRow {
+            color: $grayMid;
+            padding-top: 0;
+            font-style: italic;
+        }
+        .matchedField {
+            color: #999;
+            font-style: italic;
+        }
+    }
+
+    .match {
+        font-weight: bold;
+        text-decoration: underline;
+    }
+
+    .fc-foxycomplete-no-results p {
+        color:#777;
+        font-style:italic;
+    }
+}
+
+.fc-foxycomplete-combobox {
+    background:#F1F1F1;
+    border:none;
+    border-left:1px solid #777;
+    color:#777;
+    cursor:pointer;
+    font-family:Tahoma;
+    font-size:12px;
+    text-align:center;
+    position:absolute;
+    display:inline-block;
+    padding:0;
+    margin:0;
+
+    &:hover {
+        background:$white;
+    }
+}
+
+.fc-foxycomplete-flag {
+    width:16px;
+    display:inline-block;
+    background-repeat:no-repeat;
+    background-position:center right;
+    position:absolute;
+    padding:0;
+    margin:0;
+}
+
+.fc-foxycomplete-inactive {
+    .fc-location {
+      border:none;
+      background:none;
+      -webkit-box-shadow: none;
+      -moz-box-shadow: none;
+      box-shadow: none;
+      cursor: pointer;
+      text-decoration:underline;
+    }
+
+    .fc-readonly {
+        text-decoration:none;
+        cursor: default;
+    }
+
+    .fc-foxycomplete-combobox-closed {
+      display:none;
+    }
+}
+
+.fc-foxycomplete-active {
+    .fc-readonly {
+        border:none;
+        background:none;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+        text-decoration:none;
+        cursor: default;
+    }
+}

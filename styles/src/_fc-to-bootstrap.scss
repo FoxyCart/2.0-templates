@@ -1,0 +1,554 @@
+// OVERRIDES
+
+@media ($smallScreen) {
+  .fc-container {
+    padding-right: 7px;
+    padding-left: 7px;
+  }
+
+  .fc-container__row {
+    margin-left: -7px;
+    margin-right: -7px
+  }
+}
+
+.panel {
+  box-shadow: none;
+}
+
+// GENERIC
+
+.fc-container {
+  @extend .container;
+}
+.fc-container__row,
+.fc-checkout__main {
+  @extend .row;
+
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.fc-alert {
+  @extend .alert;
+}
+
+.fc-alert--danger {
+  @extend .alert-danger;
+}
+
+.fc-alert--warning {
+  @extend .alert-warning;
+}
+
+.fc-alert--success {
+  @extend .alert-success;
+}
+
+.fc-alert--info {
+  @extend .alert-info;
+}
+
+.fc-button {
+  @extend .btn;
+  @extend .btn-default;
+}
+
+.fc-input-group__button {
+  @extend .input-group-btn;
+}
+
+.fc-input-group {
+  @extend .input-group;
+}
+
+.fc-hidden {
+  @extend .hidden;
+}
+
+.fc-form-control {
+  @extend .form-control;
+}
+
+.fc-form-group {
+  @extend .form-group;
+}
+
+.fc-input-group-container--checkbox {
+  @extend .checkbox;
+}
+
+.fc-input-group-container--radio {
+  @extend .radio;
+}
+
+.fc-alert-container--error {
+  @extend .has-error;
+}
+
+.fc-alert-container--success {
+  @extend .has-success;
+}
+
+.fc-alert-container--warning {
+  @extend .has-warning;
+}
+
+// BUTTONS
+
+.fc-sidecart-button {
+  @extend .btn;
+  @extend .btn-default;
+  @extend .btn-block;
+}
+
+.fc-transaction--future__summary--toggle .fc-transaction__ui__toggle {
+  @extend .btn-link;
+  @extend .btn-block;
+}
+
+.fc-action--checkout--button {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+.fc-transaction__ui__toggle,
+.fc-transaction__ui__button {
+  @extend .btn-xs;
+}
+
+.fc-transaction__ui__button {
+  @extend .pull-right;
+}
+
+.fc-action--payment--checkout,
+.fc-action--payment--or,
+.fc-action--payment--paypal-express-checkout,
+.fc-action--payment--amazon-fps,
+.fc-action--payment--amazon-mws,
+.fc-action--payment--paypal-ec,
+.fc-transaction__header {
+  @extend .text-center;
+}
+
+.fc-input-group__button {
+  @extend .input-group-btn;
+}
+
+.fc-button-link {
+  @extend .btn;
+  @extend .btn-link;
+}
+
+.fc-button--submit,
+.fc-button--subscription-cancel {
+  @extend .btn-block;
+}
+
+.fc-button--cancel,
+#AmazonLogoutButton {
+  @extend .btn-sm;
+}
+
+// LISTS
+
+.fc-transaction--multiship-shiptos,
+.fc-transaction,
+.fc-cart__item__options {
+  @extend .list-unstyled;
+}
+
+.fc-actions-container,
+.fc-list--inline {
+  @extend .list-inline;
+}
+
+.fc-password-action--change,
+.fc-password-action--reset {
+  @extend .pull-left;
+
+  .fc-password-action--button-container {
+    @extend .pull-left;
+  }
+}
+
+.fc-password-action--guest {
+  @extend .pull-right;
+
+  .fc-password-action--button-container {
+    @extend .pull-right;
+  }
+}
+
+// FORMS
+
+.fc-form-label--postal-code,
+.fc-form-label--city-options,
+.fc-form-label--city,
+.fc-form-label--region,
+.fc-form-label--customer-email,
+.fc-form-label--customer-password,
+.fc-form-label--new-cc-number,
+.fc-form-label--new-cc-exp-year,
+.fc-form-label--plastic-new__text
+{
+  @extend .sr-only;
+  left: -9999px;
+}
+
+.fc-container__grid--input--first-name,
+.fc-container__grid--input--last-name,
+.fc-container__grid--input--phone,
+.fc-container__grid--input--company,
+.fc-container__grid--input--tax-id,
+.fc-container__grid--input--address1,
+.fc-container__grid--label--address2 {
+
+  .fc-form-label {
+    @extend .sr-only;
+  }
+}
+.fc-form-label--new-cc-number {
+  @extend .text-right;
+  @extend .control-label;
+}
+
+.fc-checkout__main__form,
+.fc-address-entry {
+  @extend .form-horizontal;
+}
+
+.fc-coupon-entry--input {
+  @extend .input-group;
+}
+
+.fc-cart__item__quantity__input {
+  @extend .input-sm;
+}
+
+.fc-payment-method--plastic-saved__card-number,
+.fc-container__checkout-helper-text,
+.fc-container__subscription-cancel-helper-text,
+.fc_checkout__shipping-results__help-text {
+  @extend .text-muted;
+}
+
+.fc-order-quantity {
+  @extend .lead;
+}
+
+// IMAGES
+
+.fc-cart__item__image__img {
+  @extend .img-responsive;
+  @extend .img-rounded;
+}
+
+.fc-logo__image {
+  @extend .img-responsive;
+}
+
+// GRIDS
+
+// Full page cart
+#fc-cart--responsive {
+  .fc-cart__title { @extend .col-sm-8; }
+
+  .fc-cancel-continue-shopping { @extend .col-sm-4; }
+
+  .fc-cart__main__content { @extend .col-sm-8; }
+
+  .fc-sidebar--cart { @extend .col-sm-4; }
+
+  .fc-cart__item__image { @extend .col-xs-3; }
+
+  .fc-cart__items--with-images .fc-cart__item__details { @extend .col-xs-9; }
+
+  .fc-cart__items--without-images .fc-cart__item__details { @extend .col-xs-12; }
+}
+
+// Sidebar cart and sidecart
+#fc-cart--fixed-width {
+
+  .fc-cart__title { @extend .col-xs-12; }
+
+  .fc-cancel-continue-shopping { @extend .col-xs-12; }
+
+  .fc-cart__main__content { @extend .col-xs-12; }
+
+  .fc-sidebar--cart { @extend .col-xs-12; }
+
+  .fc-cart__item__image { @extend .col-xs-4; }
+
+  .fc-cart__items--with-images .fc-cart__item__details { @extend .col-sm-10;
+                                                         @extend .col-xs-8; }
+
+  .fc-cart__items--without-images .fc-cart__item__details { @extend .col-xs-12; }
+}
+
+.fc-sidebar {
+  @extend .clearfix;
+}
+
+.fc-cart__main,
+.fc-checkout__main {
+  @extend .panel;
+}
+
+.fc-checkout__main .fc-sidebar--checkout {
+  @extend .col-xs-12;
+  @extend .col-sm-4;
+  @extend .col-sm-push-8;
+}
+
+.fc-cart__items__header,
+.fc-logo,
+.fc-cart__items__header__quantity,
+.fc-cart__items__header__total {
+  @extend .hidden-xs;
+}
+
+.fc-cart__items--without-images .fc-cart__items__header__item {
+  @extend .col-xs-9;
+  @extend .col-sm-7;
+}
+
+.fc-cart__items--with-images .fc-cart__items__header__item {
+  @extend .col-xs-8;
+  @extend .col-xs-offset-2;
+  @extend .col-sm-5;
+  @extend .col-sm-offset-2;
+}
+
+.fc-cart__items__header__totals,
+.fc-cart__item__totals {
+  @extend .col-xs-2;
+  @extend .col-sm-5;
+}
+
+.fc-cart__items__header__price,
+.fc-cart__items__header__quantity,
+.fc-cart__items__header__total {
+  @extend .col-sm-4;
+}
+
+.fc-cart__item__details-and-image {
+  @extend .col-xs-10;
+  @extend .col-sm-7;
+}
+
+.fc-cart__item__total {
+  @extend .col-sm-4;
+  @extend .col-sm-push-8;
+}
+
+.fc-cart__item__price,
+.fc-cart__item__quantity {
+  @extend .col-sm-4;
+  @extend .col-sm-pull-4;
+}
+
+.fc-shipping-rates .fc-input-group--sidebar,
+.fc-form-group--multiship-select {
+  @extend .col-md-12;
+}
+
+.fc-shipping-rates .fc-input-group--full-page,
+.fc-shipping-results__header,
+.fc_checkout__shipping-results__help-text {
+  @extend .col-md-10;
+  @extend .col-md-offset-1;
+}
+
+.fc-container__grid--use-different-address {
+  @extend .col-sm-8;
+  @extend .col-sm-offset-3;
+}
+
+.fc-checkout__main__contents {
+  @extend .col-xs-12;
+  @extend .col-sm-8;
+  @extend .col-md-8;
+  @extend .col-sm-pull-4;
+}
+
+// Postal code stuff
+
+.fc-container__grid--postal-code {
+  @extend .col-xs-4;
+}
+
+.fc-container__grid--postal-code-actions {
+  @extend .col-xs-8;
+}
+
+.fc-container--postal-code-actions--search {
+
+  .fc-container__grid--postal-code {
+    @extend .col-xs-4;
+  }
+  .fc-container__grid--postal-code-actions {
+    @extend .col-xs-7;
+  }
+}
+
+.fc-postal-code-entry__without-search .fc-container__grid--country {
+  @extend .col-xs-8;
+}
+
+.fc-container__grid--postal-code-errors {
+  @extend .col-xs-10;
+}
+
+.fc-container__grid--city,
+.fc-postal-code__manual-inputs .fc-container__grid--region {
+  @extend .col-xs-6;
+}
+
+.fc-postal-code-entry__with-search .fc-container__grid--country {
+  @extend .col-xs-12;
+  @extend .col-sm-10;
+}
+
+.fc-section-counter {
+  @extend .hidden-xs;
+}
+
+.fc-container__grid--input--customer-email,
+.fc-container__grid--authentication-button--amazon {
+   @extend .col-sm-8;
+   @extend .col-sm-offset-3;
+}
+
+.fc-container__grid--payment-method,
+.fc-checkout__additional-field--tos,
+.fc-checkout__additional-field--secure-transfer,
+.fc-checkout__additional-field--subscribe,
+.fc-checkout__additional-field--save-account {
+  @extend .col-md-8;
+  @extend .col-md-offset-3;
+}
+
+.fc-form-label__plastic-saved-expiration,
+.fc-form-label--cvv2-saved {
+  @extend .col-xs-9;
+  @extend .col-sm-6;
+  @extend .control-label;
+  @extend .text-right;
+}
+
+.fc-container__grid--static--plastic-saved-csc {
+  @extend .col-xs-3;
+}
+
+.fc-container__static--plastic-saved-expiration {
+  @extend .col-xs-3;
+
+  .fc-form-control--static {
+    @extend .form-control-static;
+    @extend .text-muted;
+  }
+}
+
+.fc-container__grid--input--plastic-new-card-number {
+  @extend .col-xs-11;
+  @extend .col-sm-12;
+}
+
+.fc-form-label--new-cc-exp-month {
+  @extend .col-xs-9;
+  @extend .col-sm-3;
+}
+
+.fc-form-label--new-cc-cvv2 {
+  @extend .col-xs-2;
+  @extend .visible-xs;
+}
+
+.fc-container__grid--plastic-new-exp-month {
+  @extend .col-xs-5;
+  @extend .col-sm-3;
+}
+
+.fc-container__grid--plastic-new-exp-year {
+  @extend .col-xs-3;
+}
+
+.fc-container__grid--plastic-new-csc {
+  @extend .col-xs-3;
+  @extend .col-sm-2;
+}
+
+.fc-container__grid--label--po {
+  @extend .col-xs-3;
+  @extend .text-right;
+}
+
+.fc-container__grid--input--po {
+  @extend .col-xs-8;
+}
+
+.fc-container__grid--checkout-submit,
+.fc-container__grid--checkout-subscription-cancel,
+.fc-container__grid--checkout-submit-helper-text,
+.fc-container__grid--checkout-subscription-cancel-helper-text {
+  @extend .col-sm-5;
+  @extend .col-sm-offset-3;
+  @extend .col-md-5;
+  @extend .col-md-offset-3;
+}
+
+.fc-container__grid--label--multiship-select,
+.fc-container__grid--label--name,
+.fc-container__grid--label--tax-id,
+.fc-container__grid--label--address {
+  @extend .col-sm-3;
+  @extend .hidden-xs;
+}
+
+.fc-container__grid--input--first-name,
+.fc-container__grid--input--last-name,
+.fc-form-group--multiple-inline .fc-container__grid--input--company, // Company should go
+.fc-container__grid--input--phone {
+  @extend .col-xs-6;
+  @extend .col-sm-4;
+}
+
+.fc-container__grid--input--company,
+.fc-container__grid--input--phone,
+.fc-container-checkout__grid--postal-code {
+  @extend .col-sm-offset-3;
+}
+
+.fc-container__grid--input--company,
+.fc-container__grid--input--tax-id {
+  @extend .col-xs-12;
+  @extend .col-sm-8;
+}
+
+.fc-form-group--multiple-inline .fc-container__grid--input--phone {
+  @extend .col-sm-offset-0;
+}
+
+.fc-container__grid--input--address1,
+.fc-container__grid--input--multiship-select {
+  @extend .col-xs-8;
+  @extend .col-sm-5;
+}
+
+.fc-container__grid--label--address2 {
+  @extend .col-xs-4;
+  @extend .col-sm-3;
+}
+
+.fc-container-checkout__grid--postal-code {
+  @extend .col-sm-8;
+}
+
+// Address Verification Modal
+.fc-address-validation--original {
+  @extend .col-sm-6, .col-sm-pull-6;
+}
+.fc-address-validation--suggested {
+  @extend .col-sm-6, .col-sm-push-6;
+}

@@ -1,0 +1,29 @@
+/* CSS LOADERS */
+/* http://tobiasahlin.com/spinkit/ */
+.fc-spinner {
+  margin: 10px auto 0;
+  width: 70px;
+  text-align: center;
+}
+
+.fc-spinner > div {
+  width: 10px;
+  height: 10px;
+  background-color: #999;
+
+  border-radius: 100%;
+  display: inline-block;
+  @include animation(bouncedelay 1.4s infinite ease-in-out);
+  /* Prevent first frame from flickering when animation starts */
+  @include animation-fill-mode(both);
+}
+
+.fc-spinner .bounce1 {
+  @include animation-delay(-0.32s);
+}
+
+.fc-spinner .bounce2 {
+  @include animation-delay(-0.16s);
+}
+
+// Keyframes info is in _animations.scss

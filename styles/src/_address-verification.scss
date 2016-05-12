@@ -1,0 +1,99 @@
+// Remodal.js-specific styling
+.fc-modal--overlay {
+  background: rgba(43, 46, 56, 0.9);
+}
+.fc-modal,
+.fc-modal--wrapper:after {
+  vertical-align: middle;
+}
+
+@media only screen and (min-width: 471px) {
+  .fc-modal {
+    width: 470px;
+  }
+}
+
+.fc-modal {
+  text-align:left;
+  background:none;
+}
+
+.lt-ie9 .fc-modal {
+  width: 470px;
+}
+
+
+// Address verification display styles
+.fc-modal {
+  display:none;
+
+  .fc-alert {
+    padding:20px;
+    opacity:1;
+    display:block;
+    background:$white;
+    border-top-left-radius:4px;
+    border-top-right-radius:4px;
+    border-width:0;
+
+    .fc-spinner {
+      margin:10px auto;
+      float:none;
+      > div {
+        background-color:$success;
+      }
+    }
+
+    h2, address, p {
+      text-shadow:none;
+    }
+    h2 {
+      margin-bottom:10px;
+      color:$black;
+    }
+    p {
+      color:$black;
+      font-size:95%;
+    }
+    address {
+      font-weight:normal;
+      color:$grayDark;
+      padding:10px;
+      border-radius:4px;
+      border:1px solid $grayMidLighter;
+      margin-bottom:0; // override default
+    }
+    .fc-address-validation--suggested address {
+      border:none;
+      background-color:$grayMidLighter;
+    }
+
+    button {
+      @extend .btn-sm;
+      margin-top:10px;
+      width:100%;
+    }
+  }
+
+  .fc-alert--success {
+    h2 { color: $successText; }
+  }
+}
+
+.fc-modal--is-initialized {
+  display: inline-block;
+}
+
+.fc-address-validation--changed {
+  background-color:$highlight;
+  font-weight:bold;
+  color:$successText;
+}
+.fc-address-validation__address1:after,
+.fc-address-validation__address2:after,
+.fc-address-validation__region:after,
+.fc-address-validation__postal-code:after,
+.fc-address-validation__country:after {
+    content:"\000A";
+    white-space: pre;
+}

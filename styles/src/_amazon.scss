@@ -1,0 +1,31 @@
+.fc-container__grid--authentication-button--amazon .fc-action--payment--or {
+  text-align: left;
+  margin: -10px 0 5px 12px;
+  color: $grayMidLight;
+
+  @media($smallScreen) {
+    margin-top: 0;
+  }
+}
+
+#AmazonAddressBookWidget,
+#AmazonWalletWidget,
+#AmazonConsentWidget {
+  margin-left: 11%;
+  height: auto !important;
+
+  @media($medScreen) {
+    height: 300px !important;
+  }
+
+  iframe {
+    border: none !important;
+  }
+}
+
+@media($medScreen) {
+  #AmazonConsentWidget {
+    height: 175px !important;
+  }
+}
+

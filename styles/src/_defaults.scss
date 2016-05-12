@@ -1,0 +1,96 @@
+html, body {
+  height:100%;
+}
+body {
+  background: $bodyBackground #{$pageBackgroundImageUrl} repeat top left;
+  padding: 0;
+  @media($medScreen) {
+    padding:30px 0;
+  }
+}
+
+a { color: $linkColor }
+.text-info {color: $secondary;}
+
+
+// Typography Overrides
+// =====================================================
+
+h1 {
+  color: $primary;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h2,
+h3,
+h4 {
+  font-weight:normal;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, .9);
+}
+h2 {
+  color: $primary;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+h3 {
+  color: lighten($darkerPrimary, 30%);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:22px;
+}
+h4 {
+  color: lighten($darkerPrimary, 40%);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:18px;
+}
+h5 {
+  color: lighten($darkerPrimary, 30%);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size:13px;
+  font-weight:bold;
+}
+
+p {
+  font-size: 14px;
+}
+
+
+p,
+input,
+button,
+span,
+a,
+table,
+table *,
+div,
+address,
+li,
+ul, {
+  // not declaring this causes issues with sidecart
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+fieldset {
+    margin:30px 0
+}
+
+legend {
+    color: $darkerPrimary;
+    font-weight:thin;
+    border-bottom:none;
+    margin-bottom:20px;
+    font-size:em(28);
+}
+
+// Remove the damn unusable arrows on number inputs
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+-moz-appearance: textfield;
+}
+
+li {
+  margin: 0;
+}

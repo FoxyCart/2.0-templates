@@ -1,0 +1,94 @@
+.fc-btn-action {
+  border-radius:0;
+  border: 0;
+  padding-top: 10px;
+  padding-bottom: 10px;
+
+  &.btn-default {
+    border: 0;
+  }
+}
+
+.fc-password-actions {
+    margin-top:8px;
+
+    .fc-password-action {
+        max-width: 50%;
+    }
+}
+
+.fc-cancel-continue-shopping {
+    text-align: center;
+
+    .fc-button {
+      margin: 0 auto 10px auto;
+    }
+}
+@media ($medScreen) {
+  #fc-cart--responsive .fc-cancel-continue-shopping {
+    text-align: right;
+
+    .fc-button {
+      margin: 20px auto 0 auto;
+    }
+  }
+}
+
+.fc-button {
+    @include transition(all .1s linear);
+    line-height:1.9; /* to match the .fc-form-control elements */
+}
+.fc-form-control--static .fc-button {
+    // The .form-control-static has a 7px top padding, that needs to be offset
+    margin-top:-7px;
+}
+.fc-button--cancel {
+    font-size: 12px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
+.fc-button {
+    background: $grayLightest; /* Old browsers */
+    @include background(linear-gradient($grayLightest, $grayLight) top 0%);
+    border: 1px solid $btnBorder;
+    color: $btnText;
+    text-shadow: 1px 1px 0px rgba($white, 1);
+}
+.fc-input-group__button > .fc-button:hover,
+.fc-button:hover {
+    background: $grayLightest; /* Old browsers */
+    @include background(linear-gradient($grayLightest, $grayLight) top 0%);
+    color: $btnActiveText;
+    border-color: $btnActiveBorder;
+    z-index: 0;
+}
+
+.fc-action--checkout--button,
+.fc-button--subscription-cancel,
+.fc-button--submit {
+    padding-top:10px;
+    padding-bottom:10px;
+    border-color:$callToAction;
+    background-color:$navActive;
+    color:$white;
+    @include background(linear-gradient(to bottom,  #73b263 0%, #458c33 100%)); /* W3C */
+    text-shadow: 1px 1px 0px rgba(50, 113, 35, 1);
+
+     &:hover,
+     &:focus {
+        color: $white;
+        border-color:$callToAction;
+        background-color:$navActive;
+        @include background( linear-gradient(to bottom,  #458c33 0%,#458c33 100%)); /* W3C */
+        text-shadow: 1px 1px 0px rgba(50, 113, 35, 1);
+        @include transition(all .1s linear);
+    }
+}
+
+.fc-button--submit  .fc-spinner {
+  margin-top: 0;
+  > div {
+    background-color: $white;
+  }
+}

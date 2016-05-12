@@ -1,0 +1,91 @@
+#fc-icons {
+  max-height:0;
+  max-width: 0;
+  overflow:hidden;
+  position:absolute;
+}
+
+.fc-svg-icon {
+  display: inline-block;
+  height: .9em;
+  width: .9em;
+  text-align: center;
+
+  &.fc-icon-large {
+    height: 1.25em;
+    margin-bottom: -.25em;
+    width: 1.25em;
+  }
+
+  &.fc-icon-small {
+    height: .7em;
+    width: .7em;
+    margin-bottom: 0;
+  }
+
+  &#fc-icon-lock-large {
+    width: .6em;
+  }
+}
+
+.fc-cc-icon {
+  position:absolute;
+  top:9px;
+  right:22px;
+  font-size:24px;
+  color:$success;
+}
+
+.fa-angle-double-left {
+  display: block;
+  height: 12px;
+  width: 9px;
+  fill: $primary;
+}
+
+.fa-caret-left {
+  height: 14px;
+  width: 5px;
+  fill: $white;
+}
+
+.fa-caret-right {
+  height: 14px;
+  width: 5px;
+  fill: $btnText;
+}
+
+.fa-lock {
+  height: 16px;
+  width: 14px;
+  fill: $white;
+
+  & {
+    fill: $success;
+  }
+}
+
+.fa-lock-large {
+  height: 117px;
+  width: 85px;
+  fill: $grayLight;
+}
+
+.fa-times-circle {
+  height: 14px;
+  width: 14px;
+  fill: $grayMid;
+}
+
+.fa-truck,
+.fa-bank {
+  height: 17px;
+  width: 16px;
+  fill: $grayMidLight;
+}
+
+.fa-map-marker {
+  height:20px;
+  width:14px;
+  fill: $grayMidLight;
+}

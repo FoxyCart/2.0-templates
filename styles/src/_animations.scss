@@ -1,0 +1,72 @@
+// Keyframes for errors
+
+@include keyframes( fadeInInfoBorder ) {
+    from {
+        border: 2px solid rgba(#d9edf7, 0.0);
+    } to {
+        border: 2px solid rgba(#d9edf7, 1.0);
+    }
+}
+
+@include keyframes( fadeInSuccessBorder ) {
+    from {
+        border: 2px solid rgba(#C1DB9B, 0.0);
+    } to {
+        border: 2px solid rgba(#C1DB9B, 1.0);
+    }
+}
+
+@include keyframes( fadeInErrorBorder ) {
+    from {
+        border: 2px solid rgba(#DC3144, 0.0);
+    } to {
+        border: 2px solid rgba(#DC3144, 1.0);
+    }
+}
+
+@include keyframes( scaleUpAndFadeIn ) {
+    from {
+        opacity: 0;
+        @include transform(scaleY(.85));
+        @include transform-origin(center top);
+    } to {
+        opacity: 1;
+        @include transform(scaleY(1));
+        @include transform-origin(center top);
+    }
+}
+
+@include keyframes( scaleUp ) {
+    from {
+        @include transform(scaleY(.85));
+        @include transform-origin(center top);
+    } to {
+        @include transform(scaleY(1));
+        @include transform-origin(center top);
+    }
+}
+
+@include keyframes( highlight ) {
+    0% {
+        background-color: lighten($success, 15%);
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    75% {
+        background-color: lighten($success, 15%);
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    100% {
+        background-color: transparent;
+        padding-top: 0;
+        padding-bottom: 0;
+    }
+
+}
+
+// Keybrames for _loading.scss
+@include keyframes(bouncedelay) {
+  0%, 80%, 100% { @include transform(scale(0.0)); }
+  40% { @include transform(scale(1.0)); }
+}

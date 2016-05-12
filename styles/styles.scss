@@ -1,0 +1,36 @@
+@import 'bourbon/bourbon';
+@import 'src/variables';
+// @inject via store_config
+@import 'src/custom-colors';
+
+@import 'src/animations';
+
+#fc {
+  @import "../../../../static/frameworks/bootstrap/3.1.1/stylesheets/bootstrap.scss";
+
+  @import 'src/fc-to-bootstrap';
+
+  @import 'src/defaults';
+  @import 'src/base-layout';
+  @import 'src/address-lookup';
+  @import 'src/buttons';
+  @import 'src/discounts';
+  @import 'src/error-notifier';
+  @import 'src/form-fields';
+  @import 'src/foxycomplete';
+  @import 'src/icons';
+  @import 'src/loading';
+  @import 'src/multiship';
+  @import 'src/payment-methods';
+  @import 'src/placeholder-polyfill';
+  @import 'src/products';
+  @import 'src/receipt';
+  @import 'src/shipping';
+  @import 'src/address-verification';
+  @import 'src/amazon';
+
+  // Alert styling goes last to properly override
+  @import 'src/alerts';
+}
+
+@import 'src/sidecart';

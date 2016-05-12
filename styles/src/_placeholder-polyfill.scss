@@ -1,0 +1,36 @@
+span.fc-placeholder{
+    font-size:.9em;
+    font-weight: normal;
+    color: $grayMid;
+    font-family:Helvetica, Arial, sans-serif;
+    padding:4px 3px;
+    z-index:1;
+    text-align: left;
+    cursor:text;
+}
+
+span.fc-placeholder--hide-except-screenreader{
+    clip: rect(1px 1px 1px 1px);
+    clip: rect(1px, 1px, 1px, 1px);
+    padding:0 !important;
+    border:0 !important;
+    height: 1px !important;
+    width: 1px !important;
+    overflow: hidden;
+    position: inherit !important;
+}
+
+span.placeholder-hide{
+  display:none;
+}
+
+/* overwrite for the HTML5 Boilerplate way to hide labels */
+label.fc-form-label--with-placeholder{
+    clip: auto !important;
+    height:auto !important;
+    width: auto !important;
+    overflow: visible !important;
+    position:absolute !important;
+    left:-9999px;
+    margin: 0 !important;
+}

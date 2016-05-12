@@ -1,0 +1,162 @@
+.fc-payment-method--plastic-saved__card-number,
+.fc-container__checkout-helper-text,
+.fc-container__subscription-cancel-helper-text {
+   a {
+    color:$grayMidDark;
+  }
+}
+
+
+$cards: visa mastercard amex discover;
+
+.fc-checkout__section--payment__method__logo {
+    opacity: 1;
+    @include transition (all 0.2s ease-out 0.1s);
+}
+
+@each $card in $cards {
+  .fc-checkout__section--payment--#{$card} .fc-checkout__section--payment__method__logo {
+    opacity: 0.2;
+    @include transition (all 0.2s ease-out 0.1s);
+
+    &.fc-checkout__section--payment__method__logo--#{$card} {
+      opacity: 1;
+      @include transition (all 0.2s ease-out 0.1s);
+    }
+
+  }
+
+}
+
+.fc-container__grid--plastic-new-exp-month {
+    padding-left: 15px;
+    padding-right: 5px;
+    width: 30%;
+}
+
+.fc-container__grid--plastic-new-exp-year,
+.fc-container__grid--plastic-new-csc {
+    padding-left: 5px;
+    padding-right: 5px;
+    width:30%;
+}
+
+@media ($medScreen)  {
+  .fc-container__grid--plastic-new-exp-month {
+      padding-left: 10px;
+      width:27%;
+  }
+  .fc-container__grid--plastic-new-exp-year {
+      width:28%;
+  }
+  .fc-container__grid--plastic-new-csc {
+      width:20%;
+  }
+}
+
+/* Payment methods */
+.fc-checkout__section--payment {
+    position:relative;
+
+      & > .fc-form-group {
+        margin-bottom:0px;
+      }
+    @media ($medScreen) {
+      & > .fc-form-group {
+          margin-bottom:8px;
+      }
+    }
+
+
+    #fc-icon-lock-large {
+        position: absolute;
+        color: $grayLight;
+        top: 50px;
+        left: 55px;
+        font-size:130px;
+    }
+
+    .fc-payment-method--plastic__saved,
+    .fc-payment-method--plastic__new {
+        padding-top: 0;
+
+        .fc-form-group {
+            margin-top:5px;
+            margin-bottom:.7em;
+        }
+        .fc-form-group:last-child {
+            margin-bottom:10px;
+        }
+    }
+
+    .fc-payment-method--plastic__saved {
+        .fc-form-group {
+            &:first-of-type {
+                margin-bottom:0;
+            }
+            .fc-form-label {
+                padding-top: ($padding-base-vertical + 1); // From .control-label, which only has this for $medScreen and up
+            }
+        }
+        .fc-svg-icon--lock {
+            position:absolute;
+            top:56px;
+            left:20px;
+            color:$white;
+            font-size:90px;
+        }
+        .fc-input-group-container--active .fc-form-control--static {
+            font-size:100% !important;
+        }
+    }
+
+    .fc-payment-method--plastic__new {
+        .fc-input-group-container__title--forced {
+            padding-left:40px;
+        }
+        .fc-form-group:first-of-type {
+            margin-top:15px;
+        }
+        .fc-svg-icon--lock {
+            position:absolute;
+            top:9px;
+            right:22px;
+            font-size:24px;
+            color:$success;
+        }
+
+        .fc-form-group {
+            @media ($smallScreen) {
+                margin-left: ($grid-gutter-width / -2);
+                margin-right: ($grid-gutter-width / -2);
+            }
+        }
+    }
+
+    .fc-checkout__section--payment__method__logo,
+    .fc-payment-method-logo {
+        display:inline-block;
+        text-align:left;
+        padding-top: 5px;
+
+        img {
+            width: 37px;
+            height: 23px;
+            margin-right:5px;
+        }
+    }
+}
+
+
+// The inputs inside the #fc-payment-method-plastic
+// =====================================================
+.fc-form-control--new-cc-number,
+.fc-payment-method--plastic__saved .fc-form-control {
+    padding-right:0;
+    padding-left:6px;
+    background:$white;
+}
+
+.fc-container__grid--input--plastic-new-card-number {
+    padding-right: 5px;
+}

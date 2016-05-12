@@ -1,0 +1,345 @@
+// widths set at the top to help with media query replication
+$sidecartWidth: 280px;
+$sidecartAnimationInDuration: .5s;
+$sidecartAnimationOutDuration: .4s;
+$sidecartTimingFunction: ease-in-out;
+$sidecartUIBlockColor: #000;
+
+%sidecart-reset {
+    margin:0;
+    padding:0;
+    border:none;
+}
+
+html, body.cart-visible--reset {
+    height: 100%;
+    z-index: 1;
+}
+
+span.fc-skeleton {
+    background:#000;
+    color:#000;
+    text-shadow:none;
+    display:inline-block;
+    opacity:.125
+}
+
+// Extra reset to prevent bleed from the site into Sidecart
+#fc {
+    header, section, div {
+        @extend %sidecart-reset;
+    }
+}
+
+[data-fc-sidecart] {
+    @extend %sidecart-reset;
+
+    -webkit-overflow-scrolling: touch;
+
+    position: absolute;
+    overflow-y: scroll;
+    display: block;
+    width: $sidecartWidth;
+    height: 100%;
+    background:$grayLightish;
+
+    #fc {
+        position:relative;
+
+        .fc-sidebar--cart {
+            margin-bottom:0 !important;
+            padding-bottom:0 !important;
+        }
+
+        #fc-cart--fixed-width {
+            .fc-cart__item__image {
+                width:34%;
+                margin-left:-5%;
+
+                // span {
+                //     float:left;
+                //     border:5px solid $white;
+                //     border-radius:10px;
+                //     max-width: 100%;
+                // }
+            }
+            .fc-cart__item__details {
+                width:71%;
+            }
+        }
+
+        .fa-caret-right    {
+            fill: $white;
+        }
+
+        .fa-caret-left{
+            fill: #333;
+        }
+
+        .fc-fixed-button-left .fc-svg-icon,
+        .fc-fixed-button-right .fc-svg-icon {
+            top: 0px;
+            position: relative;
+            height: 8px;
+        }
+        .fc-fixed-button-left .fc-svg-icon {
+            margin-right: 3px;
+        }
+        .fc-fixed-button-right .fc-btn-action {
+            background-color: $callToAction;
+            color: $white;
+            @include background(linear-gradient(to bottom,  #73b263 0%, #458c33 100%));
+        }
+    }
+    #fc-cart {
+        margin-top:0;
+        margin-bottom:0;
+        padding-top:50px; // to account for .fc-sidecart-only-fixed
+        background-color:#e4e4e4;
+
+        &.fc-container {
+          width: inherit;
+        }
+    }
+    .fc-sidecart-only-fixed {
+        @extend %sidecart-reset;
+
+        display: block;
+        position: fixed;
+        z-index: 10000;
+        max-width: 100%;
+        top: 0;
+        width: $sidecartWidth;
+    }
+
+    .fc-fixed-button-right {
+        width: 80%;
+        float: left;
+    }
+    .fc-fixed-button-left {
+        width: 20%;
+        float: left;
+
+        .fc-fixed-button-left--text {
+            display: none;
+        }
+    }
+
+    #fc .fc-cart-item-image {
+        margin-left: -5%;
+    }
+
+    // This overrides the negative margins that cause issues with sidecart on mobile.
+    @media ($smallScreen) {
+        #fc .fc-cart__header,
+        #fc .fc-cart-container {
+            margin-left: -7px;
+            margin-right: -7px;
+        }
+    }
+}
+
+[data-fc-with-sidecart] { // This is typically going to be the body element
+    @include transition-property(transform, opacity);
+    @include transition-duration($sidecartAnimationOutDuration);
+    @include transition-timing-function($sidecartTimingFunction);
+
+}
+
+
+[data-fc-store-page] {
+    @extend %sidecart-reset;
+
+    @include transition-property (transform, opacity);
+    @include transition-duration($sidecartAnimationOutDuration);
+    @include transition-timing-function($sidecartTimingFunction);
+    @include transform-origin(100% 50%);
+    overflow-y: scroll;
+    height: 100%;
+    position: relative;
+    font-size: inherit; // Helps if somebody's got a div {font-size:.9em} or something that'll compound with an extra div wrapping the content.
+    -webkit-overflow-scrolling: touch;
+}
+
+@mixin prefixed-transition-ui-block-out($prefix) {
+    #{$prefix}transition:
+        #{$prefix}transform $sidecartAnimationOutDuration $sidecartTimingFunction 0s,
+        opacity $sidecartAnimationOutDuration $sidecartTimingFunction 0s,
+        width 0s linear $sidecartAnimationOutDuration,
+        height 0s linear $sidecartAnimationOutDuration
+    ;
+}
+@mixin prefixed-transition-ui-block-in($prefix) {
+    #{$prefix}transition:
+        #{$prefix}transform $sidecartAnimationInDuration $sidecartTimingFunction 0s,
+        opacity $sidecartAnimationInDuration $sidecartTimingFunction 0s,
+        width 0s linear 0s,
+        height 0s linear 0s
+    ;
+}
+
+[data-fc-ui-block] { // SASS doesn't handle the browser prefixes, so need to do it long-hand.
+    @extend %sidecart-reset;
+
+    @include prefixed-transition-ui-block-out('-webkit-');
+    @include prefixed-transition-ui-block-out('-moz-');
+    @include prefixed-transition-ui-block-out('-ms-');
+    @include prefixed-transition-ui-block-out('-o-');
+    @include prefixed-transition-ui-block-out('');
+    @include transform-origin(100% 50%);
+
+    position: fixed;
+    z-index: 10000;
+    top:0;
+    width:0;
+    height:0;
+    opacity:0;
+    background-color:$sidecartUIBlockColor;
+}
+
+[data-fc-with-sidecart].cart-visible {
+    // Don't change the overflow on this class. As of Firefox v32, we've got http://stackoverflow.com/questions/13626412/firefox-transitions-breaking-when-parent-overflow-is-changed to contend with.
+    @include transition-duration($sidecartAnimationInDuration);
+
+    [data-fc-store-page] {
+        @include transform-style(preserve-3d);
+        @include transition-duration($sidecartAnimationInDuration);
+
+        overflow: hidden;
+    }
+    [data-fc-ui-block] {
+        @include transform-style(preserve-3d);
+        @include prefixed-transition-ui-block-in('-webkit-');
+        @include prefixed-transition-ui-block-in('-moz-');
+        @include prefixed-transition-ui-block-in('-ms-');
+        @include prefixed-transition-ui-block-in('-o-');
+        @include prefixed-transition-ui-block-in('');
+
+        display: block;
+        position: absolute;
+        width:100%;
+        height:100%;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        left: 0;
+        cursor: pointer;
+        opacity: .2;
+    }
+}
+
+
+[data-fc-with-sidecart="rotate-pusher"] {
+    @include perspective(2000px);
+    @include transform(translate3d(-$sidecartWidth, 0, 0));
+    @include transform(translateZ(0));
+
+    [data-fc-sidecart] {
+        top: 0;
+        left:100%;
+        z-index: -10;
+    }
+
+    &.cart-visible {
+        @include transform(translate3d(-$sidecartWidth, 0, 0));
+
+        [data-fc-store-page] {
+            @include transition-duration($sidecartAnimationInDuration);
+        }
+        [data-fc-store-page],
+        [data-fc-ui-block] {
+            @include transform(translate3d(0, 0, 0) rotateY(15deg));
+        }
+
+        [data-fc-sidecart] {
+            z-index: 2500;
+        }
+    }
+}
+
+[data-fc-with-sidecart="reveal"] {
+    [data-fc-sidecart] {
+        z-index:-10;
+        top:0;
+        right:0;
+    }
+    [data-fc-store-page],
+    [data-fc-ui-block] {
+        @include transform(translate3d(-$sidecartWidth, 0, 0));
+        @include transform(translateZ(0));
+    }
+
+    &.cart-visible {
+        [data-fc-store-page],
+        [data-fc-ui-block] {
+            @include transform(translate3d(-$sidecartWidth, 0, 0));
+        }
+    }
+    &.cart-visible--animation-complete {
+        [data-fc-sidecart] {
+            z-index: 100;
+        }
+    }
+
+    [data-fc-store-page] {
+        z-index:2;
+    }
+}
+
+// FIX FOR SIDECART ON LOGGED IN WP SITES
+// BLAME DAVID FOR THIS ONE
+
+body.logged-in.admin-bar div[data-fc-store-page] {
+    padding-top: 32px;
+}
+body.logged-in.admin-bar {
+    margin-top: -32px;
+}
+
+
+@mixin sidecartResponsive($sidecartWidth) {
+    [data-fc-sidecart] {
+        width: $sidecartWidth;
+
+        .fc-fixed-button-left {
+            width: 45%;
+            left: 0;
+            height: 40px;
+
+            .fc-fixed-button-left--text {
+                display: inline;
+            }
+        }
+        .fc-fixed-button-right {
+            left: 55%;
+            width: 55%;
+            height: 40px;
+            border-radius: 0;
+        }
+
+        .fc-sidecart-button {
+            font-size: 13px;
+        }
+
+        .fc-sidecart-only-fixed {
+            width: $sidecartWidth;
+        }
+    }
+    [data-fc-with-sidecart="rotate-pusher"].cart-visible {
+        @include transform(translate3d(-$sidecartWidth, 0, 0));
+    }
+    [data-fc-with-sidecart="reveal"].cart-visible {
+        [data-fc-store-page],
+        [data-fc-ui-block] {
+            @include transform(translate3d(-$sidecartWidth, 0, 0));
+        }
+    }
+}
+
+@media($medScreen) {
+    @include sidecartResponsive(310px);
+}
+
+@media($largeScreen) {
+    @include sidecartResponsive(340px);
+}

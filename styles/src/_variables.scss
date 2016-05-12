@@ -1,0 +1,51 @@
+
+// Media Queries
+
+$smallScreen: 'max-width: 768px';
+$medScreen: 'min-width: 769px';
+$largeScreen: 'min-width: 992px';
+$xLargeScreen: 'min-width: 1200px';
+
+// Base Font Sizes
+
+$base-font-size: em(16);
+$base-line-height: em(16);
+
+// Library colors
+
+$white: #ffffff;
+$grayLightest: #F9F9F9; // header bg
+$grayLighter: #f5f5f5; // sidecart/cart bg whitesmoke
+$grayLightish: #e4e4e4;
+$grayLight: #EEEEEE;
+$grayMidLighter: #ccc;
+$grayMidLight: #999;
+$grayMid: #666; // Header text
+$grayMidDark: #A9A9A9; // muted text
+$grayDark: #1A1A1A;
+$black: #000000;
+
+
+$btnText: #888888;
+$btnBorder: #d5d5d5;
+$btnActiveText: #555555;
+$btnActiveBorder: #bbbbbb;
+
+$callToAction: #55aa3f; // checkout buttons
+$notice: #DC3144; // red danger boxes
+$noticeLight: #FF8593;
+$warning: #c09853; // gold warnings
+$info: #D9EDF7; // info boxes
+$infoText: #000080;
+$success: #C1DB9B; // green
+$successText: #3e5300;
+$highlight: #ffffaa; // pale yellow, to highlight text
+$navActive: #00A533;
+$navBG: #B9B9B9;
+$bgBase: $grayLight;
+// #f5f0e3 beige
+// Basic Colors
+
+$primary: #666;
+$secondary: #5ABA62;
+

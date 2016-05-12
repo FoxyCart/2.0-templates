@@ -1,0 +1,291 @@
+.fc-receipt__main {
+    @extend .panel;
+}
+.fc-receipt__row {
+    @extend .row;
+}
+
+#fc-receipt__section--header {
+    @extend .panel-heading;
+
+    background:$grayLight;
+    padding:15px 25px;
+
+    .fc-container__grid--receipt--logo {
+        @extend .col-xs-6;
+
+        #fc-logo--receipt {
+            max-height:$line-height-computed * 4;
+            margin:0;
+            padding:0;
+        }
+        #fc-logotype {
+
+        }
+    }
+    .fc-container__grid--receipt--transaction-subject {
+        @extend .col-xs-6;
+
+        text-align:right;
+        padding-top:$line-height-computed;
+    }
+}
+
+
+#fc-receipt__section--downloadables {
+    .fc-container__grid--static-label--downloadables {
+        display:none;
+    }
+    .fc-container__grid--static-input--downloadables {
+        width:100%;
+    }
+}
+
+#fc-receipt-container #fc-messages,
+#fc-receipt__section--actions,
+#fc-receipt__section--general-information,
+#fc-receipt__section--billing-information,
+#fc-receipt__section--shipping-information,
+#fc-receipt__section--custom-fields,
+.fc-receipt__section--multiship-shipping-information {
+    @extend .col-sm-6;
+}
+
+#fc-receipt__section--receipt_messaging_and_actions {
+    @include clearfix;
+
+    margin-top:$grid-gutter-width;
+    margin-bottom:$grid-gutter-width / 2;
+    padding-bottom:0;
+    border-bottom:1px dashed $grayMidDark;
+
+    .fc-alert {
+        border-radius:5px;
+    }
+
+    .fc-button {
+        @extend .btn-sm;
+    }
+
+    #fc-messages,
+    .fc-alert {
+        margin-bottom:$grid-gutter-width / 2;
+    }
+
+    #fc-receipt__section--downloadables,
+    #fc-receipt__section--actions, {
+        margin-bottom:$grid-gutter-width / 2;
+    }
+}
+
+
+
+#fc-receipt-container {
+    fieldset {
+        margin-top:0;
+    }
+
+    .fc-form-group {
+        @extend .row;
+
+        margin-bottom:0;
+    }
+
+    .fc-receipt__section {}
+
+    fieldset .fc-form-group {
+        .fc-form-label {
+            @extend .col-xs-4;
+
+            padding-left:0;
+            text-align:right;
+            font-size:$base-font-size * .85;
+            line-height:$base-line-height;
+            color:$grayMidLight;
+        }
+        div[class*="fc-container__grid--static-input"] {
+            @extend .col-xs-8;
+            @extend .form-control-static;
+
+            padding-left:0;
+
+            p {
+                font-size:$base-font-size * .85;
+                line-height:$base-line-height;
+            }
+        }
+        .fc-container__grid--static-input--city-state-postcode,
+        .fc-container__grid--static-input--country {
+            @extend .col-xs-offset-4;
+        }
+        .fc-container__grid--static-label--country {
+            display:none;
+        }
+    }
+
+    .fc-form-group--receipt--phone {
+        margin-top:$base-line-height;
+    }
+
+    .fc-receipt__section--multiship-shipping-information {
+        // @extend .row;
+    }
+    .fc-container__grid--static-label--multiship-total,
+    .fc-container__grid--static-input--multiship-total {
+        font-weight:bold;
+    }
+
+    #fc-cart--responsive {
+        padding-right:$grid-gutter-width / 2;
+        padding-left:$grid-gutter-width / 2;
+
+
+        .fc-cancel-continue-shopping {
+            display:none;
+        }
+        .fc-cart__main {
+            margin-bottom:0;
+        }
+        #fc-logo,
+        .fc-logotype {
+            display:none;
+        }
+
+        .fc-cart__title {
+            text-align:left;
+        }
+        .fc-cart__title__header {
+            @extend legend;
+
+            display:inline-block;
+            width:auto;
+            margin-bottom:0;
+            text-align:left;
+        }
+        .fc-order-quantity {
+            display:inline-block;
+            padding:0 0 0 $base-line-height;
+            margin:0;
+        }
+
+        .fc-cart__item__image {
+            margin-left:-$grid-gutter-width * .85;
+
+            span {
+                border:none;
+            }
+        }
+    }
+}
+
+@media print {
+    @page {
+        size: auto;
+        margin-left:2cm;
+        margin-right:2cm;
+    }
+
+    [class*="col-sm-"] {
+        float: left;
+    }
+
+    body,
+    #fc-receipt__section--header {
+        background:none;
+        padding-top:0;
+        padding-bottom:0;
+        margin:0;
+    }
+
+    .fc-container {
+        padding:0;
+        margin:0;
+    }
+
+    #fc-logo--receipt {
+        max-height:.75in;
+        max-width:2in;
+    }
+
+    #fc-receipt__section--receipt_messaging_and_actions,
+    .fc-cancel-continue-shopping {
+        display:none;
+    }
+
+    #fc-receipt-container {
+        fieldset {
+            margin:0;
+        }
+    }
+
+    #fc-receipt__section--general-information,
+    #fc-receipt__section--billing-information,
+    #fc-receipt__section--shipping-information,
+    #fc-receipt__section--custom-fields,
+    .fc-receipt__section--multiship-shipping-information {
+        width:49%;
+        display:inline-block;
+    }
+    
+    #fc-receipt__section--multiship-shipping-information {
+        width:100%;
+    }
+
+    #fc-receipt__section--shipping-information {
+
+        .fc-form-group {
+            margin:0;
+        }
+        .fc-form-label {
+            opacity:0;
+        }
+        .fc-receipt__section--shipping-information__address {
+            padding:.5cm 0;
+            border:.1cm solid $grayMidDark;
+            font-weight:bold;
+        }
+
+        .fc-form-group--static fc-form-group--receipt--phone {
+            // display:none;
+        }
+    }
+
+    .fc-cart__main__content {
+        float:left;
+        width:66%;
+    }
+    .fc-sidebar {
+        float:right;
+        width:33%;
+        background:none;
+        color:#000;
+        border:.1cm solid $grayMidDark;
+        margin:0;
+        padding:0;
+
+        .fc-transaction__header {
+            padding:.25cm 0;
+            margin:0;
+            color:#000;
+        }
+
+        .fc-transaction {
+            padding:0;
+            margin:0;
+            color:#000;
+
+            li {
+                padding:0 0 .5cm;
+                margin:0;
+                color:#000;
+            }
+            h5 {
+                margin:0;
+                padding:0;
+            }
+            td, th {
+                color:#000;
+            }
+        }
+    }
+}

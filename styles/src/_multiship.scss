@@ -1,0 +1,21 @@
+.fc-cart__multiship-header {
+    padding:0px 20px;
+    background:#eee;
+    border-right:1px solid #fff;
+    border-bottom:1px solid #fff;
+}
+
+.fc-cart__multiship-header__ship-to {
+  color: $secondary;
+  padding-left:5px;
+}
+
+.fc-cart__multiship-header__text {
+  font-size:14px;
+  color: $primary;
+}
+@media ($medScreen)  {
+  .fc-cart__multiship-header h4 {
+    font-size:16px;
+  }
+}

@@ -1,0 +1,39 @@
+.fc-coupon-entry--input {
+  margin-bottom: 10px;
+  width: 100%;
+}
+.fc-coupon-entry__apply {
+  left: -5px;
+}
+
+.fc-transaction__discounts {
+  .fc-alert--warning {
+    width: 100%;
+    color: $notice;
+    text-shadow: none;
+    padding-left: 2px;
+    padding-right: 2px;
+    border:none;
+    background:none;
+  }
+}
+
+.fc-transaction__discounts .fc-subtotal--row {
+  .fc-subtotal__label,
+  .fc-subtotal__value {
+    color: #267d00;
+  }
+}
+
+// Added via JS for a new coupon
+.fc-transaction__discounts .fc-subtotal--row--new {
+  @include animation(highlight 2s ease-in 0s 1);
+}
+
+.fc-subtotal--row--inactive {
+  .fc-subtotal__label,
+  .fc-subtotal__value {
+    color:lighten($darkerPrimary, 20%);
+  }
+}
+

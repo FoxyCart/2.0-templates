@@ -1,0 +1,35 @@
+[data-fc-error-notifier] {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  top: 0;
+  opacity: 0;
+  padding: 0;
+  background-color: $notice;
+  text-align: center;
+  z-index: 1500;
+  @include transform(scaleY(0));
+  @include transition(opacity .6s linear);
+
+  h3 {
+    opacity: 0;
+  }
+
+  &.fc-alert.fc-alert--danger {
+    padding: 0;
+    border-radius: 0;
+    opacity: 1.0;
+    @include transform(scaleY(1));
+    @include transition(opacity .6s linear);
+
+    h3 {
+      margin-top: .5em;
+      margin-bottom: .5em;
+      color: $white;
+      opacity: 1.0;
+      padding: 0;
+      text-shadow: none;
+      @include transition(opacity .6s linear);
+    }
+  }
+}

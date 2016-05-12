@@ -1,0 +1,127 @@
+/* Postal Code specific elements */
+.fc-form-group--postal-code {
+    margin-left:-15px;
+    margin-right:-15px;
+}
+.fc-form-control--postal-code--with-search { // Default state, prior to any entry.
+    min-width:6.5em;
+}
+
+.fc-address-entry {
+    .fc-postal-code-entry__loading {
+        display: block;
+        padding-top: .7em;
+        padding-bottom: .7em;
+        width: 100%;
+        text-align: center;
+        border-radius: 5px;
+        background-color: $grayLighter;
+        @include clearfix;
+
+        .fc-spinner {
+            margin: 0;
+            float: left;
+        }
+    }
+
+    .fc-postal-code-entry__loading__text {
+        display: inline-block;
+        float: left;
+        margin: 0;
+        margin-left: 15px;
+    }
+
+    // Submit postal code
+    .fc-postal-code-entry__submit {
+        margin-bottom: 0;
+        overflow: hidden;
+        @include transition (all 0.2s ease-out 0.1s);
+        // Position it to look like it's connected to the postal code.
+        // We aren't connecting it directly because it'll disappear when the select box loads,
+        // and that'd be more DOM manipulation to adjust the grid than this is.
+        @media ($medScreen) {
+            margin-left:-18px;
+        }
+
+        button {
+            @include border-left-radius(0);
+            padding-bottom:4px;
+            margin-left: 1px;
+            line-height: 2;
+        }
+    }
+
+    // account for the border sizing
+    .fc-alert-container--error .fc-postal-code-entry__submit button {
+        padding-bottom: 2px;
+    }
+
+
+    &.fc-with-submit-postal-code .fc-postal-code-entry__submit {
+        opacity: 1;
+        max-height: 44px;
+        @include transition (all 0.2s ease-out);
+    }
+
+    .text-info {
+        max-height: 140px;
+        @include transform (scale(1));
+        @include transition (all 0.2s ease-out 0.1s);
+    }
+
+    &.fc-with-city-options .text-info,
+    &.fc-with-submit-postal-code .text-info {
+        max-height: 0;
+        padding: 0;
+        margin: 0;
+        opacity: 0;
+        @include transform (scale(1.1));
+        @include transition (all 0.2s ease-out);
+    }
+
+    // City options
+    .fc-city-options {
+        overflow: hidden;
+        max-height: 0px;
+        padding: 0;
+        opacity: 0;
+        @include transition (all 0.2s ease-out);
+    }
+
+    &.fc-with-city-options .fc-city-options {
+        max-height: 160px;
+        opacity: 1;
+        @include transition (all 0.2s ease-out 0.2s);
+    }
+
+    // City inputs
+    .fc-city-inputs {
+        display: block;
+        margin-bottom: 0;
+        max-height: 0;
+        opacity: 0;
+        @include transform (scale(1.1));
+        @include transition (all 0.2s ease-out 0.1s);
+    }
+    &.fc-with-city-inputs .fc-city-inputs {
+        opacity: 1;
+        margin-bottom: 15px;
+        max-height: 200px;
+        @include transform (scale(1));
+        @include transition (all 0.2s ease-in 0.1s);
+    }
+
+    // Error message overrides
+    .fc-alert-container--error .fc-alert--danger {
+        border-radius: 5px;
+        margin-top: 10px;
+        margin-left: 7px;
+    }
+}
+
+// Sidebar button is correct on small screens but checkout needs a little push left.
+@media ($smallScreen) {
+    .fc-checkout__main__contents .fc-postal-code-entry__submit {
+        margin-left: -10px;
+    }
+}

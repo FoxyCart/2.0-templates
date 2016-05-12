@@ -1,0 +1,422 @@
+
+.text-info { padding:5px 12px 10px; }
+
+// What shows if there are no products in the cart
+.fc-messages__empty-notification {
+  background-color: $success;
+  border-radius: 6px;
+  margin: 1em 0;
+  padding: 1em 2em;
+  text-align: center;
+
+  a {
+    color: $successText;
+    font-size: 1.2em;
+  }
+}
+
+// Hard errors, displayed at the top of the cart or checkout
+.fc-messages {
+
+  .fc-alert {
+    margin:20px 10px;
+    padding:10px;
+    opacity:1;
+    display:block;
+    background:$grayLight;
+
+    .fc-alert--more {
+      font-weight: bold;
+      text-shadow: none;
+    }
+
+    ul {
+      margin-left: 0;
+      list-style: none;
+    }
+
+    h2 {
+      font-weight: normal;
+      padding: 0;
+      text-shadow: none;
+    }
+
+    li {
+      color:$grayMid;
+      text-shadow:none;
+    }
+  }
+
+}
+
+
+//////////////////////////////////////////////////////////////////
+/////////////////////////// BASIC ALERTS /////////////////////////
+//////////////////////////////////////////////////////////////////
+
+.fc-alert {
+  border: 0;
+  color: $white;
+  padding: 10px;
+  text-shadow: 1px 1px 0px rgba(0, 0, 0, .5);
+  margin-top: -4px;
+  margin-bottom:0;
+
+  a { text-decoration:underline; }
+
+  p {
+    margin-bottom: 15px;
+    font-size: .9em;
+
+    &:last-child {
+        margin-bottom: 0px;
+    }
+  }
+
+  h2 {
+    font-size: em(21);
+    margin: 0;
+    padding: 0;
+  }
+
+  ul {
+    padding: 0;
+    margin-left: 15px;
+  }
+
+  .fc-list--inline {
+    width:100%;
+    margin-left:0;
+    display:inline-block;
+  }
+
+  .fc-spinner {
+    width: 40px;
+    float: left;
+    margin-top: 0;
+    margin-left: 20px;
+  }
+}
+
+.fc-payment-method--plastic__saved .fc-alert {
+    margin-left: -23px;
+    margin-right: -10px;
+    margin-bottom: -12px;
+    padding-left: 25px;
+    padding-right: 25px;
+    padding-bottom: 12px;
+}
+
+.fc-alert--success {
+  color: $successText;
+  background-color: $success;
+  border: 2px solid $success;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  text-shadow: 1px 1px 0px rgba($white, .5);
+
+  &.fc-with-animation {
+    @media ($medScreen) {
+      @include animation(scaleUpAndFadeIn .2s ease-in 0s 1);
+    }
+  }
+
+
+  h2 { color: $success; }
+
+  .alert-more, a {
+    color: $successText;
+  }
+
+  .fc-spinner > div {
+    background-color: $success;
+  }
+}
+
+.fc-alert--success .fc-alert-container--error {
+    background-color: $notice;
+    border-color: $notice;
+    border-top-right-radius: 0;
+    border-top-left-radius: 0;
+    text-shadow: none;
+}
+
+.fc-alert--success .fc-alert--info {
+  // Password authentication box
+  border-color: $info;
+  border-top-right-radius: 0;
+  border-top-left-radius: 0;
+  width: 99.6%; // The button above the alert is pulled in slightly
+  margin-left: 1px;
+  @include clearfix;
+
+  p {
+    margin-bottom: 0;
+    float: left;
+  }
+
+}
+
+.fc-alert--danger {
+  background-color: $notice;
+  border: 2px solid $notice;
+  overflow: hidden;
+  @media ($medScreen) {
+    @include animation(scaleUp .2s ease-in 0s 1);
+  }
+
+  h2 { color: $notice; }
+  span {
+    color: $notice;
+    font-weight: bold;
+  }
+
+  .fc-alert--more {
+    color: $notice;
+    margin-top: 0;
+  }
+
+  .fc-spinner > div {
+    background-color: $notice;
+  }
+
+  .fc-button-link {
+    border: 0px;
+    color: $white;
+    text-decoration:underline;
+    padding: 0px;
+  }
+}
+
+// The shipping results error is nested in a grid and doesn't need margins
+[data-fc-id='shipping-results'] .fc-alert--danger {
+  margin-left: -16px;
+  margin-right: -16px;
+  border-radius: 0px 0px 3px 3px;
+}
+
+.fc-alert--info {
+  border: 2px solid $infoText;
+  color:$infoText;
+  text-shadow:none;
+  @media ($medScreen) {
+    @include animation(scaleUpAndFadeIn .2s ease-in);
+  }
+
+  h2 { color: $infoText; }
+
+  .fc-spinner > div {
+    background-color: $infoText;
+  }
+}
+
+.fc-alert--warning {
+  border: 2px solid $warning;
+  color: $warning;
+  text-shadow:none;
+
+  .alert-more, h2 { color: $warning; }
+
+  .fc-spinner > div {
+    background-color: $warning;
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+////////////////////////// ALERT CONTAINERS //////////////////////
+//////////////////////////////////////////////////////////////////
+
+
+.fc-alert-container--success {
+
+  .fc-form-control,
+  .fc-form-control:focus {
+    border: 2px solid $success;
+    outline: 0;
+    @include box-shadow(none);
+  }
+
+  .fc-alert .fc-form-control,
+  .fc-alert .fc-form-control:focus {
+   border:1px solid $success;
+   border-bottom: none;
+   border-right: none;
+   @include box-shadow(none);
+  }
+
+  .fc-alert-container--error .fc-form-control--customer-password,
+  .fc-alert-container--error .fc-form-control--customer-password:focus {
+    border: none;
+  }
+
+  .fc-alert-container--error .fc-button--sign-in {
+    border-bottom-right-radius: 0;
+  }
+
+  .fc-alert--success .fc-input-group {
+    border-bottom-right-radius: 0;
+
+     &+ .fc-alert--danger {
+      margin-right: 1px;
+    }
+  }
+
+  .fc-alert--success .fc-input-group button {
+    height: 40px;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    padding: 0px 15px;
+    border: 0;
+  }
+
+  .fc-alert--success .fc-input-group .fc-button--sign-in {
+    height: 39px;
+    margin-top: 1px;
+  }
+
+  .fc-alert--success {
+    border: none;
+  }
+
+  // slight override to make the loading animation look better
+  .fc-alert--success .fc-form-control--customer-password {
+    border-bottom: none;
+  }
+}
+
+.fc-alert-container--error {
+
+  label { color: $notice; }
+  .fc-input-title { color: inherit; }
+
+  .fc-input-group-container--radio & .fc-form-group input,
+  .fc-input-group,
+  .fc-container__grid--payment-method .fc-input-group-container--active,
+  .fc-input-group-container--checkbox,
+  .fc-input-group-container--active {
+    background: lighten($notice, 40%);
+    border: 2px solid $notice;
+    border-radius:5px;
+    @include transition(background 0.2s linear, border 0.2s linear);
+
+    &:focus {
+      background: $white;
+      @include transition(background 0.2s linear);
+    }
+  }
+
+  .fc-form-control,
+  .fc-form-control:focus { // Separate from the above group because of the padding.
+    padding-left:10px;
+    background: lighten($notice, 40%);
+    border: 2px solid $notice;
+    @include transition(background 0.2s linear, border 0.2s linear, padding 0.2s linear);
+
+    &:focus {
+      background: $white;
+      @include transition(background 0.2s linear);
+    }
+  }
+
+
+  .fc-button{
+    border: 2px solid $notice;
+    border-left: none;
+    line-height: 1.9;
+    @include transition(border 0.2s linear);
+
+    &:hover {
+      border-color: $notice;
+    }
+
+    &.fc-button-link {
+      border: none;
+    }
+  }
+
+  .fc-input-group-container--active .fc-input-group-container__title:before,
+  .fc-input-group-container--active .fc-input-group-container__no-title:before,
+  .fc-input-group-container--checkbox .fc-input-group-container__title:before {
+    border-width: 2px;
+    border-color: $notice;
+    border-style: solid;
+    left: -8px;
+    @include transition(border 0.2s linear);
+    @media ($medScreen) {
+      @include animation(fadeInErrorBorder .2s linear 0s 1);
+    }
+  }
+  .fc-alert--danger {
+    display:block;
+    border-radius: 0px 0px 5px 5px;
+    opacity: 1.0;
+  }
+
+  .fc-alert .fc-form-control {
+    border:none;
+  }
+
+  .fc-alert-container--success .fc-form-control { // For the individual inputs within the CC# group
+    border:none;
+  }
+
+  .fc-payment-method--plastic__new .fc-alert-container--error .fc-form-control {
+    border: 2px solid $notice;
+    @include transition(background 0.2s linear, border 0.2s linear);
+  }
+
+  .fc-input-group--full-page {
+    border: 2px solid $notice;
+    border-radius: 5px;
+    background-color: $grayLight;
+    @media ($medScreen) {
+      @include animation(fadeInErrorBorder .2s linear 0s 1);
+    }
+  }
+}
+
+.fc-alert-container--info {
+
+  .fc-form-control {
+    border: 2px solid $info;
+    border-bottom: none;
+    @media ($medScreen) {
+      @include animation(fadeInInfoBorder .1s linear);
+    }
+  }
+
+  .fc-alert .fc-form-control,
+  .fc-alert .fc-input-group {
+    border: 2px solid $info;
+    border-bottom: none;
+  }
+
+  .fc-alert {
+    border-radius: 0px 0px 5px 5px;
+    border: 2px solid $info;
+    border-top: none;
+    @include clearfix;
+    @media ($medScreen) {
+      @include animation(fadeInInfoBorder .1s linear);
+    }
+
+    p {
+      float: left;
+      margin-bottom: 0;
+    }
+  }
+
+  .fc-button{
+    border: 2px solid $info;
+    border-bottom: none;
+    border-left: none;
+    line-height: 1.9em;
+    height: 39px;
+    @include transition(border 0.2s linear);
+
+    &:hover {
+      border-color: $info;
+    }
+  }
+
+}

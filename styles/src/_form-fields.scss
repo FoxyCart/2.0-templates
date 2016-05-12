@@ -1,0 +1,318 @@
+/* First and Last name inputs on the same line */
+/* Company + Phone inputs optionally on the same line */
+/* Postal Code + Select autocomplete */
+/* City + State inputs */
+
+.fc-form-group {
+    margin-bottom: 8px;
+}
+
+@media ($medScreen) {
+    .fc-form-group {
+        margin-bottom: 15px;
+    }
+}
+
+.fc-form-group--multiple-inline {
+    > div:nth-of-type(2) {
+        padding-right:7px;
+        padding-left:8px;
+    }
+    > div:first-of-type {
+        padding-right:7px;
+    }
+
+    > div:last-of-type {
+        padding-left:8px;
+        padding-right:15px; // To reset the nth-of-type(2)
+    }
+}
+
+.fc-container__grid--input--phone {
+    padding-right:7px; // To match the First Name above it, when the phone is displayed without the company field
+
+    .fc-form-group--multiple-inline & {
+        padding-right:15px; // To set it back how it should be when the company field is present
+    }
+}
+
+.fc-form-control,
+.fc-form-control:focus {
+    font-size:14px;
+    height: 40px;
+    background: $pageBackground;
+    border: none;
+    border-bottom: 1px solid $btnBorder;
+    box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, .2);
+}
+
+@media($smallScreen) {
+    .fc-form-control--postal-code,
+    .fc-form-control--postal-code:focus,
+    .fc-coupon-entry--input .fc-form-control,
+    .fc-coupon-entry--input .fc-form-control:focus {
+        border-top: 1px solid $btnActiveBorder;
+        box-shadow: inset 1px 1px 1px 0px rgba(0, 0, 0, .1);
+        z-index: 0;
+    }
+}
+
+.fc-sidebar {
+    .fc-form-control,
+    .fc-form-control:focus {
+        background:$white;
+    }
+}
+
+.fc-cart__item__quantity .fc-form-control:focus {
+    height: auto;
+}
+
+.fc-form-control--static {
+    line-height:28px; /* to match the .fc-form-control elements */
+}
+
+.fc-form-group .fc-form-group .fc-form-label {
+    line-height:28px;
+}
+
+.fc-form-group--postal-code {/* To avoid double bottom margins when a .form-group containers more .form-group elements */
+    margin-bottom:0;
+}
+
+.fc-form-label {
+    font-weight:normal;
+    color: $primary;
+    @include transition(opacity .2s linear);
+
+    @media ($smallScreen) {
+        &.focused {
+            width: auto;
+            height: auto;
+            margin: 0;
+            overflow: visible;
+            clip: auto;
+            @include transition(opacity .2s linear);
+        }
+    }
+}
+
+.fc-checkout__main__contents .fc-address-entry {
+    .fc-form-label {
+        padding-top: 7px;
+        text-align: right;
+    }
+    // Fix for multiship results
+    .fc-shipping-results .fc-form-label,
+    .fc-input-group-container .fc-form-label {
+        text-align: left;
+    }
+    .fc-input-group-container .fc-form-label {
+        padding-top:0;
+        line-height: 2.9em;
+    }
+}
+
+@media ($smallScreen) {
+    label.focused {
+        color: $grayMid;
+        left: 10%;
+        top: -13px;
+        font-weight: normal;
+        font-size: .85em;
+        line-height: 1.2em;
+        opacity: 1;
+        @include transition(opacity .2s linear);
+    }
+}
+
+.fc-form-label--new-cc-exp-month {
+    margin-top: 7px;
+}
+
+// Select Boxes
+// =====================================================
+select.fc-form-control {
+    //TODO: Firefox doesn't take line-height into account. Lame.
+    // Need to do something like the following for Firefox.
+    padding-left:6px;
+    padding-right:0px;
+    border-bottom: 1px solid lighten($grayMidLight, 20%);
+    box-shadow: 0px 0px 0px $white;
+    // browser specific hackety hackety
+    -moz-padding:8px 0 4px 12px;
+    -webkit-appearance: caret;
+    -moz-appearance: none;
+    -webkit-box-shadow: none;
+
+    @media ($largeScreen) {
+        padding-top: 8px;
+        -webkit-appearance: menulist;
+        border-top: 1px solid lighten($grayMidLight, 20%);
+    }
+}
+
+select.fc-form-control:focus {
+    border: 1px solid darken($info, 10%);
+    @include transition(border 0.2s ease-in-out);
+    box-shadow: 0px 0px 2px 2px darken($info, 10%);
+}
+
+
+// Input Groups
+// =====================================================
+.fc-input-group-container {
+    padding:5px 10px 0px 23px;
+    position:relative;
+
+    .fc-form-group {
+        margin-top: -40px;
+        max-height: 0; // Hidden by default
+        opacity: 0; // Hidden by default
+        @include transition(all .2s ease-in .2s);
+
+        select {
+            background: $white;
+        }
+
+        input {
+            background: $white;
+        }
+    }
+}
+
+.fc-input-group-container--active {
+    padding-bottom:10px;
+    background-color: #f1f1f1;
+    border-radius: 5px;
+    border:2px solid #fff;
+    @include transition(background-color .2s linear .2s);
+
+    p {
+        font-size:95%;
+    }
+
+    .fc-form-group {
+        opacity: 1;
+        margin: 1em 13px 10px 0;
+        max-height: 200px;
+        @include transition(all .2s ease-in .2s);
+    }
+
+    .fc-input-group-container__title {
+        background-color: #e1e1e1;
+        @include transition(background-color .2s linear .2s);
+
+        input {
+            left:-2px;
+        }
+    }
+
+    .fc-input-group-container__title--forced {
+        background-color: lighten($success, 10);
+        text-shadow: none;
+        padding-left:23px;
+    }
+}
+
+
+// Radios and Checkboxes
+// =====================================================
+.fc-input-group-container--checkbox {
+    .fc-form-control {
+        top:13px;
+    }
+}
+
+.fc-input-group-container--radios .fc-radio {
+    margin-bottom: .5em;
+}
+
+.fc-input-group-container--checkbox .fc-input-group-container__title:before {
+    border-radius:7px;
+}
+
+
+// Label Titles
+
+.fc-form-group .fc-input-group-container__title {
+    min-height: 40px;
+    line-height:  30px;
+    display: block !important;
+    background-color: none;
+    border-radius: 5px 5px 0 0;
+    margin: -5px -10px 0 -23px;
+    padding-left: 20px;
+    text-shadow: 1px 1px 0px rgba($white, .5);
+    max-width:none;
+
+    .fc-payment-no-logo {
+        line-height: 2.9em;
+    }
+
+    img {
+        position: relative;
+        top: -2px;
+        display: inline-block;
+    }
+}
+
+.fc-input-group-container__no-title,
+.fc-input-group-container__title {
+    .fc-form-control {
+        position:relative;
+        top:12px;
+        left:0;
+        z-index:3;
+        padding:0;
+        line-height:1;
+        height:14px;
+        width: 16px;
+        margin-top:0;
+        margin-right:15px;
+        box-shadow: none;
+    }
+
+    &:before {
+        content:"";
+        background:#fff;
+        border-radius:16px;
+        border:2px solid #fff;
+        width:28px;
+        height:28px;
+        position:absolute;
+        z-index:2;
+        top: 7px;
+        left: -8px;
+        clip:rect(0px, 100px, 100px, 6px);
+    }
+
+    &.fc-input-group-container__title--forced:before {
+        background:inherit;
+        width:0;
+        height:0;
+    }
+}
+
+
+
+// Additional fields
+#fc-additional-fields {
+    .fc-form-group {
+        margin-bottom:8px;
+    }
+
+    .fc-form-label {
+        line-height: 2.9em;
+    }
+}
+
+.fc-container__grid--use-different-address .fc-input-group-container--checkbox {
+    padding-left: 0;
+}
+
+
+.fc-form-label--tos a {
+    color: $secondary;
+    text-decoration: underline;
+}

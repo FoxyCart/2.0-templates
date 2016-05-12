@@ -1,0 +1,66 @@
+.fc-transaction__shipping-address img {
+    vertical-align:baseline;
+    padding-left:6px;
+}
+.fc-transaction__shipping-address {
+    border:1px solid darken($grayLight, 10%);
+    border-radius: 3px;
+    margin:15px 0;
+    padding:5px 5px 3px;
+
+    @media ($medScreen) {
+      margin: 5px 0 10px 5px;
+    }
+}
+
+// .fc-shipping-rates {
+//   @media ($medScreen) {
+//     @include animation(scaleUpAndFadeIn .2s ease-in 0s 1);
+//   }
+// }
+
+.fc_checkout__shipping-results__help-text {
+  font-weight: normal;
+}
+
+.fc-shipping-rates__rate .fc-form-label--shipping-rate {
+  display: block;
+  @include clearfix();
+}
+
+.fc-shipping-rates__rate__name {
+  float: left;
+  padding: 0;
+  width: 80%;
+  @include clearfix();
+}
+
+.fc-shipping-rates__rate__value {
+  float: left;
+  margin-left: 2%;
+  padding: 0;
+  width: 18%;
+  @include clearfix();
+}
+
+/* Shipping radios and labels */
+.fc-shipping-rates__rate .fc-shipping-rates__rate__value {
+    color:$grayMidLight;
+    font-style:italic;
+}
+
+.fc-shipping-rates__rate {
+  border: 2px solid rgba(255,255,255,0);
+  padding-bottom: .5em;
+}
+
+// highlights active shipping result
+.fc-input-group-container--active.fc-shipping-rates__rate {
+    margin-bottom: 0;
+    padding-bottom: .5em;
+}
+
+
+.fc-container__grid--label--multiship-select {
+  text-align: right;
+}

@@ -1,0 +1,16 @@
+
+// preset / calculated colors
+
+$secondary: darken(complement($primary), 25%);
+$linkColor: desaturate($primary, 15%);
+
+$darkerPrimary: darken($primary, 20%);
+$pageBackground: $grayLight;
+$sidebarBackground: darken($pageBackground, 4%);
+// $bodyBackground: lighten(desaturate($primary, 50%), 30%);
+$bodyBackground: $bgBase;
+$pageBackgroundImageUrl: 'url(/static/themes/responsive/images/background.png)';
+
+@if lightness($bodyBackground) > 60% {
+  $pageBackgroundImageUrl: 'url(/static/themes/responsive/images/background-dark.png)';
+}

@@ -1,0 +1,285 @@
+// This is the basic structure and layout of the foxycart
+// default responsive theme. If some presentation code
+// is too high-level for any of the other partials, put it
+// here but PLEASE organize it.
+
+//////////////////////////////////////////////////////////////////
+/////////////////////////// CONTAINERS ///////////////////////////
+//////////////////////////////////////////////////////////////////
+
+#fc-checkout-container {
+  // This is used for the full-page cart or checkout only.
+  padding:0;
+  counter-reset:fieldsets 0;
+  background-color: $white !important;
+  border-color:$white;
+  @include clearfix;
+}
+
+.fc-cart__main,
+#fc-checkout-container,
+.fc-receipt-container {
+  @media ($smallScreen) {
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  @media ($medScreen) { // Needed to stretch the .fc-sidebar to full height
+    min-height:100%;
+    overflow:hidden;
+    clear: both;
+  }
+}
+
+@media ($xLargeScreen) {
+  .fc-container {
+      max-width:940px;
+  }
+}
+
+.fc-sidebar {
+  // Used on the fullpage cart, checkout, and receipt
+  background: $sidebarBackground;
+  border-radius:0 4px 4px 0;
+  @include clearfix;
+
+  @media ($medScreen) { // Needed to stretch the .fc-sidebar to full height
+    min-height:100%;
+    padding-bottom: 9999px;
+    margin-bottom: -9999px;
+  }
+}
+
+.fc-sidebar .fc-container {
+  // On checkout and receipt, this is needed to prevent double padding.
+  padding:0;
+}
+
+.fc-checkout__main__contents {
+  padding-top:20px;
+  @include transform(translate3d(0,0,0));
+}
+
+//////////////////////////////////////////////////////////////////
+///////////////////// CART SIDEBAR STRUCTURE /////////////////////
+//////////////////////////////////////////////////////////////////
+
+#fc-cart--fixed-width {
+
+  .fc-logo__image,
+  .fc-cart__items__header,
+  .fc-logo,
+  .fc-cart__items__header__quantity,
+  .fc-cart__items__header__total {
+    display: none;
+  }
+
+}
+
+.fc-logo__image {
+  padding:50px 0 35px;
+  margin: 0 auto;
+}
+
+.fc-cart__title__header {
+  font-size:em(24);
+  margin-bottom:5px;
+  text-align:center;
+}
+
+.fc-order-quantity {
+  font-size:em(14);
+  text-align: center;
+}
+
+.fc-transaction__total {
+    font-weight:bold;
+    font-size: 1.1em;
+}
+
+.fc-transaction__header {
+    margin-bottom:0;
+}
+
+.fc-transaction__total {
+  .fc-subtotal__label,
+  .fc-subtotal__value {
+    font-size: 16px;
+    font-weight: bold;
+    color: lighten($darkerPrimary, 30%);
+  }
+}
+
+.fc-sidebar--cart {
+  // Give the sections some bottom borders
+  .fc-transaction,
+  .fc-address-entry,
+  .fc-actions--payment {
+      margin:0 -15px;
+      padding:15px 15px;
+      @include clearfix;
+  }
+
+  .fc-transaction,
+  .fc-address-entry {
+      border-bottom:1px solid #ddd;
+  }
+
+  .fc-address-entry,
+  .fc-actions--payment {
+      border-top:1px solid $white;
+  }
+
+  .fc-shipping-rates__rate__name {
+    font-size: .9em;
+    padding-top: 3px;
+  }
+}
+
+//////////////////////////////////////////////////////////////////
+///////////////////// CART FULLPAGE STRUCTURE ////////////////////
+//////////////////////////////////////////////////////////////////
+
+
+// If it's a full-page cart, we have to make a few adjustments
+.fc-context--cart-fullpage {
+
+  // hide the fixed nav buttons
+  .fc-sidecart-only-fixed {
+    display: none;
+  }
+
+  @media ($smallScreen)  {
+    .fc-section-counter {
+        display: none !important;
+    }
+
+    .fc-cart__items--with-images .fc-cart__item__image {
+      padding-left: 1px;
+      padding-right: 1px;
+    }
+  }
+
+  @media ($medScreen) {
+    .fc-cart__title__header,
+    .fc-order-quantity {
+        display:inline-block;
+        margin-bottom:10px;
+    }
+    .fc-cart__title__header {
+        padding-right:20px;
+    }
+  }
+}
+
+.fc-cart__main {
+  border-width:2px;
+}
+
+.fc-transaction {
+  color: $primary;
+  font-size:13px;
+
+  table {
+    width:100%;
+  }
+}
+
+.fc-transaction__section {
+  padding:5px 0;
+  margin-bottom: .4em;
+}
+
+.fc-transaction__ui__header {
+  display:inline-block;
+  vertical-align: top;
+}
+
+.fc-transaction__ui__header__value {
+  margin-left: 15px;
+}
+
+.fc-transaction__ui__toggle {
+  font-size:11px;
+  margin:5px 0;
+  border-radius:6px;
+  float:right;
+}
+
+.fc-subtotal--row {
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.fc-subtotal__label {
+  text-align:left;
+  color: $primary;
+  font-size:12px;
+  padding-left: 5px;
+}
+
+// stupid override
+.fc-transaction__subtotal,
+.fc-transaction__total {
+  .fc-subtotal__label {
+    padding-left: 0;
+  }
+}
+
+.fc-subtotal__value {
+  text-align:right;
+  color: $primary;
+  vertical-align: bottom;
+}
+
+//////////////////////////////////////////////////////////////////
+///////////////////////// CHECKOUT STRUCTURE /////////////////////
+//////////////////////////////////////////////////////////////////
+
+
+.fc-logotype {
+  text-align: center;
+  font-size: 28px;
+  color: $primary;
+  margin-top: 2em;
+}
+
+.fc-section-counter {
+    height:36px;
+    width:36px;
+    background: $darkerPrimary;
+    @if lightness($primary) < 70% {
+        color: $white;
+    } @else {
+        color: darken(desaturate($primary, 50%), 20%);
+    }
+    font-size:em(20);
+    border-color:$darkerPrimary;
+    border-radius:20px;
+    display:inline-block;
+    margin:-2px 3px 0;
+    line-height:36px;
+    vertical-align:middle;
+    text-align:center;
+    box-shadow: inset 0 3px 5px -3px darken($primary, 90%);
+}
+
+.fc-section-counter {
+    // This is a little hacky, but it's overridden in the media query at the bottom.
+    // Without this, the .hidden- classes display:block !important, which causes problems here.
+    display: inline-block !important;
+}
+
+legend {
+    .fc-section-counter:before {
+        counter-increment: fieldsets 1;
+        content:counter(fieldsets, decimal);
+    }
+    .fc-active {
+        background-color:$navActive;
+    }
+    .incomplete {
+        background-color:$navBG;
+    }
+}
+
