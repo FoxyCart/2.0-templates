@@ -338,6 +338,12 @@ CONVENTIONS:
             name="shipping_service_description"
             value="{{ shipping_address.shipping_service_description }}"
         />
+        <input
+            id="shipping_service_signature"
+            type="hidden"
+            name="shipping_service_signature"
+            value="{{ shipping_address.shipping_service_signature }}"
+        />
         {% if config.template_config.custom_script_values.multiship_checkout_fields %}
             {% include template_from_string(config.template_config.custom_script_values.multiship_checkout_fields) %}
         {% endif %}
@@ -814,23 +820,25 @@ CONVENTIONS:
 
 
 {% else %}{# is_subscription_cancel #}
+    <section data-fc-id="block-additional-fields">
+        <fieldset id="fc-additional-fields">
+            <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_almost_done|raw }}</legend>
+            <div id="fc-submit" class="fc-form-group"></div>
+        </fieldset>
+    </section>
 
     <section data-fc-id="block-subscription-cancel">
     {% block subscription_cancel %}
-        <fieldset id="fc-subscription-cancel">
-            <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_almost_done|raw }}</legend>
-
-            <div id="fc-submit" class="fc-form-group">
-                <div class="fc-container__grid--checkout-subscription-cancel">
-                    <button class="fc-button fc-button--subscription-cancel" data-fc-id="submit-button">{{ config.lang.checkout_cancel_my_subscription|raw }}</button>
-                </div>
-                <div class="fc-container__grid--checkout-subscription-cancel-helper-text">
-                    <p class="fc-container__subscription-cancel-helper-text">
-                        <small>{{ config.lang.checkout_subscription_cancel_helper_text|raw }}</small>
-                    </p>
-                </div>
+        <div id="fc-submit" class="fc-form-group">
+            <div class="fc-container__grid--checkout-subscription-cancel">
+                <button class="fc-button fc-button--subscription-cancel" data-fc-id="submit-button">{{ config.lang.checkout_cancel_my_subscription|raw }}</button>
             </div>
-        </fieldset>
+            <div class="fc-container__grid--checkout-subscription-cancel-helper-text">
+                <p class="fc-container__subscription-cancel-helper-text">
+                    <small>{{ config.lang.checkout_subscription_cancel_helper_text|raw }}</small>
+                </p>
+            </div>
+        </div>
     {% endblock subscription_cancel %}
     </section><!-- data-fc-id="block-subscription-cancel" -->
 
@@ -841,6 +849,16 @@ CONVENTIONS:
 
 {% if config.supports_address_validation %}
     {% include 'address.validation.inc.twig' %}
+{% endif %}
+
+{% if config.template_config.custom_config.upsell.enabled %}
+    <div data-fc-id="block-upsell-modal-container" style="display:none;">
+        {% block upsell_modal_container %}
+            <div class="fc-modal fc-upsell-modal">
+                <div class="fc-alert fc-alert--info" data-fc-id="block-upsell-modal">{% block upsell_modal %}{% endblock upsell_modal %}</div>
+            </div>
+        {% endblock upsell_modal_container %}
+    </div>
 {% endif %}
 
 </div><!-- #fc-checkout__main -->

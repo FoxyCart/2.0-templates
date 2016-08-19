@@ -179,9 +179,11 @@
                                 <li class="fc_cart_item_option fc_cart_item_sub_startdate">
                                     <span class="fc_cart_item_option_name">{{ config.lang.cart_start_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_startdate }}</span>
                                 </li>
+                            {% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
                                 <li class="fc_cart_item_option fc_cart_item_sub_nextdate">
                                     <span class="fc_cart_item_option_name">{{ config.lang.cart_next_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_nextdate }}</span>
                                 </li>
+                            {% endif %}
                             {% if item.sub_enddate != "0000-00-00" %}
                                 <li class="fc_cart_item_option fc_cart_item_sub_enddate">
                                     <span class="fc_cart_item_option_name">{{ config.lang.cart_end_date|raw }}</span><span class="fc_cart_item_option_separator">:</span> <span class="fc_cart_item_option_value">{{ item.sub_enddate }}</span>

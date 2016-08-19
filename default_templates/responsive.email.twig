@@ -456,6 +456,11 @@
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_shipping_and_handling|raw }}</td>
                                                         <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
                                                     </tr>
+                                                    {% elseif total_shipping > 0 %}
+                                                    <tr id="fc-cart-shipping" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
+                                                        <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ shipping_and_handling_label }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
+                                                    </tr>
                                                     {% endif %}
                                                     {% if has_multiship %}
                                                         <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
@@ -566,10 +571,12 @@
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_start_date|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_startdate }}</span>
                                                                         </li>
+                                                                    {% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
                                                                         <li class="fc-cart-item-option-subscription-nextdate">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_next_date|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_nextdate }}</span>
                                                                         </li>
+                                                                    {% endif %}
                                                                     {% if item.sub_enddate != "0000-00-00" %}
                                                                         <li class="fc-cart-item-option-subscription-enddate">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_end_date|raw }}</span>:

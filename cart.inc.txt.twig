@@ -36,7 +36,9 @@
   * {{ config.lang.cart_subscription_details|raw }}
       - {{ config.lang.cart_frequency|pad(11)|raw }} {{ item.sub_frequency }}
       - {{ config.lang.cart_start_date|pad(11)|raw }} {{ item.sub_startdate }}
+{% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
       - {{ config.lang.cart_next_date|pad(11)|raw }} {{ item.sub_nextdate }}
+{% endif %}
 {% if item.sub_enddate != "0000-00-00" %}
       - {{ config.lang.cart_end_date|pad(11)|raw }} {{ item.sub_enddate }}
 {% endif %}

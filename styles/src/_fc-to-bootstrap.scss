@@ -175,8 +175,18 @@
 .fc-password-action--guest {
   @extend .pull-right;
 
+  @media ($medScreen) and ($medScreenMax), ($xSmallScreen) {
+    float:left !important;
+    clear:left;
+  }
+
   .fc-password-action--button-container {
     @extend .pull-right;
+
+    @media ($medScreen) and ($medScreenMax), ($xSmallScreen) {
+      float:left !important;
+      clear:left;
+    }
   }
 }
 
@@ -432,7 +442,8 @@
 .fc-form-label__plastic-saved-expiration,
 .fc-form-label--cvv2-saved {
   @extend .col-xs-9;
-  @extend .col-sm-6;
+  @extend .col-sm-8;
+  @extend .col-md-6;
   @extend .control-label;
   @extend .text-right;
 }

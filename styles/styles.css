@@ -1169,16 +1169,17 @@
 #fc .fc-postal-code__manual-inputs .fc-container__grid--region, #fc .fc-container__grid--input--first-name,
 #fc .fc-container__grid--input--last-name,
 #fc .fc-form-group--multiple-inline .fc-container__grid--input--company,
-#fc .fc-container__grid--input--phone, #fc #fc-receipt__section--header .fc-container__grid--receipt--logo, #fc #fc-receipt__section--header .fc-container__grid--receipt--transaction-subject, #fc .col-sm-6, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
+#fc .fc-container__grid--input--phone, #fc #fc-receipt__section--header .fc-container__grid--receipt--logo, #fc #fc-receipt__section--header .fc-container__grid--receipt--transaction-subject, #fc .col-sm-6, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
 #fc #fc-receipt__section--actions,
 #fc #fc-receipt__section--general-information,
 #fc #fc-receipt__section--billing-information,
 #fc #fc-receipt__section--shipping-information,
 #fc #fc-receipt__section--custom-fields,
-#fc .fc-receipt__section--multiship-shipping-information, #fc .col-md-6, #fc .col-lg-6, #fc .col-xs-7, #fc .fc-container--postal-code-actions--search .fc-container__grid--postal-code-actions, #fc .col-sm-7, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .fc-cart__item__details-and-image, #fc .col-md-7, #fc .col-lg-7, #fc .col-xs-8, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-cart__items--with-images .fc-cart__items__header__item, #fc .fc-container__grid--postal-code-actions, #fc .fc-postal-code-entry__without-search .fc-container__grid--country, #fc .fc-container__grid--input--po, #fc .fc-container__grid--input--address1,
+#fc .fc-receipt__section--multiship-shipping-information, #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
+#fc .fc-form-label--cvv2-saved, #fc .col-lg-6, #fc .col-xs-7, #fc .fc-container--postal-code-actions--search .fc-container__grid--postal-code-actions, #fc .col-sm-7, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .fc-cart__item__details-and-image, #fc .col-md-7, #fc .col-lg-7, #fc .col-xs-8, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-cart__items--with-images .fc-cart__items__header__item, #fc .fc-container__grid--postal-code-actions, #fc .fc-postal-code-entry__without-search .fc-container__grid--country, #fc .fc-container__grid--input--po, #fc .fc-container__grid--input--address1,
 #fc .fc-container__grid--input--multiship-select, #fc #fc-receipt-container fieldset .fc-form-group div[class*="fc-container__grid--static-input"], #fc .col-sm-8, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-cart--responsive .fc-cart__main__content, #fc .fc-container__grid--use-different-address, #fc .fc-checkout__main__contents, #fc .fc-container__grid--input--customer-email,
-#fc .fc-container__grid--authentication-button--amazon, #fc .fc-container__grid--input--company,
+#fc .fc-container__grid--authentication-button--amazon, #fc .fc-form-label__plastic-saved-expiration,
+#fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--company,
 #fc .fc-container__grid--input--tax-id, #fc .fc-container-checkout__grid--postal-code, #fc .col-md-8, #fc .fc-checkout__main__contents, #fc .fc-container__grid--payment-method,
 #fc .fc-checkout__additional-field--tos,
 #fc .fc-checkout__additional-field--secure-transfer,
@@ -1382,15 +1383,15 @@
   #fc .fc-container__grid--checkout-subscription-cancel,
   #fc .fc-container__grid--checkout-submit-helper-text,
   #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-container__grid--input--address1,
-  #fc .fc-container__grid--input--multiship-select, #fc .col-sm-6, #fc .fc-form-label__plastic-saved-expiration,
-  #fc .fc-form-label--cvv2-saved, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
+  #fc .fc-container__grid--input--multiship-select, #fc .col-sm-6, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
   #fc #fc-receipt__section--actions,
   #fc #fc-receipt__section--general-information,
   #fc #fc-receipt__section--billing-information,
   #fc #fc-receipt__section--shipping-information,
   #fc #fc-receipt__section--custom-fields,
   #fc .fc-receipt__section--multiship-shipping-information, #fc .col-sm-7, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .fc-cart__item__details-and-image, #fc .col-sm-8, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-cart--responsive .fc-cart__main__content, #fc .fc-container__grid--use-different-address, #fc .fc-checkout__main__contents, #fc .fc-container__grid--input--customer-email,
-  #fc .fc-container__grid--authentication-button--amazon, #fc .fc-container__grid--input--company,
+  #fc .fc-container__grid--authentication-button--amazon, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--company,
   #fc .fc-container__grid--input--tax-id, #fc .fc-container-checkout__grid--postal-code, #fc .col-sm-9, #fc .col-sm-10, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-postal-code-entry__with-search .fc-container__grid--country, #fc .col-sm-11, #fc .col-sm-12, #fc .fc-container__grid--input--plastic-new-card-number {
     float: left;
   }
@@ -1423,8 +1424,7 @@
   #fc .fc-container__grid--input--multiship-select {
     width: 41.6666666667%;
   }
-  #fc .col-sm-6, #fc .fc-form-label__plastic-saved-expiration,
-  #fc .fc-form-label--cvv2-saved, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
+  #fc .col-sm-6, #fc .fc-address-validation--original, #fc .fc-address-validation--suggested, #fc #fc-receipt-container #fc-messages,
   #fc #fc-receipt__section--actions,
   #fc #fc-receipt__section--general-information,
   #fc #fc-receipt__section--billing-information,
@@ -1437,7 +1437,8 @@
     width: 58.3333333333%;
   }
   #fc .col-sm-8, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-cart--responsive .fc-cart__main__content, #fc .fc-container__grid--use-different-address, #fc .fc-checkout__main__contents, #fc .fc-container__grid--input--customer-email,
-  #fc .fc-container__grid--authentication-button--amazon, #fc .fc-container__grid--input--company,
+  #fc .fc-container__grid--authentication-button--amazon, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--company,
   #fc .fc-container__grid--input--tax-id, #fc .fc-container-checkout__grid--postal-code {
     width: 66.6666666667%;
   }
@@ -1582,7 +1583,8 @@
   #fc .col-md-1, #fc .col-md-2, #fc .col-md-3, #fc .col-md-4, #fc .col-md-5, #fc .fc-container__grid--checkout-submit,
   #fc .fc-container__grid--checkout-subscription-cancel,
   #fc .fc-container__grid--checkout-submit-helper-text,
-  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .col-md-6, #fc .col-md-7, #fc .col-md-8, #fc .fc-checkout__main__contents, #fc .fc-container__grid--payment-method,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .col-md-7, #fc .col-md-8, #fc .fc-checkout__main__contents, #fc .fc-container__grid--payment-method,
   #fc .fc-checkout__additional-field--tos,
   #fc .fc-checkout__additional-field--secure-transfer,
   #fc .fc-checkout__additional-field--subscribe,
@@ -1610,7 +1612,8 @@
   #fc .fc-container__grid--checkout-subscription-cancel-helper-text {
     width: 41.6666666667%;
   }
-  #fc .col-md-6 {
+  #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved {
     width: 50%;
   }
   #fc .col-md-7 {
@@ -4313,7 +4316,7 @@
     display: none !important;
   }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-container {
     padding-right: 7px;
     padding-left: 7px;
@@ -4331,6 +4334,18 @@
 #fc .fc-checkout__main {
   margin-left: -15px;
   margin-right: -15px;
+}
+@media (min-width: 768px) and (max-width: 991px), (max-width: 480px) {
+  #fc .fc-password-action--guest {
+    float: left !important;
+    clear: left;
+  }
+}
+@media (min-width: 768px) and (max-width: 991px), (max-width: 480px) {
+  #fc .fc-password-action--guest .fc-password-action--button-container {
+    float: left !important;
+    clear: left;
+  }
 }
 #fc .fc-form-label--postal-code,
 #fc .fc-form-label--city-options,
@@ -4350,7 +4365,7 @@
   background: #EEEEEE url(/static/themes/responsive/images/background-dark.png) repeat top left;
   padding: 0;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc body {
     padding: 30px 0;
   }
@@ -4442,7 +4457,7 @@
 #fc #fc-checkout-container:after {
   clear: both;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-cart__main,
   #fc #fc-checkout-container,
   #fc .fc-receipt-container {
@@ -4450,7 +4465,7 @@
     margin: 0 auto;
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-cart__main,
   #fc #fc-checkout-container,
   #fc .fc-receipt-container {
@@ -4475,7 +4490,7 @@
 #fc .fc-sidebar:after {
   clear: both;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-sidebar {
     min-height: 100%;
     padding-bottom: 9999px;
@@ -4560,7 +4575,7 @@
 #fc .fc-context--cart-fullpage .fc-sidecart-only-fixed {
   display: none;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-context--cart-fullpage .fc-section-counter {
     display: none !important;
   }
@@ -4569,7 +4584,7 @@
     padding-right: 1px;
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-context--cart-fullpage .fc-cart__title__header,
   #fc .fc-context--cart-fullpage .fc-order-quantity {
     display: inline-block;
@@ -4699,7 +4714,7 @@
   -o-transition: all 0.2s ease-out 0.1s;
   transition: all 0.2s ease-out 0.1s;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-address-entry .fc-postal-code-entry__submit {
     margin-left: -18px;
   }
@@ -4794,7 +4809,7 @@
   margin-top: 10px;
   margin-left: 7px;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-checkout__main__contents .fc-postal-code-entry__submit {
     margin-left: -10px;
   }
@@ -4814,13 +4829,18 @@
 #fc .fc-password-actions .fc-password-action {
   max-width: 50%;
 }
+@media (min-width: 768px) and (max-width: 991px), (max-width: 480px) {
+  #fc .fc-password-actions .fc-password-action {
+    max-width: 100%;
+  }
+}
 #fc .fc-cancel-continue-shopping {
   text-align: center;
 }
 #fc .fc-cancel-continue-shopping .fc-button {
   margin: 0 auto 10px auto;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cancel-continue-shopping {
     text-align: right;
   }
@@ -4975,7 +4995,7 @@
 #fc .fc-form-group {
   margin-bottom: 8px;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-form-group {
     margin-bottom: 15px;
   }
@@ -5006,7 +5026,7 @@
   border-bottom: 1px solid #d5d5d5;
   box-shadow: inset 0px 1px 1px 0px rgba(0, 0, 0, 0.2);
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-form-control--postal-code,
   #fc .fc-form-control--postal-code:focus,
   #fc .fc-coupon-entry--input .fc-form-control,
@@ -5041,7 +5061,7 @@
   -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-form-label.focused {
     width: auto;
     height: auto;
@@ -5065,7 +5085,7 @@
   padding-top: 0;
   line-height: 2.9em;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc label.focused {
     color: #666;
     left: 10%;
@@ -5450,7 +5470,7 @@
   font-size: 14px;
   color: #666;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-cart__multiship-header h4 {
     font-size: 16px;
   }
@@ -5525,7 +5545,7 @@
   padding-right: 5px;
   width: 30%;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-container__grid--plastic-new-exp-month {
     padding-left: 10px;
     width: 27%;
@@ -5543,7 +5563,7 @@
 #fc .fc-checkout__section--payment > .fc-form-group {
   margin-bottom: 0px;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-checkout__section--payment > .fc-form-group {
     margin-bottom: 8px;
   }
@@ -5568,6 +5588,16 @@
 #fc .fc-checkout__section--payment .fc-payment-method--plastic__new .fc-form-group:last-child {
   margin-bottom: 10px;
 }
+@media (max-width: 991px) {
+  #fc .fc-checkout__section--payment .fc-payment-method--plastic__saved .fc-input-group-container {
+    min-height: 160px;
+  }
+}
+@media (max-width: 480px) {
+  #fc .fc-checkout__section--payment .fc-payment-method--plastic__saved .fc-input-group-container {
+    min-height: 27px;
+  }
+}
 #fc .fc-checkout__section--payment .fc-payment-method--plastic__saved .fc-form-group:first-of-type {
   margin-bottom: 0;
 }
@@ -5579,7 +5609,12 @@
   top: 56px;
   left: 20px;
   color: #ffffff;
-  font-size: 90px;
+  font-size: 85px;
+}
+@media (max-width: 480px) {
+  #fc .fc-checkout__section--payment .fc-payment-method--plastic__saved .fc-svg-icon--lock {
+    display: none !important;
+  }
 }
 #fc .fc-checkout__section--payment .fc-payment-method--plastic__saved .fc-input-group-container--active .fc-form-control--static {
   font-size: 100% !important;
@@ -5597,7 +5632,7 @@
   font-size: 24px;
   color: #C1DB9B;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-checkout__section--payment .fc-payment-method--plastic__new .fc-form-group {
     margin-left: -15px;
     margin-right: -15px;
@@ -5772,7 +5807,7 @@
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cart__item__image {
     padding-left: 0 !important;
     padding-right: 10px !important;
@@ -5782,7 +5817,7 @@
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cart__item__details {
     padding-left: 10px !important;
     padding-right: 10px !important;
@@ -5792,7 +5827,7 @@
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cart__item__total {
     padding-left: 10px !important;
     padding-right: 10px !important;
@@ -5802,7 +5837,7 @@
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cart__item__price {
     padding-left: 10px !important;
     padding-right: 10px !important;
@@ -5812,13 +5847,13 @@
   padding-left: 5px !important;
   padding-right: 5px !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #fc-cart--responsive .fc-cart__item__quantity {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-cart__item__image {
     width: 34%;
     margin-left: -23%;
@@ -5874,7 +5909,7 @@
   width: 3.5em;
   font-size: 14px;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-cart__item__quantity .fc-form-control {
     text-align: center;
   }
@@ -5959,7 +5994,7 @@
 #fc .fc-context--cart-fullpage .fc-cart__item__image__img {
   margin-top: 5px;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-context--cart-fullpage .fc-cart__item__total {
     /*       text-align:right; */
   }
@@ -5970,7 +6005,7 @@
     /*       text-align:left; */
   }
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-cart__item {
     padding: 15px 20px 10px;
     font-size: 14px;
@@ -6206,7 +6241,7 @@
   margin: 15px 0;
   padding: 5px 5px 3px;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-transaction__shipping-address {
     margin: 5px 0 10px 5px;
   }
@@ -6294,6 +6329,8 @@
   border-top-left-radius: 4px;
   border-top-right-radius: 4px;
   border-width: 0;
+  animation: none;
+  -webkit-animation: none;
 }
 #fc .fc-modal .fc-alert .fc-spinner {
   margin: 10px auto;
@@ -6353,7 +6390,7 @@
   margin: -10px 0 5px 12px;
   color: #999;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   #fc .fc-container__grid--authentication-button--amazon .fc-action--payment--or {
     margin-top: 0;
   }
@@ -6364,7 +6401,7 @@
   margin-left: 11%;
   height: auto !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #AmazonAddressBookWidget,
   #fc #AmazonWalletWidget,
   #fc #AmazonConsentWidget {
@@ -6376,7 +6413,7 @@
 #fc #AmazonConsentWidget iframe {
   border: none !important;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc #AmazonConsentWidget {
     height: 175px !important;
   }
@@ -6473,7 +6510,7 @@
   border-top-left-radius: 0;
   text-shadow: 1px 1px 0px rgba(255, 255, 255, 0.5);
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert--success.fc-with-animation {
     -webkit-animation: scaleUpAndFadeIn 0.2s ease-in 0s 1;
     -o-animation: scaleUpAndFadeIn 0.2s ease-in 0s 1;
@@ -6519,7 +6556,7 @@
   border: 2px solid #DC3144;
   overflow: hidden;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert--danger {
     -webkit-animation: scaleUp 0.2s ease-in 0s 1;
     -o-animation: scaleUp 0.2s ease-in 0s 1;
@@ -6556,7 +6593,7 @@
   color: #000080;
   text-shadow: none;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert--info {
     -webkit-animation: scaleUpAndFadeIn 0.2s ease-in;
     -o-animation: scaleUpAndFadeIn 0.2s ease-in;
@@ -6694,7 +6731,7 @@
   -o-transition: border 0.2s linear;
   transition: border 0.2s linear;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert-container--error .fc-input-group-container--active .fc-input-group-container__title:before,
   #fc .fc-alert-container--error .fc-input-group-container--active .fc-input-group-container__no-title:before,
   #fc .fc-alert-container--error .fc-input-group-container--checkbox .fc-input-group-container__title:before {
@@ -6725,7 +6762,7 @@
   border-radius: 5px;
   background-color: #EEEEEE;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert-container--error .fc-input-group--full-page {
     -webkit-animation: fadeInErrorBorder 0.2s linear 0s 1;
     -o-animation: fadeInErrorBorder 0.2s linear 0s 1;
@@ -6736,7 +6773,7 @@
   border: 2px solid #D9EDF7;
   border-bottom: none;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert-container--info .fc-form-control {
     -webkit-animation: fadeInInfoBorder 0.1s linear;
     -o-animation: fadeInInfoBorder 0.1s linear;
@@ -6760,7 +6797,7 @@
 #fc .fc-alert-container--info .fc-alert:after {
   clear: both;
 }
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   #fc .fc-alert-container--info .fc-alert {
     -webkit-animation: fadeInInfoBorder 0.1s linear;
     -o-animation: fadeInInfoBorder 0.1s linear;
@@ -6879,7 +6916,7 @@ span.fc-skeleton {
 [data-fc-sidecart] #fc .fc-cart-item-image {
   margin-left: -5%;
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
   [data-fc-sidecart] #fc .fc-cart__header,
   [data-fc-sidecart] #fc .fc-cart-container {
     margin-left: -7px;
@@ -7065,7 +7102,7 @@ body.logged-in.admin-bar {
   margin-top: -32px;
 }
 
-@media (min-width: 769px) {
+@media (min-width: 768px) {
   [data-fc-sidecart] {
     width: 310px;
   }

@@ -1,8 +1,10 @@
 
 // Media Queries
 
-$smallScreen: 'max-width: 768px';
-$medScreen: 'min-width: 769px';
+$xSmallScreen: 'max-width: 480px';
+$smallScreen: 'max-width: 767px';
+$medScreen: 'min-width: 768px';
+$medScreenMax: 'max-width: 991px';
 $largeScreen: 'min-width: 992px';
 $xLargeScreen: 'min-width: 1200px';
 

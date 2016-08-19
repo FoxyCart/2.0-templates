@@ -234,6 +234,12 @@
             value="{{ address.shipping_service_description }}"
         />
         <input
+            id="{{ address.prefix }}_shipping_service_signature"
+            type="hidden"
+            name="{{ address.prefix }}_shipping_service_signature"
+            value="{{ address.shipping_service_signature }}"
+        />
+        <input
             id="{{ address.prefix }}_subtotal"
             type="hidden"
             name="{{ address.prefix }}_subtotal"

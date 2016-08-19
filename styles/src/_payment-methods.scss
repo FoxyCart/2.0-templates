@@ -90,6 +90,15 @@ $cards: visa mastercard amex discover;
     }
 
     .fc-payment-method--plastic__saved {
+        .fc-input-group-container {
+            @media ($medScreenMax) {
+                min-height:160px;
+            }
+
+            @media ($xSmallScreen) {
+                min-height:27px;
+            }
+        }
         .fc-form-group {
             &:first-of-type {
                 margin-bottom:0;
@@ -103,7 +112,11 @@ $cards: visa mastercard amex discover;
             top:56px;
             left:20px;
             color:$white;
-            font-size:90px;
+            font-size:85px;
+
+            @media ($xSmallScreen) {
+                display:none !important;
+            }
         }
         .fc-input-group-container--active .fc-form-control--static {
             font-size:100% !important;

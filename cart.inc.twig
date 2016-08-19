@@ -258,10 +258,12 @@
                                             <span class="fc-cart__item__option__name">{{ config.lang.cart_start_date|raw }}</span>:
                                             <span class="fc-cart__item__option__value">{{ item.sub_startdate }}</span>
                                         </li>
+                                    {% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
                                         <li class="fc-cart__item__option--subscription-nextdate">
                                             <span class="fc-cart__item__option__name">{{ config.lang.cart_next_date|raw }}</span>:
                                             <span class="fc-cart__item__option__value">{{ item.sub_nextdate }}</span>
                                         </li>
+                                    {% endif %}
                                     {% if item.sub_enddate != "0000-00-00" %}
                                         <li class="fc-cart__item__option--subscription-enddate">
                                             <span class="fc-cart__item__option__name">{{ config.lang.cart_end_date|raw }}</span>:
@@ -544,6 +546,25 @@
                         </tbody>
                     </table>
                 </li>
+                {% elseif total_shipping > 0 %}
+                <li class="fc-transaction__shipping fc-transaction__section">
+                    <table>
+                        <tbody class="fc-subtotal--shipping">
+                        <tr class="fc-subtotal--row">
+                            <td class="fc-subtotal__label">{{ shipping_and_handling_label }}</td>
+                            <td class="fc-subtotal__value">
+                                {{ total_shipping|money_format }}
+                            <input
+                                id="total_shipping"
+                                type="hidden"
+                                name="total_shipping"
+                                value="{{ total_shipping }}"
+                            />
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </li>
                 {% endif %}
 
                 {% if has_taxes %}
@@ -635,7 +656,7 @@
                 </li>
             </ul>
 
-            {% if context == "checkout" and has_multiple_addresses %}
+            {% if context == "checkout" and has_multiple_addresses and multiship_data|length > 1 %}
             <div class="fc-transaction fc-transaction--multiship">
                 <button type="button" class="fc-button fc-transaction__ui__toggle" data-fc-id="button-toggle-multiship-details">{{ config.lang.cart_details|raw }}</button>
                 {% for multiship in multiship_data %}
