@@ -565,12 +565,21 @@ CONVENTIONS:
                                     class="fc-form-control fc-form-control--{{ hosted_gateway.type }}" />
                                 {{ hosted_gateway.lang_pay_with|raw }}
                             </label>
+                            {% if hosted_gateway.type == 'paypal_plus' %}
+                            <div id="ppplus"></div>
+                            <input type="hidden" name="paymentId" value="{{ paymentId }}"/>
+                            {% endif %}
                             {% if payment_method_type == hosted_gateway.type %}
                             <div class="fc-form-group fc-form-group-multiple-inline">
                                 {{ hosted_gateway.lang_payment_method }}
                             </div>
                             {% endif %}
                         </div>
+                        {% if hosted_gateway.type == 'paypal_plus' %}
+                        <div class="paypal-plus-error fc-alert fc-alert--danger {{ fc_payment_method_paypal_plus ? 'show' : 'hidden' }}" data-fc-error-for="fc_payment_method_paypal_plus" data-fc-error-class="show,hidden">
+                            {{ config.lang.checkout_validation_paypal_plus_error|raw }}
+                        </div>
+                        {% endif %}
                     </div>
                 </div>
                     {% endfor %}

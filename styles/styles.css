@@ -6418,6 +6418,15 @@
     height: 175px !important;
   }
 }
+#fc .paypalplus_loader_spinner {
+  width: 90%;
+}
+#fc .paypalplus_loader_spinner .paypalplus_loader_spinwrap {
+  margin-left: -100px;
+}
+#fc .paypalplus_loader_spinner .paypalplus_loader_spinwrap p {
+  margin: 0 0 0 -23px;
+}
 #fc .text-info {
   padding: 5px 12px 10px;
 }

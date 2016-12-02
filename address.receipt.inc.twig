@@ -81,8 +81,16 @@
 <div class="fc-form-group fc-form-group--static fc-form-group--receipt--city-state-postcode">
     <div class="fc-container__grid--static-input--city-state-postcode">
         <p class="fc-form-control--static">
-            {% if show_city and address.city %}{{ address.city }}{% endif %}{% if show_region and address.region %}{% if show_city and address.city %}, {% endif %}{{ address.region }}{% endif %}
-            {% if show_postal_code and address.postal_code %}{{ address.postal_code }}{% endif %}
+            {% if address.country_name == 'United States' %}
+                {% if address.city and show_city %}{{ address.city }}{% endif %}{% if address.region and show_region %}{% if address.city and show_city %}, {% endif %}{{ address.region }}{% endif %}{% if address.postal_code and show_postal_code %} {{ address.postal_code }}{% endif %}
+            {% else %}
+            {% if address.city_and_region and show_city and show_region %}
+                {{ address.city_and_region }}
+            {% endif %}
+            {% if address.postal_code and show_postal_code %}
+                {{ address.postal_code }}
+            {% endif %}
+            {% endif %}
         </p>
     </div>
 </div>
