@@ -208,6 +208,7 @@
                                             {% endif %}
                                             <!-- /DOWNLOADABLES -->
 
+                                            {% if is_subscription_dunning_reminder == false %}
                                             <!-- ORDER SUMMARY -->
                                             <table cellspacing="0" cellpadding="0" id="fc-order-summary" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-bottom: 20px;">
                                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -281,6 +282,7 @@
                                                 </tr>
                                             </table>
                                             <!-- /ORDER SUMMARY -->
+                                            {% endif %}
 
                                             <!-- BILLING INFORMATION -->
                                             <table cellspacing="0" cellpadding="0" align="left" class="fc-column" id="fc-billing-information" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;">

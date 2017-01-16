@@ -34,7 +34,7 @@
                     value="{{ rate.service_id }}"
                     class="fc-form-control--shipping-rate"
                     {{ checked(rate.service_id, address.shipping_service_id) }}
-                /><div class="fc-shipping-rates__rate__name">{{ rate.method }} {{ rate.service_name }}</div>
+                /><div class="fc-shipping-rates__rate__name">{{ rate.method|raw }} {{ rate.service_name|raw }}</div>
                 <div class="fc-shipping-rates__rate__value">{{ rate.price|money_format }}</div>
             </label>
         </div>

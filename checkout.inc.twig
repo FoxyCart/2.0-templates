@@ -61,8 +61,6 @@ CONVENTIONS:
 
 
     <form method="post" class="fc-checkout__main__form" data-fc-id="checkout-form" action="https://{{ config.store_domain }}/checkout" role="form">
-        {# A trap to catch webkit's overagressive autofill. #}
-        <div style="position: absolute; top: -800px; left: -1000px; opacity: 0;"><input type="text" name="email_dummy" data-fc-dummy tabindex="-1"/><input type="password" name="password_dummy" data-fc-dummy tabindex="-1"/></div>
 
         <div data-fc-id="required-hidden-fields">
         {% block required_hidden_fields %}
@@ -96,6 +94,9 @@ CONVENTIONS:
 {% block login_register %}
     <fieldset id="fc-email">
         <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_email|raw }}</legend>
+
+        {# A trap to catch webkit's overagressive autofill. #}
+        <div style="position:absolute; height:0px; width:0px; overflow:hidden; opacity:0; top:0px; left:0px;"><input type="text" name="email_dummy" data-fc-dummy tabindex="-1"/><input type="password" name="password_dummy" data-fc-dummy tabindex="-1"/></div>
 
         {# logic for setting the wrapper class regarding alerts, if one is needed #}
         {% if email_is_checking %}

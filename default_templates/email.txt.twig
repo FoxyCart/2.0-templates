@@ -55,6 +55,7 @@
 
 
 {% endif %} {# has downloads #}
+{% if is_subscription_dunning_reminder == false %}
 {{ config.lang.email_text_order_summary|pad(60,"-"," ")|raw }}
 
   * {{ config.lang.checkout_merchant|pad(20)|raw }} {{ config.store_name }}
@@ -78,6 +79,7 @@
 {% endif %}
 {% endfor %}
 {% endif %} {# has custom fields #}
+{% endif %} {# not dunning reminder email #}
 {% endif %} {# is not update info #}
 
 
