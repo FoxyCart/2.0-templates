@@ -258,7 +258,7 @@
 
                                                                     {% if shipping_address.has_shippable_products and not has_multiship %}
                                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.email_shipping|raw }}</h3>
-                                                                        {{ shipping_address.shipping_service_description }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                        {{ shipping_address.shipping_service_description|raw }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endif %}
 
                                                                     {% if is_order %}
@@ -362,7 +362,7 @@
 
                                                             {% if multiship.has_shippable_products %}
                                                                 {% if multiship.shipping_service_description %}
-                                                                    {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                    {{ multiship.shipping_service_description|raw }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 {% else %}
                                                                     {{ shipping_and_handling_label }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 {% endif %}
@@ -460,7 +460,7 @@
                                                     </tr>
                                                     {% elseif total_shipping > 0 %}
                                                     <tr id="fc-cart-shipping" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
-                                                        <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ shipping_and_handling_label }}</td>
+                                                        <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ shipping_and_handling_label|raw }}</td>
                                                         <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
                                                     </tr>
                                                     {% endif %}
@@ -522,11 +522,21 @@
                                                             {% set show_product_weight = true %}
                                                             {% set show_product_category = true %}
                                                             {% set show_product_code = true %}
+                                                            {% set show_sub_frequency = true %}
+                                                            {% set show_sub_startdate = true %}
+                                                            {% set show_sub_nextdate = true %}
+                                                            {% set show_sub_enddate = true %}
+                                                            {% set hidden_product_options = [] %}
                                                             {% if config.template_config.cart_display_config.usage != "none" %}
                                                                 {% set show_product_options = config.template_config.cart_display_config.show_product_options %}
                                                                 {% set show_product_weight = config.template_config.cart_display_config.show_product_weight %}
                                                                 {% set show_product_category = config.template_config.cart_display_config.show_product_category %}
                                                                 {% set show_product_code = config.template_config.cart_display_config.show_product_code %}
+                                                                {% set show_sub_frequency = config.template_config.cart_display_config.show_sub_frequency %}
+                                                                {% set show_sub_startdate = config.template_config.cart_display_config.show_sub_startdate %}
+                                                                {% set show_sub_nextdate = config.template_config.cart_display_config.show_sub_nextdate %}
+                                                                {% set show_sub_enddate = config.template_config.cart_display_config.show_sub_enddate %}
+                                                                {% set hidden_product_options = config.template_config.cart_display_config.hidden_product_options %}
                                                             {% endif %}
                                                             {% if item.options|length == 0 and item.code == '' and item.category == 'DEFAULT' and item.weight == 0 and item.sub_frequency == '' %}
                                                                 {% set show_product_options = false %}
@@ -534,12 +544,13 @@
                                                             {% if show_product_options %}
                                                             <ul style="padding-left:1em;">
                                                                 {% for option in item.options %}
+                                                                    {% if (option.name|lower not in hidden_product_options) and (option.class|lower not in hidden_product_options) %}
                                                                 <li class="fc-cart-item-option-{{ option.class }}">
                                                                     <span class="fc-cart-item-option-name">{{ option.name }}</span>:
                                                                     <span class="fc-cart-item-option-value">{{ option.value }}</span>
                                                                 </li>
+                                                                    {% endif %}
                                                                 {% endfor %}
-
                                                                 {% if item.code and show_product_code %}
                                                                 <li class="fc-cart-item-option-code">
                                                                     <span class="fc-cart-item-option-name">{{ config.lang.cart_code|raw }}</span>:
@@ -561,25 +572,29 @@
                                                                 </li>
                                                                 {% endif %}
 
-                                                                {% if item.sub_frequency %}
+                                                                {% if item.sub_frequency and (show_sub_frequency or show_sub_nextdate or show_sub_startdate or show_sub_enddate) %}
                                                                 <li class="fc-cart-item-option-subscription-details">
                                                                     {{ config.lang.cart_subscription_details|raw }}
                                                                     <ul style="padding-left:1em;">
+                                                                        {% if show_sub_frequency %}
                                                                         <li class="fc-cart-item-option-subscription-frequency">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_frequency|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_frequency }}</span>
                                                                         </li>
+                                                                        {% endif %}
+                                                                        {% if show_sub_startdate %}
                                                                         <li class="fc-cart-item-option-subscription-startdate">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_start_date|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_startdate }}</span>
                                                                         </li>
-                                                                    {% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
+                                                                        {% endif %}
+                                                                    {% if show_sub_nextdate and item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
                                                                         <li class="fc-cart-item-option-subscription-nextdate">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_next_date|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_nextdate }}</span>
                                                                         </li>
                                                                     {% endif %}
-                                                                    {% if item.sub_enddate != "0000-00-00" %}
+                                                                    {% if show_sub_enddate and item.sub_enddate != "0000-00-00" %}
                                                                         <li class="fc-cart-item-option-subscription-enddate">
                                                                             <span class="fc-cart-item-option-name">{{ config.lang.cart_end_date|raw }}</span>:
                                                                             <span class="fc-cart-item-option-value">{{ item.sub_enddate }}</span>
@@ -613,14 +628,16 @@
                                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
 
                                                     {# Begin block future_products from cart.inc.twig #}
-                                                    {% if future_subscription_totals_by_date|length > 1 %}
-                                                    <h5>{{ config.lang.cart_future_charges|raw }}</h5>
-                                                    {% else %}
-                                                    <h5>{{ config.lang.cart_future_charge|raw }}</h5>
+                                                    {% if future_subscription_totals_by_date|length > 0 %}
+                                                        {% if future_subscription_totals_by_date|length > 1 %}
+                                                        <h5>{{ config.lang.cart_future_charges|raw }}</h5>
+                                                        {% else %}
+                                                        <h5>{{ config.lang.cart_future_charge|raw }}</h5>
+                                                        {% endif %}
                                                     {% endif %}
 
                                                     {% set has_future_subscription_details = false %}
-                                                    {% if has_future_shipping or future_coupons|length > 0 or has_future_taxes %}
+                                                    {% if future_subscription_totals_by_date|length > 0 and (has_future_shipping or future_coupons|length > 0 or has_future_taxes) %}
                                                         {% set has_future_subscription_details = true %}
                                                     {% endif %}
                                                         <ul style="padding-left:1em;">

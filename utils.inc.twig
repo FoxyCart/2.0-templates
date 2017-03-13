@@ -14,6 +14,14 @@
 {% endfor %}
 {% endmacro %}
 
+{% macro get_warning_string(context, warnings) %}
+{# don't indent as it will return a non-empty string #}
+{# even if there's no error #}
+{% for warning in warnings if warning.context == context %}
+<p>{{ warning.message|raw }}</p>
+{% endfor %}
+{% endmacro %}
+
 {% macro shipping_results(address, context_class, errors, lang) %}
 {% set field_name = 'shipping_service_id' %}
 {% if address.prefix != 'shipping' %}

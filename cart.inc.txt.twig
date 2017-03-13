@@ -4,11 +4,21 @@
 {% set show_product_weight = true %}
 {% set show_product_category = true %}
 {% set show_product_code = true %}
+{% set show_sub_frequency = true %}
+{% set show_sub_startdate = true %}
+{% set show_sub_nextdate = true %}
+{% set show_sub_enddate = true %}
+{% set hidden_product_options = [] %}
 {% if config.template_config.cart_display_config.usage != "none" %}
     {%- set show_product_options = config.template_config.cart_display_config.show_product_options -%}
     {%- set show_product_weight = config.template_config.cart_display_config.show_product_weight -%}
     {%- set show_product_category = config.template_config.cart_display_config.show_product_category -%}
     {%- set show_product_code = config.template_config.cart_display_config.show_product_code -%}
+    {%- set show_sub_frequency = config.template_config.cart_display_config.show_sub_frequency -%}
+    {%- set show_sub_startdate = config.template_config.cart_display_config.show_sub_startdate -%}
+    {%- set show_sub_nextdate = config.template_config.cart_display_config.show_sub_nextdate -%}
+    {%- set show_sub_enddate = config.template_config.cart_display_config.show_sub_enddate -%}
+    {%- set hidden_product_options = config.template_config.cart_display_config.hidden_product_options -%}
 {% endif %}
 {% for item in items %}
 {% if item.multiship >= 0 %}
@@ -20,7 +30,9 @@
 {{ item.name }}
 {% if show_product_options %}
 {% for option in item.options %}
+{% if (option.name|lower not in hidden_product_options) and (option.class|lower not in hidden_product_options) %}
   * {{ option.name|pad(15) }} {{ option.value }}
+{% endif %}
 {% endfor %}
 {% endif %}
 {% if item.code != '' and show_product_code %}
@@ -32,14 +44,18 @@
 {% if item.weight != 0 and show_product_weight %}
   * {{ config.lang.cart_weight|pad(15)|raw }} {{ item.weight }} {{ weight_uom }}
 {% endif %}
-{% if item.sub_frequency != '' %}
+{% if item.sub_frequency != '' and (show_sub_frequency or show_sub_nextdate or show_sub_startdate or show_sub_enddate) %}
   * {{ config.lang.cart_subscription_details|raw }}
+{% if show_sub_frequency %}
       - {{ config.lang.cart_frequency|pad(11)|raw }} {{ item.sub_frequency }}
+{% endif %}
+{% if show_sub_startdate %}
       - {{ config.lang.cart_start_date|pad(11)|raw }} {{ item.sub_startdate }}
-{% if item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
+{% endif %}
+{% if show_sub_nextdate and item.sub_enddate != item.sub_nextdate and (item.sub_enddate == "0000-00-00" or (item.sub_enddate != "0000-00-00" and item.sub_enddate > item.sub_nextdate)) %}
       - {{ config.lang.cart_next_date|pad(11)|raw }} {{ item.sub_nextdate }}
 {% endif %}
-{% if item.sub_enddate != "0000-00-00" %}
+{% if show_sub_enddate and item.sub_enddate != "0000-00-00" %}
       - {{ config.lang.cart_end_date|pad(11)|raw }} {{ item.sub_enddate }}
 {% endif %}
 {% endif %}

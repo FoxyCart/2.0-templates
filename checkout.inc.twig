@@ -110,6 +110,7 @@ CONVENTIONS:
         {% endif %}
 
         {% set error_string = utils.get_error_string('customer_email', messages.errors) %}
+        {% set warning_string = utils.get_warning_string('customer_email', messages.warnings) %}
         <div class="fc-form-group {{ message_class }}">
             <div class="fc-container__grid--input--customer-email{% if error_string %} fc-alert-container--error{% endif %}" data-fc-error-for="customer_email" data-fc-error-class="fc-alert-container--error">
         {% if not customer_is_authenticated %}
@@ -127,6 +128,12 @@ CONVENTIONS:
                 {% endif %}
                 formnovalidate
                 autofocus />
+            {% if warning_string != "" %}
+                <div class="fc-alert fc-alert--warning">
+                <p>{{ config.lang.checkout_modify_subscription_email_changed_notice|raw }}</p>
+                </div>
+            {% endif %}
+
             {% if email_is_valid %}
                 {% if is_anonymous == 1 or (has_subscriptions == false and checkout_type == 'guest_only') %}
                 {# guest checkout: do nothing #}
@@ -786,10 +793,10 @@ CONVENTIONS:
         <div class="fc-form-group">
             {% if payment_method_type in ["plastic_new", "plastic_saved"] %}
                 {% if config.template_config.use_checkout_confirmation_window.usage == "required" %}
-                    {% set checkout_button_text = config.lang.checkout_complete_your_purchase %}
+                    {% set checkout_button_text = config.lang.checkout_confirm_your_purchase %}
                     {% set checkout_button_helper_text = config.lang.checkout_payment_confirmation %}
                 {% else %}
-                    {% set checkout_button_text = config.lang.checkout_confirm_your_purchase %}
+                    {% set checkout_button_text = config.lang.checkout_complete_your_purchase %}
                     {% set checkout_button_helper_text = '' %}
                 {% endif %}
             {% else %}

@@ -89,7 +89,7 @@
                 {% endfor %}
                 {% if has_future_shipping %}
                 <tr>
-                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label }}:</td>
+                    <td class="fc_col1" colspan="{{ colspan-1 }}">{{ shipping_service_label|raw }}:</td>
                     <td class="fc_col2">{{ subscription_item_total.total_shipping|money_format }}</td>
                 </tr>
                 {% endif %}

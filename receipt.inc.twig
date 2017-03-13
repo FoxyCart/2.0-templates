@@ -143,7 +143,7 @@
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--processor-response">
                 <label class="fc-form-label fc-container__grid--static-label--processor-response">{{ config.lang.checkout_processor_response|raw }}</label>
                 <div class="fc-container__grid--static-input--processor-response">
-                    <p class="fc-form-control--static">{{ processor_response }}</p>
+                    <p class="fc-form-control--static">{{ processor_response|raw }}</p>
                 </div>
             </div>
         </fieldset><!-- #fc_receipt_general -->
@@ -177,7 +177,7 @@
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--shipping-method">
                 <label class="fc-form-label fc-container__grid--static-label--shipping-method">{{ config.lang.checkout_shipping_method|raw }}</label>
                 <div class="fc-container__grid--static-input--shipping-method">
-                    <p class="fc-form-control--static">{{ shipping_address.shipping_service_description }}</p>
+                    <p class="fc-form-control--static">{{ shipping_address.shipping_service_description|raw }}</p>
                   </div>
             </div>
 
@@ -221,7 +221,7 @@
                     </div>
                 </div>
                 <div class="fc-form-group fc-form-group--inline">
-                    <label class="fc-form-label fc-container__grid--static-label--multiship-shipping">{{ multiship.shipping_service_description }}</label>
+                    <label class="fc-form-label fc-container__grid--static-label--multiship-shipping">{{ multiship.shipping_service_description|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-shipping">
                         <p class="fc-form-control--static">{{ multiship.total_shipping|money_format }}</p>
                     </div>
