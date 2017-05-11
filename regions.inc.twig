@@ -2,6 +2,7 @@
 {% set show_field = true %}
 {% set field_config = "required" %}
 {% set field_optional_placeholder = '' %}
+{% set maxlength = 50 %}
 {% if address.type == 'billing' %}
     {% set field_config = config.template_config.custom_checkout_field_requirements[address.type~'_'~location_type] %}
     {% set field_optional_placeholder = (field_config == 'optional') ? config.lang.checkout_optional : '' %}
@@ -23,6 +24,9 @@
             {% set locations = [] %}
             {% set region_lang = "checkout_location_state" %}
         {% endif %}
+    {% endif %}
+    {% if location_type == "country" %}
+        {% set maxlength = 2 %}
     {% endif %}
 
     <label for="{{ field_name }}" class="fc-form-label fc-form-label--region">{{ config.lang[region_lang]|raw }}</label>
@@ -60,6 +64,7 @@
             type="text"
             {{ required_attr }}
             placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"
+            maxlength="{{ maxlength }}"
             class="fc-form-control fc-location" />
     {% endif %}
 {% endif %}

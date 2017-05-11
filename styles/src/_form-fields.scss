@@ -80,6 +80,14 @@
     margin-bottom:0;
 }
 
+.fc-alert--success .fc-input-group--customer-password__authenticated {
+    width:100%;
+
+    .fc-input-group__button {
+        display:none;
+    }
+}
+
 .fc-form-label {
     font-weight:normal;
     color: $primary;
@@ -141,13 +149,10 @@ select.fc-form-control {
     box-shadow: 0px 0px 0px $white;
     // browser specific hackety hackety
     -moz-padding:8px 0 4px 12px;
-    -webkit-appearance: caret;
-    -moz-appearance: none;
     -webkit-box-shadow: none;
 
     @media ($largeScreen) {
         padding-top: 8px;
-        -webkit-appearance: menulist;
         border-top: 1px solid lighten($grayMidLight, 20%);
     }
 }

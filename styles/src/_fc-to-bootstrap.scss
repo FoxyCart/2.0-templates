@@ -434,7 +434,8 @@
 .fc-checkout__additional-field--tos,
 .fc-checkout__additional-field--secure-transfer,
 .fc-checkout__additional-field--subscribe,
-.fc-checkout__additional-field--save-account {
+.fc-checkout__additional-field--save-account,
+.fc-container__grid--recaptcha {
   @extend .col-md-8;
   @extend .col-md-offset-3;
 }

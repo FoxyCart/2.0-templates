@@ -128,6 +128,7 @@
             value="{{ address.city }}"
             placeholder="{{ config.lang.checkout_city }}{{ city_optional_placeholder }}"
             autocomplete="{{ address.type }} locality"
+            maxlength="50"
             {% if city_config == 'required' %}data-fc-required{% endif %}
             class="fc-form-control fc-form-control--city" />
     </div>
@@ -163,6 +164,7 @@
             value="{{ address.postal_code }}"
             placeholder="{{ getPostalCodeLabel(address.country) }}{{ postal_code_optional_placeholder }}"
             autocomplete="{{ address.type }} postal-code"
+            maxlength="20"
             {% if postal_code_config == 'required' %}data-fc-required{% endif %}
             class="fc-form-control fc-form-control--postal-code" />
     </div>

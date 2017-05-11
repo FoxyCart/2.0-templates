@@ -179,6 +179,10 @@
                                                                 {{ config.lang.email_message_subscription_cancel|raw }}
                                                             {% endif %}
                                                         {% endif  %}
+                                                        {% if status == 'pending' and is_show_additional_payment_data %}
+                                                            <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                            {{ config.lang.email_paypal_plus_pui|raw }}
+                                                        {% endif %}
                                                             </p>
                                                    </td>
                                                 </tr>
@@ -264,6 +268,12 @@
                                                                     {% if is_order %}
                                                                         <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.cart_order_total|raw }}</h3>
                                                                         {{ total_order|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                    {% endif  %}
+
+                                                                    {% if is_show_additional_payment_data %}
+                                                                        <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_processor_response|raw }}</h3>
+                                                                        {{ processor_response|raw }}
+                                                                        <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endif  %}
 
                                                                     {% if has_visible_custom_fields %}

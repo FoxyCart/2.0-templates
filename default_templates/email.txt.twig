@@ -39,7 +39,10 @@
 {% elseif is_subscription_modification %}
 {{ conig.lang.email_message_subscription_modification|raw }}
 {% endif %}
+{% if status == 'pending' and is_show_additional_payment_data %}
 
+{{ config.lang.email_paypal_plus_pui|raw }}
+{% endif %}
 ===========================================================
 
 {% if not is_updateinfo %}
@@ -70,6 +73,9 @@
   * {{ config.lang.cart_order_total|pad(20)|raw }} {{ total_order|money_format }}
 {% if shipping_address.has_live_rate_shippable_products and not has_multiship %}
   * {{ config.lang.email_shipping|pad(20)|raw }} {{ shipping_address.shipping_service_description }}
+{% endif %}
+{% if is_show_additional_payment_data %}
+  * {{ config.lang.checkout_processor_response|pad(20)|raw }} {{ texted_processor_response }}
 {% endif %}
 {% if custom_fields|length > 0 %}
 

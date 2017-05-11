@@ -152,7 +152,7 @@ CONVENTIONS:
                             {% if display_welcome_message %}
                             <p>{{ config.lang.checkout_as_returning_customer|raw }}</p>
                             {% endif %}
-                            <div class="fc-input-group">
+                            <div class="fc-input-group fc-input-group--customer-password{% if authentication_is_successful or change_password %} fc-input-group--customer-password__authenticated{% endif %}">
                                 <label for="customer_password" class="fc-form-label fc-form-label--customer-password">{{ config.lang.checkout_password|raw }}</label>
                                 <input type="password"
                                     id="customer_password"
@@ -616,7 +616,7 @@ CONVENTIONS:
                                         id="purchase_order"
                                         name="purchase_order"
                                         value="{{ purchase_order }}"
-                                        maxlength="30"
+                                        maxlength="100"
                                         placeholder=""
                                         autocomplete="off"
                                         data-fc-required
@@ -787,6 +787,16 @@ CONVENTIONS:
     {% endblock additional_fields %}
     </section><!-- data-fc-id="block-additional-fields" -->
 
+    {% if use_recaptcha %}
+    <section data-fc-id="block-recaptcha" class="fc-checkout__section--recaptcha">
+    {% block recaptcha %}
+        <div class="fc-form-group">
+            <div id="fc-recaptcha" class="fc-container__grid--recaptcha"></div>
+        </div>
+    {% endblock %}
+    </section>
+    {% endif %}
+
     {# SUBMIT BUTTON ===================================================== #}
     <section data-fc-id="block-submit-button" class="fc-checkout__section--submit">
     {% block submit_button %}
@@ -812,6 +822,7 @@ CONVENTIONS:
                 {% set checkout_button_helper_text = '' %}
             {% endif %}
             <div class="fc-container__grid--checkout-submit">
+
                 <button class="fc-button fc-button--submit" {% if loading_submit %}disabled{% endif %} data-fc-id="submit-button">
                     {% if loading_submit %}
                         <div class="fc-spinner">

@@ -1184,7 +1184,8 @@
 #fc .fc-checkout__additional-field--tos,
 #fc .fc-checkout__additional-field--secure-transfer,
 #fc .fc-checkout__additional-field--subscribe,
-#fc .fc-checkout__additional-field--save-account, #fc .col-lg-8, #fc .col-xs-9, #fc #fc-cart--responsive .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .fc-form-label__plastic-saved-expiration,
+#fc .fc-checkout__additional-field--save-account,
+#fc .fc-container__grid--recaptcha, #fc .col-lg-8, #fc .col-xs-9, #fc #fc-cart--responsive .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .fc-form-label__plastic-saved-expiration,
 #fc .fc-form-label--cvv2-saved, #fc .fc-form-label--new-cc-exp-month, #fc .col-sm-9, #fc .col-md-9, #fc .col-lg-9, #fc .col-xs-10, #fc .fc-cart__item__details-and-image, #fc .fc-container__grid--postal-code-errors, #fc .col-sm-10, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .fc-postal-code-entry__with-search .fc-container__grid--country, #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
 #fc .fc-shipping-results__header,
 #fc .fc_checkout__shipping-results__help-text, #fc .col-lg-10, #fc .col-xs-11, #fc .fc-container__grid--input--plastic-new-card-number, #fc .col-sm-11, #fc .col-md-11, #fc .col-lg-11, #fc .col-xs-12, #fc #fc-cart--responsive .fc-cart__items--without-images .fc-cart__item__details, #fc #fc-cart--fixed-width .fc-cart__title, #fc #fc-cart--fixed-width .fc-cancel-continue-shopping, #fc #fc-cart--fixed-width .fc-cart__main__content, #fc #fc-cart--fixed-width .fc-sidebar--cart, #fc #fc-cart--fixed-width .fc-cart__items--without-images .fc-cart__item__details, #fc .fc-checkout__main .fc-sidebar--checkout, #fc .fc-checkout__main__contents, #fc .fc-postal-code-entry__with-search .fc-container__grid--country, #fc .fc-container__grid--input--company,
@@ -1588,7 +1589,8 @@
   #fc .fc-checkout__additional-field--tos,
   #fc .fc-checkout__additional-field--secure-transfer,
   #fc .fc-checkout__additional-field--subscribe,
-  #fc .fc-checkout__additional-field--save-account, #fc .col-md-9, #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha, #fc .col-md-9, #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
   #fc .fc-shipping-results__header,
   #fc .fc_checkout__shipping-results__help-text, #fc .col-md-11, #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
   #fc .fc-form-group--multiship-select {
@@ -1623,7 +1625,8 @@
   #fc .fc-checkout__additional-field--tos,
   #fc .fc-checkout__additional-field--secure-transfer,
   #fc .fc-checkout__additional-field--subscribe,
-  #fc .fc-checkout__additional-field--save-account {
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha {
     width: 66.6666666667%;
   }
   #fc .col-md-9 {
@@ -1734,7 +1737,8 @@
   #fc .fc-checkout__additional-field--tos,
   #fc .fc-checkout__additional-field--secure-transfer,
   #fc .fc-checkout__additional-field--subscribe,
-  #fc .fc-checkout__additional-field--save-account, #fc .fc-container__grid--checkout-submit,
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha, #fc .fc-container__grid--checkout-submit,
   #fc .fc-container__grid--checkout-subscription-cancel,
   #fc .fc-container__grid--checkout-submit-helper-text,
   #fc .fc-container__grid--checkout-subscription-cancel-helper-text {
@@ -5054,6 +5058,12 @@
   /* To avoid double bottom margins when a .form-group containers more .form-group elements */
   margin-bottom: 0;
 }
+#fc .fc-alert--success .fc-input-group--customer-password__authenticated {
+  width: 100%;
+}
+#fc .fc-alert--success .fc-input-group--customer-password__authenticated .fc-input-group__button {
+  display: none;
+}
 #fc .fc-form-label {
   font-weight: normal;
   color: #666;
@@ -5108,14 +5118,11 @@
   border-bottom: 1px solid #cccccc;
   box-shadow: 0px 0px 0px #ffffff;
   -moz-padding: 8px 0 4px 12px;
-  -webkit-appearance: caret;
-  -moz-appearance: none;
   -webkit-box-shadow: none;
 }
 @media (min-width: 992px) {
   #fc select.fc-form-control {
     padding-top: 8px;
-    -webkit-appearance: menulist;
     border-top: 1px solid #cccccc;
   }
 }
@@ -5646,7 +5653,6 @@
 }
 #fc .fc-checkout__section--payment .fc-checkout__section--payment__method__logo img,
 #fc .fc-checkout__section--payment .fc-payment-method-logo img {
-  width: 37px;
   height: 23px;
   margin-right: 5px;
 }
@@ -6385,6 +6391,24 @@
   content: "\000A";
   white-space: pre;
 }
+#fc .fc-checkout__section--recaptcha {
+  margin: -10px 0 30px;
+  padding-top: 2px;
+  overflow: hidden;
+}
+@media (max-width: 480px) {
+  #fc .fc-checkout__section--recaptcha iframe {
+    -webkit-transform: scale(0.9);
+    -moz-transform: scale(0.9);
+    -ms-transform: scale(0.9);
+    -o-transform: scale(0.9);
+    transform: scale(0.9);
+    -webkit-transform-origin: 0 0;
+    -moz-transform-origin: 0 0;
+    -ms-transform-origin: 0 0;
+    transform-origin: 0 0;
+  }
+}
 #fc .fc-container__grid--authentication-button--amazon .fc-action--payment--or {
   text-align: left;
   margin: -10px 0 5px 12px;
@@ -6593,9 +6617,11 @@
   padding: 0px;
 }
 #fc [data-fc-id='shipping-results'] .fc-alert--danger {
-  margin-left: -16px;
-  margin-right: -16px;
-  border-radius: 0px 0px 3px 3px;
+  margin-left: -15px;
+  margin-right: -15px;
+  margin-bottom: -2px;
+  border-radius: 0px;
+  clear: both;
 }
 #fc .fc-alert--info {
   border: 2px solid #000080;

@@ -1,0 +1,21 @@
+// This is a general use partial to contain styles that either
+// don't fit within an existing partial, or aren't substantial
+// enough to justify having its own.
+// PLEASE organize it clearly though.
+
+/////////////////////////// reCAPTCHA ///////////////////////////
+
+.fc-checkout__section--recaptcha {
+	margin:-10px 0 30px;
+	padding-top:2px;
+	overflow: hidden;
+
+	@media ($xSmallScreen) {
+		// reCAPTCHA isn't responsive, scale it for small screens
+		iframe {
+			@include transform(scale(0.9));
+			@include transform-origin(0 0);
+		}
+	}
+}
+

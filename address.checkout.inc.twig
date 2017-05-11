@@ -39,6 +39,7 @@
                 value="{{ address.first_name }}"
                 placeholder="{{ config.lang.checkout_first_name }}{{ first_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} given-name"
+                maxlength="50"
                 {% if first_name == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-first-name" />
         </div>
@@ -55,6 +56,7 @@
                 value="{{ address.last_name }}"
                 placeholder="{{ config.lang.checkout_last_name }}{{ last_name_optional_placeholder }}"
                 autocomplete="{{ address.type }} family-name"
+                maxlength="50"
                 {% if last_name == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-last-name"/>
         </div>
@@ -87,6 +89,7 @@
                     value="{{ address.company }}"
                     placeholder="{{ config.lang.checkout_company }}{{ company_optional_placeholder }}"
                     autocomplete="{{ address.type }} organization"
+                    maxlength="50"
                     {% if company == 'required' %}data-fc-required{% endif %}
                     class="fc-form-control fc-form-control--{{ address.prefix }}-company" />
             </div>
@@ -103,6 +106,7 @@
                     value="{{ address.phone }}"
                     placeholder="{{ config.lang.checkout_phone }}{{ phone_optional_placeholder }}"
                     autocomplete="{{ address.type }} tel"
+                    maxlength="50"
                     {% if phone == 'required' %}data-fc-required{% endif %}
                     class="fc-form-control fc-form-control--{{ address.prefix }}-phone" />
             </div>
@@ -176,6 +180,7 @@
                 value="{{ address.address1 }}"
                 placeholder="{{ config.lang.checkout_address1 }}{{ address1_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line1"
+                maxlength="100"
                 {% if address1 == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-address1" />
         </div>
@@ -193,6 +198,7 @@
                 value="{{ address.address2 }}"
                 placeholder="{{ config.lang.checkout_address2 }}{{ address2_optional_placeholder }}"
                 autocomplete="{{ address.type }} address-line2"
+                maxlength="100"
                 {% if address2 == 'required' %}data-fc-required{% endif %}
                 class="fc-form-control fc-form-control--{{ address.prefix }}-address2" />
         </div>
