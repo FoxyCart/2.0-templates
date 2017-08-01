@@ -45,6 +45,10 @@
       color:$grayMid;
       text-shadow:none;
     }
+
+    a {
+      color:$grayMid;
+    }
   }
 
 }
@@ -62,7 +66,10 @@
   margin-top: -4px;
   margin-bottom:0;
 
-  a { text-decoration:underline; }
+  a { 
+    text-decoration:underline;
+    color: $white;
+  }
 
   p {
     margin-bottom: 15px;

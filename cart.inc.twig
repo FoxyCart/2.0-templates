@@ -176,7 +176,7 @@
                 {% endif %}
 
                 {# bug in twig.js keeps us from just setting a variable. hopefully this is resolved eventually #}
-                <div class="fc-container__row fc-cart__item {% if item.parent_code %}fc-cart__item--child-product{% elseif item.is_parent %}fc-cart__item--parent-product{% endif %} {% if loop.last %}fc-cart__item--last{% endif %}" {% if item.code != '' %}data-item-code="{{ item.code|escape('html_attr') }}" {% endif %}>
+                <div data-fc-item-id="{{ item.id }}" class="fc-container__row fc-cart__item {% if item.parent_code %}fc-cart__item--child-product{% elseif item.is_parent %}fc-cart__item--parent-product{% endif %} {% if loop.last %}fc-cart__item--last{% endif %}" {% if item.code != '' %}data-item-code="{{ item.code|escape('html_attr') }}" {% endif %}>
 
                 {% if loading_quantity %}
                     <div class="fc-cart__item--updating">
