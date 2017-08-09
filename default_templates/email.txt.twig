@@ -74,9 +74,7 @@
 {% if shipping_address.has_live_rate_shippable_products and not has_multiship %}
   * {{ config.lang.email_shipping|pad(20)|raw }} {{ shipping_address.shipping_service_description }}
 {% endif %}
-{% if is_show_additional_payment_data %}
   * {{ config.lang.checkout_processor_response|pad(20)|raw }} {{ texted_processor_response }}
-{% endif %}
 {% if custom_fields|length > 0 %}
 
 {% for key,custom_field in custom_fields %}

@@ -11,7 +11,9 @@
 #AmazonAddressBookWidget,
 #AmazonWalletWidget,
 #AmazonConsentWidget {
-  margin-left: 11%;
+  margin-left:52px;
+  padding-left:15px;
+  width: 81%;
   height: auto !important;
 
   @media($medScreen) {

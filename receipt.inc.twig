@@ -214,6 +214,7 @@
                     {% endfor %}
                 {% endif %}
 
+                {% if total_order > 0 %}
                 <div class="fc-form-group fc-form-group--inline">
                     <label class="fc-form-label fc-container__grid--static-label--multiship-price">{{ config.lang.checkout_subtotal|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-price">
@@ -244,6 +245,7 @@
                         <p class="fc-form-control--static">{{ multiship.total_price|money_format }}</p>
                     </div>
                 </div>
+                {% endif %}
             </fieldset>
         </div>
         {% endfor %}

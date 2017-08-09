@@ -258,10 +258,22 @@
             value="{{ address.total_shipping }}"
         />
         <input
+            id="{{ address.prefix }}_total_future_shipping"
+            type="hidden"
+            name="{{ address.prefix }}_total_future_shipping"
+            value="{{ address.total_future_shipping }}"
+        />
+        <input
             id="{{ address.prefix }}_tax_total"
             type="hidden"
             name="{{ address.prefix }}_tax_total"
             value="{{ address.total_tax }}"
+        />
+        <input
+            id="{{ address.prefix }}_total_future_tax"
+            type="hidden"
+            name="{{ address.prefix }}_total_future_tax"
+            value="{{ address.total_future_tax }}"
         />
         <input
             id="{{ address.prefix }}_total"
