@@ -74,7 +74,7 @@
             <div class="fc-content" style="margin: 0 auto;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 600px;display: block;">
 
                 <!-- LINKS -->
-                {% if not is_subscription_dunning_reminder %}
+                {% if not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
                 <table cellspacing="0" cellpadding="0" id="fc-links" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-top: 20px;margin-bottom: 10px;text-shadow: 1px 1px 0px #ffffff;filter: dropshadow(color=#ffffff, offx=1, offy=1);">
                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -118,6 +118,8 @@
                                             {{ config.lang.email_subject_updateinfo|raw }}
                                         {% elseif is_subscription_dunning_reminder %}
                                             {{ config.lang.email_subject_subscription_past_due|raw }}
+                                        {% elseif is_expiring_payment_reminder %}
+                                            {{ config.lang.email_subject_expiring_payment_reminder|upper|raw }}
                                         {% elseif is_subscription_modification %}
                                             {{ config.lang.email_subject_subscription_updated|raw }}
                                         {% elseif is_subscription_cancel %}
@@ -166,6 +168,20 @@
                                                                 '{{ days_since_first_failed_transaction }}': days_since_first_failed_transaction
                                                                 })|raw }}
                                                             {% endif %}
+                                                        {% elseif is_expiring_payment_reminder %}
+                                                            {{ config.lang.email_html_message_expiring_payment_reminder|replace({
+                                                            '{{ billing_address.first_name }}': billing_address.first_name
+                                                            })|replace({
+                                                            '{{ billing_address.last_name }}': billing_address.last_name
+                                                            })|replace({
+                                                            '{{ cc_exp_year }}': cc_exp_year
+                                                            })|replace({
+                                                            '{{ cc_exp_month }}': cc_exp_month
+                                                            })|replace({
+                                                            '{{ config.store_domain }}': config.store_domain
+                                                            })|replace({
+                                                            '{{ customer_email }}': customer_email
+                                                            })|raw }}
                                                         {% elseif is_updateinfo %}
                                                             {{ config.lang.email_message_updateinfo|replace({
                                                             '{{ config.store_domain }}': config.store_domain
@@ -212,14 +228,17 @@
                                             {% endif %}
                                             <!-- /DOWNLOADABLES -->
 
-                                            {% if is_subscription_dunning_reminder == false %}
+                                    {% if not is_expiring_payment_reminder %}
+                                            {% if not is_subscription_dunning_reminder %}
                                             <!-- ORDER SUMMARY -->
                                             <table cellspacing="0" cellpadding="0" id="fc-order-summary" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-bottom: 20px;">
+                                                {% if not is_updateinfo %}
                                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                         <h2 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: normal;font-size: 18px;margin-bottom: 10px;">{{ config.lang.email_html_order_summary|raw }}</h2>
                                                     </td>
                                                 </tr>
+                                                {% endif %} {# is not update info #}
 
                                                 <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                     <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -245,7 +264,6 @@
                                                             </tr>
                                                         </table>
 
-                                                        {% if not is_updateinfo %}
                                                         <table cellspacing="0" cellpadding="0" align="left" class="fc-column" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;">
                                                             <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -285,12 +303,11 @@
                                                                 </td>
                                                             </tr>
                                                         </table>
-                                                        {% endif %}
                                                     </td>
                                                 </tr>
                                             </table>
                                             <!-- /ORDER SUMMARY -->
-                                            {% endif %}
+                                            {% endif %} {# is_subscription_dunning_reminder #}
 
                                             <!-- BILLING INFORMATION -->
                                             <table cellspacing="0" cellpadding="0" align="left" class="fc-column" id="fc-billing-information" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;">
@@ -694,6 +711,7 @@
                                             </table>
                                         </div>
                                         {% endif %}
+                                    {% endif %} {# is_expiring_payment_reminder #}
                                      </td>
                                  </tr>
                              </table>

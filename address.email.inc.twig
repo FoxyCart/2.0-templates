@@ -44,6 +44,10 @@
 {% else %}
 {% if address.city_and_region and show_city and show_region %}
     {{ address.city_and_region }}<br />
+{% elseif address.city and show_city %}
+    {{ address.city }}<br />
+{% elseif address.region and show_region %}
+    {{ address.region }}<br />
 {% endif %}
 {% if address.postal_code and show_postal_code %}
     {{ address.postal_code }}<br />

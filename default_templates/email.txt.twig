@@ -2,7 +2,9 @@
 {% if is_updateinfo %}
 {{ config.lang.email_subject_updateinfo|upper|raw }}
 {% elseif is_subscription_dunning_reminder %}
-    {{ config.lang.email_subject_subscription_past_due|upper|raw }}
+{{ config.lang.email_subject_subscription_past_due|upper|raw }}
+{% elseif is_expiring_payment_reminder %}
+{{ config.lang.email_subject_expiring_payment_reminder|upper|raw }}
 {% elseif is_subscription_modification %}
 {{ config.lang.email_subject_subscription_updated|upper|raw }}
 {% elseif is_subscription_cancel %}
@@ -12,7 +14,7 @@
 {% endif  %}
 ===========================================================
 
-{% if not is_subscription_dunning_reminder %}
+{% if not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
 {{ config.lang.email_view_in_your_browser|raw }}: {{ receipt_url }}
 
 {% endif  %}
@@ -28,6 +30,20 @@
 '{{ days_since_first_failed_transaction }}': days_since_first_failed_transaction
 })|raw }}
 {% endif %}
+{% elseif is_expiring_payment_reminder %}
+{{ config.lang.email_text_message_expiring_payment_reminder|replace({
+'{{ billing_address.first_name }}': billing_address.first_name
+})|replace({
+'{{ billing_address.last_name }}': billing_address.last_name
+})|replace({
+'{{ cc_exp_year }}': cc_exp_year
+})|replace({
+'{{ cc_exp_month }}': cc_exp_month
+})|replace({
+'{{ config.store_domain }}': config.store_domain
+})|replace({
+'{{ customer_email }}': customer_email
+})|raw }}
 {% elseif is_updateinfo %}
 {{ config.lang.email_message_updateinfo|raw }}
 {% elseif is_subscription_cancel %}
@@ -58,8 +74,12 @@
 
 
 {% endif %} {# has downloads #}
-{% if is_subscription_dunning_reminder == false %}
+{% endif %} {# is not update info #}
+{% if not is_expiring_payment_reminder %}
+{% if not is_subscription_dunning_reminder %}
+{% if not is_updateinfo %}
 {{ config.lang.email_text_order_summary|pad(60,"-"," ")|raw }}
+{% endif %} {# is not update info #}
 
   * {{ config.lang.checkout_merchant|pad(20)|raw }} {{ config.store_name }}
   * {% if is_order %}{{ config.lang.email_order_number|pad(20)|raw }}{% else %}{{ config.lang.email_reference_number|pad(20) }}{% endif  %} {{ order_id }}
@@ -70,7 +90,9 @@
 {% if payment_type == 'plastic' and cc_number_masked %}
   * {{ config.lang.checkout_card_number|pad(20)|raw }} {{ cc_number_masked }} ({{ cc_type }})
 {% endif %}
+{% if is_order %}
   * {{ config.lang.cart_order_total|pad(20)|raw }} {{ total_order|money_format }}
+{% endif %}
 {% if shipping_address.has_live_rate_shippable_products and not has_multiship %}
   * {{ config.lang.email_shipping|pad(20)|raw }} {{ shipping_address.shipping_service_description }}
 {% endif %}
@@ -84,10 +106,11 @@
 {% endfor %}
 {% endif %} {# has custom fields #}
 {% endif %} {# not dunning reminder email #}
-{% endif %} {# is not update info #}
 
 
+{% if not is_updateinfo %}
 {{ config.lang.email_text_purchasing_information|pad(60,"-"," ")|raw }}
+{% endif %} {# is not update info #}
 
 {{ config.lang.email_email|raw }}:
     {{ customer_email }}
@@ -164,3 +187,4 @@
 {% if not is_updateinfo %}
 {% include 'cart.inc.txt.twig' %}
 {% endif %}
+{% endif %} {# not is_expiring_payment_reminder #}
