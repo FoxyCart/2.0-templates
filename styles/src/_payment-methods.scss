@@ -29,29 +29,44 @@ $cards: visa mastercard amex discover;
 }
 
 .fc-container__grid--plastic-new-exp-month {
-    padding-left: 15px;
+    padding-left: 10px;
     padding-right: 5px;
-    width: 30%;
+    width:28%;
 }
-
 .fc-container__grid--plastic-new-exp-year,
 .fc-container__grid--plastic-new-csc {
     padding-left: 5px;
     padding-right: 5px;
-    width:30%;
+}
+.fc-container__grid--plastic-new-exp-year {
+    width:27%;
+}
+.fc-container__grid--plastic-new-csc {
+    width:20%;
+    padding-right: 0px;
 }
 
-@media ($medScreen)  {
+@media ($smallScreen) {
   .fc-container__grid--plastic-new-exp-month {
-      padding-left: 10px;
-      width:27%;
+      padding-left: 0px;
+      width:35%;
   }
   .fc-container__grid--plastic-new-exp-year {
-      width:28%;
+      width:35%;
   }
   .fc-container__grid--plastic-new-csc {
-      width:20%;
+      width:22%;
   }
+}
+
+@media ($xSmallScreen) {
+    .fc-container__grid--plastic-new-exp-month,
+    .fc-container__grid--plastic-new-exp-year {
+        width:35%;
+    }
+    .fc-container__grid--plastic-new-csc {
+        width:30%;
+    }
 }
 
 /* Payment methods */
@@ -88,9 +103,14 @@ $cards: visa mastercard amex discover;
             margin-bottom:10px;
         }
     }
+    .fc-container__grid--static--plastic-saved-csc {
+        @media ($smallScreen) {
+            padding-right:0;
+        }
+    }
 
     .fc-payment-method--plastic__saved {
-        .fc-input-group-container {
+        .fc-input-group-container--active {
             @media ($medScreenMax) {
                 min-height:160px;
             }
@@ -133,15 +153,15 @@ $cards: visa mastercard amex discover;
         .fc-svg-icon--lock {
             position:absolute;
             top:9px;
-            right:22px;
+            right:9px;
             font-size:24px;
             color:$success;
         }
 
         .fc-form-group {
             @media ($smallScreen) {
-                margin-left: ($grid-gutter-width / -2);
-                margin-right: ($grid-gutter-width / -2);
+                //margin-left: ($grid-gutter-width / -2);
+                //margin-right: ($grid-gutter-width / -2);
             }
         }
     }
@@ -150,7 +170,7 @@ $cards: visa mastercard amex discover;
     .fc-payment-method-logo {
         display:inline-block;
         text-align:left;
-        padding-top: 5px;
+        //padding-top: 5px;
 
         img {
             height: 23px;
@@ -170,5 +190,15 @@ $cards: visa mastercard amex discover;
 }
 
 .fc-container__grid--input--plastic-new-card-number {
-    padding-right: 5px;
+    padding-right: 0px;
+    padding-left:0;
+
+    @media ($xSmallScreen) {
+        width:100%;
+    }
+}
+
+.fc-container__grid--payment-method .fc-form-label--new-cc-exp-month {
+    margin-top: 7px;
+    padding-left:0;
 }

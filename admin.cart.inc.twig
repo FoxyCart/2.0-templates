@@ -46,6 +46,14 @@
                 {% endif %}
                 </td>
             </tr>
+        {% elseif total_shipping > 0 %}
+            <tr class="fc_cart_foot_shipping">
+                <td class="fc_col1" colspan="{{ colspan-1 }}">
+                    {{ shipping_and_handling_label|raw }}:</td>
+                <td class="fc_col2">
+                    {{ total_shipping|money_format }}
+                </td>
+            </tr>
         {% endif %}
     {% if coupons|length > 0 %}
         {% for key,coupon in coupons %}
