@@ -7,7 +7,7 @@
 }
 
 
-$cards: visa mastercard amex discover;
+$cards: visa mastercard amex discover dinersclub maestro laser jcb;
 
 .fc-checkout__section--payment__method__logo {
     opacity: 1;
@@ -201,4 +201,82 @@ $cards: visa mastercard amex discover;
 .fc-container__grid--payment-method .fc-form-label--new-cc-exp-month {
     margin-top: 7px;
     padding-left:0;
+}
+
+@media ($medScreenMax) {
+    .fc-form-label__pos-masked-number,
+    .fc-form-label__pos-expiration {
+        text-align:left;
+    }
+}
+
+.fc-container__static--pos-masked-number {
+    .fc-payment-method-logo img {
+        margin-right:0;
+        margin-left:5px;
+    }
+}
+
+// Point Of Sale Card Swiping Modal
+// =====================================================
+.fc-pos-modal .fc-modal--inner {
+    min-height:300px;
+}
+[data-fc-id="fc-pos--swipe-ui"] {
+    background: #FFF;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    padding:20px;
+
+    h3 {
+        text-align: center;
+        margin: 95px 0 30px;
+        color: #000;
+        text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.8);
+    }
+}
+.fc-pos-modal--header {
+    margin: -20px -20px 20px;
+    padding: 20px;
+    background: #F1F1F1;
+    text-align: center;
+
+    h2 {
+        font-size:20px;
+    }
+    h3 {
+        margin: 0 0 5px;
+        font-size: 16px;
+    }
+    ul {
+        list-style: none;
+        border-top:1px solid #CCC;
+        margin: 0;
+        padding:10px 0 0;
+    }
+    .fc-pos-modal--email {
+        margin-top:8px;
+    }
+    .fc-payment-method-logo {
+        display:inline-block;
+        text-align:left;
+
+        img {
+            height: 20px;
+            margin-left:5px;
+        }
+    }
+}
+#fc_checkout_pos_encryption_number {
+    position:absolute;
+    height:0px;
+    width:0px;
+    overflow:hidden;
+    opacity:0;
+    top:0px;
+    left:0px;
 }

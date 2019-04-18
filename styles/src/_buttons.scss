@@ -14,9 +14,30 @@
 
     .fc-password-action {
         max-width: 50%;
+        padding-left: 0;
+        padding-right: 0;
 
         @media ($medScreen) and ($medScreenMax), ($xSmallScreen) {
           max-width: 100%;
+
+          &:first-child {
+            margin-bottom: 3px;
+          }
+        }
+
+        .fc-button-link {
+          padding-left: 6px;
+          padding-right: 6px;
+          white-space: normal;
+          text-align: left;
+        }
+
+        &:last-child .fc-button-link {
+          text-align: right;
+
+          @media ($medScreen) and ($medScreenMax), ($xSmallScreen) {
+            text-align: left;
+          }
         }
     }
 }

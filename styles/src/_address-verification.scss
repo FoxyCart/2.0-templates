@@ -7,6 +7,10 @@
   vertical-align: middle;
 }
 
+.fc-modal {
+  width:90%;
+}
+
 @media only screen and (min-width: 471px) {
   .fc-modal {
     width: 470px;
@@ -27,14 +31,15 @@
 .fc-modal {
   display:none;
 
-  .fc-alert {
+  .fc-modal--inner {
+    position:relative;
     padding:20px;
     opacity:1;
     display:block;
     background:$white;
-    border-top-left-radius:4px;
-    border-top-right-radius:4px;
+    border-radius:4px;
     border-width:0;
+    overflow:hidden;
 
     animation:none;
     -webkit-animation:none;
@@ -51,12 +56,19 @@
       text-shadow:none;
     }
     h2 {
-      margin-bottom:10px;
+      font-size: em(21);
+      margin: 0 0 10px;
+      padding: 0;
       color:$black;
     }
     p {
       color:$black;
       font-size:95%;
+      margin-bottom: 15px;
+
+      &:last-child {
+          margin-bottom: 0px;
+      }
     }
     address {
       font-weight:normal;
@@ -69,6 +81,9 @@
     .fc-address-validation--suggested address {
       border:none;
       background-color:$grayMidLighter;
+    }
+    a[data-remodal-action] {
+      cursor:pointer;
     }
 
     button {

@@ -1,29 +1,21 @@
 <div data-fc-id="block-address-validation-modal" style="display:none;">
 {% block address_validation_modal %}
     <div class="fc-modal fc-address-validation-modal">
-    {% if loading_address_validation %}
-        <div class="fc-alert fc-alert--info">
+        <div class="fc-modal--inner">
             <h2>
                 <svg class="fc-svg-icon fc-icon-large" role="presentation">
                     <use xlink:href="#fa-map-marker" />
                 </svg>
                 {{ config.lang.checkout_address_validation_heading }}
             </h2>
+        {% if loading_address_validation %}
             <p>{{ config.lang.checkout_address_validation_loading }}</p>
             <div class="fc-spinner">
               <div class="bounce1"></div>
               <div class="bounce2"></div>
               <div class="bounce3"></div>
             </div>
-        </div>
-    {% elseif address_validation_successful %}
-        <div class="fc-alert fc-alert--success">
-            <h2>
-                <svg class="fc-svg-icon fc-icon-large" role="presentation">
-                    <use xlink:href="#fa-map-marker" />
-                </svg>
-                {{ config.lang.checkout_address_validation_heading }}
-            </h2>
+        {% elseif address_validation_successful %}
             <p>{{ config.lang.checkout_address_validation_success }}</p>
             <div class="fc-container__row">
                 <div class="fc-address-validation--suggested">
@@ -36,7 +28,7 @@
                         <span class="fc-address-validation__region {{ utils.address_changed(address_being_validated.region, address_validation_update.region) }}">{{ address_validation_update.region }}</span>
                         <span class="fc-address-validation__postal-code {{ utils.address_changed(address_being_validated.postal_code, address_validation_update.postal_code) }}">{{ address_validation_update.postal_code }}</span>
                         <span class="fc-address-validation__country {{ utils.address_changed(address_being_validated.country, address_validation_update.country) }}">
-                            <img src="//cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_validation_update.country|lower }}.png" />
+                            <img src="https://cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_validation_update.country|lower }}.png" />
                             {{ address_validation_update.country }}
                         </span>
                         <button id="fc-address-validation__button--accept" data-modal-action="accept" class="fc-button fc-button--submit">{{ config.lang.checkout_address_validation_accept }}</button>
@@ -52,29 +44,21 @@
                         <span class="fc-address-validation__region">{{ address_being_validated.region }}</span>
                         <span class="fc-address-validation__postal-code">{{ address_being_validated.postal_code }}</span>
                         <span class="fc-address-validation__country">
-                            <img src="//cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_being_validated.country|lower }}.png" />
+                            <img src="https://cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ address_being_validated.country|lower }}.png" />
                             {{ address_being_validated.country }}
                         </span>
                         <button id="fc-address-validation__button--cancel" data-modal-action="cancel" class="fc-button fc-button--cancel">{{ config.lang.checkout_address_validation_reject }}</button>
                     </address>
                 </div>
             </div>
-        </div>
-    {% else %}
-        <div class="fc-alert fc-alert--danger">
-            <h2>
-                <svg class="fc-svg-icon fc-icon-large" role="presentation">
-                    <use xlink:href="#fa-map-marker" />
-                </svg>
-                {{ config.lang.checkout_address_validation_heading }}
-            </h2>
+        {% else %}
             <p>{{ config.lang.checkout_address_validation_failure }}</p>
 
             <div class="fc-input-group__button">
                 <button id="fc-address-validation__button--cancel" data-modal-action="cancel" class="fc-button fc-button--cancel">{{ config.lang.checkout_ok }}</button>
             </div>
+        {% endif %}
         </div>
-    {% endif %}
     </div>
 {% endblock address_validation_modal %}
 </div>
