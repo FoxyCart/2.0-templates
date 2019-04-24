@@ -157,7 +157,7 @@ $types: image details total price quantity;
 }
 .fc-cart__item__option__value {
     color: $primary;
-    white-space:nowrap;
+    white-space: inherit;
 }
 
 .fc-cart__item__option--subscription-details ul {

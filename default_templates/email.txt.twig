@@ -14,7 +14,7 @@
 {% endif  %}
 ===========================================================
 
-{% if not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
+{% if not is_subscription_dunning_cancellation and not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
 {{ config.lang.email_view_in_your_browser|raw }}: {{ receipt_url }}
 
 {% endif  %}
@@ -76,7 +76,7 @@
 {% endif %} {# has downloads #}
 {% endif %} {# is not update info #}
 {% if not is_expiring_payment_reminder %}
-{% if not is_subscription_dunning_reminder %}
+{% if not is_subscription_dunning_cancellation and not is_subscription_dunning_reminder %}
 {% if not is_updateinfo %}
 {{ config.lang.email_text_order_summary|pad(60,"-"," ")|raw }}
 {% endif %} {# is not update info #}
@@ -87,7 +87,7 @@
 {% if purchase_order != '' %}
   * {{ config.lang.checkout_purchase_order|pad(20)|raw }} {{ purchase_order }}
 {% endif %}
-{% if payment_type == 'plastic' and cc_number_masked %}
+{% if (payment_type == 'plastic' or payment_type == 'pos') and cc_number_masked %}
   * {{ config.lang.checkout_card_number|pad(20)|raw }} {{ cc_number_masked }} ({{ cc_type }})
 {% endif %}
 {% if is_order %}
@@ -180,7 +180,7 @@
 ----------------------------------------
 {% endif %}
 
-{% endfor %} {# subscirption loop #}
+{% endfor %} {# subscription loop #}
 
 {% endif %} {# has subscriptions #}
 

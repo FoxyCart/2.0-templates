@@ -325,7 +325,9 @@
                             </div>
 
                             <div class="fc-cart__item__quantity">
-                                {% if item.parent_code == '' or (item.parent_code != '' and item.quantity_min == 0) %}
+                                {% if context == 'receipt' %}
+                                <p class="text-center">{{ item.quantity }}</p>
+                                {% elseif item.parent_code == '' or (item.parent_code != '' and item.quantity_min == 0) %}
                                 {% if config.with_controls and checkout_sub_cancel == false %}
                                 <input type="hidden" id="id{{ item.item_number }}" name="id{{ item.item_number }}" value="{{ item.id }}" />
                                 <input class="fc-cart__item__quantity__input fc-form-control" type="number" name="quantity{{ item.item_number }}" id="quantity{{ item.item_number }}" min="1" value="{{ item.quantity }}" data-fc-id="item-quantity-input" data-fc-item-id="{{ item.id }}"/>
@@ -524,7 +526,7 @@
                         <address class="fc-transaction__shipping-address">
                             {{ shipping_address.city }}, {{ shipping_address.region }} {{ shipping_address.postal_code }}
                             {% if config.template_config.foxycomplete.show_flags %}
-                            <img src="//cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ shipping_address.country|lower }}.png" alt="{{ shipping_address.country }}">
+                            <img src="https://cdn.foxycart.com/static/images/icons/flags/famfamfam/{{ shipping_address.country|lower }}.png" alt="{{ shipping_address.country }}">
                             {% endif %}
                         </address>
                         {% endif %}

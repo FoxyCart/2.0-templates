@@ -74,7 +74,7 @@
             <div class="fc-content" style="margin: 0 auto;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 600px;display: block;">
 
                 <!-- LINKS -->
-                {% if not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
+                {% if not is_subscription_dunning_cancellation and not is_subscription_dunning_reminder and not is_expiring_payment_reminder %}
                 <table cellspacing="0" cellpadding="0" id="fc-links" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-top: 20px;margin-bottom: 10px;text-shadow: 1px 1px 0px #ffffff;filter: dropshadow(color=#ffffff, offx=1, offy=1);">
                     <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                         <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -229,7 +229,7 @@
                                             <!-- /DOWNLOADABLES -->
 
                                     {% if not is_expiring_payment_reminder %}
-                                            {% if not is_subscription_dunning_reminder %}
+                                            {% if not is_subscription_dunning_cancellation and not is_subscription_dunning_reminder %}
                                             <!-- ORDER SUMMARY -->
                                             <table cellspacing="0" cellpadding="0" id="fc-order-summary" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;margin-bottom: 20px;">
                                                 {% if not is_updateinfo %}
@@ -267,7 +267,7 @@
                                                         <table cellspacing="0" cellpadding="0" align="left" class="fc-column" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 50%;float: left;">
                                                             <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
-                                                                    {% if payment_type == 'plastic' and cc_number_masked %}
+                                                                    {% if (payment_type == 'plastic' or payment_type == 'pos') and cc_number_masked %}
                                                                     <h3 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: bold;font-size: 13px;">{{ config.lang.checkout_payment_method|raw }}</h3>
                                                                     <div class="fc-payment_method" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;margin-top: -9px;letter-spacing: 1px;">{{ cc_number_masked }} {% if cc_type|lower in ['amex','discover', 'maestro', 'mastercard', 'solo', 'switch', 'visa'] %}<img src="https://{{ config.store_domain }}/static/images/payment_logos/email/{{cc_type|lower}}.png" width="35" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 100%;position: relative;top: 6px;">{% endif %}</div>
                                                                     <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
@@ -414,7 +414,7 @@
                                             <!-- /SHIPPING INFORMATION -->
 
 
-                                        <!-- SUBSCIRPTIONS -->
+                                        <!-- SUBSCRIPTIONS -->
                                         {% if subscriptions|length > 0 and not is_subscription_cancel %}
                                             <span class="fc-clear" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;display: block;clear: both;"></span>
                                             <div style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif; display: block;">
@@ -442,7 +442,7 @@
                                                 </tr>
                                             </table>
                                         {% endif %}
-                                        <!-- /SUBSCIRPTIONS -->
+                                        <!-- /SUBSCRIPTIONS -->
 
                                         {% if items|length > 0 and not is_updateinfo %}
                                         <span class="fc-clear" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;display: block;clear: both;"></span>

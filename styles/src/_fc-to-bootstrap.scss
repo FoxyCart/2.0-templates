@@ -54,6 +54,11 @@
   @extend .btn-default;
 }
 
+.fc-button--minor {
+  @extend .btn;
+  @extend .btn-xs;
+}
+
 .fc-input-group__button {
   @extend .input-group-btn;
 }
@@ -449,12 +454,31 @@
   @extend .text-right;
 }
 
+.fc-form-label__pos-masked-number,
+.fc-form-label__pos-expiration {
+  @extend .col-xs-11;
+  @extend .col-sm-5;
+  @extend .control-label;
+  @extend .text-right;
+}
+
 .fc-container__grid--static--plastic-saved-csc {
   @extend .col-xs-3;
 }
 
 .fc-container__static--plastic-saved-expiration {
   @extend .col-xs-3;
+
+  .fc-form-control--static {
+    @extend .form-control-static;
+    @extend .text-muted;
+  }
+}
+
+.fc-container__static--pos-masked-number,
+.fc-container__static--pos-expiration {
+  @extend .col-xs-11;
+  @extend .col-sm-7;
 
   .fc-form-control--static {
     @extend .form-control-static;
@@ -563,4 +587,20 @@
 }
 .fc-address-validation--suggested {
   @extend .col-sm-6, .col-sm-push-6;
+}
+
+// POS Modal
+.fc-pos-modal--header__value {
+  @extend .col-xs-8;
+  @extend .text-left;
+}
+.fc-pos-modal--header__action {
+  @extend .col-xs-4;
+  @extend .text-right;
+}
+.fc-pos-modal--header__label {
+  @extend .hidden-xs;
+}
+.fc-pos-modal--email-container {
+  @extend .col-xs-12;
 }

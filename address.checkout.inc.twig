@@ -118,7 +118,7 @@
     {% set tax_id_optional_placeholder = (tax_id == 'optional') ? config.lang.checkout_optional : '' %}
 
     {% if tax_id != "hidden" %}
-        {% if (address.type == 'billing' and not use_alternate_shipping_address) or address.type == 'shipping' %}
+        {% if (address.type == 'billing' and not shipping_address.has_shippable_products) or address.type == 'shipping' %}
         <div class="fc-form-group fc-address-entry__tax-id-container">
             {% set field_name = address.prefix~"_tax_id" %}
             {% set error_string = utils.get_error_string(field_name, messages.errors) %}

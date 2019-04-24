@@ -125,7 +125,7 @@
                 </div>
             </div>
             {% endif %}
-            {% if payment_type == 'plastic' and cc_number_masked %}
+            {% if (payment_type == 'plastic' or payment_type == 'pos') and cc_number_masked %}
             <div class="fc-form-group fc-form-group--static fc-form-group--receipt--credit-card">
                 <label class="fc-form-label fc-container__grid--static-label--credit-card">{{ config.lang.checkout_card_number|raw }}</label>
                 <div class="fc-container__grid--static-input--credit-card">

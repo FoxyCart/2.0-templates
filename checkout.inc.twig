@@ -126,8 +126,7 @@ CONVENTIONS:
                 {% if is_subscription_cancel %}
                 disabled
                 {% endif %}
-                formnovalidate
-                autofocus />
+                formnovalidate />
             {% if warning_string != "" %}
                 <div class="fc-alert fc-alert--warning">
                 <p>{{ config.lang.checkout_modify_subscription_email_changed_notice|raw }}</p>
@@ -362,16 +361,14 @@ CONVENTIONS:
     {# PAYMENT METHOD ===================================================== #}
     <section data-fc-id="block-payment-method" class="fc-checkout__section--payment">
     {% block payment_method %}
-        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 %}
+        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect %}
         {% if show_payment_type_block %}
-            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc ? 'radio' : 'hidden' %}
+            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc ? 'radio' : 'hidden' %}
             <fieldset id="fc-payment" data-fc-container="payment">
                 <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_payment_method|raw }}</legend>
-
                 {% if payment_info_required %}
                 <svg id="fc-icon-lock-large" class="fc-svg-icon fc-svg-icon--lock hidden-xs hidden-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock-large" /></svg>
                 {% endif %}
-
                 {% if config.supports_pay_with_plastic and payment_info_required %}
 
                     {% if has_saved_cc %}
@@ -390,9 +387,9 @@ CONVENTIONS:
                                     autocomplete="off"
                                     class="fc-form-control--plastic-saved--checkbox fc-form-control"/>
                                 {% if cc_type %}
-                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
+                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
                                 {% else %}
-                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
                                 {% endif %}
                                 {{ config.lang.checkout_use_saved_payment_info|raw }}
                                 <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ cc_number_masked }}</span>
@@ -451,7 +448,7 @@ CONVENTIONS:
                             {% for card_type in config.template_config.supported_payment_cards %}
                                 <span class="fc-checkout__section--payment__method__logo
                                 fc-checkout__section--payment__method__logo--{{ card_type }}">
-                                    <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="//cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ card_type }}.png" alt="{{ card_type }}" />
+                                    <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ card_type }}.png" alt="{{ card_type }}" />
                                 </span>
                             {% endfor %}
                             {% if has_saved_cc %}
@@ -529,7 +526,59 @@ CONVENTIONS:
                 </div>
                 {% endif %}{# config.supports_pay_with_plastic and payment_info_required #}
 
-                {% if payment_info_required and show_paypal_express_payment_option and not is_updateinfo %}
+                {% if not is_updateinfo and payment_info_required %}
+                {% if stripe_connect_data %}
+                    {% if stripe_connect_data.cards %}
+                        {% if stripe_connect_data.has_saved_cc %}
+                        <div class="fc-form-group">
+                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_saved' %}fc-input-group-container--active{% endif %}">
+                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_saved_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_saved') }} name="fc_payment_method" value="stripe_connect_plastic_saved" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
+
+                                        {% if stripe_connect_data.cc_type %}
+                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ stripe_connect_data.cc_type|lower }}.png" alt="{{ stripe_connect_data.cc_type }}" /></span>
+                                        {% else %}
+                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                        {% endif %}
+                                        {{ config.lang.checkout_use_saved_payment_info|raw }}
+                                        <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ stripe_connect_data.cc_number_masked }}</span>
+                                    </label>
+                                    {% if payment_method_type == 'stripe_connect_plastic_saved' %}
+                                    <div class="fc-form-group">
+                                        <span class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</span>
+                                        <div class="fc-container__static--plastic-saved-expiration ">
+                                            <p class="fc-form-control--static">{{ stripe_connect_data.cc_exp_month }}/{{ stripe_connect_data.cc_exp_year }}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="fc-form-group">
+                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_new' %}fc-input-group-container--active{% endif %}">
+                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_new_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_new') }} name="fc_payment_method" value="stripe_connect_plastic_new" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
+                                        {{ config.lang.checkout_pay_with_new_cc }}
+                                    </label>
+                                    {% if payment_method_type == 'stripe_connect_plastic_new' %}
+                                    <div class="fc-stripe-element">
+                                        <div id="fc_stripe_connect_cc"></div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="stripe_connect-new-cc-error stripe_connect-error fc-alert fc-alert--danger hidden" data-fc-error-for="fc_payment_method_stripe_connect" data-fc-error-class="show,hidden">
+                                    {{ config.lang["checkout_validation_stripe_connect_error"]|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}{# stripe_connect_data #}
+
+                {% if show_paypal_express_payment_option %}
                 <div class="fc-form-group">
                     <div id="fc-payment-method-paypal" class="fc-container__grid--payment-method fc-payment-method--paypal">
                         <div class="fc-input-group-container {% if payment_method_input_type == 'radio' or has_saved_cc %}fc-input-group-container--radio{% endif %} {% if payment_method_type == 'paypal' %}fc-input-group-container--active{% endif %}">
@@ -556,10 +605,9 @@ CONVENTIONS:
                         </div>
                     </div>
                 </div>
-                {% endif %}{# show_paypal_express_payment_option and not is_updateinfo #}
+                {% endif %}{# show_paypal_express_payment_option #}
 
-                {% if not is_updateinfo and payment_info_required %}
-                    {% for hosted_gateway in hosted_payment_gateways if ((hosted_gateway.supports_subscriptions == false and has_subscriptions == false) or hosted_gateway.supports_subscriptions) %}
+                {% for hosted_gateway in hosted_payment_gateways if (hosted_gateway.supports_subscriptions or has_subscriptions == false) %}
                 <div class="fc-form-group">
                     <div id="fc-payment-method-{{ hosted_gateway.type }}" class="fc-container__grid--payment-method fc-payment-method--{{ hosted_gateway.type }}">
                         <div class="fc-input-group-container {% if payment_method_input_type == 'radio' or has_saved_cc %}fc-input-group-container--radio{% endif %} {% if payment_method_type == hosted_gateway.type %}fc-input-group-container--active{% endif %}">
@@ -578,22 +626,70 @@ CONVENTIONS:
                             <input type="hidden" name="paymentId" value="{{ paymentId }}"/>
                             {% endif %}
                             {% if payment_method_type == hosted_gateway.type %}
-                            <div class="fc-form-group fc-form-group-multiple-inline">
+                            {% if not hosted_gateway.is_pos %}
+                            <div class="fc-form-group">
                                 {{ hosted_gateway.lang_payment_method }}
                             </div>
                             {% endif %}
+                                {% if hosted_gateway.is_ach %}
+                                <div class="fc-form-group">
+                                    {% for var_name, var_value in hosted_gateway.ach_fields %}
+                                        {% set title = "checkout_" ~ var_name %}
+                                        <input type="text" id="fc_checkout_{{ var_name }}" name="{{ var_name }}" value="{{ var_value }}" placeholder="{{ config.lang[title] }}" autocomplete="off" class="fc-form-control">
+                                    {% endfor %}
+                                        <label class="fc-form-label">
+                                            <input type="checkbox" id="fc_checkout_ach_the_owner" name="ach_the_owner" autocomplete="off" class="fc-form-control"> {{ config.lang.checkout_ach_the_owner }}
+
+                                </div>
+                                {% endif %}
+                                {% if hosted_gateway.is_pos %}
+                                <div class="fc-form-group">
+                                    {% for var_name, var_value in hosted_gateway.pos_fields %}
+                                        {% set title = "checkout_" ~ var_name %}
+                                        {% set value = var_value %}
+                                        {% if _context[var_name] is defined %}
+                                            {% set value = _context[var_name] %}
+                                        {% endif %}
+                                        <input type="text" id="fc_checkout_{{ var_name }}" name="{{ var_name }}" value="{{ value }}" placeholder="{{ config.lang[title] }}" autocomplete="off" class="fc-form-control">
+                                    {% endfor %}
+                                </div>
+                                {% if cc_number_masked or cc_exp_year %}
+                                <div class="fc-form-group">
+                                    {% if cc_number_masked %}
+                                        <label class="fc-form-label__pos-masked-number fc-form-label">{{ config.lang.checkout_card_number|raw }}</label>
+                                        <div class="fc-container__static--pos-masked-number ">
+                                            <p class="fc-form-control--static">{{ cc_number_masked }}{% if cc_type %} <span class="fc-payment-method-logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>{% endif %}</p>
+                                        </div>
+                                        <input type="hidden" name="cc_type" id="cc_type" value="{{ cc_type }}" />
+                                        <input type="hidden" name="cc_number_masked" id="cc_number_masked" value="{{ cc_number_masked }}" />
+                                        <input type="hidden" name="cc_exp_year" id="cc_exp_year" value="{{ cc_exp_year }}" />
+                                        <input type="hidden" name="cc_exp_month" id="cc_exp_month" value="{{ cc_exp_month }}" />
+                                    {% endif %}
+                                    {% if cc_exp_year %}
+                                        <label class="fc-form-label__pos-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</label>
+                                        <div class="fc-container__static--pos-expiration ">
+                                            <p class="fc-form-control--static">{{ cc_exp_month }}/{{ cc_exp_year }}</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                                <div class="fc-form-group">
+                                    <a class="fc-pos__button--init fc-button">{{ config.lang.checkout_pos_swipe_card }}</a>
+                                </div>
+                                {% endif %}
+                            {% endif %}
                         </div>
-                        {% if hosted_gateway.type == 'paypal_plus' %}
-                        <div class="paypal-plus-error fc-alert fc-alert--danger {{ fc_payment_method_paypal_plus ? 'show' : 'hidden' }}" data-fc-error-for="fc_payment_method_paypal_plus" data-fc-error-class="show,hidden">
-                            {{ config.lang.checkout_validation_paypal_plus_error|raw }}
+                        {% if hosted_gateway.type == 'paypal_plus' or hosted_gateway.is_ach %}
+                        {% set lng_var = "checkout_validation_" ~ hosted_gateway.type ~ "_error" %}
+                        <div class="{{ hosted_gateway.type }}-error fc-alert fc-alert--danger hidden" data-fc-error-for="fc_payment_method_{{ hosted_gateway.type }}" data-fc-error-class="show,hidden">
+                            {{ config.lang[lng_var]|raw }}
                         </div>
                         {% endif %}
                     </div>
                 </div>
-                    {% endfor %}
-                {% endif %}{# not is_updateinfo and payment_info_required #}
+                {% endfor %}
 
-                {% if config.supports_purchase_order and not is_updateinfo and payment_info_required %}
+                {% if config.supports_purchase_order %}
                 <div class="fc-form-group" data-fc-error-for="purchase_order" data-fc-error-class="fc-alert-container--error">
                     <div id="fc-payment-method-purchase-order" class="fc-container__grid--payment-method fc-payment-method--purchase-order">
                         {% set po_error_string = utils.get_error_string('purchase_order', messages.errors) %}
@@ -630,7 +726,10 @@ CONVENTIONS:
                         </div>
                     </div>
                 </div>
-                {% endif %}{# config.supports_purchase_order and not is_updateinfo and payment_info_required #}
+                {% endif %}{# config.supports_purchase_order#}
+
+                {% endif %}{# not is_updateinfo and payment_info_required #}
+
 
                 {% if not payment_info_required %}
                 <div class="fc-form-group">
@@ -883,10 +982,99 @@ CONVENTIONS:
     <div data-fc-id="block-upsell-modal-container" style="display:none;">
         {% block upsell_modal_container %}
             <div class="fc-modal fc-upsell-modal">
-                <div class="fc-alert fc-alert--info" data-fc-id="block-upsell-modal">{% block upsell_modal %}{% endblock upsell_modal %}</div>
+                <div class="fc-modal--inner" data-fc-id="block-upsell-modal">{% block upsell_modal %}{% endblock upsell_modal %}</div>
             </div>
         {% endblock upsell_modal_container %}
     </div>
+{% endif %}
+
+{% if config.supports_pos %}
+<div data-fc-id="block-pos-modal-container" style="display:none;">
+    <div class="fc-modal fc-pos-modal">
+        <div class="fc-modal--inner">
+            <div data-fc-id="block-pos-modal">
+            {% block pos_modal %}
+                <div class="fc-pos-modal--header">
+                    <h3>{{ config.lang.cart_order_summary }}</h3>
+                    <h2>{{ total_order|money_format }}</h2>
+                    {% if cc_number_masked or customer_email %}
+                    <ul>
+                    {% if cc_number_masked %}
+                        <li class="fc-pos-modal--card-masked fc-container__row">
+                            <div class="fc-pos-modal--header__value">
+                                <span class="fc-pos-modal--header__label">{{ config.lang.checkout_card_number|raw }}: </span>{{ cc_number_masked }}{% if cc_type %} <span class="fc-payment-method-logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ cc_type|lower }}.png" alt="{{ cc_type }}" /></span>{% endif %}
+                            </div>
+                            <div class="fc-pos-modal--header__action">
+                                <a class="fc-pos__button--change-card fc-button--minor">{{ config.lang.cart_change }}</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    {% if customer_email and pos_customer_complete %}
+                        <li class="fc-pos-modal--email fc-container__row">
+                            <div class="fc-pos-modal--header__value">
+                                <span class="fc-pos-modal--header__label">{{ config.lang.email_email }}: </span>{{ customer_email }}
+                            </div>
+                            <div class="fc-pos-modal--header__action">
+                                <a class="fc-pos__button--change-email fc-button--minor">{{ config.lang.cart_change }}</a>
+                            </div>
+                        </li>
+                    {% endif %}
+                    </ul>
+                    {% endif %}
+                </div>
+
+                {% if not pos_is_complete %}
+                    <div data-fc-id="fc-pos--swipe-ui">
+                    {% if pos_is_receiving %}
+                        <h3>{{ config.lang.checkout_pos_swipe_receiving }}</h3>
+                        <div class="fc-spinner">
+                          <div class="bounce1"></div>
+                          <div class="bounce2"></div>
+                          <div class="bounce3"></div>
+                        </div>
+                    {% else %}
+                        <h3>
+                            {% if pos_requires_tap %}
+                                {{ config.lang.checkout_pos_swipe_tap }}
+                            {% else %}
+                                {{ config.lang.checkout_pos_swipe_ready }}
+                            {% endif %}
+                        </h3>
+                        <a class="fc-pos__button--cancel fc-button">{{ config.lang.cart_cancel }}</a>
+                    {% endif %}
+                    </div>
+                {% else %}
+                    {% if pos_customer_complete %}
+                        <h2>{{ config.lang.cart_thankyou }}</h2>
+                        <p>{{ config.lang.checkout_pos_customer_complete }}</p>
+
+                        <a class="fc-pos__button--complete fc-button">{{ config.lang.checkout_continue }}</a>
+                    {% else %}
+                        <h2>{{ config.lang.checkout_email }}</h2>
+                        {% set error_string = utils.get_error_string('pos-email', messages.errors) %}
+                        <div class="fc-form-group fc-container__row{% if error_string %} fc-alert-container--error{% endif %}">
+                            <div class="fc-pos-modal--email-container">
+                                <input type="email"
+                                    data-fc-id="pos-email"
+                                    placeholder="{{ config.lang.email_email }}"
+                                    class="fc-form-control"
+                                    value="{{ customer_email }}" />
+                                {% if error_string %}
+                                <div class="fc-alert fc-alert--danger">
+                                    {{ config.lang.checkout_error_email|raw }}
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        <a class="fc-pos__button--confirm fc-button">{{ config.lang.checkout_continue }}</a>
+                    {% endif %}
+                {% endif %}
+            {% endblock pos_modal %}
+            </div>
+        </div>
+    </div>
+</div>
 {% endif %}
 
 </div><!-- #fc-checkout__main -->
