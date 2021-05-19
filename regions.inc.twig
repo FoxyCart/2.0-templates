@@ -57,10 +57,14 @@
             {% endfor %}
         </select>
     {% else %}
+        {% set field_value = address[location_type~'_name'] %}
+        {% if field_value == "" %}
+            {% set field_value = address[location_type] %}
+        {% endif %}
         <input
             data-fc-id="{{ field_name }}"
             name="{{ field_name }}"
-            value="{{ address[location_type~'_name'] or address[location_type] }}"
+            value="{{ field_value }}"
             type="text"
             {{ required_attr }}
             placeholder="{{ config.lang[region_lang] }}{{ field_optional_placeholder }}"

@@ -1,3 +1,8 @@
+#fc-payment {
+    position: relative;
+    min-height: 160px;
+}
+
 .fc-payment-method--plastic-saved__card-number,
 .fc-container__checkout-helper-text,
 .fc-container__subscription-cancel-helper-text {
@@ -7,7 +12,7 @@
 }
 
 
-$cards: visa mastercard amex discover dinersclub maestro laser jcb;
+$cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
 
 .fc-checkout__section--payment__method__logo {
     opacity: 1;
@@ -279,4 +284,19 @@ $cards: visa mastercard amex discover dinersclub maestro laser jcb;
     opacity:0;
     top:0px;
     left:0px;
+}
+
+// 3D Secure v2 Modal
+// =====================================================
+.fc-3dsv2-modal .fc-modal--inner {
+    padding:0;
+    height:350px;
+}
+.fc-3dsv2-modal iframe {
+    border: 0;
+    width: 100%;
+    height: 100%;
+}
+.fc-3dsv2-modal .fc-modal--inner .fc-spinner {
+    margin-top:165px;
 }
