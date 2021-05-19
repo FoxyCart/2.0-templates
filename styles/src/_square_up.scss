@@ -1,0 +1,47 @@
+#payment_gateway_live_square_up {
+  display: none;
+}
+
+.payment-gateway-square-up-notice {
+  margin: 10px;
+  padding: 10px;
+  clear: both;
+  background: #e0e0e0;
+  width: 90%;
+}
+
+.square-up-payment-fields {
+  height: 40px;
+  padding: 0;
+  background-color: #FFFFFF;
+}
+
+@media ($medScreen) {
+  .square-up-expiration-date {
+    width: 30%;
+  }
+}
+
+.square-up-postal-code {
+  padding-left: 0;
+}
+
+.square-up-hide-elements {
+  visibility: hidden;
+}
+
+.square-up-hide-spinner {
+  display: none;
+}
+
+.fc-payment-method--square_up {
+  .fc-spinner {
+    position: absolute;
+    top:50%;
+    left:50%;
+    margin-left:-35px;
+  }
+  .fc-alert-container--error .fc-form-control {
+    padding-left:0;
+  }
+}

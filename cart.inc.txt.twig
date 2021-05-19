@@ -68,9 +68,15 @@
 {% if has_future_products %}
 {{ config.lang.cart_future_subscriptions|pad(24)|raw }} {{ total_future_item_price|money_format }}
 {% endif %}
-{% for key,coupon in coupons %}
-{% set coupon_label = coupon.name ~ " (" ~ key ~ ")" %}
+{% for key,coupon_data in coupons %}
+{% if coupon_data is not array %}
+{% set coupon_data = [coupon_data] %}
+{% endif %}
+{% set coupon_code = key %}
+{% for i, coupon in coupon_data %}
+{% set coupon_label = coupon.name ~ " (" ~ coupon_code ~ ")" %}
 {{ coupon_label|pad(24) }} {{ coupon.amount|money_format }}
+{% endfor %}
 {% endfor %}
 {{ shipping_and_handling_label|pad(24) }} {{ total_shipping|money_format }}
 {% if has_future_products and show_future_shipping_and_handling %}

@@ -107,7 +107,7 @@
     <div class="fc-container__row fc-cart-container">
     {% endif %}
         {% block cart_form_start %}
-        {% if config.with_controls %}
+        {% if with_controls %}
         <form id="fc-cart-form" action="https://{{ config.store_domain }}/cart" method="post">
             {% block cart_hidden_inputs %}
             <input type="hidden" name="cart" value="update" />
@@ -139,6 +139,7 @@
 
             <div data-fc-id="block-cart-items-divs">
             {% block cart_items_divs %}
+            {% set checkout_sub_cancel = (context == 'checkout' and is_subscription_cancel) %}
             <div class="fc-cart__items {% if has_product_images %}fc-cart__items--with-images{% else %} fc-cart__items--without-images{% endif %}">
 
                 {% if items|length > 0 %}
@@ -194,7 +195,7 @@
                             <a href="{{ item.url }}" target="_top" alt="{{ item.alt_name }}">
                             {% endif %}
                                 {% if item.image %}
-                                <span><img class="fc-cart__item__image__img" src="{{ item.image }}" /></span>
+                                <span><img class="fc-cart__item__image__img" src="{{ item.image }}" alt="{{ item.alt_name }}" /></span>
                                 {% endif %}
                             {% if item.url != '' and item.image != '' %}
                             </a>
@@ -204,7 +205,6 @@
                         <div class="fc-cart__item__details">
                             <p class="fc-cart__item__name">{{ item.name }}</p>
                         {% block product_options %}
-                            {% set checkout_sub_cancel = (context == 'checkout' and is_subscription_cancel) %}
                             {% set show_product_options = true %}
                             {% set show_product_weight = true %}
                             {% set show_product_category = true %}
@@ -289,7 +289,7 @@
                                     </ul>
                                 </li>
                                 {% endif %}
-                                {% if config.with_controls and checkout_sub_cancel == false and (item.parent_code == '' or (item.parent_code != '' and item.quantity_min == 0)) %}
+                                {% if with_controls and checkout_sub_cancel == false and (item.parent_code == '' or (item.parent_code != '' and item.quantity_min == 0)) %}
                                 <li class="fc-cart__item__actions">
                                     <ul class="fc-actions-container">
                                         <li class="fc-cart__item__remove">
@@ -328,8 +328,9 @@
                                 {% if context == 'receipt' %}
                                 <p class="text-center">{{ item.quantity }}</p>
                                 {% elseif item.parent_code == '' or (item.parent_code != '' and item.quantity_min == 0) %}
-                                {% if config.with_controls and checkout_sub_cancel == false %}
+                                {% if with_controls and checkout_sub_cancel == false %}
                                 <input type="hidden" id="id{{ item.item_number }}" name="id{{ item.item_number }}" value="{{ item.id }}" />
+                                <label class="hidden" for="quantity{{ item.item_number }}">{{ config.lang.cart_quantity }}</label>
                                 <input class="fc-cart__item__quantity__input fc-form-control" type="number" name="quantity{{ item.item_number }}" id="quantity{{ item.item_number }}" min="1" value="{{ item.quantity }}" data-fc-id="item-quantity-input" data-fc-item-id="{{ item.id }}"/>
                                     {% else %}
                                     <p>{{ config.lang.cart_qty|raw }}: {{ item.quantity }}</p>
@@ -435,7 +436,7 @@
                 </li>
                 {% endif %}
 
-                {% set enable_coupon_controls = (has_eligible_coupons and config.with_controls) %}
+                {% set enable_coupon_controls = (has_eligible_coupons and with_controls) %}
                 {% if context == 'checkout' %}
                     {% set enable_coupon_controls = (has_eligible_coupons and config.template_config.custom_checkout_field_requirements.coupon_entry == 'enabled') %}
                 {% endif %}
@@ -492,21 +493,27 @@
 
                     {% if coupons|length > 0 %}
                     <table>
-                        {% for key,coupon in coupons %}
-                        <tr class="fc-subtotal--row {# if not coupon.is_applied %}fc-subtotal--row--inactive{% endif #}" data-fc-coupon-container-id="{{ coupon.id }}">
-                            <td class="fc-subtotal__label">
-                                <span class="fc-coupon__name">{{ coupon.name }}</span>:
-                                <span class="fc-coupon__code">{{ key }}</span>
-                                {% if enable_coupon_controls %}
-                                <span class="fc-action--close">
-                                    <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
-                                        <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
-                                    </a>
-                                </span>
-                                {% endif %}
-                            </td>
-                            <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
-                        </tr>
+                        {% for key,coupon_data in coupons %}
+                            {% if coupon_data is not array %}
+                                {% set coupon_data = [coupon_data] %}
+                            {% endif %}
+                            {% set coupon_code = key %}
+                            {% for i, coupon in coupon_data %}
+                                <tr class="fc-subtotal--row {# if not coupon.is_applied %}fc-subtotal--row--inactive{% endif #}" data-fc-coupon-container-id="{{ coupon.id }}">
+                                    <td class="fc-subtotal__label">
+                                        <span class="fc-coupon__name">{{ coupon.name }}</span>:
+                                        <span class="fc-coupon__code">{{ coupon_code }}</span>
+                                        {% if enable_coupon_controls %}
+                                        <span class="fc-action--close">
+                                            <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
+                                                <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
+                                            </a>
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
+                                </tr>
+                            {% endfor %}
                         {% endfor %}
                     </table>
                     {% endif %}
@@ -587,21 +594,19 @@
 
                 {% if has_taxes %}
                 <li class="fc-transaction__taxes fc-transaction__section">
-                {% set show_tax_header = false %}
-                {% if has_multiple_addresses %}
-                    {% for multiship in multiship_data %}
-                        {% if multiship.taxes|length > 0 %}
-                            {% set show_tax_header = true %}
-                        {% endif %}
-                    {% endfor %}
-                {% else %}
-                    {% if shipping_address.taxes|length > 0 %}
+                    {% set show_tax_header = false %}
+                    {% if has_multiple_addresses %}
+                        {% for multiship in multiship_data %}
+                            {% if multiship.taxes|length > 0 %}
+                                {% set show_tax_header = true %}
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+
+                    {% if shipping_address.taxes|length > 0 and total_tax > 0 %}
                         {% set show_tax_header = true %}
                     {% endif %}
-                {% endif %}
-                {% if context == 'receipt' %}
-                    {% set show_tax_header = false %}
-                {% endif %}
+
                     {% if show_tax_header %}
                     <div class="fc-transaction__ui">
                         <h5 class="fc-transaction__ui__header">{{ config.lang.cart_tax|raw }}</h5>
@@ -633,6 +638,7 @@
                                 {% endfor %}
                             {% endif %}
                             {% if context == 'receipt' %}
+                                {% if shipping_address.taxes|length == 0 %}
                                 <tr class="fc-subtotal--row">
                                     <td class="fc-subtotal__label">
                                         {{ config.lang.cart_tax|raw }}
@@ -641,8 +647,20 @@
                                         {{ total_tax|money_format }}
                                     </td>
                                 </tr>
+                                {% endif %}
+
+                                {% for tax in shipping_address.taxes %}
+                                <tr class="fc-subtotal--row">
+                                    <td class="fc-subtotal__label">
+                                        {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%):
+                                    </td>
+                                    <td class="fc-subtotal__value">
+                                        {{ tax.amount|money_format }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
                             {% endif %}
-                        {% else %}
+                        {% elseif total_tax > 0 %}
                             {% for tax in shipping_address.taxes %}
                             <tr class="fc-subtotal--row">
                                 <td class="fc-subtotal__label">
@@ -802,7 +820,7 @@
                     <p class="fc-action--payment--or">—{{ config.lang.cart_or|raw }}—</p>
                     <p class="fc-action--payment--{{ gateway.name_dashed }}">
                         <a data-fc-id="{{ gateway.name_dashed }}-link" href="https://{{ config.store_domain }}/checkout?ThisAction=checkout&amp;fc_payment_method={{ gateway.name }}&amp;{{ session_name }}={{ session_id }}{%if gateway.additional_params%}&amp;{{gateway.additional_params}}{% endif %}" target="_top">
-                            <img src="{{ gateway.logo_url }}" />
+                            <img src="{{ gateway.logo_url }}" alt="{{ gateway.name }}"/>
                         </a>
                     </p>
                     {% endfor %}
@@ -819,7 +837,7 @@
 
 
         {% block cart_form_end %}
-        {% if config.with_controls %}
+        {% if with_controls %}
         </form>
         {% endif %}
         {% endblock cart_form_end %}
@@ -832,5 +850,3 @@
 </div><!-- data-fc-container="cart" -->
 {% endblock %}{# cart #}
 {# ===================================================== #}
-
-

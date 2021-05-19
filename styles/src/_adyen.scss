@@ -1,0 +1,65 @@
+.fc-adyen-payment-form {
+  height: 220px;
+}
+
+.adyen-payment-method-hidden {
+  display: none;
+}
+
+.adyen-payment-method-container {
+  padding-top: 5px;
+  margin-top: 5px;
+  padding-bottom: 10px;
+}
+
+.adyen-created-payment-method {
+  margin-left: 20px;
+}
+
+.remove-bottom-padding {
+  padding-bottom: 0;
+}
+
+.adyen-checkout__label__text {
+  font-size: 15px;
+  color: #333333;
+}
+
+.adyen-checkout__field--expiryDate .adyen-checkout__label__text {
+  float: left;
+  padding-right: 10px;
+  margin: 12px 12px 12px 0;
+}
+
+.adyen-checkout__field__cvc .adyen-checkout__label__text {
+  display: none;
+}
+
+.adyen-checkout__card__form > .adyen-checkout__field .adyen-checkout__label__text {
+  display: none;
+}
+
+.adyen-checkout__card__exp-date__input {
+  width: 80px;
+}
+.adyen-checkout__card__cvc__input {
+  width: 90px;
+  margin-left: 12px
+}
+
+label.adyen-checkout__label {
+  padding: 10px;
+}
+
+.adyen-checkout__input--error {
+  border: 2px solid $notice;
+}
+
+.adyen-checkout__error-text {
+  color: $notice;
+  font-size: 14px;
+}
+
+.adyen-checkout__field--expiryDate > .adyen-checkout__label {
+  width: 210px;
+}

@@ -21,17 +21,21 @@
   @import 'src/icons';
   @import 'src/loading';
   @import 'src/multiship';
+  @import 'src/address-verification';
   @import 'src/payment-methods';
   @import 'src/placeholder-polyfill';
   @import 'src/products';
   @import 'src/receipt';
   @import 'src/shipping';
-  @import 'src/address-verification';
   @import 'src/additional-components';
   @import 'src/amazon';
   @import 'src/paypalplus';
   @import 'src/apple';
   @import 'src/stripe';
+  @import 'src/klarna';
+  @import 'src/square_up';
+  @import 'src/adyen';
+  @import 'src/paypal-platform';
 
   // Alert styling goes last to properly override
   @import 'src/alerts';

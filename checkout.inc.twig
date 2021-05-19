@@ -46,9 +46,11 @@ CONVENTIONS:
 
 <div id="fc-main" class="fc-checkout__main__contents" role="main">
 
-    {% block checkout_errors %}
-        {% include 'errors.inc.twig' %}
-    {% endblock checkout_errors %}
+    <section data-fc-id="block-checkout-errors">
+        {% block checkout_errors %}
+            {% include 'errors.inc.twig' %}
+        {% endblock checkout_errors %}
+    </section>
 
     {% block noscript_warning %}
     <noscript>
@@ -67,7 +69,7 @@ CONVENTIONS:
             <input type="hidden" id="ThisAction" name="ThisAction" value="checkout" />
             <input type="hidden" id="customer_id" name="customer_id" value="{{ customer_id_encoded }}" />
             <input type="hidden" id="{{ session_name }}" name="{{ session_name }}" value="{{ session_id }}" />
-            <input type="hidden" id="is_anonymous" name="is_anonymous" value="{{ is_anonymous ? 1 : 0 }}" />
+            <input type="hidden" id="is_anonymous" name="is_anonymous" value="{{ (is_anonymous == 1) ? 1 : 0 }}" />
             <input type="hidden" id="anonymous_checkout_selected" name="anonymous_checkout_selected" value="{{ anonymous_checkout_selected ? 1 : 0 }}" />
             <input type="hidden" id="email_is_found" name="email_is_found" value="{{ email_is_found ? 1 : 0 }}" />
 
@@ -361,9 +363,11 @@ CONVENTIONS:
     {# PAYMENT METHOD ===================================================== #}
     <section data-fc-id="block-payment-method" class="fc-checkout__section--payment">
     {% block payment_method %}
-        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect %}
+        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect or config.supports_pay_with_adyen_embedded or config.supports_pay_with_klarna or config.supports_pay_with_square_up or config.supports_pay_with_square_platform or config.supports_pay_with_pp_platform %}
         {% if show_payment_type_block %}
-            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc ? 'radio' : 'hidden' %}
+            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc or adyen_embedded_data.has_saved_cc or square_data.has_saved_cc ? 'radio' : 'hidden' %}
+            {% set show_no_payment_needed_msg = true %}
+
             <fieldset id="fc-payment" data-fc-container="payment">
                 <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_payment_method|raw }}</legend>
                 {% if payment_info_required %}
@@ -371,9 +375,9 @@ CONVENTIONS:
                 {% endif %}
                 {% if config.supports_pay_with_plastic and payment_info_required %}
 
-                    {% if has_saved_cc %}
+                {% if has_saved_cc %}
 
-                    {% set error_string = utils.get_error_string('cc_cvv2_saved',messages.errors) %}
+                {% set error_string = utils.get_error_string('cc_cvv2_saved',messages.errors) %}
                 <div class="fc-form-group {% if error_string %}fc-alert-container--error{% endif %}" data-fc-id="payment-method-plastic-saved-group" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="fc-alert-container--error">
                     <div id="fc-payment-method-plastic-saved" class="fc-container__grid--payment-method fc-payment-method--plastic__saved">
                         <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == "plastic_saved" %}fc-input-group-container--active{% endif %}">
@@ -424,16 +428,18 @@ CONVENTIONS:
                                 {% endif %}
                             {% endif %}
 
-                            <div class="fc-alert fc-alert--danger {{ error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="show,hidden">
+                            <div class="fc-alert fc-alert--danger {{ error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="show,hidden" aria-live="polite" role="status">
                                 {{ config.lang.checkout_error_verification_code|raw }}
                             </div>
                         </div>
                     </div>
                 </div>
-                    {% endif %}{# has_saved_cc #}
+                {% endif %}{# has_saved_cc #}
 
-                    {% set cvv2_error_string = utils.get_error_string('cc_cvv2',messages.errors) %}
-                    {% set cc_number_error_string = utils.get_error_string('cc_number',messages.errors) %}
+                {% set cvv2_error_string = utils.get_error_string('cc_cvv2',messages.errors) %}
+                {% set cc_number_error_string = utils.get_error_string('cc_number',messages.errors) %}
+                {% set cc_exp_month_error_string = utils.get_error_string('cc_exp_month',messages.errors) %}
+                {% set cc_exp_year_error_string = utils.get_error_string('cc_exp_year',messages.errors) %}
 
                 <div class="fc-form-group" data-fc-id="fc-payment-method-plastic-new" data-fc-error-for="cc_number cc_exp_month cc_exp_year cc_cvv2" data-fc-error-class="fc-alert-container--error">
                     <div id="fc-payment-method-plastic-new" class="fc-container__grid--payment-method fc-payment-method--plastic__new">
@@ -457,13 +463,327 @@ CONVENTIONS:
                             {% endif %}
                             </label>
                             {% if payment_method_type == 'plastic_new' %}
-                            <div class="fc-form-group fc-form-group-multiple-inline {% if cc_number_error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="cc_number" data-fc-error-class="fc-alert-container--error,fc-alert-container--success">
+                            <div class="fc-form-group fc-form-group-multiple-inline {% if cc_number_error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="cc_number" aria-live="polite" role="status" data-fc-error-class="fc-alert-container--error,fc-alert-container--success">
                                 <label class="fc-form-label fc-form-label--new-cc-number" for="cc_number">{{ config.lang.checkout_card_number|raw }}</label>
                                 <div class="fc-container__grid--input--plastic-new-card-number">
                                     <input type="tel"
                                         id="cc_number"
                                         name="cc_number"
                                         value="{{ cc_number }}"
+                                        maxlength="16"
+                                        placeholder="{{ config.lang.checkout_card_number }}"
+                                        autocomplete="cc-number"
+                                        class="fc-form-control fc-form-control--new-cc-number" />
+                                    <svg class="fc-svg-icon fc-svg-icon--lock fc-cc-icon visible-xs visible-sm" title="Security Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
+                                </div>
+                            </div>
+                            <div class="fc-form-group fc-form-group-multiple-inline">
+                                <label class="fc-form-label--new-cc-exp-month fc-form-control--static fc-form-label" for="cc_exp_month">{{ config.lang.checkout_expiration|raw }}</label>
+                                <label class="fc-form-label fc-form-label--new-cc-exp-year" for="cc_exp_year">{{ config.lang.cart_year|raw }}</label>
+                                <label class=" fc-form-label fc-form-label--new-cc-cvv2" for="cc_cvv2">{{ config.lang.checkout_card_verification_code|raw }}</label>
+                                {% set field_name = 'cc_exp_month' %}
+                                {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                                <div id="fc-payment-method-plastic-expires-month" class="fc-container__grid--plastic-new-exp-month {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error,has-success">
+                                    <select class="fc-form-control--new-cc-exp-month fc-form-control" name="cc_exp_month" id="cc_exp_month" autocomplete="cc-exp-month" >
+                                        <option value="">{{ config.lang.cart_month|raw }}</option>
+                                        {% for month in config.cc_expiration_months %}
+                                        <option value="{{ month.value }}" {{ selected(cc_exp_month, month.value) }}>
+                                            {{ month.name }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                                {% set field_name = 'cc_exp_year' %}
+                                {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                                <div id="fc-payment-method-plastic-expires-year" class="fc-container__grid--plastic-new-exp-year {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error,has-success">
+                                    <select class="fc-form-control--new-cc-exp-year fc-form-control" name="cc_exp_year" id="cc_exp_year" autocomplete="cc-exp-year" >
+                                        <option value="">{{ config.lang.cart_year|raw }}</option>
+                                        {% for year in config.cc_expiration_years %}
+                                        <option value="{{ year }}" {{ selected(cc_exp_year, year) }}>
+                                            {{ year }}
+                                        </option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+
+                                {% set field_name = 'cc_cvv2' %}
+                                {% set error_string = utils.get_error_string(field_name, messages.errors) %}
+                                <div id="fc-payment-method-plastic-csc" class="fc-container__grid--plastic-new-csc {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="cc_cvv2" data-fc-error-class="fc-alert-container--error,has-success">
+                                    <input type="tel"
+                                        id="cc_cvv2"
+                                        name="cc_cvv2"
+                                        value="{{ cc_cvv2 }}"
+                                        maxlength="4"
+                                        placeholder="{{ config.lang.checkout_csc }}"
+                                        autocomplete="off"
+                                        class="fc-form-control fc-form-control--new-cc-cvv2"
+                                         />
+                                </div>
+                            </div>
+                            {% endif %}
+                        </div>
+                        <div class="fc-alert fc-alert--danger {{ cvv2_error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2" data-fc-error-class="show,hidden" aria-live="polite" role="status">
+                            {{ config.lang.checkout_error_verification_code|raw }}
+                        </div>
+                        <div class="fc-alert fc-alert--danger {{ cc_number_error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_number" data-fc-error-class="show,hidden" aria-live="polite" role="status">
+                            {{ config.lang.checkout_error_card_number|raw }}
+                        </div>
+                        <div class="fc-alert fc-alert--danger {{ cc_exp_year_error_string or cc_exp_month_error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_exp_month cc_exp_year" data-fc-error-class="show,hidden" aria-live="polite" role="status">
+                            {{ config.lang.checkout_expiration_date|raw }}
+                        </div>
+                    </div>
+                </div>
+                {% endif %}{# config.supports_pay_with_plastic and payment_info_required #}
+
+                {% if stripe_connect_data %}
+                    {% if
+                        (stripe_connect_data.cards) and
+                        (payment_info_required or has_subscriptions)
+                    %}
+                        {% set show_no_payment_needed_msg = false %}
+
+                        {% if stripe_connect_data.has_saved_cc %}
+                        <div class="fc-form-group">
+                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_saved' %}fc-input-group-container--active{% endif %}">
+                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_saved_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_saved') }} name="fc_payment_method" value="stripe_connect_plastic_saved" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
+
+                                        {% if stripe_connect_data.cc_type %}
+                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ stripe_connect_data.cc_type|lower }}.png" alt="{{ stripe_connect_data.cc_type }}" /></span>
+                                        {% else %}
+                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                        {% endif %}
+                                        {{ config.lang.checkout_use_saved_payment_info|raw }}
+                                        <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ stripe_connect_data.cc_number_masked }}</span>
+                                    </label>
+                                    {% if payment_method_type == 'stripe_connect_plastic_saved' %}
+                                    <div class="fc-form-group">
+                                        <span class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</span>
+                                        <div class="fc-container__static--plastic-saved-expiration ">
+                                            <p class="fc-form-control--static">{{ stripe_connect_data.cc_exp_month }}/{{ stripe_connect_data.cc_exp_year }}</p>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        <div class="fc-form-group">
+                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_new' %}fc-input-group-container--active{% endif %}">
+                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_new_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_new') }} name="fc_payment_method" value="stripe_connect_plastic_new" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
+                                        {{ config.lang.checkout_pay_with_new_cc }}
+                                    </label>
+                                    {% if payment_method_type == 'stripe_connect_plastic_new' %}
+                                    <div class="fc-stripe-element">
+                                        <div id="fc_stripe_connect_cc"></div>
+                                    </div>
+                                    {% endif %}
+                                </div>
+                                <div class="stripe_connect-new-cc-error stripe_connect-error fc-alert fc-alert--danger hidden" data-fc-error-for="fc_payment_method_stripe_connect" data-fc-error-class="show,hidden">
+                                    {{ config.lang["checkout_validation_stripe_connect_error"]|raw }}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}{# stripe_connect_data #}
+
+                {% if square_data %}
+                    {% if square_data.cards %}
+                        {% if square_data.has_saved_cc %}
+                            <div class="fc-form-group">
+                                <div class="fc-container__grid--payment-method fc-payment-method--{{square_data.payment_platform}}">
+                                    <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == square_data.payment_platform ~ '_plastic_saved' %}fc-input-group-container--active{% endif %}">
+                                        <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                            <input type="{{ payment_method_input_type }}" id="fc_{{ square_data.payment_platform }}_saved_cc" {{ checked(payment_method_type, square_data.payment_platform ~ '_plastic_saved') }} name="fc_payment_method" value="{{ square_data.payment_platform }}_plastic_saved" autocomplete="off" class="fc-form-control fc_{{ square_data.payment_platform }}_payment_selector">
+
+                                            {% if square_data.cc_type %}
+                                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ square_data.cc_type|lower }}.png" alt="{{ square_data.cc_type }}" /></span>
+                                            {% else %}
+                                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                            {% endif %}
+                                            {{ config.lang.checkout_use_saved_payment_info|raw }}
+                                            <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ square_data.cc_number_masked }}</span>
+                                        </label>
+                                        {% if payment_method_type == square_data.payment_platform ~ '_plastic_saved' %}
+                                            <div class="fc-form-group">
+                                                <span class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</span>
+                                                <div class="fc-container__static--plastic-saved-expiration ">
+                                                    <p class="fc-form-control--static">{{ square_data.cc_exp_month }}/{{ square_data.cc_exp_year }}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+
+                        <div class="fc-form-group">
+                            <div class="fc-container__grid--payment-method fc-payment-method--{{ square_data.payment_platform }}">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == square_data.payment_platform ~ '_plastic_new' %}fc-input-group-container--active{% endif %}">
+                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                        <input type="{{ payment_method_input_type }}" id="fc_{{ square_data.payment_platform }}_new_cc" {{ checked(payment_method_type, square_data.payment_platform ~ '_plastic_new') }} name="fc_payment_method" value="{{ square_data.payment_platform }}_plastic_new" autocomplete="off" class="fc-form-control fc_{{ square_data.payment_platform }}_payment_selector">
+                                        {{ config.lang.checkout_pay_with_new_cc }}
+                                    </label>
+                                    {% if payment_method_type == square_data.payment_platform ~ '_plastic_new' %}
+                                        <div id="{{ square_data.payment_platform }}_container" class="square-up-hide-elements">
+                                            <div class="fc-form-group fc-form-group-multiple-inline square-up-cc-number-field" data-fc-error-for="cc_number" data-fc-error-class="fc-alert-container--error,fc-alert-container--success" id="{{ square_data.payment_platform }}_payment_form_cc_number">
+                                                <div class="fc-container__grid--input--plastic-new-card-number">
+                                                    <input type="tel"
+                                                           id="cc_number_{{ square_data.payment_platform }}"
+                                                           name="cc_number"
+                                                           value="{{ cc_number }}"
+                                                           maxlength="16"
+                                                           placeholder="{{ config.lang.checkout_card_number }}"
+                                                           autocomplete="cc-number"
+                                                           class="fc-form-control fc-form-control--new-cc-number square-up-payment-fields" />
+                                                </div>
+                                            </div>
+                                            <div class="fc-form-group fc-form-group-multiple-inline">
+                                                <div id="fc-payment-method-plastic-expires-year" class="fc-container__grid--plastic-new-exp-year square-up-postal-code" data-fc-error-class="fc-alert-container--error,has-success">
+                                                    <input
+                                                            type="text"
+                                                            id="postal_code_{{ square_data.payment_platform }}"
+                                                            class="fc-form-control--new-cc-exp-year fc-form-control input-field-color square-up-payment-fields"
+                                                            autocomplete="off"
+                                                            placeholder=" {{ config.lang.checkout_location_zipcode }}"
+                                                    />
+                                                </div>
+                                                <div id="fc-payment-method-plastic-expires-month" class="fc-container__grid--plastic-new-exp-year square-up-expiration-date" data-fc-error-class="fc-alert-container--error,has-success">
+                                                    <input
+                                                            type="text"
+                                                            class="fc-form-control--new-cc-exp-month fc-form-control input-field-color square-up-payment-fields"
+                                                            placeholder="{{ config.lang.checkout_expiration }}"
+                                                            id="cc_expiration_date"
+                                                    />
+                                                </div>
+                                                <div id="fc-payment-method-plastic-csc" class="fc-container__grid--plastic-new-csc " data-fc-error-for="cc_cvv2" data-fc-error-class="fc-alert-container--error,has-success">
+                                                    <input type="tel"
+                                                           id="cc_cvv2_{{ square_data.payment_platform }}"
+                                                           value="{{ cc_cvv2 }}"
+                                                           maxlength="4"
+                                                           placeholder="{{ config.lang.checkout_csc }}"
+                                                           autocomplete="off"
+                                                           class="fc-form-control fc-form-control--new-cc-cvv2 input-field-color square-up-payment-fields"
+                                                    />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div id="spinner-container" class="fc-spinner">
+                                            <div class="bounce1"></div>
+                                            <div class="bounce2"></div>
+                                            <div class="bounce3"></div>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                                <div class="{{ square_data.payment_platform }}-new-cc-error {{ square_data.payment_platform }}-error fc-alert fc-alert--danger hidden" data-fc-error-for="fc_payment_method_{{ square_data.payment_platform }}" data-fc-error-class="show,hidden">
+                                    {% if square_data.payment_platform == 'square_up' %}
+                                        {{ config.lang["checkout_validation_square_up_error"]|raw }}
+                                    {% else %}
+                                        {{ config.lang["checkout_validation_square_platform_error"]|raw }}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endif %}
+                {% endif %}{# square_data #}
+
+                {% if show_paypal_platform_cc_form %}
+                {% set show_no_payment_needed_msg = false %}
+                {% if paypal_platform_data.has_saved_cc %}
+                {% set error_string = utils.get_error_string('cc_cvv2_saved',messages.errors) %}
+                <div class="fc-form-group {% if error_string %}fc-alert-container--error{% endif %}" data-fc-id="payment-method-plastic-saved-group" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="fc-alert-container--error">
+                    <div id="fc-payment-method-plastic-saved" class="fc-container__grid--payment-method fc-payment-method--plastic__saved">
+                        <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == "paypal_platform_plastic_saved" %}fc-input-group-container--active{% endif %}">
+                            <label for="fc_payment_method_plastic_saved" class="fc-input-group-container__title fc-form-label--plastic-saved fc-form-label">
+                                <input type="hidden" name="cc_type" id="cc_type" value="{{ paypal_platform_data.cc_type }}" />
+                                <input type="radio"
+                                    {{ checked(payment_method_type, 'paypal_platform_plastic_saved') }}
+                                    id="fc_payment_method_plastic_saved"
+                                    name="fc_payment_method"
+                                    value="paypal_platform_plastic_saved"
+                                    autocomplete="off"
+                                    class="fc-form-control--plastic-saved--checkbox fc-form-control"/>
+                                {% if paypal_platform_data.cc_type %}
+                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ paypal_platform_data.cc_type|lower }}.png" alt="{{ cc_type }}" /></span>
+                                {% else %}
+                                    <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                {% endif %}
+                                {{ config.lang.checkout_use_saved_payment_info|raw }}
+                                <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ paypal_platform_data.cc_number_masked }}</span>
+                                <input type="hidden" name="cc_number_masked" id="cc_number_masked" value="{{ paypal_platform_data.cc_number_masked }}" />
+                                <input type="hidden" name="cc_exp_year_saved" id="cc_exp_year_saved" value="{{ paypal_platform_data.cc_exp_year }}" />
+                                <input type="hidden" name="cc_exp_month_saved" id="cc_exp_month_saved" value="{{ paypal_platform_data.cc_exp_month }}" />
+                            </label>
+
+                            {% if payment_method_type == "paypal_platform_plastic_saved" %}
+                                <svg class="fc-svg-icon fc-svg-icon--lock visible-xs visible-sm" title="Secured Icon" role="presentation"><use xlink:href="#fa-lock" /></svg>
+                                <div class="fc-form-group">
+                                    <label for="" class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</label>
+                                    <div class="fc-container__static--plastic-saved-expiration ">
+                                        <p class="fc-form-control--static">{{ paypal_platform_data.cc_exp_month }}/{{ paypal_platform_data.cc_exp_year }}</p>
+                                    </div>
+                                </div>
+                                {% if is_updateinfo == false and ((config.template_config.csc_requirements == "all_cards" and is_uoe == false) or (config.template_config.csc_requirements == "sso_only" and customer_is_authenticated)) %}
+                                <div class="fc-form-group">
+                                    <label class="fc-form-label fc-form-label--cvv2-saved " for="cc_cvv2_saved">{{ config.lang.checkout_card_verification_code|raw }}</label>
+                                    <div class="fc-container__grid--static--plastic-saved-csc">
+                                        <input type="tel"
+                                            id="cc_cvv2_saved"
+                                            name="cc_cvv2_saved"
+                                            value="{{ paypal_platform_data.cc_cvv2_saved }}"
+                                            maxlength="4"
+                                            placeholder="{{ config.lang.checkout_csc }}"
+                                            autocomplete="off"
+                                            class="fc-form-control fc-form-control--cvv2-saved" />
+                                    </div>
+                                </div>
+                                {% endif %}
+                            {% endif %}
+
+                            <div class="fc-alert fc-alert--danger {{ error_string ? 'show' : 'hidden' }}" data-fc-error-for="cc_cvv2_saved" data-fc-error-class="show,hidden">
+                                {{ config.lang.checkout_error_verification_code|raw }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endif %}{# paypal_platform_data.has_saved_cc #}
+
+                {% set cvv2_error_string = utils.get_error_string('cc_cvv2',messages.errors) %}
+                {% set cc_number_error_string = utils.get_error_string('cc_number',messages.errors) %}
+
+                <div class="fc-form-group" data-fc-id="fc-payment-method-plastic-new" data-fc-error-for="cc_number cc_exp_month cc_exp_year cc_cvv2" data-fc-error-class="fc-alert-container--error">
+                    <div id="fc-payment-method-plastic-new" class="fc-container__grid--payment-method fc-payment-method--plastic__new">
+                        <div class="fc-input-group-container {% if paypal_platform_payment_method_input_type == 'radio' or paypal_platform_data.has_saved_cc %}fc-input-group-container--radio{% endif %} {% if payment_method_type == 'paypal_platform_plastic_new' %}fc-input-group-container--active{% endif %}">
+                            <label for="fc_payment_method_plastic_new" class="fc-form-label--plastic-new {% if paypal_platform_payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                <input type="{{ paypal_platform_payment_method_input_type }}"
+                                    {{ checked(payment_method_type, 'paypal_platform_plastic_new') }}
+                                    id="fc_payment_method_plastic_new"
+                                    name="fc_payment_method"
+                                    value="paypal_platform_plastic_new"
+                                    class="fc-form-control--plastic-new--checkbox fc-form-control" />
+                            {% for card_type in config.template_config.supported_payment_cards %}
+                                <span class="fc-checkout__section--payment__method__logo
+                                fc-checkout__section--payment__method__logo--{{ card_type }}">
+                                    <img class="fc-checkout__section--payment__method__logo--{{ card_type }}" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ card_type }}.png" alt="{{ card_type }}" />
+                                </span>
+                            {% endfor %}
+                            {% if paypal_platform_data.has_saved_cc %}
+                            {# Show the text only when there's a saved card #}
+                            <span class="fc-form-label--plastic-new__text">{{ config.lang.checkout_enter_new_card|raw }}</span>
+                            {% endif %}
+                            </label>
+                            {% if payment_method_type == 'paypal_platform_plastic_new' %}
+                            <div class="fc-form-group fc-form-group-multiple-inline {% if cc_number_error_string %}fc-alert-container--error{% endif %}" data-fc-error-for="cc_number" data-fc-error-class="fc-alert-container--error,fc-alert-container--success">
+                                <label class="fc-form-label fc-form-label--new-cc-number" for="cc_number">{{ config.lang.checkout_card_number|raw }}</label>
+                                <div class="fc-container__grid--input--plastic-new-card-number">
+                                    <input type="tel"
+                                        id="cc_number"
+                                        name="cc_number"
+                                        value="{{ paypal_platform_data.cc_number }}"
                                         maxlength="16"
                                         placeholder="{{ config.lang.checkout_card_number }}"
                                         autocomplete="cc-number"
@@ -524,59 +844,50 @@ CONVENTIONS:
                         </div>
                     </div>
                 </div>
-                {% endif %}{# config.supports_pay_with_plastic and payment_info_required #}
+                {% endif %}{# paypal_platform #}
 
                 {% if not is_updateinfo and payment_info_required %}
-                {% if stripe_connect_data %}
-                    {% if stripe_connect_data.cards %}
-                        {% if stripe_connect_data.has_saved_cc %}
+                {% if klarna_data and has_subscriptions == false %}
+                    {% for paymentMethod in klarna_data.sessionData.payment_method_categories %}
                         <div class="fc-form-group">
-                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
-                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_saved' %}fc-input-group-container--active{% endif %}">
-                                    <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
-                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_saved_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_saved') }} name="fc_payment_method" value="stripe_connect_plastic_saved" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
-
-                                        {% if stripe_connect_data.cc_type %}
-                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ stripe_connect_data.cc_type|lower }}.png" alt="{{ stripe_connect_data.cc_type }}" /></span>
-                                        {% else %}
-                                            <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
-                                        {% endif %}
-                                        {{ config.lang.checkout_use_saved_payment_info|raw }}
-                                        <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ stripe_connect_data.cc_number_masked }}</span>
+                            <div class="fc-container__grid--payment-method fc-payment-method--klarna">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if paymentMethod.identifier == payment_method_type %} fc-input-group-container--active {% endif %}">
+                                    <label class="fc-input-group-container__title">
+                                        <input type="radio"
+                                               id="fc_payment_method_{{ paymentMethod.identifier }}"
+                                               name="fc_payment_method"
+                                               data-payment-method-type="{{ paymentMethod.identifier }}"
+                                               class="fc-form-control klarna-payment-method-selector"
+                                               value="{{ paymentMethod.identifier }}"
+                                                {{ checked(paymentMethod.identifier, payment_method_type) }}
+                                        >
+                                        <img class="klarna-description-image" src="{{ paymentMethod.asset_urls.descriptive }}" alt="{{ paymentMethod.name }}">
+                                        {{ config.lang.checkout_pay_with_klarna_method }} {{ paymentMethod.name }}
                                     </label>
-                                    {% if payment_method_type == 'stripe_connect_plastic_saved' %}
-                                    <div class="fc-form-group">
-                                        <span class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</span>
-                                        <div class="fc-container__static--plastic-saved-expiration ">
-                                            <p class="fc-form-control--static">{{ stripe_connect_data.cc_exp_month }}/{{ stripe_connect_data.cc_exp_year }}</p>
-                                        </div>
-                                    </div>
-                                    {% endif %}
+                                    <div class="{% if paymentMethod.identifier != payment_method_type %} klarna-payment-method-hidden {% endif %}" id="klarna-payment-method-{{ paymentMethod.identifier }}"></div>
                                 </div>
                             </div>
                         </div>
-                        {% endif %}
+                    {% endfor %}
 
+                    {% if klarna_data.sessionData.payment_method_categories is empty %}
                         <div class="fc-form-group">
-                            <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
-                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'stripe_connect_plastic_new' %}fc-input-group-container--active{% endif %}">
+                            <div id="klarna-payment-container" class="fc-container__grid--payment-method fc-payment-method--klarna" data-fc-error-class="fc-alert-container--error">
+                                <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'klarna_plastic_new' %}fc-input-group-container--active{% endif %}">
                                     <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
-                                        <input type="{{ payment_method_input_type }}" id="fc_stripe_connect_new_cc" {{ checked(payment_method_type, 'stripe_connect_plastic_new') }} name="fc_payment_method" value="stripe_connect_plastic_new" autocomplete="off" class="fc-form-control fc_stripe_connect_payment_selector">
-                                        {{ config.lang.checkout_pay_with_new_cc }}
+                                        <input type="{{ payment_method_input_type }}" id="fc_klarna_new_cc" {{ checked(payment_method_type, 'klarna_plastic_new') }} name="fc_payment_method" value="klarna_plastic_new" autocomplete="off" class="fc-form-control">
+                                        {{ config.lang.checkout_pay_with_klarna }}
                                     </label>
-                                    {% if payment_method_type == 'stripe_connect_plastic_new' %}
-                                    <div class="fc-stripe-element">
-                                        <div id="fc_stripe_connect_cc"></div>
-                                    </div>
-                                    {% endif %}
-                                </div>
-                                <div class="stripe_connect-new-cc-error stripe_connect-error fc-alert fc-alert--danger hidden" data-fc-error-for="fc_payment_method_stripe_connect" data-fc-error-class="show,hidden">
-                                    {{ config.lang["checkout_validation_stripe_connect_error"]|raw }}
+                                    <div id="klarna_payment_method_message" class="klarna-display-message {% if payment_method_type != 'klarna_plastic_new' %}klarna-payment-method-hidden{% endif %}">{{ config.lang.checkout_klarna_no_payment_methods }}</div>
                                 </div>
                             </div>
                         </div>
                     {% endif %}
-                {% endif %}{# stripe_connect_data #}
+                {% endif %}{# klarna_data #}
+
+                {% if enable_bluesnap_additional_html %}
+                    <div class="kaxsdc" data-event="load"></div>
+                {% endif %}
 
                 {% if show_paypal_express_payment_option %}
                 <div class="fc-form-group">
@@ -689,6 +1000,92 @@ CONVENTIONS:
                 </div>
                 {% endfor %}
 
+                {% if adyen_embedded_data %}
+                        {% if adyen_embedded_data.has_saved_cc %}
+                            <div class="fc-form-group">
+                                <div class="fc-container__grid--payment-method fc-payment-method--stripe_connect">
+                                    <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == 'adyen_embedded_plastic_saved' %}fc-input-group-container--active{% endif %}">
+                                        <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                            <input type="{{ payment_method_input_type }}" id="fc_adyen_embedded_saved_cc" {{ checked(payment_method_type, 'adyen_embedded_plastic_saved') }} name="fc_payment_method" value="adyen_embedded_plastic_saved" autocomplete="off" class="fc-form-control fc_adyen_embedded_payment_selector">
+
+                                            {% if adyen_embedded_data.cc_type %}
+                                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/{{ adyen_embedded_data.cc_type|lower }}.png" alt="{{ adyen_embedded_data.cc_type }}" /></span>
+                                            {% else %}
+                                                <span class="fc-checkout__section--payment__method__logo"><img data-fc-id="card_type_img" src="https://cdn.foxycart.com/static/images/payment_logos/sets/smashing/visa.png" alt="visa" /></span>
+                                            {% endif %}
+                                            {{ config.lang.checkout_use_saved_payment_info|raw }}
+                                            <span class="fc-payment-method-plastic-saved  fc-payment-method--plastic-saved__card-number " data-fc-id="masked-card">{{ adyen_embedded_data.cc_number_masked }}</span>
+                                        </label>
+                                        {% if payment_method_type == 'adyen_embedded_plastic_saved' %}
+                                            <div class="fc-form-group">
+                                                <span class="fc-form-label__plastic-saved-expiration fc-form-label">{{ config.lang.checkout_expiration|raw }}</span>
+                                                <div class="fc-container__static--plastic-saved-expiration ">
+                                                    <p class="fc-form-control--static">{{ adyen_embedded_data.cc_exp_month }}/{{ adyen_embedded_data.cc_exp_year }}</p>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                        {% for paymentMethod in adyen_embedded_data.paymentMethods %}
+                            <div class="fc-form-group">
+                                <div class="fc-container__grid--payment-method fc-payment-method--adyen_embedded">
+                                    <div class="fc-input-group-container fc-input-group-container--radio {% if paymentMethod.type == payment_method_type|trim %} fc-input-group-container--active {% endif %}">
+                                        <label class="fc-input-group-container__title">
+                                            <input type="radio"
+                                                   name="fc_payment_method"
+                                                   data-payment-method-type="{{ paymentMethod.type }}"
+                                                   class="fc-form-control adyen-payment-method-selector"
+                                                   value="{{ paymentMethod.type ~ ' ' }}"
+                                                   {{ checked((paymentMethod.type ~ ' '), payment_method_type) }}
+                                            >
+                                            {{ config.lang.checkout_adyen_embedded_pay_with }} {{ paymentMethod.name }}
+                                        </label>
+                                        <div class="adyen-payment-method-container {% if paymentMethod.type != payment_method_type|trim %} adyen-payment-method-hidden {% endif %}">
+                                            <div id="adyen-payment-method-{{ paymentMethod.type }}">
+                                                {% if paymentMethod.type not in adyen_embedded_data.componentPaymentMethods %}
+                                                    {% if paymentMethod.details %}
+                                                        <div class="adyen-created-payment-method">
+                                                            {% for detailToCollect in paymentMethod.details %}
+                                                                {% if detailToCollect.type == "emailAddress" %}
+                                                                    <div>{{ detailToCollect.key|capitalize }}</div>
+                                                                    <input type="email" name="{{ detailToCollect.key }}" />
+                                                                {% endif %}
+                                                                {% if detailToCollect.type == "select" %}
+                                                                    <select name="{{ detailToCollect.key }}">
+                                                                        {% for item in detailToCollect.items %}
+                                                                            <option value="{{ item.id }}">{{ item.name }}</option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                {% endif %}
+                                                                {% if detailToCollect.type ==  "tel" %}
+                                                                    <div>{{ detailToCollect.key|capitalize }}</div>
+                                                                    <input type="{{ detailToCollect.type }}" name="{{ detailToCollect.key }}" />
+                                                                {% endif %}
+                                                                {% if detailToCollect.type == "text" %}
+                                                                    <div>{{ detailToCollect.key|capitalize }}</div>
+                                                                    <input type="{{ detailToCollect.type }}" name="{{ detailToCollect.key }}" />
+                                                                {% endif %}
+                                                                {% if detailToCollect.type == "fieldSet" %}
+                                                                {% endif %}
+                                                            {% endfor %}
+                                                        </div>
+                                                    {% else %}
+                                                        {{ config.lang.checkout_payment_method_redirect|replace({'{{payment_method}}' : paymentMethod.type|capitalize}) }}
+                                                    {% endif %}
+                                                {% endif %}
+                                            </div>
+                                            {% if paymentMethod.type == 'scheme' %}
+                                                <div class="adyen-payment-method-hidden" id="threeDS2"></div>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                {% endif %}
+
                 {% if config.supports_purchase_order %}
                 <div class="fc-form-group" data-fc-error-for="purchase_order" data-fc-error-class="fc-alert-container--error">
                     <div id="fc-payment-method-purchase-order" class="fc-container__grid--payment-method fc-payment-method--purchase-order">
@@ -730,8 +1127,7 @@ CONVENTIONS:
 
                 {% endif %}{# not is_updateinfo and payment_info_required #}
 
-
-                {% if not payment_info_required %}
+                {% if not payment_info_required and show_no_payment_needed_msg%}
                 <div class="fc-form-group">
                     <div id="fc-payment-method-no-payment-needed" class="fc-container__grid--payment-method fc-payment-method--no-payment fc-payment-method col-md-8 col-md-offset-3">
                     {{ config.lang.checkout_no_payment_needed|raw }}
@@ -863,6 +1259,7 @@ CONVENTIONS:
                             {% if force_password_reset %}
                                 {# put some text here...? #}
                             {% endif %}
+                            <label for="new_customer_password">{{ config.lang.checkout_password }}</label>
                             <input type="password"
                                 id="new_customer_password"
                                 name="new_customer_password"
@@ -986,6 +1383,22 @@ CONVENTIONS:
             </div>
         {% endblock upsell_modal_container %}
     </div>
+{% endif %}
+
+{% if config.supports3dSecureModalWindow %}
+<div data-fc-id="block-3dsv2-modal-container" style="display:none;">
+    <div class="fc-modal fc-3dsv2-modal">
+        <div class="fc-modal--inner" data-fc-id="block-3dsv2-modal">
+            {% block threedsv2_modal %}
+            <div class="fc-spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            {% endblock threedsv2_modal %}
+        </div>
+    </div>
+</div>
 {% endif %}
 
 {% if config.supports_pos %}

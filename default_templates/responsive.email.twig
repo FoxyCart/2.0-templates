@@ -510,13 +510,19 @@
                                                         </tr>
                                                         {% endfor %}
                                                     {% endif %}
-                                                    {% for key,coupon in coupons %}
-                                                    <tr class="fc-cart-total-discount {% if not coupon.is_applied %}fc-cart-total-discount-inactive{% endif %}" data-fc-coupon-container-id="{{ coupon.id }}" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;color: #267d00;">
-                                                        <td class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
-                                                            {{ coupon.name }}: {{ key }}
-                                                        </td>
-                                                        <td class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ coupon.amount|money_format }}</td>
-                                                    </tr>
+                                                    {% for key,coupon_data in coupons %}
+                                                        {% if coupon_data is not array %}
+                                                            {% set coupon_data = [coupon_data] %}
+                                                        {% endif %}
+                                                        {% set coupon_code = key %}
+                                                        {% for i, coupon in coupon_data %}
+                                                        <tr class="fc-cart-total-discount {% if not coupon.is_applied %}fc-cart-total-discount-inactive{% endif %}" data-fc-coupon-container-id="{{ coupon.id }}" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;color: #267d00;">
+                                                            <td class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
+                                                                {{ coupon.name }}: {{ coupon_code }}
+                                                            </td>
+                                                            <td class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ coupon.amount|money_format }}</td>
+                                                        </tr>
+                                                        {% endfor %}
                                                     {% endfor %}
                                                     <tr id="fc-cart-total" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;font-weight: bold;">
                                                         <td width="440" class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_order_total|raw }}:</td>
@@ -535,7 +541,7 @@
                                                         <td width="70" class="fc-cart-image" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;padding-right: 10px;border-bottom: 1px solid #eeeeee;vertical-align: top;max-width: 70px;">
                                                             {% if item.image %}
                                                                 {% if item.url %}<a href="{{ item.url }}" alt="{{ item.alt_name }}" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #333333;text-decoration: underline;">{% endif %}
-                                                                    <img src="{{ item.image }}" border="0" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 70px;">
+                                                                    <img src="{{ item.image }}" width="70" border="0" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;max-width: 70px;">
                                                                 {% if item.url %}</a>{% endif %}
                                                             {% endif %}
                                                         </td>
