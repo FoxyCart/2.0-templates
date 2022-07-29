@@ -524,6 +524,20 @@
                                                         </tr>
                                                         {% endfor %}
                                                     {% endfor %}
+                                                    {% for key,gift_card_data in gift_cards %}
+                                                        {% if gift_card_data is not array %}
+                                                            {% set gift_card_data = [gift_card_data] %}
+                                                        {% endif %}
+                                                        {% set gift_card_code = key %}
+                                                        {% for i, gift_card in gift_card_data %}
+                                                        <tr class="fc-cart-total-discount" data-fc-gift-card-container-id="{{ gift_card.id }}" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;color: #267d00;">
+                                                            <td class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
+                                                                {{ gift_card.name }}: {{ gift_card_code }}
+                                                            </td>
+                                                            <td class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ gift_card.amount|money_format }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    {% endfor %}
                                                     <tr id="fc-cart-total" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;font-weight: bold;">
                                                         <td width="440" class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_order_total|raw }}:</td>
                                                         <td width="{{ price_width }}" class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_order|money_format }}</td>

@@ -91,7 +91,7 @@ $cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
     #fc-icon-lock-large {
         position: absolute;
         color: $grayLight;
-        top: 50px;
+        top: 0px;
         left: 55px;
         font-size:130px;
     }
@@ -290,13 +290,25 @@ $cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
 // =====================================================
 .fc-3dsv2-modal .fc-modal--inner {
     padding:0;
-    height:350px;
+    height:450px;
 }
 .fc-3dsv2-modal iframe {
     border: 0;
     width: 100%;
-    height: 100%;
+    height: 95%;
 }
 .fc-3dsv2-modal .fc-modal--inner .fc-spinner {
     margin-top:165px;
+}
+
+.modal-buttons {
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+}
+
+.modal-button-cancel-lang {
+    color: $white;
+    float: right;
+    padding-left: 5px;
 }

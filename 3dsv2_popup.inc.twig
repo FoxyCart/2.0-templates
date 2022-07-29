@@ -1,0 +1,35 @@
+<!--
+
+CONVENTIONS:
+
+* ERRORS: Add .fc-alert-container- -error to the div.form-group
+* Error messages are div.alert.alert-danger
+
+* SUCCESS: Add .has-success to the div.form-group
+* Success messages are div.alert.alert-success
+
+* Info messages are div.alert.alert-info
+
+-->
+
+{% block threedsv2_popup %}
+{% if supports3dSecureModalWindow %}
+<div data-fc-id="block-3dsv2-modal-container" style="display:none;">
+    <div class="fc-modal fc-3dsv2-modal">
+        <div id="modal-buttons" class="modal-buttons" data-remodal-action="cancel">
+            <svg class="fc-svg-icon" id="remodal-cancel" title="Close Modal" role="presentation"><use xlink:href="#fa-times-circle"/></svg>
+            <div class="modal-button-cancel-lang">{{lang.cart_cancel | trim}}</div>
+        </div>
+        <div class="fc-modal--inner" id="block-3dsv2-modal" data-fc-id="block-3dsv2-modal">
+            {% block threedsv2_modal %}
+            <div class="fc-spinner" id="fc-spinner">
+                <div class="bounce1"></div>
+                <div class="bounce2"></div>
+                <div class="bounce3"></div>
+            </div>
+            {% endblock threedsv2_modal %}
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock threedsv2_popup %}
