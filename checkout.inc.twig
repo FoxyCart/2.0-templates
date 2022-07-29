@@ -11,6 +11,7 @@ CONVENTIONS:
 * Info messages are div.alert.alert-info
 
 -->
+
 {% block checkout %}
 {# do no remove this outer div;
    the data-fc-id="block-checkout" element
@@ -21,9 +22,6 @@ CONVENTIONS:
 {# BEGIN CHECKOUT TWIG TEMPLATE #}
 <div class="fc-container">
 <div id="fc-checkout-container" class="fc-checkout__main fc-checkout__row">
-
-
-
 
 {% block sidebar %}
 <div class="fc-sidebar fc-sidebar--checkout" role="complementary">
@@ -98,7 +96,10 @@ CONVENTIONS:
         <legend><span class="fc-section-counter"></span> {{ config.lang.checkout_email|raw }}</legend>
 
         {# A trap to catch webkit's overagressive autofill. #}
-        <div style="position:absolute; height:0px; width:0px; overflow:hidden; opacity:0; top:0px; left:0px;"><input type="text" name="email_dummy" data-fc-dummy tabindex="-1"/><input type="password" name="password_dummy" data-fc-dummy tabindex="-1"/></div>
+        {% if (email_is_found and is_anonymous == 0 and checkout_type != 'guest_only') or has_subscriptions == true %}
+            <div style="position:absolute; height:0px; width:0px; overflow:hidden; opacity:0; top:0px; left:0px;"><input type="text" name="email_dummy" data-fc-dummy tabindex="-1"/><input type="password" name="password_dummy" data-fc-dummy tabindex="-1"/></div>
+        {% endif %}
+
 
         {# logic for setting the wrapper class regarding alerts, if one is needed #}
         {% if email_is_checking %}
@@ -363,7 +364,7 @@ CONVENTIONS:
     {# PAYMENT METHOD ===================================================== #}
     <section data-fc-id="block-payment-method" class="fc-checkout__section--payment">
     {% block payment_method %}
-        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect or config.supports_pay_with_adyen_embedded or config.supports_pay_with_klarna or config.supports_pay_with_square_up or config.supports_pay_with_square_platform or config.supports_pay_with_pp_platform %}
+        {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect or config.supports_pay_with_adyen_embedded or config.supports_pay_with_klarna or config.supports_pay_with_square_up or config.supports_pay_with_square_platform or config.supports_pay_with_pp_platform or show_paypal_express_payment_option %}
         {% if show_payment_type_block %}
             {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc or adyen_embedded_data.has_saved_cc or square_data.has_saved_cc ? 'radio' : 'hidden' %}
             {% set show_no_payment_needed_msg = true %}
@@ -629,49 +630,7 @@ CONVENTIONS:
                                         {{ config.lang.checkout_pay_with_new_cc }}
                                     </label>
                                     {% if payment_method_type == square_data.payment_platform ~ '_plastic_new' %}
-                                        <div id="{{ square_data.payment_platform }}_container" class="square-up-hide-elements">
-                                            <div class="fc-form-group fc-form-group-multiple-inline square-up-cc-number-field" data-fc-error-for="cc_number" data-fc-error-class="fc-alert-container--error,fc-alert-container--success" id="{{ square_data.payment_platform }}_payment_form_cc_number">
-                                                <div class="fc-container__grid--input--plastic-new-card-number">
-                                                    <input type="tel"
-                                                           id="cc_number_{{ square_data.payment_platform }}"
-                                                           name="cc_number"
-                                                           value="{{ cc_number }}"
-                                                           maxlength="16"
-                                                           placeholder="{{ config.lang.checkout_card_number }}"
-                                                           autocomplete="cc-number"
-                                                           class="fc-form-control fc-form-control--new-cc-number square-up-payment-fields" />
-                                                </div>
-                                            </div>
-                                            <div class="fc-form-group fc-form-group-multiple-inline">
-                                                <div id="fc-payment-method-plastic-expires-year" class="fc-container__grid--plastic-new-exp-year square-up-postal-code" data-fc-error-class="fc-alert-container--error,has-success">
-                                                    <input
-                                                            type="text"
-                                                            id="postal_code_{{ square_data.payment_platform }}"
-                                                            class="fc-form-control--new-cc-exp-year fc-form-control input-field-color square-up-payment-fields"
-                                                            autocomplete="off"
-                                                            placeholder=" {{ config.lang.checkout_location_zipcode }}"
-                                                    />
-                                                </div>
-                                                <div id="fc-payment-method-plastic-expires-month" class="fc-container__grid--plastic-new-exp-year square-up-expiration-date" data-fc-error-class="fc-alert-container--error,has-success">
-                                                    <input
-                                                            type="text"
-                                                            class="fc-form-control--new-cc-exp-month fc-form-control input-field-color square-up-payment-fields"
-                                                            placeholder="{{ config.lang.checkout_expiration }}"
-                                                            id="cc_expiration_date"
-                                                    />
-                                                </div>
-                                                <div id="fc-payment-method-plastic-csc" class="fc-container__grid--plastic-new-csc " data-fc-error-for="cc_cvv2" data-fc-error-class="fc-alert-container--error,has-success">
-                                                    <input type="tel"
-                                                           id="cc_cvv2_{{ square_data.payment_platform }}"
-                                                           value="{{ cc_cvv2 }}"
-                                                           maxlength="4"
-                                                           placeholder="{{ config.lang.checkout_csc }}"
-                                                           autocomplete="off"
-                                                           class="fc-form-control fc-form-control--new-cc-cvv2 input-field-color square-up-payment-fields"
-                                                    />
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <div id="{{ square_data.payment_platform }}_container" class="fc-form-group fc-form-group-multiple-inline"></div>
                                         <div id="spinner-container" class="fc-spinner">
                                             <div class="bounce1"></div>
                                             <div class="bounce2"></div>
@@ -794,7 +753,7 @@ CONVENTIONS:
                             <div class="fc-form-group fc-form-group-multiple-inline">
                                 <label class="fc-form-label--new-cc-exp-month fc-form-control--static fc-form-label" for="cc_exp_month">{{ config.lang.checkout_expiration|raw }}</label>
                                 <label class="fc-form-label fc-form-label--new-cc-exp-year" for="cc_exp_year">{{ config.lang.cart_year|raw }}</label>
-                                <label class=" fc-form-label fc-form-label--new-cc-cvv2" for="cc_cvv2">{{ config.lang.checkout_cart_verification_code|raw }}</label>
+                                <label class=" fc-form-label fc-form-label--new-cc-cvv2" for="cc_cvv2">{{ config.lang.checkout_card_verification_code|raw }}</label>
                                 {% set field_name = 'cc_exp_month' %}
                                 {% set error_string = utils.get_error_string(field_name, messages.errors) %}
                                 <div id="fc-payment-method-plastic-expires-month" class="fc-container__grid--plastic-new-exp-month {% if error_string %}fc-alert-container--error{%endif %}" data-fc-error-for="{{ field_name }}" data-fc-error-class="fc-alert-container--error,has-success">
@@ -858,13 +817,13 @@ CONVENTIONS:
                                                name="fc_payment_method"
                                                data-payment-method-type="{{ paymentMethod.identifier }}"
                                                class="fc-form-control klarna-payment-method-selector"
-                                               value="{{ paymentMethod.identifier }}"
-                                                {{ checked(paymentMethod.identifier, payment_method_type) }}
+                                               value="klarna_{{ paymentMethod.identifier }}"
+                                                {{ checked('klarna_' ~ paymentMethod.identifier, payment_method_type) }}
                                         >
                                         <img class="klarna-description-image" src="{{ paymentMethod.asset_urls.descriptive }}" alt="{{ paymentMethod.name }}">
                                         {{ config.lang.checkout_pay_with_klarna_method }} {{ paymentMethod.name }}
                                     </label>
-                                    <div class="{% if paymentMethod.identifier != payment_method_type %} klarna-payment-method-hidden {% endif %}" id="klarna-payment-method-{{ paymentMethod.identifier }}"></div>
+                                    <div class="{% if 'klarna_' ~ paymentMethod.identifier != payment_method_type %} klarna-payment-method-hidden {% endif %}" id="klarna-payment-method-{{ paymentMethod.identifier }}"></div>
                                 </div>
                             </div>
                         </div>
@@ -1383,22 +1342,6 @@ CONVENTIONS:
             </div>
         {% endblock upsell_modal_container %}
     </div>
-{% endif %}
-
-{% if config.supports3dSecureModalWindow %}
-<div data-fc-id="block-3dsv2-modal-container" style="display:none;">
-    <div class="fc-modal fc-3dsv2-modal">
-        <div class="fc-modal--inner" data-fc-id="block-3dsv2-modal">
-            {% block threedsv2_modal %}
-            <div class="fc-spinner">
-                <div class="bounce1"></div>
-                <div class="bounce2"></div>
-                <div class="bounce3"></div>
-            </div>
-            {% endblock threedsv2_modal %}
-        </div>
-    </div>
-</div>
 {% endif %}
 
 {% if config.supports_pos %}

@@ -436,89 +436,6 @@
                 </li>
                 {% endif %}
 
-                {% set enable_coupon_controls = (has_eligible_coupons and with_controls) %}
-                {% if context == 'checkout' %}
-                    {% set enable_coupon_controls = (has_eligible_coupons and config.template_config.custom_checkout_field_requirements.coupon_entry == 'enabled') %}
-                {% endif %}
-                {% if not is_subscription_cancel and (enable_coupon_controls or coupons|length > 0) %}
-                <li class="fc-transaction__discounts fc-transaction__section">
-                    <div data-fc-id="block-coupon-entry">
-                    {% block coupon_entry %}
-
-                    <div class="fc-transaction__ui">
-                        <h5 class="fc-transaction__ui__header">{{ config.lang.cart_discounts|raw }}</h5>
-                        {% if enable_coupon_controls %}
-                            <button class="fc-transaction__ui__toggle fc-button" type="button" data-fc-id="show-coupon-input-button">
-                            {% if show_coupon_input_button %}
-                                {{ config.lang.cart_hide_coupon_input|raw }}
-                            {% else %}
-                                {{ config.lang.cart_add_coupon|raw }}
-                            {% endif %}
-                            </button>
-                        {% endif %}
-                    </div>
-
-                    {% set error_string = utils.get_error_string('coupon',messages.errors) %}
-                    {% if enable_coupon_controls and show_coupon_input_button %}
-                    <div class="fc-coupon-entry--input">
-                        <input type="text"
-                            name="coupon"
-                            id="coupon"
-                            value="{{ current_coupon_code }}"
-                            class="fc-coupon-entry__input fc-form-control"
-                            placeholder="{{ config.lang.cart_coupon_code }}"
-                            autocomplete="off">
-                        <span class="fc-input-group__button">
-                            <button class="fc-button fc-coupon-entry__apply" type="button" data-fc-id="add-coupon-button">{{ config.lang.cart_apply|raw }}</button>
-                        </span>
-                    </div>
-                    {% endif %}
-
-                    {% if loading_coupons %}
-                    <div class="fc-spinner">
-                      <div class="bounce1"></div>
-                      <div class="bounce2"></div>
-                      <div class="bounce3"></div>
-                    </div>
-                    {% endif %}
-
-                    {% if error_string %}
-                    <div class="fc-alert fc-alert--warning">
-                        {{ error_string }}
-                    </div>
-                    {% endif %}
-
-                    {% endblock coupon_entry %}
-                    </div><!-- data-fc-id="block-coupon-entry" -->
-
-                    {% if coupons|length > 0 %}
-                    <table>
-                        {% for key,coupon_data in coupons %}
-                            {% if coupon_data is not array %}
-                                {% set coupon_data = [coupon_data] %}
-                            {% endif %}
-                            {% set coupon_code = key %}
-                            {% for i, coupon in coupon_data %}
-                                <tr class="fc-subtotal--row {# if not coupon.is_applied %}fc-subtotal--row--inactive{% endif #}" data-fc-coupon-container-id="{{ coupon.id }}">
-                                    <td class="fc-subtotal__label">
-                                        <span class="fc-coupon__name">{{ coupon.name }}</span>:
-                                        <span class="fc-coupon__code">{{ coupon_code }}</span>
-                                        {% if enable_coupon_controls %}
-                                        <span class="fc-action--close">
-                                            <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
-                                                <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
-                                            </a>
-                                        </span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
-                                </tr>
-                            {% endfor %}
-                        {% endfor %}
-                    </table>
-                    {% endif %}
-                </li>
-                {% endif %}
 
                 {% if shipping_address.has_shippable_products %}
                 <li class="fc-transaction__shipping fc-transaction__section">
@@ -589,6 +506,124 @@
                         </tr>
                         </tbody>
                     </table>
+                </li>
+                {% endif %}
+
+                {% set enable_coupon_and_gift_cart_controls = ((has_eligible_coupons or has_eligible_gift_cards) and with_controls) %}
+                {% if context == 'checkout' %}
+                    {% set enable_coupon_and_gift_cart_controls = ((has_eligible_coupons or has_eligible_gift_cards) and config.template_config.custom_checkout_field_requirements.coupon_entry == 'enabled') %}
+                {% endif %}
+                {% if has_eligible_gift_cards and has_eligible_coupons %}
+                    {% set discount_lang_string = config.lang.cart_add_coupon_and_gift_card %}
+                {% elseif has_eligible_coupons %} 
+                    {% set discount_lang_string = config.lang.cart_add_coupon %}
+                {% elseif has_eligible_gift_cards %} 
+                    {% set discount_lang_string = config.lang.cart_add_gift_card %}
+                {% endif %}
+                {% if not is_subscription_cancel and (enable_coupon_and_gift_cart_controls or coupons|length > 0 or gift_cards|length > 0) %}
+                <li class="fc-transaction__discounts fc-transaction__section">
+                    <div data-fc-id="block-coupon-entry">
+                    {% block coupon_entry %}
+
+                    <div class="fc-transaction__ui">
+                        <h5 class="fc-transaction__ui__header">{{ config.lang.cart_discounts|raw }}</h5>
+                        {% if enable_coupon_and_gift_cart_controls %}
+                            <button class="fc-transaction__ui__toggle fc-button" type="button" data-fc-id="show-coupon-input-button">
+                            {% if show_coupon_input_button %}
+                                {{ config.lang.cart_hide_coupon_input|raw }}
+                            {% else %}
+                                {{ discount_lang_string|raw }}
+                            {% endif %}
+                            </button>
+                        {% endif %}
+                    </div>
+
+                    {% set error_string = utils.get_error_string('coupon',messages.errors) %}
+                    {% set error_string = error_string ~ utils.get_error_string('gift_card',messages.errors) %}
+                    {% if enable_coupon_and_gift_cart_controls and show_coupon_input_button %}
+                    <div class="fc-coupon-entry--input">
+                        <input type="text"
+                            name="coupon"
+                            id="coupon"
+                            value="{{ current_coupon_code }}"
+                            class="fc-coupon-entry__input fc-form-control"
+                            placeholder="{{ config.lang.cart_coupon_code }}"
+                            autocomplete="off">
+                        <span class="fc-input-group__button">
+                            <button class="fc-button fc-coupon-entry__apply" type="button" data-fc-id="add-coupon-button">{{ config.lang.cart_apply|raw }}</button>
+                        </span>
+                    </div>
+                    {% endif %}
+
+                    {% if loading_coupons %}
+                    <div class="fc-spinner">
+                      <div class="bounce1"></div>
+                      <div class="bounce2"></div>
+                      <div class="bounce3"></div>
+                    </div>
+                    {% endif %}
+
+                    {% if error_string %}
+                    <div class="fc-alert fc-alert--warning">
+                        {{ error_string|raw }}
+                    </div>
+                    {% endif %}
+
+                    {% endblock coupon_entry %}
+                    </div><!-- data-fc-id="block-coupon-entry" -->
+
+                    {% if coupons|length > 0 %}
+                    <table>
+                        {% for key,coupon_data in coupons %}
+                            {% if coupon_data is not array %}
+                                {% set coupon_data = [coupon_data] %}
+                            {% endif %}
+                            {% set coupon_code = key %}
+                            {% for i, coupon in coupon_data %}
+                                <tr class="fc-subtotal--row {# if not coupon.is_applied %}fc-subtotal--row--inactive{% endif #}" data-fc-coupon-container-id="{{ coupon.id }}">
+                                    <td class="fc-subtotal__label">
+                                        <span class="fc-coupon__name">{{ coupon.name }}</span>:
+                                        <span class="fc-coupon__code">{{ coupon_code }}</span>
+                                        {% if enable_coupon_and_gift_cart_controls %}
+                                        <span class="fc-action--close">
+                                            <a href="https://{{ config.store_domain }}/cart?cart=remove_coupon&amp;coupon_code_id={{ coupon.id }}&amp;{{ session_name }}={{ session_id }}" title="{{ config.lang.cart_remove_coupon }}" data-fc-id="remove-coupon-link" data-fc-coupon-code-id="{{ coupon.id }}">
+                                                <svg class="fc-svg-icon" title="Remove Coupon" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
+                                            </a>
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                    {% endif %}
+                    {% if gift_cards|length > 0 %}
+                    <table>
+                        {% for key,gift_card_data in gift_cards %}
+                            {% if gift_card_data is not array %}
+                                {% set gift_card_data = [gift_card_data] %}
+                            {% endif %}
+                            {% set gift_card_code = key %}
+                            {% for i, gift_card in gift_card_data %}
+                                <tr class="fc-subtotal--row" data-fc-gift-card-container-id="{{ gift_card.code_id }}">
+                                    <td class="fc-subtotal__label">
+                                        <span class="fc-gift-card__name">{{ gift_card.name }}</span>:
+                                        <span class="fc-gift-card__code">{{ gift_card_code }}</span>
+                                        {% if enable_coupon_and_gift_cart_controls %}
+                                        <span class="fc-action--close">
+                                            <a href="" data-fc-id="remove-gift-card-link" data-fc-gift-card-code-id="{{ gift_card.code_id }}">
+                                                <svg class="fc-svg-icon" title="Remove Gift Card" role="presentation"><use xlink:href="#fa-times-circle" /></svg>
+                                            </a>
+                                        </span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="fc-subtotal__value">{{ gift_card.amount|money_format }}</td>
+                                </tr>
+                            {% endfor %}
+                        {% endfor %}
+                    </table>
+                    {% endif %}
                 </li>
                 {% endif %}
 
