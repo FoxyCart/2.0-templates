@@ -41,6 +41,10 @@
     }
 }
 
+#fc-receipt__section--footer {
+    margin-bottom: 30px;
+}
+
 #fc-receipt-container #fc-messages,
 #fc-receipt__section--actions,
 #fc-receipt__section--general-information,
@@ -49,6 +53,24 @@
 #fc-receipt__section--custom-fields,
 .fc-receipt__section--multiship-shipping-information {
     @extend .col-sm-6;
+}
+
+#fc-receipt__section--transaction-history {
+    @extend .col-sm-12;
+
+    margin-top: $grid-gutter-width;
+
+    .fc-list--transaction-history__item {
+        font-size: 12px;
+    }
+
+    .fc-transaction-history__positive {
+        color: #267d00;
+    }
+
+    .fc-transaction-history__processor {
+        color: $grayMidLight;
+    }
 }
 
 #fc-receipt__section--receipt_messaging_and_actions {
@@ -73,7 +95,7 @@
     }
 
     #fc-receipt__section--downloadables,
-    #fc-receipt__section--actions, {
+    #fc-receipt__section--actions {
         margin-bottom:$grid-gutter-width / 2;
     }
 }
@@ -226,7 +248,7 @@
         width:49%;
         display:inline-block;
     }
-    
+
     #fc-receipt__section--multiship-shipping-information {
         width:100%;
     }

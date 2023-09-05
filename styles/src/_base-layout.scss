@@ -92,6 +92,26 @@
   text-align: center;
 }
 
+.fc-transaction-history {
+  padding-left: 10px;
+}
+
+.fc-transaction-history h2 {
+  color: #1a1a1a;
+  font-size: 1.5em;
+}
+
+.fc-info {
+  min-height: 65px;
+  text-align: right;
+  max-width: 500px;
+  float: right;
+  padding-top: 10px;
+  padding-right: 10px;
+  border: solid 2px #a19696;
+  background-color: #f6f6b5;
+}
+
 .fc-transaction__total {
     font-weight:bold;
     font-size: 1.1em;

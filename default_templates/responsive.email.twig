@@ -124,6 +124,10 @@
                                             {{ config.lang.email_subject_subscription_updated|raw }}
                                         {% elseif is_subscription_cancel %}
                                             {{ config.lang.email_subject_subscription_cancelled|raw }}
+                                        {% elseif is_void %}
+                                            {{ config.lang.checkout_receipt_void|raw }}
+                                        {% elseif is_refund %}
+                                            {{ config.lang.checkout_receipt_refund|raw }}
                                         {% else %}
                                             {{ config.lang.checkout_receipt|raw }}
                                         {% endif  %}
@@ -200,6 +204,12 @@
                                                             {{ config.lang.email_paypal_plus_pui|raw }}
                                                         {% endif %}
                                                             </p>
+
+                                                        {% if payment_is_authorized %}
+                                                            <p style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;line-height: 20px;background-color: #eeeeee;margin-bottom: 30px;padding:15px;">
+                                                                {{ config.lang.receipt_message_authorized|raw }}
+                                                            </p>
+                                                        {% endif %}
                                                    </td>
                                                 </tr>
                                             </table>
@@ -396,7 +406,12 @@
                                                             {% if not is_updateinfo %}
                                                                 {% if has_taxes %}
                                                                     {% for tax in multiship.taxes %}
-                                                                        {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|raw }}:
+                                                                        {% if tax.rate is null  %}
+                                                                            {% set tax_rate = '' %}
+                                                                        {% else %}
+                                                                            {% set tax_rate = ' (' ~ tax.rate ~ '%)' %}
+                                                                        {% endif %}
+                                                                        {{ tax.name }}{{ tax_rate }} {{ config.lang.cart_tax|raw }}:
                                                                         {{ tax.amount|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endfor %}
                                                                 {% endif %}
@@ -500,9 +515,14 @@
                                                         </tr>
                                                     {% else %}
                                                         {% for tax in shipping_address.taxes %}
+                                                        {% if tax.rate is null  %}
+                                                            {% set tax_rate = '' %}
+                                                        {% else %}
+                                                            {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">' ~ tax.rate ~ '</span>%)' %}
+                                                        {% endif %}
                                                         <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                             <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
-                                                                {{ tax.name }} (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">{{ tax.rate }}</span>%):
+                                                                {{ tax.name }}{{ tax_rate|raw }}:
                                                             </td>
                                                             <td class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
                                                                 {{ tax.amount|money_format }}
@@ -731,7 +751,48 @@
                                             </table>
                                         </div>
                                         {% endif %}
+
+                                        {% if transaction_history_data %}
+                                            <!-- TRANSACTION HISTORY -->
+                                            <span class="fc-clear" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;display: block;clear: both;"></span>
+                                            <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;"><br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                            <table cellspacing="0" cellpadding="0" id="fc-downloadables" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 100%;">
+                                                <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                    <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                        <h2 style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;color: #666666;font-weight: normal;font-size: 18px;margin-bottom: 10px;">{{ config.lang.receipt_transaction_history|raw }}</h2>
+                                                    </td>
+                                                </tr>
+                                                <tr style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                    <td style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                        <ul class="fc-transaction-history" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;margin-top: 4px;margin-bottom:20px;margin-left: 20px;font-size:12px;">
+                                                            {% for historical_data in transaction_history_data %}
+                                                                {% set action = historical_data.request_type|split('_')[1] %}
+                                                                {% set amount = historical_data.amount|money_format ~ " " ~ (action|capitalize) %}
+                                                                {% if action in ['refund', 'void'] %}
+                                                                    {% set amount = "<span style=\"color: #267d00\">" ~ amount ~ "</span>" %}
+                                                                {% endif %}
+                                                                <li class="fc-list--transaction-history__item">
+                                                                    <strong>{{ historical_data.date }}:</strong> {{ amount|raw }} <span style="color:#999">({{ historical_data.processor_response }})</span>
+                                                                </li>
+                                                            {% endfor %}
+                                                        </ul>
+
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <!-- /TRANSACTION HISTORY -->
+                                        {% endif %} {# transaction_history_data #}
                                     {% endif %} {# is_expiring_payment_reminder #}
+                                    {% if processor_response_details %}
+                                        {% for detail in processor_response_details %}
+                                            <div class="fc-form-group fc-form-group--static fc-form-group--receipt--processor-response-details--{{ detail.class }}">
+                                                <label class="fc-form-label fc-container__grid--static-label--processor-response-details--{{ detail.class }}">{{ detail.label }}</label>
+                                                <div class="fc-container__grid--static-input--processor-response-details--{{ detail.class }}">
+                                                    <p class="fc-form-control--static">{{ detail.value }}</p>
+                                                </div>
+                                            </div>
+                                        {% endfor %}
+                                    {% endif %}
                                      </td>
                                  </tr>
                              </table>

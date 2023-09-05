@@ -12,7 +12,7 @@
 }
 
 
-$cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
+$cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay uatp;
 
 .fc-checkout__section--payment__method__logo {
     opacity: 1;
@@ -184,6 +184,12 @@ $cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
     }
 }
 
+#fc-payment-method-show_other_options {
+    @extend .text-center;
+    @extend .col-sm-8;
+    @extend .col-sm-offset-3;
+}
+
 
 // The inputs inside the #fc-payment-method-plastic
 // =====================================================
@@ -311,4 +317,17 @@ $cards: visa mastercard amex discover dinersclub maestro laser jcb unionpay;
     color: $white;
     float: right;
     padding-left: 5px;
+}
+
+
+// Express Payment Options
+// ====================================================
+#fc-checkout__section--express-options {
+    margin-bottom: 5px;
+
+    .fc-express-option {
+        display: inline-block;
+        vertical-align: middle;
+        margin:0 5px 10px;
+    }
 }

@@ -5,13 +5,13 @@
   <mj-body background-color="#F4F4F4" >
     <mj-section background-repeat="repeat" padding-left="0px" padding-right="0px" padding-top="40px" padding="40px 0px 20px 0px" text-align="center">
       <mj-column>
-        {% if store_data.logo_url|length %}
+        <mj-raw>{% if store_data.logo_url|length != 0 %}</mj-raw>
           <mj-image align="center" alt="Logo" border="none" height="auto" href="" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px" src="{{ store_data.logo_url }}" target="_blank" title="" width="200px"></mj-image>
-        {% else %}
+        <mj-raw>{% else %}</mj-raw>
           <mj-text align="left" color="#000000" font-family="Arial, sans-serif" font-size="20px" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px">
-          <h2 class="text-build-content" style="line-height:30px;text-align:center;; margin-top: 10px; margin-bottom: 10px" data-testid="A3g1Tqavxqp"><span style="font-size:24px;"></span>{{ store_data.name }}</h2>
+          <h2 class="text-build-content" style="line-height:30px;text-align:center;; margin-top: 10px; margin-bottom: 10px" data-testid="A3g1Tqavxqp">{{ store_data.name }}</h2>
           </mj-text>
-        {% endif %}
+        <mj-raw>{% endif %}</mj-raw>
       </mj-column>
     </mj-section>
     <mj-section background-color="#fff" background-repeat="repeat" padding-bottom="30px" padding-left="30px" padding-right="30px" padding-top="30px" padding="30px 30px 30px 30px" text-align="center">
@@ -19,11 +19,12 @@
         <mj-text align="left" color="#000000" font-family="Arial, sans-serif" font-size="20px" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px">
           <h2 class="text-build-content" style="line-height:30px;text-align:center;; margin-top: 10px; margin-bottom: 10px" data-testid="A3g1Tqavxqp"><span style="font-size:24px;">{{ lang.gift_card_header }}</span><br /><span style="font-size:20px;">{{lang.from}}: {{ transaction_data.customer_first_name }} {{ transaction_data.customer_last_name }}</span></h2>
         </mj-text>
-        <mj-text align="left" color="#000000" font-family="Arial, sans-serif" font-size="20px" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px">{% for option in transaction_data._embedded["fx:items"][0]["_embedded"]["fx:item_options"] %}
-          {% if (option.name == 'gift_recipient_message') %}
+        <mj-text align="left" color="#000000" font-family="Arial, sans-serif" font-size="20px" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px">
+        <mj-raw>{% for option in transaction_data._embedded["fx:items"][0]["_embedded"]["fx:item_options"] %}</mj-raw>
+          <mj-raw>{% if (option.name == 'gift_recipient_message') %}</mj-raw>
           <p class="text-build-content" style="line-height: 30px; text-align: center; margin: 10px 0; margin-top: 10px; margin-bottom: 10px;" data-testid="xQFIzXF17"><span style="color:#666;font-family:Open Sans;font-size:20px;"><i>{{ option.value }}</i></span></p>
-          {% endif %}
-          {% endfor %}
+          <mj-raw>{% endif %}</mj-raw>
+          <mj-raw>{% endfor %}</mj-raw>
         </mj-text>
       </mj-column>
     </mj-section>
@@ -42,7 +43,7 @@
         </mj-text>
       </mj-column>
     </mj-section>
-    <mj-section background-color="#fff" background-repeat="repeat" padding-bottom="40px" padding-left="30px" padding-right="30px" padding-top="0px" padding="0px 30px 40px 30px" text-align="center">
+    <mj-section background-color="#fff" background-repeat="repeat" padding-bottom="70px" padding-left="30px" padding-right="30px" padding-top="0px" padding="0px 30px 40px 30px" text-align="center">
       <mj-column>
         <mj-button align="center" background-color="#009005" border-radius="0px" border="none" color="#ffffff" font-family="Arial, sans-serif" font-size="16px" font-weight="normal" inner-padding="15px 25px 15px 25px" padding-bottom="0px" padding-left="0px" padding-right="0px" padding-top="0px" padding="0px 0px 0px 0px" text-decoration="none" text-transform="none" vertical-align="middle" href="{{ store_data.url }}"><span style="font-family:Open Sans, Helvetica, Arial, sans-serif;font-size:16px;" ><b>{{ lang.start_shopping }}</b></span></mj-button>
       </mj-column>
