@@ -150,7 +150,12 @@
 {% endif %}
 {% if not is_updateinfo %}
 {% for tax in multiship.taxes %}
-    {{ tax.name }} ({{ tax.rate }}%) {{ config.lang.cart_tax|raw }}: {{ tax.amount|money_format }}
+    {% if tax.rate is null  %}
+        {% set tax_rate = '' %}
+    {% else %}
+        {% set tax_rate = ' (' ~ tax.rate ~ '%)' %}
+    {% endif %}
+    {{ tax.name }}{{ tax_rate }} {{ config.lang.cart_tax|raw }}: {{ tax.amount|money_format }}
 {% endfor %}
     {{ config.lang.checkout_shipment_total|raw }}: {{ multiship.total_price|money_format }}
 {% endif %}

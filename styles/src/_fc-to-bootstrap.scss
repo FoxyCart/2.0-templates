@@ -140,7 +140,8 @@
   @extend .input-group-btn;
 }
 
-.fc-button-link {
+.fc-button-link,
+.fc-button--show-other-payment {
   @extend .btn;
   @extend .btn-link;
 }
@@ -250,6 +251,14 @@
 
 .fc-order-quantity {
   @extend .lead;
+}
+
+// Express Payment Options
+// ====================================================
+#fc-checkout__section--express-options {
+  @extend .text-center;
+  @extend .col-sm-8;
+  @extend .col-sm-offset-3;
 }
 
 // IMAGES
@@ -429,8 +438,7 @@
   @extend .hidden-xs;
 }
 
-.fc-container__grid--input--customer-email,
-.fc-container__grid--authentication-button--amazon {
+.fc-container__grid--input--customer-email {
    @extend .col-sm-8;
    @extend .col-sm-offset-3;
 }

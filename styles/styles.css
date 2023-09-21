@@ -444,9 +444,7 @@
   }
 }
 #fc {
-  /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
-  /* Postal Code specific elements */
-  /* First and Last name inputs on the same line */
+  /*! normalize.css v3.0.1 | MIT License | git.io/normalize */ /* Postal Code specific elements */ /* First and Last name inputs on the same line */
   /* Company + Phone inputs optionally on the same line */
   /* Postal Code + Select autocomplete */
   /* City + State inputs */
@@ -857,7 +855,7 @@
 #fc .fc-form-label--cvv2-saved, #fc .fc-form-label--new-cc-number {
   text-align: right;
 }
-#fc .text-center, #fc .fc-action--payment--checkout,
+#fc .text-center, #fc #fc-payment-method-show_other_options, #fc #fc-checkout__section--express-options, #fc .fc-action--payment--checkout,
 #fc .fc-action--payment--or,
 #fc .fc-action--payment--paypal-express-checkout,
 #fc .fc-action--payment--amazon-fps,
@@ -1181,10 +1179,9 @@
 #fc .fc-receipt__section--multiship-shipping-information, #fc .fc-address-validation--suggested, #fc .fc-address-validation--original, #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
 #fc .fc-form-label--cvv2-saved, #fc .col-lg-6, #fc .col-xs-7, #fc .fc-container--postal-code-actions--search .fc-container__grid--postal-code-actions, #fc .col-sm-7, #fc .fc-container__static--pos-masked-number,
 #fc .fc-container__static--pos-expiration, #fc .fc-cart__item__details-and-image, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .col-md-7, #fc .col-lg-7, #fc .col-xs-8, #fc #fc-receipt-container fieldset .fc-form-group div[class*=fc-container__grid--static-input], #fc .fc-pos-modal--header__value, #fc .fc-container__grid--input--address1,
-#fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--input--po, #fc .fc-postal-code-entry__without-search .fc-container__grid--country, #fc .fc-container__grid--postal-code-actions, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .col-sm-8, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
+#fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--input--po, #fc .fc-postal-code-entry__without-search .fc-container__grid--country, #fc .fc-container__grid--postal-code-actions, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .col-sm-8, #fc #fc-payment-method-show_other_options, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
 #fc .fc-container__grid--input--tax-id, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email,
-#fc .fc-container__grid--authentication-button--amazon, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title, #fc .col-md-8, #fc .fc-container__grid--payment-method,
+#fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-checkout__section--express-options, #fc .col-md-8, #fc .fc-container__grid--payment-method,
 #fc .fc-checkout__additional-field--tos,
 #fc .fc-checkout__additional-field--secure-transfer,
 #fc .fc-checkout__additional-field--subscribe,
@@ -1195,7 +1192,7 @@
 #fc .fc_checkout__shipping-results__help-text, #fc .col-lg-10, #fc .col-xs-11, #fc .fc-container__grid--input--plastic-new-card-number, #fc .fc-container__static--pos-masked-number,
 #fc .fc-container__static--pos-expiration, #fc .fc-form-label__pos-masked-number,
 #fc .fc-form-label__pos-expiration, #fc .col-sm-11, #fc .col-md-11, #fc .col-lg-11, #fc .col-xs-12, #fc .fc-pos-modal--email-container, #fc .fc-container__grid--input--company,
-#fc .fc-container__grid--input--tax-id, #fc #fc-cart--fixed-width .fc-cart__items--without-images .fc-cart__item__details, #fc #fc-cart--fixed-width .fc-sidebar--cart, #fc #fc-cart--fixed-width .fc-cart__main__content, #fc #fc-cart--fixed-width .fc-cancel-continue-shopping, #fc #fc-cart--fixed-width .fc-cart__title, #fc #fc-cart--responsive .fc-cart__items--without-images .fc-cart__item__details, #fc .col-sm-12, #fc .fc-container__grid--input--plastic-new-card-number, #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
+#fc .fc-container__grid--input--tax-id, #fc #fc-cart--fixed-width .fc-cart__items--without-images .fc-cart__item__details, #fc #fc-cart--fixed-width .fc-sidebar--cart, #fc #fc-cart--fixed-width .fc-cart__main__content, #fc #fc-cart--fixed-width .fc-cancel-continue-shopping, #fc #fc-cart--fixed-width .fc-cart__title, #fc #fc-cart--responsive .fc-cart__items--without-images .fc-cart__item__details, #fc .col-sm-12, #fc #fc-receipt__section--transaction-history, #fc .fc-container__grid--input--plastic-new-card-number, #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
 #fc .fc-form-group--multiship-select, #fc .col-lg-12 {
   position: relative;
   min-height: 1px;
@@ -1381,31 +1378,30 @@
 }
 @media (min-width: 768px) {
   #fc .col-sm-1, #fc .col-sm-2, #fc .fc-container__grid--plastic-new-csc, #fc .col-sm-3, #fc .fc-container__grid--label--address2, #fc .fc-container__grid--label--multiship-select,
-#fc .fc-container__grid--label--name,
-#fc .fc-container__grid--label--tax-id,
-#fc .fc-container__grid--label--address, #fc .fc-container__grid--plastic-new-exp-month, #fc .fc-form-label--new-cc-exp-month, #fc .col-sm-4, #fc .fc-container__grid--input--first-name,
-#fc .fc-container__grid--input--last-name,
-#fc .fc-form-group--multiple-inline .fc-container__grid--input--company,
-#fc .fc-container__grid--input--phone, #fc .fc-cart__item__price,
-#fc .fc-cart__item__quantity, #fc .fc-cart__item__total, #fc .fc-cart__items__header__price,
-#fc .fc-cart__items__header__quantity,
-#fc .fc-cart__items__header__total, #fc .fc-checkout__main .fc-sidebar--checkout, #fc #fc-cart--responsive .fc-sidebar--cart, #fc #fc-cart--responsive .fc-cancel-continue-shopping, #fc .col-sm-5, #fc .fc-container__grid--input--address1,
-#fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-form-label__pos-masked-number,
-#fc .fc-form-label__pos-expiration, #fc .fc-cart__items__header__totals,
-#fc .fc-cart__item__totals, #fc .fc-cart__items--with-images .fc-cart__items__header__item, #fc .col-sm-6, #fc #fc-receipt-container #fc-messages,
-#fc #fc-receipt__section--actions,
-#fc #fc-receipt__section--general-information,
-#fc #fc-receipt__section--billing-information,
-#fc #fc-receipt__section--shipping-information,
-#fc #fc-receipt__section--custom-fields,
-#fc .fc-receipt__section--multiship-shipping-information, #fc .fc-address-validation--suggested, #fc .fc-address-validation--original, #fc .col-sm-7, #fc .fc-container__static--pos-masked-number,
-#fc .fc-container__static--pos-expiration, #fc .fc-cart__item__details-and-image, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .col-sm-8, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
-#fc .fc-container__grid--input--tax-id, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email,
-#fc .fc-container__grid--authentication-button--amazon, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title, #fc .col-sm-9, #fc .col-sm-10, #fc .fc-postal-code-entry__with-search .fc-container__grid--country, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .col-sm-11, #fc .col-sm-12, #fc .fc-container__grid--input--plastic-new-card-number {
+  #fc .fc-container__grid--label--name,
+  #fc .fc-container__grid--label--tax-id,
+  #fc .fc-container__grid--label--address, #fc .fc-container__grid--plastic-new-exp-month, #fc .fc-form-label--new-cc-exp-month, #fc .col-sm-4, #fc .fc-container__grid--input--first-name,
+  #fc .fc-container__grid--input--last-name,
+  #fc .fc-form-group--multiple-inline .fc-container__grid--input--company,
+  #fc .fc-container__grid--input--phone, #fc .fc-cart__item__price,
+  #fc .fc-cart__item__quantity, #fc .fc-cart__item__total, #fc .fc-cart__items__header__price,
+  #fc .fc-cart__items__header__quantity,
+  #fc .fc-cart__items__header__total, #fc .fc-checkout__main .fc-sidebar--checkout, #fc #fc-cart--responsive .fc-sidebar--cart, #fc #fc-cart--responsive .fc-cancel-continue-shopping, #fc .col-sm-5, #fc .fc-container__grid--input--address1,
+  #fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--checkout-submit,
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-form-label__pos-masked-number,
+  #fc .fc-form-label__pos-expiration, #fc .fc-cart__items__header__totals,
+  #fc .fc-cart__item__totals, #fc .fc-cart__items--with-images .fc-cart__items__header__item, #fc .col-sm-6, #fc #fc-receipt-container #fc-messages,
+  #fc #fc-receipt__section--actions,
+  #fc #fc-receipt__section--general-information,
+  #fc #fc-receipt__section--billing-information,
+  #fc #fc-receipt__section--shipping-information,
+  #fc #fc-receipt__section--custom-fields,
+  #fc .fc-receipt__section--multiship-shipping-information, #fc .fc-address-validation--suggested, #fc .fc-address-validation--original, #fc .col-sm-7, #fc .fc-container__static--pos-masked-number,
+  #fc .fc-container__static--pos-expiration, #fc .fc-cart__item__details-and-image, #fc .fc-cart__items--without-images .fc-cart__items__header__item, #fc .col-sm-8, #fc #fc-payment-method-show_other_options, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
+  #fc .fc-container__grid--input--tax-id, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-checkout__section--express-options, #fc .col-sm-9, #fc .col-sm-10, #fc .fc-postal-code-entry__with-search .fc-container__grid--country, #fc #fc-cart--fixed-width .fc-cart__items--with-images .fc-cart__item__details, #fc .col-sm-11, #fc .col-sm-12, #fc #fc-receipt__section--transaction-history, #fc .fc-container__grid--input--plastic-new-card-number {
     float: left;
   }
   #fc .col-sm-1 {
@@ -1415,46 +1411,45 @@
     width: 16.6666666667%;
   }
   #fc .col-sm-3, #fc .fc-container__grid--label--address2, #fc .fc-container__grid--label--multiship-select,
-#fc .fc-container__grid--label--name,
-#fc .fc-container__grid--label--tax-id,
-#fc .fc-container__grid--label--address, #fc .fc-container__grid--plastic-new-exp-month, #fc .fc-form-label--new-cc-exp-month {
+  #fc .fc-container__grid--label--name,
+  #fc .fc-container__grid--label--tax-id,
+  #fc .fc-container__grid--label--address, #fc .fc-container__grid--plastic-new-exp-month, #fc .fc-form-label--new-cc-exp-month {
     width: 25%;
   }
   #fc .col-sm-4, #fc .fc-container__grid--input--first-name,
-#fc .fc-container__grid--input--last-name,
-#fc .fc-form-group--multiple-inline .fc-container__grid--input--company,
-#fc .fc-container__grid--input--phone, #fc .fc-cart__item__price,
-#fc .fc-cart__item__quantity, #fc .fc-cart__item__total, #fc .fc-cart__items__header__price,
-#fc .fc-cart__items__header__quantity,
-#fc .fc-cart__items__header__total, #fc .fc-checkout__main .fc-sidebar--checkout, #fc #fc-cart--responsive .fc-sidebar--cart, #fc #fc-cart--responsive .fc-cancel-continue-shopping {
+  #fc .fc-container__grid--input--last-name,
+  #fc .fc-form-group--multiple-inline .fc-container__grid--input--company,
+  #fc .fc-container__grid--input--phone, #fc .fc-cart__item__price,
+  #fc .fc-cart__item__quantity, #fc .fc-cart__item__total, #fc .fc-cart__items__header__price,
+  #fc .fc-cart__items__header__quantity,
+  #fc .fc-cart__items__header__total, #fc .fc-checkout__main .fc-sidebar--checkout, #fc #fc-cart--responsive .fc-sidebar--cart, #fc #fc-cart--responsive .fc-cancel-continue-shopping {
     width: 33.3333333333%;
   }
   #fc .col-sm-5, #fc .fc-container__grid--input--address1,
-#fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-form-label__pos-masked-number,
-#fc .fc-form-label__pos-expiration, #fc .fc-cart__items__header__totals,
-#fc .fc-cart__item__totals, #fc .fc-cart__items--with-images .fc-cart__items__header__item {
+  #fc .fc-container__grid--input--multiship-select, #fc .fc-container__grid--checkout-submit,
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-form-label__pos-masked-number,
+  #fc .fc-form-label__pos-expiration, #fc .fc-cart__items__header__totals,
+  #fc .fc-cart__item__totals, #fc .fc-cart__items--with-images .fc-cart__items__header__item {
     width: 41.6666666667%;
   }
   #fc .col-sm-6, #fc #fc-receipt-container #fc-messages,
-#fc #fc-receipt__section--actions,
-#fc #fc-receipt__section--general-information,
-#fc #fc-receipt__section--billing-information,
-#fc #fc-receipt__section--shipping-information,
-#fc #fc-receipt__section--custom-fields,
-#fc .fc-receipt__section--multiship-shipping-information, #fc .fc-address-validation--suggested, #fc .fc-address-validation--original {
+  #fc #fc-receipt__section--actions,
+  #fc #fc-receipt__section--general-information,
+  #fc #fc-receipt__section--billing-information,
+  #fc #fc-receipt__section--shipping-information,
+  #fc #fc-receipt__section--custom-fields,
+  #fc .fc-receipt__section--multiship-shipping-information, #fc .fc-address-validation--suggested, #fc .fc-address-validation--original {
     width: 50%;
   }
   #fc .col-sm-7, #fc .fc-container__static--pos-masked-number,
-#fc .fc-container__static--pos-expiration, #fc .fc-cart__item__details-and-image, #fc .fc-cart__items--without-images .fc-cart__items__header__item {
+  #fc .fc-container__static--pos-expiration, #fc .fc-cart__item__details-and-image, #fc .fc-cart__items--without-images .fc-cart__items__header__item {
     width: 58.3333333333%;
   }
-  #fc .col-sm-8, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
-#fc .fc-container__grid--input--tax-id, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email,
-#fc .fc-container__grid--authentication-button--amazon, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title {
+  #fc .col-sm-8, #fc #fc-payment-method-show_other_options, #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--input--company,
+  #fc .fc-container__grid--input--tax-id, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .fc-container__grid--input--customer-email, #fc .fc-checkout__main__contents, #fc .fc-container__grid--use-different-address, #fc #fc-cart--responsive .fc-cart__main__content, #fc #fc-cart--responsive .fc-cart__title, #fc #fc-checkout__section--express-options {
     width: 66.6666666667%;
   }
   #fc .col-sm-9 {
@@ -1466,7 +1461,7 @@
   #fc .col-sm-11 {
     width: 91.6666666667%;
   }
-  #fc .col-sm-12, #fc .fc-container__grid--input--plastic-new-card-number {
+  #fc .col-sm-12, #fc #fc-receipt__section--transaction-history, #fc .fc-container__grid--input--plastic-new-card-number {
     width: 100%;
   }
   #fc .col-sm-pull-0 {
@@ -1482,7 +1477,7 @@
     right: 25%;
   }
   #fc .col-sm-pull-4, #fc .fc-checkout__main__contents, #fc .fc-cart__item__price,
-#fc .fc-cart__item__quantity {
+  #fc .fc-cart__item__quantity {
     right: 33.3333333333%;
   }
   #fc .col-sm-pull-5 {
@@ -1557,13 +1552,12 @@
   #fc .col-sm-offset-2, #fc .fc-cart__items--with-images .fc-cart__items__header__item {
     margin-left: 16.6666666667%;
   }
-  #fc .col-sm-offset-3, #fc .fc-container__grid--input--company,
-#fc .fc-container__grid--input--phone,
-#fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-container__grid--input--customer-email,
-#fc .fc-container__grid--authentication-button--amazon, #fc .fc-container__grid--use-different-address {
+  #fc .col-sm-offset-3, #fc #fc-payment-method-show_other_options, #fc .fc-container__grid--input--company,
+  #fc .fc-container__grid--input--phone,
+  #fc .fc-container-checkout__grid--postal-code, #fc .fc-container__grid--checkout-submit,
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-container__grid--input--customer-email, #fc .fc-container__grid--use-different-address, #fc #fc-checkout__section--express-options {
     margin-left: 25%;
   }
   #fc .col-sm-offset-4 {
@@ -1596,18 +1590,18 @@
 }
 @media (min-width: 992px) {
   #fc .col-md-1, #fc .col-md-2, #fc .col-md-3, #fc .col-md-4, #fc .col-md-5, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved, #fc .col-md-7, #fc .col-md-8, #fc .fc-container__grid--payment-method,
-#fc .fc-checkout__additional-field--tos,
-#fc .fc-checkout__additional-field--secure-transfer,
-#fc .fc-checkout__additional-field--subscribe,
-#fc .fc-checkout__additional-field--save-account,
-#fc .fc-container__grid--recaptcha, #fc .fc-checkout__main__contents, #fc .col-md-9, #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
-#fc .fc-shipping-results__header,
-#fc .fc_checkout__shipping-results__help-text, #fc .col-md-11, #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
-#fc .fc-form-group--multiship-select {
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
+  #fc .fc-form-label--cvv2-saved, #fc .col-md-7, #fc .col-md-8, #fc .fc-container__grid--payment-method,
+  #fc .fc-checkout__additional-field--tos,
+  #fc .fc-checkout__additional-field--secure-transfer,
+  #fc .fc-checkout__additional-field--subscribe,
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha, #fc .fc-checkout__main__contents, #fc .col-md-9, #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
+  #fc .fc-shipping-results__header,
+  #fc .fc_checkout__shipping-results__help-text, #fc .col-md-11, #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
+  #fc .fc-form-group--multiship-select {
     float: left;
   }
   #fc .col-md-1 {
@@ -1623,39 +1617,39 @@
     width: 33.3333333333%;
   }
   #fc .col-md-5, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text {
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text {
     width: 41.6666666667%;
   }
   #fc .col-md-6, #fc .fc-form-label__plastic-saved-expiration,
-#fc .fc-form-label--cvv2-saved {
+  #fc .fc-form-label--cvv2-saved {
     width: 50%;
   }
   #fc .col-md-7 {
     width: 58.3333333333%;
   }
   #fc .col-md-8, #fc .fc-container__grid--payment-method,
-#fc .fc-checkout__additional-field--tos,
-#fc .fc-checkout__additional-field--secure-transfer,
-#fc .fc-checkout__additional-field--subscribe,
-#fc .fc-checkout__additional-field--save-account,
-#fc .fc-container__grid--recaptcha, #fc .fc-checkout__main__contents {
+  #fc .fc-checkout__additional-field--tos,
+  #fc .fc-checkout__additional-field--secure-transfer,
+  #fc .fc-checkout__additional-field--subscribe,
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha, #fc .fc-checkout__main__contents {
     width: 66.6666666667%;
   }
   #fc .col-md-9 {
     width: 75%;
   }
   #fc .col-md-10, #fc .fc-shipping-rates .fc-input-group--full-page,
-#fc .fc-shipping-results__header,
-#fc .fc_checkout__shipping-results__help-text {
+  #fc .fc-shipping-results__header,
+  #fc .fc_checkout__shipping-results__help-text {
     width: 83.3333333333%;
   }
   #fc .col-md-11 {
     width: 91.6666666667%;
   }
   #fc .col-md-12, #fc .fc-shipping-rates .fc-input-group--sidebar,
-#fc .fc-form-group--multiship-select {
+  #fc .fc-form-group--multiship-select {
     width: 100%;
   }
   #fc .col-md-pull-0 {
@@ -1740,22 +1734,22 @@
     margin-left: 0%;
   }
   #fc .col-md-offset-1, #fc .fc-shipping-rates .fc-input-group--full-page,
-#fc .fc-shipping-results__header,
-#fc .fc_checkout__shipping-results__help-text {
+  #fc .fc-shipping-results__header,
+  #fc .fc_checkout__shipping-results__help-text {
     margin-left: 8.3333333333%;
   }
   #fc .col-md-offset-2 {
     margin-left: 16.6666666667%;
   }
   #fc .col-md-offset-3, #fc .fc-container__grid--checkout-submit,
-#fc .fc-container__grid--checkout-subscription-cancel,
-#fc .fc-container__grid--checkout-submit-helper-text,
-#fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-container__grid--payment-method,
-#fc .fc-checkout__additional-field--tos,
-#fc .fc-checkout__additional-field--secure-transfer,
-#fc .fc-checkout__additional-field--subscribe,
-#fc .fc-checkout__additional-field--save-account,
-#fc .fc-container__grid--recaptcha {
+  #fc .fc-container__grid--checkout-subscription-cancel,
+  #fc .fc-container__grid--checkout-submit-helper-text,
+  #fc .fc-container__grid--checkout-subscription-cancel-helper-text, #fc .fc-container__grid--payment-method,
+  #fc .fc-checkout__additional-field--tos,
+  #fc .fc-checkout__additional-field--secure-transfer,
+  #fc .fc-checkout__additional-field--subscribe,
+  #fc .fc-checkout__additional-field--save-account,
+  #fc .fc-container__grid--recaptcha {
     margin-left: 25%;
   }
   #fc .col-md-offset-4 {
@@ -2059,10 +2053,12 @@
 #fc .input-group-sm > input[type=date].input-group-addon,
 #fc .input-group-sm > .input-group-btn > input[type=date].btn,
 #fc .input-group-sm > .input-group-btn > input[type=date].fc-button-link,
+#fc .input-group-sm > .input-group-btn > input[type=date].fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > input[type=date].fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > input[type=date].fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > input[type=date].btn,
 #fc .input-group-sm > .fc-input-group__button > input[type=date].fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > input[type=date].fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > input[type=date].fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > input[type=date].fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > input[type=date].fc-button--minor,
@@ -2076,10 +2072,12 @@
 #fc .input-group-sm > input[type=time].input-group-addon,
 #fc .input-group-sm > .input-group-btn > input[type=time].btn,
 #fc .input-group-sm > .input-group-btn > input[type=time].fc-button-link,
+#fc .input-group-sm > .input-group-btn > input[type=time].fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > input[type=time].fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > input[type=time].fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > input[type=time].btn,
 #fc .input-group-sm > .fc-input-group__button > input[type=time].fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > input[type=time].fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > input[type=time].fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > input[type=time].fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > input[type=time].fc-button--minor,
@@ -2093,10 +2091,12 @@
 #fc .input-group-sm > input[type=datetime-local].input-group-addon,
 #fc .input-group-sm > .input-group-btn > input[type=datetime-local].btn,
 #fc .input-group-sm > .input-group-btn > input[type=datetime-local].fc-button-link,
+#fc .input-group-sm > .input-group-btn > input[type=datetime-local].fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > input[type=datetime-local].fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > input[type=datetime-local].fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > input[type=datetime-local].btn,
 #fc .input-group-sm > .fc-input-group__button > input[type=datetime-local].fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > input[type=datetime-local].fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > input[type=datetime-local].fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > input[type=datetime-local].fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > input[type=datetime-local].fc-button--minor,
@@ -2110,10 +2110,12 @@
 #fc .input-group-sm > input[type=month].input-group-addon,
 #fc .input-group-sm > .input-group-btn > input[type=month].btn,
 #fc .input-group-sm > .input-group-btn > input[type=month].fc-button-link,
+#fc .input-group-sm > .input-group-btn > input[type=month].fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > input[type=month].fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > input[type=month].fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > input[type=month].btn,
 #fc .input-group-sm > .fc-input-group__button > input[type=month].fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > input[type=month].fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > input[type=month].fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > input[type=month].fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > input[type=month].fc-button--minor,
@@ -2126,10 +2128,12 @@
 #fc .input-group-lg > input[type=date].input-group-addon,
 #fc .input-group-lg > .input-group-btn > input[type=date].btn,
 #fc .input-group-lg > .input-group-btn > input[type=date].fc-button-link,
+#fc .input-group-lg > .input-group-btn > input[type=date].fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > input[type=date].fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > input[type=date].fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > input[type=date].btn,
 #fc .input-group-lg > .fc-input-group__button > input[type=date].fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > input[type=date].fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > input[type=date].fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > input[type=date].fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > input[type=date].fc-button--minor,
@@ -2142,10 +2146,12 @@
 #fc .input-group-lg > input[type=time].input-group-addon,
 #fc .input-group-lg > .input-group-btn > input[type=time].btn,
 #fc .input-group-lg > .input-group-btn > input[type=time].fc-button-link,
+#fc .input-group-lg > .input-group-btn > input[type=time].fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > input[type=time].fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > input[type=time].fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > input[type=time].btn,
 #fc .input-group-lg > .fc-input-group__button > input[type=time].fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > input[type=time].fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > input[type=time].fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > input[type=time].fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > input[type=time].fc-button--minor,
@@ -2158,10 +2164,12 @@
 #fc .input-group-lg > input[type=datetime-local].input-group-addon,
 #fc .input-group-lg > .input-group-btn > input[type=datetime-local].btn,
 #fc .input-group-lg > .input-group-btn > input[type=datetime-local].fc-button-link,
+#fc .input-group-lg > .input-group-btn > input[type=datetime-local].fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > input[type=datetime-local].fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > input[type=datetime-local].fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > input[type=datetime-local].btn,
 #fc .input-group-lg > .fc-input-group__button > input[type=datetime-local].fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > input[type=datetime-local].fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > input[type=datetime-local].fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > input[type=datetime-local].fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > input[type=datetime-local].fc-button--minor,
@@ -2174,10 +2182,12 @@
 #fc .input-group-lg > input[type=month].input-group-addon,
 #fc .input-group-lg > .input-group-btn > input[type=month].btn,
 #fc .input-group-lg > .input-group-btn > input[type=month].fc-button-link,
+#fc .input-group-lg > .input-group-btn > input[type=month].fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > input[type=month].fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > input[type=month].fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > input[type=month].btn,
 #fc .input-group-lg > .fc-input-group__button > input[type=month].fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > input[type=month].fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > input[type=month].fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > input[type=month].fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > input[type=month].fc-button--minor,
@@ -2255,10 +2265,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > .input-group-addon,
 #fc .input-group-sm > .input-group-btn > .btn,
 #fc .input-group-sm > .input-group-btn > .fc-button-link,
+#fc .input-group-sm > .input-group-btn > .fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > .fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > .fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > .btn,
 #fc .input-group-sm > .fc-input-group__button > .fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > .fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > .fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > .fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > .fc-button--minor,
@@ -2275,10 +2287,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > select.input-group-addon,
 #fc .input-group-sm > .input-group-btn > select.btn,
 #fc .input-group-sm > .input-group-btn > select.fc-button-link,
+#fc .input-group-sm > .input-group-btn > select.fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > select.fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > select.fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > select.btn,
 #fc .input-group-sm > .fc-input-group__button > select.fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > select.fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > select.fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > select.fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > select.fc-button--minor,
@@ -2292,10 +2306,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > textarea.input-group-addon,
 #fc .input-group-sm > .input-group-btn > textarea.btn,
 #fc .input-group-sm > .input-group-btn > textarea.fc-button-link,
+#fc .input-group-sm > .input-group-btn > textarea.fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > textarea.fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > textarea.fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > textarea.btn,
 #fc .input-group-sm > .fc-input-group__button > textarea.fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > textarea.fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > textarea.fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > textarea.fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > textarea.fc-button--minor,
@@ -2309,10 +2325,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > select[multiple].input-group-addon,
 #fc .input-group-sm > .input-group-btn > select[multiple].btn,
 #fc .input-group-sm > .input-group-btn > select[multiple].fc-button-link,
+#fc .input-group-sm > .input-group-btn > select[multiple].fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > select[multiple].fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > select[multiple].fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > select[multiple].btn,
 #fc .input-group-sm > .fc-input-group__button > select[multiple].fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > select[multiple].fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > select[multiple].fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > select[multiple].fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > select[multiple].fc-button--minor,
@@ -2325,10 +2343,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > .input-group-addon,
 #fc .input-group-lg > .input-group-btn > .btn,
 #fc .input-group-lg > .input-group-btn > .fc-button-link,
+#fc .input-group-lg > .input-group-btn > .fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > .fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > .fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > .btn,
 #fc .input-group-lg > .fc-input-group__button > .fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > .fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > .fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > .fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > .fc-button--minor,
@@ -2345,10 +2365,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > select.input-group-addon,
 #fc .input-group-lg > .input-group-btn > select.btn,
 #fc .input-group-lg > .input-group-btn > select.fc-button-link,
+#fc .input-group-lg > .input-group-btn > select.fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > select.fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > select.fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > select.btn,
 #fc .input-group-lg > .fc-input-group__button > select.fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > select.fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > select.fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > select.fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > select.fc-button--minor,
@@ -2362,10 +2384,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > textarea.input-group-addon,
 #fc .input-group-lg > .input-group-btn > textarea.btn,
 #fc .input-group-lg > .input-group-btn > textarea.fc-button-link,
+#fc .input-group-lg > .input-group-btn > textarea.fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > textarea.fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > textarea.fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > textarea.btn,
 #fc .input-group-lg > .fc-input-group__button > textarea.fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > textarea.fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > textarea.fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > textarea.fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > textarea.fc-button--minor,
@@ -2378,10 +2402,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > select[multiple].input-group-addon,
 #fc .input-group-lg > .input-group-btn > select[multiple].btn,
 #fc .input-group-lg > .input-group-btn > select[multiple].fc-button-link,
+#fc .input-group-lg > .input-group-btn > select[multiple].fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > select[multiple].fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > select[multiple].fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > select[multiple].btn,
 #fc .input-group-lg > .fc-input-group__button > select[multiple].fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > select[multiple].fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > select[multiple].fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > select[multiple].fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > select[multiple].fc-button--minor,
@@ -2411,10 +2437,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > .input-group-addon + .form-control-feedback,
 #fc .input-group-lg > .input-group-btn > .btn + .form-control-feedback,
 #fc .input-group-lg > .input-group-btn > .fc-button-link + .form-control-feedback,
+#fc .input-group-lg > .input-group-btn > .fc-button--show-other-payment + .form-control-feedback,
 #fc .input-group-lg > .input-group-btn > .fc-action--checkout--button + .form-control-feedback,
 #fc .input-group-lg > .input-group-btn > .fc-sidecart-button + .form-control-feedback,
 #fc .input-group-lg > .fc-input-group__button > .btn + .form-control-feedback,
 #fc .input-group-lg > .fc-input-group__button > .fc-button-link + .form-control-feedback,
+#fc .input-group-lg > .fc-input-group__button > .fc-button--show-other-payment + .form-control-feedback,
 #fc .input-group-lg > .fc-input-group__button > .fc-action--checkout--button + .form-control-feedback,
 #fc .input-group-lg > .fc-input-group__button > .fc-sidecart-button + .form-control-feedback,
 #fc .input-group-lg > .input-group-btn > .fc-button--minor + .form-control-feedback,
@@ -2429,10 +2457,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > .input-group-addon + .form-control-feedback,
 #fc .input-group-sm > .input-group-btn > .btn + .form-control-feedback,
 #fc .input-group-sm > .input-group-btn > .fc-button-link + .form-control-feedback,
+#fc .input-group-sm > .input-group-btn > .fc-button--show-other-payment + .form-control-feedback,
 #fc .input-group-sm > .input-group-btn > .fc-action--checkout--button + .form-control-feedback,
 #fc .input-group-sm > .input-group-btn > .fc-sidecart-button + .form-control-feedback,
 #fc .input-group-sm > .fc-input-group__button > .btn + .form-control-feedback,
 #fc .input-group-sm > .fc-input-group__button > .fc-button-link + .form-control-feedback,
+#fc .input-group-sm > .fc-input-group__button > .fc-button--show-other-payment + .form-control-feedback,
 #fc .input-group-sm > .fc-input-group__button > .fc-action--checkout--button + .form-control-feedback,
 #fc .input-group-sm > .fc-input-group__button > .fc-sidecart-button + .form-control-feedback,
 #fc .input-group-sm > .input-group-btn > .fc-button--minor + .form-control-feedback,
@@ -2627,45 +2657,45 @@ fieldset[disabled] #fc .checkbox-inline {
     vertical-align: middle;
   }
   #fc .form-inline .input-group .input-group-addon, #fc .form-inline .fc-coupon-entry--input .input-group-addon, #fc .form-inline .fc-input-group .input-group-addon,
-#fc .form-inline .input-group .input-group-btn,
-#fc .form-inline .fc-coupon-entry--input .input-group-btn,
-#fc .form-inline .fc-input-group .input-group-btn,
-#fc .form-inline .input-group .fc-input-group__button,
-#fc .form-inline .fc-coupon-entry--input .fc-input-group__button,
-#fc .form-inline .fc-input-group .fc-input-group__button,
-#fc .form-inline .input-group .form-control,
-#fc .form-inline .fc-coupon-entry--input .form-control,
-#fc .form-inline .input-group .fc-form-control,
-#fc .form-inline .fc-coupon-entry--input .fc-form-control,
-#fc .form-inline .fc-input-group .form-control,
-#fc .form-inline .fc-input-group .fc-form-control {
+  #fc .form-inline .input-group .input-group-btn,
+  #fc .form-inline .fc-coupon-entry--input .input-group-btn,
+  #fc .form-inline .fc-input-group .input-group-btn,
+  #fc .form-inline .input-group .fc-input-group__button,
+  #fc .form-inline .fc-coupon-entry--input .fc-input-group__button,
+  #fc .form-inline .fc-input-group .fc-input-group__button,
+  #fc .form-inline .input-group .form-control,
+  #fc .form-inline .fc-coupon-entry--input .form-control,
+  #fc .form-inline .input-group .fc-form-control,
+  #fc .form-inline .fc-coupon-entry--input .fc-form-control,
+  #fc .form-inline .fc-input-group .form-control,
+  #fc .form-inline .fc-input-group .fc-form-control {
     width: auto;
   }
   #fc .form-inline .input-group > .form-control, #fc .form-inline .fc-coupon-entry--input > .form-control, #fc .form-inline .input-group > .fc-form-control, #fc .form-inline .fc-coupon-entry--input > .fc-form-control, #fc .form-inline .fc-input-group > .form-control, #fc .form-inline .fc-input-group > .fc-form-control {
     width: 100%;
   }
   #fc .form-inline .control-label, #fc .form-inline .fc-form-label__pos-masked-number,
-#fc .form-inline .fc-form-label__pos-expiration, #fc .form-inline .fc-form-label__plastic-saved-expiration,
-#fc .form-inline .fc-form-label--cvv2-saved, #fc .form-inline .fc-form-label--new-cc-number {
+  #fc .form-inline .fc-form-label__pos-expiration, #fc .form-inline .fc-form-label__plastic-saved-expiration,
+  #fc .form-inline .fc-form-label--cvv2-saved, #fc .form-inline .fc-form-label--new-cc-number {
     margin-bottom: 0;
     vertical-align: middle;
   }
   #fc .form-inline .radio, #fc .form-inline .fc-input-group-container--radio,
-#fc .form-inline .checkbox,
-#fc .form-inline .fc-input-group-container--checkbox {
+  #fc .form-inline .checkbox,
+  #fc .form-inline .fc-input-group-container--checkbox {
     display: inline-block;
     margin-top: 0;
     margin-bottom: 0;
     vertical-align: middle;
   }
   #fc .form-inline .radio label, #fc .form-inline .fc-input-group-container--radio label,
-#fc .form-inline .checkbox label,
-#fc .form-inline .fc-input-group-container--checkbox label {
+  #fc .form-inline .checkbox label,
+  #fc .form-inline .fc-input-group-container--checkbox label {
     padding-left: 0;
   }
   #fc .form-inline .radio input[type=radio], #fc .form-inline .fc-input-group-container--radio input[type=radio],
-#fc .form-inline .checkbox input[type=checkbox],
-#fc .form-inline .fc-input-group-container--checkbox input[type=checkbox] {
+  #fc .form-inline .checkbox input[type=checkbox],
+  #fc .form-inline .fc-input-group-container--checkbox input[type=checkbox] {
     float: none;
     margin-left: 0;
   }
@@ -2741,16 +2771,16 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (min-width: 768px) {
   #fc .form-horizontal .control-label, #fc .form-horizontal .fc-form-label__pos-masked-number,
-#fc .form-horizontal .fc-form-label__pos-expiration, #fc .form-horizontal .fc-form-label__plastic-saved-expiration,
-#fc .form-horizontal .fc-form-label--cvv2-saved, #fc .fc-checkout__main__form .control-label, #fc .fc-checkout__main__form .fc-form-label__pos-masked-number,
-#fc .fc-checkout__main__form .fc-form-label__pos-expiration, #fc .fc-checkout__main__form .fc-form-label__plastic-saved-expiration,
-#fc .fc-checkout__main__form .fc-form-label--cvv2-saved,
-#fc .fc-address-entry .control-label,
-#fc .fc-address-entry .fc-form-label__pos-masked-number,
-#fc .fc-address-entry .fc-form-label__pos-expiration,
-#fc .fc-address-entry .fc-form-label__plastic-saved-expiration,
-#fc .fc-address-entry .fc-form-label--cvv2-saved, #fc .form-horizontal .fc-form-label--new-cc-number, #fc .fc-checkout__main__form .fc-form-label--new-cc-number,
-#fc .fc-address-entry .fc-form-label--new-cc-number {
+  #fc .form-horizontal .fc-form-label__pos-expiration, #fc .form-horizontal .fc-form-label__plastic-saved-expiration,
+  #fc .form-horizontal .fc-form-label--cvv2-saved, #fc .fc-checkout__main__form .control-label, #fc .fc-checkout__main__form .fc-form-label__pos-masked-number,
+  #fc .fc-checkout__main__form .fc-form-label__pos-expiration, #fc .fc-checkout__main__form .fc-form-label__plastic-saved-expiration,
+  #fc .fc-checkout__main__form .fc-form-label--cvv2-saved,
+  #fc .fc-address-entry .control-label,
+  #fc .fc-address-entry .fc-form-label__pos-masked-number,
+  #fc .fc-address-entry .fc-form-label__pos-expiration,
+  #fc .fc-address-entry .fc-form-label__plastic-saved-expiration,
+  #fc .fc-address-entry .fc-form-label--cvv2-saved, #fc .form-horizontal .fc-form-label--new-cc-number, #fc .fc-checkout__main__form .fc-form-label--new-cc-number,
+  #fc .fc-address-entry .fc-form-label--new-cc-number {
     text-align: right;
     margin-bottom: 0;
     padding-top: 7px;
@@ -2761,7 +2791,8 @@ fieldset[disabled] #fc .checkbox-inline {
   top: 0;
   right: 15px;
 }
-#fc .btn, #fc .fc-button-link, #fc .fc-action--checkout--button, #fc .fc-sidecart-button, #fc .fc-button--minor, #fc .fc-button {
+#fc .btn, #fc .fc-button-link,
+#fc .fc-button--show-other-payment, #fc .fc-action--checkout--button, #fc .fc-sidecart-button, #fc .fc-button--minor, #fc .fc-button {
   display: inline-block;
   margin-bottom: 0;
   font-weight: normal;
@@ -2780,22 +2811,30 @@ fieldset[disabled] #fc .checkbox-inline {
   -ms-user-select: none;
   user-select: none;
 }
-#fc .btn:focus, #fc .fc-button-link:focus, #fc .fc-action--checkout--button:focus, #fc .fc-sidecart-button:focus, #fc .fc-button--minor:focus, #fc .fc-button:focus, #fc .btn:active:focus, #fc .btn.active:focus {
+#fc .btn:focus, #fc .fc-button-link:focus,
+#fc .fc-button--show-other-payment:focus, #fc .fc-action--checkout--button:focus, #fc .fc-sidecart-button:focus, #fc .fc-button--minor:focus, #fc .fc-button:focus, #fc .btn:active:focus, #fc .btn.active:focus {
   outline: thin dotted;
   outline: 5px auto -webkit-focus-ring-color;
   outline-offset: -2px;
 }
-#fc .btn:hover, #fc .fc-button-link:hover, #fc .fc-action--checkout--button:hover, #fc .fc-sidecart-button:hover, #fc .fc-button--minor:hover, #fc .fc-button:hover, #fc .btn:focus, #fc .fc-button-link:focus, #fc .fc-action--checkout--button:focus, #fc .fc-sidecart-button:focus, #fc .fc-button--minor:focus, #fc .fc-button:focus {
+#fc .btn:hover, #fc .fc-button-link:hover,
+#fc .fc-button--show-other-payment:hover, #fc .fc-action--checkout--button:hover, #fc .fc-sidecart-button:hover, #fc .fc-button--minor:hover, #fc .fc-button:hover, #fc .btn:focus, #fc .fc-button-link:focus,
+#fc .fc-button--show-other-payment:focus, #fc .fc-action--checkout--button:focus, #fc .fc-sidecart-button:focus, #fc .fc-button--minor:focus, #fc .fc-button:focus {
   color: #333;
   text-decoration: none;
 }
-#fc .btn:active, #fc .fc-button-link:active, #fc .fc-action--checkout--button:active, #fc .fc-sidecart-button:active, #fc .fc-button--minor:active, #fc .fc-button:active, #fc .btn.active, #fc .active.fc-button-link, #fc .active.fc-action--checkout--button, #fc .active.fc-sidecart-button, #fc .active.fc-button--minor, #fc .active.fc-button {
+#fc .btn:active, #fc .fc-button-link:active,
+#fc .fc-button--show-other-payment:active, #fc .fc-action--checkout--button:active, #fc .fc-sidecart-button:active, #fc .fc-button--minor:active, #fc .fc-button:active, #fc .btn.active, #fc .active.fc-button-link,
+#fc .active.fc-button--show-other-payment, #fc .active.fc-action--checkout--button, #fc .active.fc-sidecart-button, #fc .active.fc-button--minor, #fc .active.fc-button {
   outline: 0;
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-#fc .btn.disabled, #fc .disabled.fc-button-link, #fc .disabled.fc-action--checkout--button, #fc .disabled.fc-sidecart-button, #fc .disabled.fc-button--minor, #fc .disabled.fc-button, #fc .btn[disabled], #fc [disabled].fc-button-link, #fc [disabled].fc-action--checkout--button, #fc [disabled].fc-sidecart-button, #fc [disabled].fc-button--minor, #fc [disabled].fc-button, fieldset[disabled] #fc .btn, fieldset[disabled] #fc .fc-button-link, fieldset[disabled] #fc .fc-action--checkout--button, fieldset[disabled] #fc .fc-sidecart-button, fieldset[disabled] #fc .fc-button--minor, fieldset[disabled] #fc .fc-button {
+#fc .btn.disabled, #fc .disabled.fc-button-link,
+#fc .disabled.fc-button--show-other-payment, #fc .disabled.fc-action--checkout--button, #fc .disabled.fc-sidecart-button, #fc .disabled.fc-button--minor, #fc .disabled.fc-button, #fc .btn[disabled], #fc [disabled].fc-button-link,
+#fc [disabled].fc-button--show-other-payment, #fc [disabled].fc-action--checkout--button, #fc [disabled].fc-sidecart-button, #fc [disabled].fc-button--minor, #fc [disabled].fc-button, fieldset[disabled] #fc .btn, fieldset[disabled] #fc .fc-button-link,
+fieldset[disabled] #fc .fc-button--show-other-payment, fieldset[disabled] #fc .fc-action--checkout--button, fieldset[disabled] #fc .fc-sidecart-button, fieldset[disabled] #fc .fc-button--minor, fieldset[disabled] #fc .fc-button {
   cursor: not-allowed;
   pointer-events: none;
   opacity: 0.65;
@@ -2928,44 +2967,56 @@ fieldset[disabled] #fc .checkbox-inline {
   color: #d9534f;
   background-color: #fff;
 }
-#fc .btn-link, #fc .fc-button-link, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle {
+#fc .btn-link, #fc .fc-button-link,
+#fc .fc-button--show-other-payment, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle {
   color: #428bca;
   font-weight: normal;
   cursor: pointer;
   border-radius: 0;
 }
-#fc .btn-link, #fc .fc-button-link, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle, #fc .btn-link:active, #fc .btn-link[disabled], fieldset[disabled] #fc .btn-link {
+#fc .btn-link, #fc .fc-button-link,
+#fc .fc-button--show-other-payment, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle, #fc .btn-link:active, #fc .btn-link[disabled], fieldset[disabled] #fc .btn-link {
   background-color: transparent;
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-#fc .btn-link, #fc .fc-button-link, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle, #fc .btn-link:hover, #fc .btn-link:focus, #fc .btn-link:active {
+#fc .btn-link, #fc .fc-button-link,
+#fc .fc-button--show-other-payment, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle, #fc .btn-link:hover, #fc .btn-link:focus, #fc .btn-link:active {
   border-color: transparent;
 }
-#fc .btn-link:hover, #fc .fc-button-link:hover, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:hover, #fc .btn-link:focus, #fc .fc-button-link:focus, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:focus {
+#fc .btn-link:hover, #fc .fc-button-link:hover,
+#fc .fc-button--show-other-payment:hover, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:hover, #fc .btn-link:focus, #fc .fc-button-link:focus,
+#fc .fc-button--show-other-payment:focus, #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:focus {
   color: #2a6496;
   text-decoration: underline;
   background-color: transparent;
 }
-#fc .btn-link[disabled]:hover, #fc [disabled].fc-button-link:hover, #fc .fc-transaction--future__summary--toggle [disabled].fc-transaction__ui__toggle:hover, #fc .btn-link[disabled]:focus, #fc [disabled].fc-button-link:focus, #fc .fc-transaction--future__summary--toggle [disabled].fc-transaction__ui__toggle:focus, fieldset[disabled] #fc .btn-link:hover, fieldset[disabled] #fc .fc-button-link:hover, fieldset[disabled] #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:hover, fieldset[disabled] #fc .btn-link:focus, fieldset[disabled] #fc .fc-button-link:focus, fieldset[disabled] #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:focus {
+#fc .btn-link[disabled]:hover, #fc [disabled].fc-button-link:hover,
+#fc [disabled].fc-button--show-other-payment:hover, #fc .fc-transaction--future__summary--toggle [disabled].fc-transaction__ui__toggle:hover, #fc .btn-link[disabled]:focus, #fc [disabled].fc-button-link:focus,
+#fc [disabled].fc-button--show-other-payment:focus, #fc .fc-transaction--future__summary--toggle [disabled].fc-transaction__ui__toggle:focus, fieldset[disabled] #fc .btn-link:hover, fieldset[disabled] #fc .fc-button-link:hover,
+fieldset[disabled] #fc .fc-button--show-other-payment:hover, fieldset[disabled] #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:hover, fieldset[disabled] #fc .btn-link:focus, fieldset[disabled] #fc .fc-button-link:focus,
+fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] #fc .fc-transaction--future__summary--toggle .fc-transaction__ui__toggle:focus {
   color: #999999;
   text-decoration: none;
 }
-#fc .btn-lg, #fc .btn-group-lg > .btn, #fc .btn-group-lg > .fc-button-link, #fc .btn-group-lg > .fc-action--checkout--button, #fc .btn-group-lg > .fc-sidecart-button, #fc .btn-group-lg > .fc-button--minor, #fc .btn-group-lg > .fc-button {
+#fc .btn-lg, #fc .btn-group-lg > .btn, #fc .btn-group-lg > .fc-button-link,
+#fc .btn-group-lg > .fc-button--show-other-payment, #fc .btn-group-lg > .fc-action--checkout--button, #fc .btn-group-lg > .fc-sidecart-button, #fc .btn-group-lg > .fc-button--minor, #fc .btn-group-lg > .fc-button {
   padding: 10px 16px;
   font-size: 18px;
   line-height: 1.33;
   border-radius: 6px;
 }
 #fc .btn-sm, #fc #fc-receipt__section--receipt_messaging_and_actions .fc-button, #fc .fc-modal .fc-modal--inner button, #fc .fc-button--cancel,
-#fc #AmazonLogoutButton, #fc .btn-group-sm > .btn, #fc .btn-group-sm > .fc-button-link, #fc .btn-group-sm > .fc-action--checkout--button, #fc .btn-group-sm > .fc-sidecart-button, #fc .btn-group-sm > .fc-button--minor, #fc .btn-group-sm > .fc-button {
+#fc #AmazonLogoutButton, #fc .btn-group-sm > .btn, #fc .btn-group-sm > .fc-button-link,
+#fc .btn-group-sm > .fc-button--show-other-payment, #fc .btn-group-sm > .fc-action--checkout--button, #fc .btn-group-sm > .fc-sidecart-button, #fc .btn-group-sm > .fc-button--minor, #fc .btn-group-sm > .fc-button {
   padding: 5px 10px;
   font-size: 12px;
   line-height: 1.5;
   border-radius: 3px;
 }
 #fc .btn-xs, #fc .fc-transaction__ui__toggle,
-#fc .fc-transaction__ui__button, #fc .fc-button--minor, #fc .btn-group-xs > .btn, #fc .btn-group-xs > .fc-button-link, #fc .btn-group-xs > .fc-action--checkout--button, #fc .btn-group-xs > .fc-sidecart-button, #fc .btn-group-xs > .fc-button--minor, #fc .btn-group-xs > .fc-button {
+#fc .fc-transaction__ui__button, #fc .fc-button--minor, #fc .btn-group-xs > .btn, #fc .btn-group-xs > .fc-button-link,
+#fc .btn-group-xs > .fc-button--show-other-payment, #fc .btn-group-xs > .fc-action--checkout--button, #fc .btn-group-xs > .fc-sidecart-button, #fc .btn-group-xs > .fc-button--minor, #fc .btn-group-xs > .fc-button {
   padding: 1px 5px;
   font-size: 12px;
   line-height: 1.5;
@@ -3010,9 +3061,11 @@ fieldset[disabled] #fc .checkbox-inline {
   display: inline-block;
   vertical-align: middle;
 }
-#fc .btn-group > .btn, #fc .btn-group > .fc-button-link, #fc .btn-group > .fc-action--checkout--button, #fc .btn-group > .fc-sidecart-button, #fc .btn-group > .fc-button--minor, #fc .btn-group > .fc-button,
+#fc .btn-group > .btn, #fc .btn-group > .fc-button-link,
+#fc .btn-group > .fc-button--show-other-payment, #fc .btn-group > .fc-action--checkout--button, #fc .btn-group > .fc-sidecart-button, #fc .btn-group > .fc-button--minor, #fc .btn-group > .fc-button,
 #fc .btn-group-vertical > .btn,
 #fc .btn-group-vertical > .fc-button-link,
+#fc .btn-group-vertical > .fc-button--show-other-payment,
 #fc .btn-group-vertical > .fc-action--checkout--button,
 #fc .btn-group-vertical > .fc-sidecart-button,
 #fc .btn-group-vertical > .fc-button--minor,
@@ -3020,51 +3073,76 @@ fieldset[disabled] #fc .checkbox-inline {
   position: relative;
   float: left;
 }
-#fc .btn-group > .btn:hover, #fc .btn-group > .fc-button-link:hover, #fc .btn-group > .fc-action--checkout--button:hover, #fc .btn-group > .fc-sidecart-button:hover, #fc .btn-group > .fc-button--minor:hover, #fc .btn-group > .fc-button:hover, #fc .btn-group > .btn:focus, #fc .btn-group > .fc-button-link:focus, #fc .btn-group > .fc-action--checkout--button:focus, #fc .btn-group > .fc-sidecart-button:focus, #fc .btn-group > .fc-button--minor:focus, #fc .btn-group > .fc-button:focus, #fc .btn-group > .btn:active, #fc .btn-group > .fc-button-link:active, #fc .btn-group > .fc-action--checkout--button:active, #fc .btn-group > .fc-sidecart-button:active, #fc .btn-group > .fc-button--minor:active, #fc .btn-group > .fc-button:active, #fc .btn-group > .btn.active, #fc .btn-group > .active.fc-button-link, #fc .btn-group > .active.fc-action--checkout--button, #fc .btn-group > .active.fc-sidecart-button, #fc .btn-group > .active.fc-button--minor, #fc .btn-group > .active.fc-button,
+#fc .btn-group > .btn:hover, #fc .btn-group > .fc-button-link:hover,
+#fc .btn-group > .fc-button--show-other-payment:hover, #fc .btn-group > .fc-action--checkout--button:hover, #fc .btn-group > .fc-sidecart-button:hover, #fc .btn-group > .fc-button--minor:hover, #fc .btn-group > .fc-button:hover, #fc .btn-group > .btn:focus, #fc .btn-group > .fc-button-link:focus,
+#fc .btn-group > .fc-button--show-other-payment:focus, #fc .btn-group > .fc-action--checkout--button:focus, #fc .btn-group > .fc-sidecart-button:focus, #fc .btn-group > .fc-button--minor:focus, #fc .btn-group > .fc-button:focus, #fc .btn-group > .btn:active, #fc .btn-group > .fc-button-link:active,
+#fc .btn-group > .fc-button--show-other-payment:active, #fc .btn-group > .fc-action--checkout--button:active, #fc .btn-group > .fc-sidecart-button:active, #fc .btn-group > .fc-button--minor:active, #fc .btn-group > .fc-button:active, #fc .btn-group > .btn.active, #fc .btn-group > .active.fc-button-link,
+#fc .btn-group > .active.fc-button--show-other-payment, #fc .btn-group > .active.fc-action--checkout--button, #fc .btn-group > .active.fc-sidecart-button, #fc .btn-group > .active.fc-button--minor, #fc .btn-group > .active.fc-button,
 #fc .btn-group-vertical > .btn:hover,
 #fc .btn-group-vertical > .fc-button-link:hover,
+#fc .btn-group-vertical > .fc-button--show-other-payment:hover,
 #fc .btn-group-vertical > .fc-action--checkout--button:hover,
 #fc .btn-group-vertical > .fc-sidecart-button:hover,
 #fc .btn-group-vertical > .fc-button--minor:hover,
 #fc .btn-group-vertical > .fc-button:hover,
 #fc .btn-group-vertical > .btn:focus,
 #fc .btn-group-vertical > .fc-button-link:focus,
+#fc .btn-group-vertical > .fc-button--show-other-payment:focus,
 #fc .btn-group-vertical > .fc-action--checkout--button:focus,
 #fc .btn-group-vertical > .fc-sidecart-button:focus,
 #fc .btn-group-vertical > .fc-button--minor:focus,
 #fc .btn-group-vertical > .fc-button:focus,
 #fc .btn-group-vertical > .btn:active,
 #fc .btn-group-vertical > .fc-button-link:active,
+#fc .btn-group-vertical > .fc-button--show-other-payment:active,
 #fc .btn-group-vertical > .fc-action--checkout--button:active,
 #fc .btn-group-vertical > .fc-sidecart-button:active,
 #fc .btn-group-vertical > .fc-button--minor:active,
 #fc .btn-group-vertical > .fc-button:active,
 #fc .btn-group-vertical > .btn.active,
 #fc .btn-group-vertical > .active.fc-button-link,
+#fc .btn-group-vertical > .active.fc-button--show-other-payment,
 #fc .btn-group-vertical > .active.fc-action--checkout--button,
 #fc .btn-group-vertical > .active.fc-sidecart-button,
 #fc .btn-group-vertical > .active.fc-button--minor,
 #fc .btn-group-vertical > .active.fc-button {
   z-index: 2;
 }
-#fc .btn-group > .btn:focus, #fc .btn-group > .fc-button-link:focus, #fc .btn-group > .fc-action--checkout--button:focus, #fc .btn-group > .fc-sidecart-button:focus, #fc .btn-group > .fc-button--minor:focus, #fc .btn-group > .fc-button:focus,
+#fc .btn-group > .btn:focus, #fc .btn-group > .fc-button-link:focus,
+#fc .btn-group > .fc-button--show-other-payment:focus, #fc .btn-group > .fc-action--checkout--button:focus, #fc .btn-group > .fc-sidecart-button:focus, #fc .btn-group > .fc-button--minor:focus, #fc .btn-group > .fc-button:focus,
 #fc .btn-group-vertical > .btn:focus,
 #fc .btn-group-vertical > .fc-button-link:focus,
+#fc .btn-group-vertical > .fc-button--show-other-payment:focus,
 #fc .btn-group-vertical > .fc-action--checkout--button:focus,
 #fc .btn-group-vertical > .fc-sidecart-button:focus,
 #fc .btn-group-vertical > .fc-button--minor:focus,
 #fc .btn-group-vertical > .fc-button:focus {
   outline: 0;
 }
-#fc .btn-group .btn + .btn, #fc .btn-group .fc-button-link + .btn, #fc .btn-group .btn + .fc-button-link, #fc .btn-group .fc-button-link + .fc-button-link, #fc .btn-group .fc-action--checkout--button + .btn, #fc .btn-group .fc-action--checkout--button + .fc-button-link, #fc .btn-group .btn + .fc-action--checkout--button, #fc .btn-group .fc-button-link + .fc-action--checkout--button, #fc .btn-group .fc-action--checkout--button + .fc-action--checkout--button, #fc .btn-group .fc-sidecart-button + .btn, #fc .btn-group .fc-sidecart-button + .fc-button-link, #fc .btn-group .fc-sidecart-button + .fc-action--checkout--button, #fc .btn-group .btn + .fc-sidecart-button, #fc .btn-group .fc-button-link + .fc-sidecart-button, #fc .btn-group .fc-action--checkout--button + .fc-sidecart-button, #fc .btn-group .fc-sidecart-button + .fc-sidecart-button, #fc .btn-group .fc-button--minor + .btn, #fc .btn-group .fc-button--minor + .fc-button-link, #fc .btn-group .fc-button--minor + .fc-action--checkout--button, #fc .btn-group .fc-button--minor + .fc-sidecart-button, #fc .btn-group .btn + .fc-button--minor, #fc .btn-group .fc-button-link + .fc-button--minor, #fc .btn-group .fc-action--checkout--button + .fc-button--minor, #fc .btn-group .fc-sidecart-button + .fc-button--minor, #fc .btn-group .fc-button--minor + .fc-button--minor, #fc .btn-group .fc-button + .btn, #fc .btn-group .fc-button + .fc-button-link, #fc .btn-group .fc-button + .fc-action--checkout--button, #fc .btn-group .fc-button + .fc-sidecart-button, #fc .btn-group .fc-button + .fc-button--minor, #fc .btn-group .btn + .fc-button, #fc .btn-group .fc-button-link + .fc-button, #fc .btn-group .fc-action--checkout--button + .fc-button, #fc .btn-group .fc-sidecart-button + .fc-button, #fc .btn-group .fc-button--minor + .fc-button, #fc .btn-group .fc-button + .fc-button,
+#fc .btn-group .btn + .btn, #fc .btn-group .fc-button-link + .btn,
+#fc .btn-group .fc-button--show-other-payment + .btn, #fc .btn-group .btn + .fc-button-link, #fc .btn-group .fc-button-link + .fc-button-link,
+#fc .btn-group .fc-button--show-other-payment + .fc-button-link,
+#fc .btn-group .btn + .fc-button--show-other-payment,
+#fc .btn-group .fc-button-link + .fc-button--show-other-payment,
+#fc .btn-group .fc-button--show-other-payment + .fc-button--show-other-payment, #fc .btn-group .fc-action--checkout--button + .btn, #fc .btn-group .fc-action--checkout--button + .fc-button-link,
+#fc .btn-group .fc-action--checkout--button + .fc-button--show-other-payment, #fc .btn-group .btn + .fc-action--checkout--button, #fc .btn-group .fc-button-link + .fc-action--checkout--button,
+#fc .btn-group .fc-button--show-other-payment + .fc-action--checkout--button, #fc .btn-group .fc-action--checkout--button + .fc-action--checkout--button, #fc .btn-group .fc-sidecart-button + .btn, #fc .btn-group .fc-sidecart-button + .fc-button-link,
+#fc .btn-group .fc-sidecart-button + .fc-button--show-other-payment, #fc .btn-group .fc-sidecart-button + .fc-action--checkout--button, #fc .btn-group .btn + .fc-sidecart-button, #fc .btn-group .fc-button-link + .fc-sidecart-button,
+#fc .btn-group .fc-button--show-other-payment + .fc-sidecart-button, #fc .btn-group .fc-action--checkout--button + .fc-sidecart-button, #fc .btn-group .fc-sidecart-button + .fc-sidecart-button, #fc .btn-group .fc-button--minor + .btn, #fc .btn-group .fc-button--minor + .fc-button-link,
+#fc .btn-group .fc-button--minor + .fc-button--show-other-payment, #fc .btn-group .fc-button--minor + .fc-action--checkout--button, #fc .btn-group .fc-button--minor + .fc-sidecart-button, #fc .btn-group .btn + .fc-button--minor, #fc .btn-group .fc-button-link + .fc-button--minor,
+#fc .btn-group .fc-button--show-other-payment + .fc-button--minor, #fc .btn-group .fc-action--checkout--button + .fc-button--minor, #fc .btn-group .fc-sidecart-button + .fc-button--minor, #fc .btn-group .fc-button--minor + .fc-button--minor, #fc .btn-group .fc-button + .btn, #fc .btn-group .fc-button + .fc-button-link,
+#fc .btn-group .fc-button + .fc-button--show-other-payment, #fc .btn-group .fc-button + .fc-action--checkout--button, #fc .btn-group .fc-button + .fc-sidecart-button, #fc .btn-group .fc-button + .fc-button--minor, #fc .btn-group .btn + .fc-button, #fc .btn-group .fc-button-link + .fc-button,
+#fc .btn-group .fc-button--show-other-payment + .fc-button, #fc .btn-group .fc-action--checkout--button + .fc-button, #fc .btn-group .fc-sidecart-button + .fc-button, #fc .btn-group .fc-button--minor + .fc-button, #fc .btn-group .fc-button + .fc-button,
 #fc .btn-group .btn + .btn-group,
 #fc .btn-group .fc-button-link + .btn-group,
+#fc .btn-group .fc-button--show-other-payment + .btn-group,
 #fc .btn-group .fc-action--checkout--button + .btn-group,
 #fc .btn-group .fc-sidecart-button + .btn-group,
 #fc .btn-group .fc-button--minor + .btn-group,
 #fc .btn-group .fc-button + .btn-group,
 #fc .btn-group .btn-group + .btn,
 #fc .btn-group .btn-group + .fc-button-link,
+#fc .btn-group .btn-group + .fc-button--show-other-payment,
 #fc .btn-group .btn-group + .fc-action--checkout--button,
 #fc .btn-group .btn-group + .fc-sidecart-button,
 #fc .btn-group .btn-group + .fc-button--minor,
@@ -3088,24 +3166,29 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .btn-toolbar .fc-input-group {
   float: left;
 }
-#fc .btn-toolbar > .btn, #fc .btn-toolbar > .fc-button-link, #fc .btn-toolbar > .fc-action--checkout--button, #fc .btn-toolbar > .fc-sidecart-button, #fc .btn-toolbar > .fc-button--minor, #fc .btn-toolbar > .fc-button,
+#fc .btn-toolbar > .btn, #fc .btn-toolbar > .fc-button-link,
+#fc .btn-toolbar > .fc-button--show-other-payment, #fc .btn-toolbar > .fc-action--checkout--button, #fc .btn-toolbar > .fc-sidecart-button, #fc .btn-toolbar > .fc-button--minor, #fc .btn-toolbar > .fc-button,
 #fc .btn-toolbar > .btn-group,
 #fc .btn-toolbar > .input-group,
 #fc .btn-toolbar > .fc-coupon-entry--input,
 #fc .btn-toolbar > .fc-input-group {
   margin-left: 5px;
 }
-#fc .btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button-link:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-action--checkout--button:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-sidecart-button:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button--minor:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button:not(:first-child):not(:last-child):not(.dropdown-toggle) {
+#fc .btn-group > .btn:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button-link:not(:first-child):not(:last-child):not(.dropdown-toggle),
+#fc .btn-group > .fc-button--show-other-payment:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-action--checkout--button:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-sidecart-button:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button--minor:not(:first-child):not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button:not(:first-child):not(:last-child):not(.dropdown-toggle) {
   border-radius: 0;
 }
-#fc .btn-group > .btn:first-child, #fc .btn-group > .fc-button-link:first-child, #fc .btn-group > .fc-action--checkout--button:first-child, #fc .btn-group > .fc-sidecart-button:first-child, #fc .btn-group > .fc-button--minor:first-child, #fc .btn-group > .fc-button:first-child {
+#fc .btn-group > .btn:first-child, #fc .btn-group > .fc-button-link:first-child,
+#fc .btn-group > .fc-button--show-other-payment:first-child, #fc .btn-group > .fc-action--checkout--button:first-child, #fc .btn-group > .fc-sidecart-button:first-child, #fc .btn-group > .fc-button--minor:first-child, #fc .btn-group > .fc-button:first-child {
   margin-left: 0;
 }
-#fc .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button-link:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-action--checkout--button:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-sidecart-button:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button--minor:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button:first-child:not(:last-child):not(.dropdown-toggle) {
+#fc .btn-group > .btn:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button-link:first-child:not(:last-child):not(.dropdown-toggle),
+#fc .btn-group > .fc-button--show-other-payment:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-action--checkout--button:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-sidecart-button:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button--minor:first-child:not(:last-child):not(.dropdown-toggle), #fc .btn-group > .fc-button:first-child:not(:last-child):not(.dropdown-toggle) {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
-#fc .btn-group > .btn:last-child:not(:first-child), #fc .btn-group > .fc-button-link:last-child:not(:first-child), #fc .btn-group > .fc-action--checkout--button:last-child:not(:first-child), #fc .btn-group > .fc-sidecart-button:last-child:not(:first-child), #fc .btn-group > .fc-button--minor:last-child:not(:first-child), #fc .btn-group > .fc-button:last-child:not(:first-child),
+#fc .btn-group > .btn:last-child:not(:first-child), #fc .btn-group > .fc-button-link:last-child:not(:first-child),
+#fc .btn-group > .fc-button--show-other-payment:last-child:not(:first-child), #fc .btn-group > .fc-action--checkout--button:last-child:not(:first-child), #fc .btn-group > .fc-sidecart-button:last-child:not(:first-child), #fc .btn-group > .fc-button--minor:last-child:not(:first-child), #fc .btn-group > .fc-button:last-child:not(:first-child),
 #fc .btn-group > .dropdown-toggle:not(:first-child) {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
@@ -3113,15 +3196,18 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .btn-group > .btn-group {
   float: left;
 }
-#fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button-link, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-action--checkout--button, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-sidecart-button, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button--minor, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button {
+#fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .btn, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button-link,
+#fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button--show-other-payment, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-action--checkout--button, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-sidecart-button, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button--minor, #fc .btn-group > .btn-group:not(:first-child):not(:last-child) > .fc-button {
   border-radius: 0;
 }
-#fc .btn-group > .btn-group:first-child > .btn:last-child, #fc .btn-group > .btn-group:first-child > .fc-button-link:last-child, #fc .btn-group > .btn-group:first-child > .fc-action--checkout--button:last-child, #fc .btn-group > .btn-group:first-child > .fc-sidecart-button:last-child, #fc .btn-group > .btn-group:first-child > .fc-button--minor:last-child, #fc .btn-group > .btn-group:first-child > .fc-button:last-child,
+#fc .btn-group > .btn-group:first-child > .btn:last-child, #fc .btn-group > .btn-group:first-child > .fc-button-link:last-child,
+#fc .btn-group > .btn-group:first-child > .fc-button--show-other-payment:last-child, #fc .btn-group > .btn-group:first-child > .fc-action--checkout--button:last-child, #fc .btn-group > .btn-group:first-child > .fc-sidecart-button:last-child, #fc .btn-group > .btn-group:first-child > .fc-button--minor:last-child, #fc .btn-group > .btn-group:first-child > .fc-button:last-child,
 #fc .btn-group > .btn-group:first-child > .dropdown-toggle {
   border-bottom-right-radius: 0;
   border-top-right-radius: 0;
 }
-#fc .btn-group > .btn-group:last-child > .btn:first-child, #fc .btn-group > .btn-group:last-child > .fc-button-link:first-child, #fc .btn-group > .btn-group:last-child > .fc-action--checkout--button:first-child, #fc .btn-group > .btn-group:last-child > .fc-sidecart-button:first-child, #fc .btn-group > .btn-group:last-child > .fc-button--minor:first-child, #fc .btn-group > .btn-group:last-child > .fc-button:first-child {
+#fc .btn-group > .btn-group:last-child > .btn:first-child, #fc .btn-group > .btn-group:last-child > .fc-button-link:first-child,
+#fc .btn-group > .btn-group:last-child > .fc-button--show-other-payment:first-child, #fc .btn-group > .btn-group:last-child > .fc-action--checkout--button:first-child, #fc .btn-group > .btn-group:last-child > .fc-sidecart-button:first-child, #fc .btn-group > .btn-group:last-child > .fc-button--minor:first-child, #fc .btn-group > .btn-group:last-child > .fc-button:first-child {
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
 }
@@ -3129,11 +3215,13 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .btn-group.open .dropdown-toggle {
   outline: 0;
 }
-#fc .btn-group > .btn + .dropdown-toggle, #fc .btn-group > .fc-button-link + .dropdown-toggle, #fc .btn-group > .fc-action--checkout--button + .dropdown-toggle, #fc .btn-group > .fc-sidecart-button + .dropdown-toggle, #fc .btn-group > .fc-button--minor + .dropdown-toggle, #fc .btn-group > .fc-button + .dropdown-toggle {
+#fc .btn-group > .btn + .dropdown-toggle, #fc .btn-group > .fc-button-link + .dropdown-toggle,
+#fc .btn-group > .fc-button--show-other-payment + .dropdown-toggle, #fc .btn-group > .fc-action--checkout--button + .dropdown-toggle, #fc .btn-group > .fc-sidecart-button + .dropdown-toggle, #fc .btn-group > .fc-button--minor + .dropdown-toggle, #fc .btn-group > .fc-button + .dropdown-toggle {
   padding-left: 8px;
   padding-right: 8px;
 }
-#fc .btn-group > .btn-lg + .dropdown-toggle, #fc .btn-group-lg.btn-group > .btn + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button-link + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-action--checkout--button + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-sidecart-button + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button--minor + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button + .dropdown-toggle {
+#fc .btn-group > .btn-lg + .dropdown-toggle, #fc .btn-group-lg.btn-group > .btn + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button-link + .dropdown-toggle,
+#fc .btn-group-lg.btn-group > .fc-button--show-other-payment + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-action--checkout--button + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-sidecart-button + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button--minor + .dropdown-toggle, #fc .btn-group-lg.btn-group > .fc-button + .dropdown-toggle {
   padding-left: 12px;
   padding-right: 12px;
 }
@@ -3141,24 +3229,30 @@ fieldset[disabled] #fc .checkbox-inline {
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
-#fc .btn-group.open .dropdown-toggle.btn-link, #fc .btn-group.open .dropdown-toggle.fc-button-link, #fc .btn-group.open .fc-transaction--future__summary--toggle .dropdown-toggle.fc-transaction__ui__toggle, #fc .fc-transaction--future__summary--toggle .btn-group.open .dropdown-toggle.fc-transaction__ui__toggle {
+#fc .btn-group.open .dropdown-toggle.btn-link, #fc .btn-group.open .dropdown-toggle.fc-button-link,
+#fc .btn-group.open .dropdown-toggle.fc-button--show-other-payment, #fc .btn-group.open .fc-transaction--future__summary--toggle .dropdown-toggle.fc-transaction__ui__toggle, #fc .fc-transaction--future__summary--toggle .btn-group.open .dropdown-toggle.fc-transaction__ui__toggle {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-#fc .btn .caret, #fc .fc-button-link .caret, #fc .fc-action--checkout--button .caret, #fc .fc-sidecart-button .caret, #fc .fc-button--minor .caret, #fc .fc-button .caret {
+#fc .btn .caret, #fc .fc-button-link .caret,
+#fc .fc-button--show-other-payment .caret, #fc .fc-action--checkout--button .caret, #fc .fc-sidecart-button .caret, #fc .fc-button--minor .caret, #fc .fc-button .caret {
   margin-left: 0;
 }
-#fc .btn-lg .caret, #fc .btn-group-lg > .btn .caret, #fc .btn-group-lg > .fc-button-link .caret, #fc .btn-group-lg > .fc-action--checkout--button .caret, #fc .btn-group-lg > .fc-sidecart-button .caret, #fc .btn-group-lg > .fc-button--minor .caret, #fc .btn-group-lg > .fc-button .caret {
+#fc .btn-lg .caret, #fc .btn-group-lg > .btn .caret, #fc .btn-group-lg > .fc-button-link .caret,
+#fc .btn-group-lg > .fc-button--show-other-payment .caret, #fc .btn-group-lg > .fc-action--checkout--button .caret, #fc .btn-group-lg > .fc-sidecart-button .caret, #fc .btn-group-lg > .fc-button--minor .caret, #fc .btn-group-lg > .fc-button .caret {
   border-width: 5px 5px 0;
   border-bottom-width: 0;
 }
-#fc .dropup .btn-lg .caret, #fc .dropup .btn-group-lg > .btn .caret, #fc .dropup .btn-group-lg > .fc-button-link .caret, #fc .dropup .btn-group-lg > .fc-action--checkout--button .caret, #fc .dropup .btn-group-lg > .fc-sidecart-button .caret, #fc .dropup .btn-group-lg > .fc-button--minor .caret, #fc .dropup .btn-group-lg > .fc-button .caret {
+#fc .dropup .btn-lg .caret, #fc .dropup .btn-group-lg > .btn .caret, #fc .dropup .btn-group-lg > .fc-button-link .caret,
+#fc .dropup .btn-group-lg > .fc-button--show-other-payment .caret, #fc .dropup .btn-group-lg > .fc-action--checkout--button .caret, #fc .dropup .btn-group-lg > .fc-sidecart-button .caret, #fc .dropup .btn-group-lg > .fc-button--minor .caret, #fc .dropup .btn-group-lg > .fc-button .caret {
   border-width: 0 5px 5px;
 }
-#fc .btn-group-vertical > .btn, #fc .btn-group-vertical > .fc-button-link, #fc .btn-group-vertical > .fc-action--checkout--button, #fc .btn-group-vertical > .fc-sidecart-button, #fc .btn-group-vertical > .fc-button--minor, #fc .btn-group-vertical > .fc-button,
+#fc .btn-group-vertical > .btn, #fc .btn-group-vertical > .fc-button-link,
+#fc .btn-group-vertical > .fc-button--show-other-payment, #fc .btn-group-vertical > .fc-action--checkout--button, #fc .btn-group-vertical > .fc-sidecart-button, #fc .btn-group-vertical > .fc-button--minor, #fc .btn-group-vertical > .fc-button,
 #fc .btn-group-vertical > .btn-group,
 #fc .btn-group-vertical > .btn-group > .btn,
 #fc .btn-group-vertical > .btn-group > .fc-button-link,
+#fc .btn-group-vertical > .btn-group > .fc-button--show-other-payment,
 #fc .btn-group-vertical > .btn-group > .fc-action--checkout--button,
 #fc .btn-group-vertical > .btn-group > .fc-sidecart-button,
 #fc .btn-group-vertical > .btn-group > .fc-button--minor,
@@ -3175,18 +3269,34 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .btn-group-vertical > .btn-group:after {
   clear: both;
 }
-#fc .btn-group-vertical > .btn-group > .btn, #fc .btn-group-vertical > .btn-group > .fc-button-link, #fc .btn-group-vertical > .btn-group > .fc-action--checkout--button, #fc .btn-group-vertical > .btn-group > .fc-sidecart-button, #fc .btn-group-vertical > .btn-group > .fc-button--minor, #fc .btn-group-vertical > .btn-group > .fc-button {
+#fc .btn-group-vertical > .btn-group > .btn, #fc .btn-group-vertical > .btn-group > .fc-button-link,
+#fc .btn-group-vertical > .btn-group > .fc-button--show-other-payment, #fc .btn-group-vertical > .btn-group > .fc-action--checkout--button, #fc .btn-group-vertical > .btn-group > .fc-sidecart-button, #fc .btn-group-vertical > .btn-group > .fc-button--minor, #fc .btn-group-vertical > .btn-group > .fc-button {
   float: none;
 }
-#fc .btn-group-vertical > .btn + .btn, #fc .btn-group-vertical > .fc-button-link + .btn, #fc .btn-group-vertical > .btn + .fc-button-link, #fc .btn-group-vertical > .fc-button-link + .fc-button-link, #fc .btn-group-vertical > .fc-action--checkout--button + .btn, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button-link, #fc .btn-group-vertical > .btn + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button-link + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-sidecart-button + .btn, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button-link, #fc .btn-group-vertical > .fc-sidecart-button + .fc-action--checkout--button, #fc .btn-group-vertical > .btn + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button-link + .fc-sidecart-button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-sidecart-button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button--minor + .btn, #fc .btn-group-vertical > .fc-button--minor + .fc-button-link, #fc .btn-group-vertical > .fc-button--minor + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button--minor + .fc-sidecart-button, #fc .btn-group-vertical > .btn + .fc-button--minor, #fc .btn-group-vertical > .fc-button-link + .fc-button--minor, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button--minor, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button--minor, #fc .btn-group-vertical > .fc-button--minor + .fc-button--minor, #fc .btn-group-vertical > .fc-button + .btn, #fc .btn-group-vertical > .fc-button + .fc-button-link, #fc .btn-group-vertical > .fc-button + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button + .fc-button--minor, #fc .btn-group-vertical > .btn + .fc-button, #fc .btn-group-vertical > .fc-button-link + .fc-button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button, #fc .btn-group-vertical > .fc-button--minor + .fc-button, #fc .btn-group-vertical > .fc-button + .fc-button,
+#fc .btn-group-vertical > .btn + .btn, #fc .btn-group-vertical > .fc-button-link + .btn,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .btn, #fc .btn-group-vertical > .btn + .fc-button-link, #fc .btn-group-vertical > .fc-button-link + .fc-button-link,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-button-link,
+#fc .btn-group-vertical > .btn + .fc-button--show-other-payment,
+#fc .btn-group-vertical > .fc-button-link + .fc-button--show-other-payment,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-button--show-other-payment, #fc .btn-group-vertical > .fc-action--checkout--button + .btn, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button-link,
+#fc .btn-group-vertical > .fc-action--checkout--button + .fc-button--show-other-payment, #fc .btn-group-vertical > .btn + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button-link + .fc-action--checkout--button,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-sidecart-button + .btn, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button-link,
+#fc .btn-group-vertical > .fc-sidecart-button + .fc-button--show-other-payment, #fc .btn-group-vertical > .fc-sidecart-button + .fc-action--checkout--button, #fc .btn-group-vertical > .btn + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button-link + .fc-sidecart-button,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-sidecart-button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-sidecart-button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button--minor + .btn, #fc .btn-group-vertical > .fc-button--minor + .fc-button-link,
+#fc .btn-group-vertical > .fc-button--minor + .fc-button--show-other-payment, #fc .btn-group-vertical > .fc-button--minor + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button--minor + .fc-sidecart-button, #fc .btn-group-vertical > .btn + .fc-button--minor, #fc .btn-group-vertical > .fc-button-link + .fc-button--minor,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-button--minor, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button--minor, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button--minor, #fc .btn-group-vertical > .fc-button--minor + .fc-button--minor, #fc .btn-group-vertical > .fc-button + .btn, #fc .btn-group-vertical > .fc-button + .fc-button-link,
+#fc .btn-group-vertical > .fc-button + .fc-button--show-other-payment, #fc .btn-group-vertical > .fc-button + .fc-action--checkout--button, #fc .btn-group-vertical > .fc-button + .fc-sidecart-button, #fc .btn-group-vertical > .fc-button + .fc-button--minor, #fc .btn-group-vertical > .btn + .fc-button, #fc .btn-group-vertical > .fc-button-link + .fc-button,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .fc-button, #fc .btn-group-vertical > .fc-action--checkout--button + .fc-button, #fc .btn-group-vertical > .fc-sidecart-button + .fc-button, #fc .btn-group-vertical > .fc-button--minor + .fc-button, #fc .btn-group-vertical > .fc-button + .fc-button,
 #fc .btn-group-vertical > .btn + .btn-group,
 #fc .btn-group-vertical > .fc-button-link + .btn-group,
+#fc .btn-group-vertical > .fc-button--show-other-payment + .btn-group,
 #fc .btn-group-vertical > .fc-action--checkout--button + .btn-group,
 #fc .btn-group-vertical > .fc-sidecart-button + .btn-group,
 #fc .btn-group-vertical > .fc-button--minor + .btn-group,
 #fc .btn-group-vertical > .fc-button + .btn-group,
 #fc .btn-group-vertical > .btn-group + .btn,
 #fc .btn-group-vertical > .btn-group + .fc-button-link,
+#fc .btn-group-vertical > .btn-group + .fc-button--show-other-payment,
 #fc .btn-group-vertical > .btn-group + .fc-action--checkout--button,
 #fc .btn-group-vertical > .btn-group + .fc-sidecart-button,
 #fc .btn-group-vertical > .btn-group + .fc-button--minor,
@@ -3195,28 +3305,34 @@ fieldset[disabled] #fc .checkbox-inline {
   margin-top: -1px;
   margin-left: 0;
 }
-#fc .btn-group-vertical > .btn:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button-link:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-action--checkout--button:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-sidecart-button:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button--minor:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button:not(:first-child):not(:last-child) {
+#fc .btn-group-vertical > .btn:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button-link:not(:first-child):not(:last-child),
+#fc .btn-group-vertical > .fc-button--show-other-payment:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-action--checkout--button:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-sidecart-button:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button--minor:not(:first-child):not(:last-child), #fc .btn-group-vertical > .fc-button:not(:first-child):not(:last-child) {
   border-radius: 0;
 }
-#fc .btn-group-vertical > .btn:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button-link:first-child:not(:last-child), #fc .btn-group-vertical > .fc-action--checkout--button:first-child:not(:last-child), #fc .btn-group-vertical > .fc-sidecart-button:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button--minor:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button:first-child:not(:last-child) {
+#fc .btn-group-vertical > .btn:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button-link:first-child:not(:last-child),
+#fc .btn-group-vertical > .fc-button--show-other-payment:first-child:not(:last-child), #fc .btn-group-vertical > .fc-action--checkout--button:first-child:not(:last-child), #fc .btn-group-vertical > .fc-sidecart-button:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button--minor:first-child:not(:last-child), #fc .btn-group-vertical > .fc-button:first-child:not(:last-child) {
   border-top-right-radius: 4px;
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-#fc .btn-group-vertical > .btn:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button-link:last-child:not(:first-child), #fc .btn-group-vertical > .fc-action--checkout--button:last-child:not(:first-child), #fc .btn-group-vertical > .fc-sidecart-button:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button--minor:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button:last-child:not(:first-child) {
+#fc .btn-group-vertical > .btn:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button-link:last-child:not(:first-child),
+#fc .btn-group-vertical > .fc-button--show-other-payment:last-child:not(:first-child), #fc .btn-group-vertical > .fc-action--checkout--button:last-child:not(:first-child), #fc .btn-group-vertical > .fc-sidecart-button:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button--minor:last-child:not(:first-child), #fc .btn-group-vertical > .fc-button:last-child:not(:first-child) {
   border-bottom-left-radius: 4px;
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
-#fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button-link, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-action--checkout--button, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-sidecart-button, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button--minor, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button {
+#fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .btn, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button-link,
+#fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button--show-other-payment, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-action--checkout--button, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-sidecart-button, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button--minor, #fc .btn-group-vertical > .btn-group:not(:first-child):not(:last-child) > .fc-button {
   border-radius: 0;
 }
-#fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button-link:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-action--checkout--button:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-sidecart-button:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button--minor:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button:last-child,
+#fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .btn:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button-link:last-child,
+#fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button--show-other-payment:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-action--checkout--button:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-sidecart-button:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button--minor:last-child, #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .fc-button:last-child,
 #fc .btn-group-vertical > .btn-group:first-child:not(:last-child) > .dropdown-toggle {
   border-bottom-right-radius: 0;
   border-bottom-left-radius: 0;
 }
-#fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button-link:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-action--checkout--button:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-sidecart-button:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button--minor:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button:first-child {
+#fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .btn:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button-link:first-child,
+#fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button--show-other-payment:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-action--checkout--button:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-sidecart-button:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button--minor:first-child, #fc .btn-group-vertical > .btn-group:last-child:not(:first-child) > .fc-button:first-child {
   border-top-right-radius: 0;
   border-top-left-radius: 0;
 }
@@ -3226,21 +3342,25 @@ fieldset[disabled] #fc .checkbox-inline {
   table-layout: fixed;
   border-collapse: separate;
 }
-#fc .btn-group-justified > .btn, #fc .btn-group-justified > .fc-button-link, #fc .btn-group-justified > .fc-action--checkout--button, #fc .btn-group-justified > .fc-sidecart-button, #fc .btn-group-justified > .fc-button--minor, #fc .btn-group-justified > .fc-button,
+#fc .btn-group-justified > .btn, #fc .btn-group-justified > .fc-button-link,
+#fc .btn-group-justified > .fc-button--show-other-payment, #fc .btn-group-justified > .fc-action--checkout--button, #fc .btn-group-justified > .fc-sidecart-button, #fc .btn-group-justified > .fc-button--minor, #fc .btn-group-justified > .fc-button,
 #fc .btn-group-justified > .btn-group {
   float: none;
   display: table-cell;
   width: 1%;
 }
-#fc .btn-group-justified > .btn-group .btn, #fc .btn-group-justified > .btn-group .fc-button-link, #fc .btn-group-justified > .btn-group .fc-action--checkout--button, #fc .btn-group-justified > .btn-group .fc-sidecart-button, #fc .btn-group-justified > .btn-group .fc-button--minor, #fc .btn-group-justified > .btn-group .fc-button {
+#fc .btn-group-justified > .btn-group .btn, #fc .btn-group-justified > .btn-group .fc-button-link,
+#fc .btn-group-justified > .btn-group .fc-button--show-other-payment, #fc .btn-group-justified > .btn-group .fc-action--checkout--button, #fc .btn-group-justified > .btn-group .fc-sidecart-button, #fc .btn-group-justified > .btn-group .fc-button--minor, #fc .btn-group-justified > .btn-group .fc-button {
   width: 100%;
 }
 #fc .btn-group-justified > .btn-group .dropdown-menu {
   left: auto;
 }
-#fc [data-toggle=buttons] > .btn > input[type=radio], #fc [data-toggle=buttons] > .fc-button-link > input[type=radio], #fc [data-toggle=buttons] > .fc-action--checkout--button > input[type=radio], #fc [data-toggle=buttons] > .fc-sidecart-button > input[type=radio], #fc [data-toggle=buttons] > .fc-button--minor > input[type=radio], #fc [data-toggle=buttons] > .fc-button > input[type=radio],
+#fc [data-toggle=buttons] > .btn > input[type=radio], #fc [data-toggle=buttons] > .fc-button-link > input[type=radio],
+#fc [data-toggle=buttons] > .fc-button--show-other-payment > input[type=radio], #fc [data-toggle=buttons] > .fc-action--checkout--button > input[type=radio], #fc [data-toggle=buttons] > .fc-sidecart-button > input[type=radio], #fc [data-toggle=buttons] > .fc-button--minor > input[type=radio], #fc [data-toggle=buttons] > .fc-button > input[type=radio],
 #fc [data-toggle=buttons] > .btn > input[type=checkbox],
 #fc [data-toggle=buttons] > .fc-button-link > input[type=checkbox],
+#fc [data-toggle=buttons] > .fc-button--show-other-payment > input[type=checkbox],
 #fc [data-toggle=buttons] > .fc-action--checkout--button > input[type=checkbox],
 #fc [data-toggle=buttons] > .fc-sidecart-button > input[type=checkbox],
 #fc [data-toggle=buttons] > .fc-button--minor > input[type=checkbox],
@@ -3310,10 +3430,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-sm > .input-group-addon,
 #fc .input-group-sm > .input-group-btn > .input-group-addon.btn,
 #fc .input-group-sm > .input-group-btn > .input-group-addon.fc-button-link,
+#fc .input-group-sm > .input-group-btn > .input-group-addon.fc-button--show-other-payment,
 #fc .input-group-sm > .input-group-btn > .input-group-addon.fc-action--checkout--button,
 #fc .input-group-sm > .input-group-btn > .input-group-addon.fc-sidecart-button,
 #fc .input-group-sm > .fc-input-group__button > .input-group-addon.btn,
 #fc .input-group-sm > .fc-input-group__button > .input-group-addon.fc-button-link,
+#fc .input-group-sm > .fc-input-group__button > .input-group-addon.fc-button--show-other-payment,
 #fc .input-group-sm > .fc-input-group__button > .input-group-addon.fc-action--checkout--button,
 #fc .input-group-sm > .fc-input-group__button > .input-group-addon.fc-sidecart-button,
 #fc .input-group-sm > .input-group-btn > .input-group-addon.fc-button--minor,
@@ -3328,10 +3450,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-lg > .input-group-addon,
 #fc .input-group-lg > .input-group-btn > .input-group-addon.btn,
 #fc .input-group-lg > .input-group-btn > .input-group-addon.fc-button-link,
+#fc .input-group-lg > .input-group-btn > .input-group-addon.fc-button--show-other-payment,
 #fc .input-group-lg > .input-group-btn > .input-group-addon.fc-action--checkout--button,
 #fc .input-group-lg > .input-group-btn > .input-group-addon.fc-sidecart-button,
 #fc .input-group-lg > .fc-input-group__button > .input-group-addon.btn,
 #fc .input-group-lg > .fc-input-group__button > .input-group-addon.fc-button-link,
+#fc .input-group-lg > .fc-input-group__button > .input-group-addon.fc-button--show-other-payment,
 #fc .input-group-lg > .fc-input-group__button > .input-group-addon.fc-action--checkout--button,
 #fc .input-group-lg > .fc-input-group__button > .input-group-addon.fc-sidecart-button,
 #fc .input-group-lg > .input-group-btn > .input-group-addon.fc-button--minor,
@@ -3350,10 +3474,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-addon:first-child,
 #fc .input-group-btn:first-child > .btn,
 #fc .input-group-btn:first-child > .fc-button-link,
+#fc .input-group-btn:first-child > .fc-button--show-other-payment,
 #fc .input-group-btn:first-child > .fc-action--checkout--button,
 #fc .input-group-btn:first-child > .fc-sidecart-button,
 #fc .fc-input-group__button:first-child > .btn,
 #fc .fc-input-group__button:first-child > .fc-button-link,
+#fc .fc-input-group__button:first-child > .fc-button--show-other-payment,
 #fc .fc-input-group__button:first-child > .fc-action--checkout--button,
 #fc .fc-input-group__button:first-child > .fc-sidecart-button,
 #fc .input-group-btn:first-child > .fc-button--minor,
@@ -3362,10 +3488,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:first-child > .fc-button,
 #fc .input-group-btn:first-child > .btn-group > .btn,
 #fc .input-group-btn:first-child > .btn-group > .fc-button-link,
+#fc .input-group-btn:first-child > .btn-group > .fc-button--show-other-payment,
 #fc .input-group-btn:first-child > .btn-group > .fc-action--checkout--button,
 #fc .input-group-btn:first-child > .btn-group > .fc-sidecart-button,
 #fc .fc-input-group__button:first-child > .btn-group > .btn,
 #fc .fc-input-group__button:first-child > .btn-group > .fc-button-link,
+#fc .fc-input-group__button:first-child > .btn-group > .fc-button--show-other-payment,
 #fc .fc-input-group__button:first-child > .btn-group > .fc-action--checkout--button,
 #fc .fc-input-group__button:first-child > .btn-group > .fc-sidecart-button,
 #fc .input-group-btn:first-child > .btn-group > .fc-button--minor,
@@ -3376,10 +3504,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:first-child > .dropdown-toggle,
 #fc .input-group-btn:last-child > .btn:not(:last-child):not(.dropdown-toggle),
 #fc .input-group-btn:last-child > .fc-button-link:not(:last-child):not(.dropdown-toggle),
+#fc .input-group-btn:last-child > .fc-button--show-other-payment:not(:last-child):not(.dropdown-toggle),
 #fc .input-group-btn:last-child > .fc-action--checkout--button:not(:last-child):not(.dropdown-toggle),
 #fc .input-group-btn:last-child > .fc-sidecart-button:not(:last-child):not(.dropdown-toggle),
 #fc .fc-input-group__button:last-child > .btn:not(:last-child):not(.dropdown-toggle),
 #fc .fc-input-group__button:last-child > .fc-button-link:not(:last-child):not(.dropdown-toggle),
+#fc .fc-input-group__button:last-child > .fc-button--show-other-payment:not(:last-child):not(.dropdown-toggle),
 #fc .fc-input-group__button:last-child > .fc-action--checkout--button:not(:last-child):not(.dropdown-toggle),
 #fc .fc-input-group__button:last-child > .fc-sidecart-button:not(:last-child):not(.dropdown-toggle),
 #fc .input-group-btn:last-child > .fc-button--minor:not(:last-child):not(.dropdown-toggle),
@@ -3388,10 +3518,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:last-child > .fc-button:not(:last-child):not(.dropdown-toggle),
 #fc .input-group-btn:last-child > .btn-group:not(:last-child) > .btn,
 #fc .input-group-btn:last-child > .btn-group:not(:last-child) > .fc-button-link,
+#fc .input-group-btn:last-child > .btn-group:not(:last-child) > .fc-button--show-other-payment,
 #fc .input-group-btn:last-child > .btn-group:not(:last-child) > .fc-action--checkout--button,
 #fc .input-group-btn:last-child > .btn-group:not(:last-child) > .fc-sidecart-button,
 #fc .fc-input-group__button:last-child > .btn-group:not(:last-child) > .btn,
 #fc .fc-input-group__button:last-child > .btn-group:not(:last-child) > .fc-button-link,
+#fc .fc-input-group__button:last-child > .btn-group:not(:last-child) > .fc-button--show-other-payment,
 #fc .fc-input-group__button:last-child > .btn-group:not(:last-child) > .fc-action--checkout--button,
 #fc .fc-input-group__button:last-child > .btn-group:not(:last-child) > .fc-sidecart-button,
 #fc .input-group-btn:last-child > .btn-group:not(:last-child) > .fc-button--minor,
@@ -3408,10 +3540,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .input-group-addon:last-child,
 #fc .input-group-btn:last-child > .btn,
 #fc .input-group-btn:last-child > .fc-button-link,
+#fc .input-group-btn:last-child > .fc-button--show-other-payment,
 #fc .input-group-btn:last-child > .fc-action--checkout--button,
 #fc .input-group-btn:last-child > .fc-sidecart-button,
 #fc .fc-input-group__button:last-child > .btn,
 #fc .fc-input-group__button:last-child > .fc-button-link,
+#fc .fc-input-group__button:last-child > .fc-button--show-other-payment,
 #fc .fc-input-group__button:last-child > .fc-action--checkout--button,
 #fc .fc-input-group__button:last-child > .fc-sidecart-button,
 #fc .input-group-btn:last-child > .fc-button--minor,
@@ -3420,10 +3554,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:last-child > .fc-button,
 #fc .input-group-btn:last-child > .btn-group > .btn,
 #fc .input-group-btn:last-child > .btn-group > .fc-button-link,
+#fc .input-group-btn:last-child > .btn-group > .fc-button--show-other-payment,
 #fc .input-group-btn:last-child > .btn-group > .fc-action--checkout--button,
 #fc .input-group-btn:last-child > .btn-group > .fc-sidecart-button,
 #fc .fc-input-group__button:last-child > .btn-group > .btn,
 #fc .fc-input-group__button:last-child > .btn-group > .fc-button-link,
+#fc .fc-input-group__button:last-child > .btn-group > .fc-button--show-other-payment,
 #fc .fc-input-group__button:last-child > .btn-group > .fc-action--checkout--button,
 #fc .fc-input-group__button:last-child > .btn-group > .fc-sidecart-button,
 #fc .input-group-btn:last-child > .btn-group > .fc-button--minor,
@@ -3434,10 +3570,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:last-child > .dropdown-toggle,
 #fc .input-group-btn:first-child > .btn:not(:first-child),
 #fc .input-group-btn:first-child > .fc-button-link:not(:first-child),
+#fc .input-group-btn:first-child > .fc-button--show-other-payment:not(:first-child),
 #fc .input-group-btn:first-child > .fc-action--checkout--button:not(:first-child),
 #fc .input-group-btn:first-child > .fc-sidecart-button:not(:first-child),
 #fc .fc-input-group__button:first-child > .btn:not(:first-child),
 #fc .fc-input-group__button:first-child > .fc-button-link:not(:first-child),
+#fc .fc-input-group__button:first-child > .fc-button--show-other-payment:not(:first-child),
 #fc .fc-input-group__button:first-child > .fc-action--checkout--button:not(:first-child),
 #fc .fc-input-group__button:first-child > .fc-sidecart-button:not(:first-child),
 #fc .input-group-btn:first-child > .fc-button--minor:not(:first-child),
@@ -3446,10 +3584,12 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-input-group__button:first-child > .fc-button:not(:first-child),
 #fc .input-group-btn:first-child > .btn-group:not(:first-child) > .btn,
 #fc .input-group-btn:first-child > .btn-group:not(:first-child) > .fc-button-link,
+#fc .input-group-btn:first-child > .btn-group:not(:first-child) > .fc-button--show-other-payment,
 #fc .input-group-btn:first-child > .btn-group:not(:first-child) > .fc-action--checkout--button,
 #fc .input-group-btn:first-child > .btn-group:not(:first-child) > .fc-sidecart-button,
 #fc .fc-input-group__button:first-child > .btn-group:not(:first-child) > .btn,
 #fc .fc-input-group__button:first-child > .btn-group:not(:first-child) > .fc-button-link,
+#fc .fc-input-group__button:first-child > .btn-group:not(:first-child) > .fc-button--show-other-payment,
 #fc .fc-input-group__button:first-child > .btn-group:not(:first-child) > .fc-action--checkout--button,
 #fc .fc-input-group__button:first-child > .btn-group:not(:first-child) > .fc-sidecart-button,
 #fc .input-group-btn:first-child > .btn-group:not(:first-child) > .fc-button--minor,
@@ -3467,21 +3607,59 @@ fieldset[disabled] #fc .checkbox-inline {
   font-size: 0;
   white-space: nowrap;
 }
-#fc .input-group-btn > .btn, #fc .input-group-btn > .fc-button-link, #fc .input-group-btn > .fc-action--checkout--button, #fc .input-group-btn > .fc-sidecart-button, #fc .fc-input-group__button > .btn, #fc .fc-input-group__button > .fc-button-link, #fc .fc-input-group__button > .fc-action--checkout--button, #fc .fc-input-group__button > .fc-sidecart-button, #fc .input-group-btn > .fc-button--minor, #fc .fc-input-group__button > .fc-button--minor, #fc .input-group-btn > .fc-button, #fc .fc-input-group__button > .fc-button {
+#fc .input-group-btn > .btn, #fc .input-group-btn > .fc-button-link,
+#fc .input-group-btn > .fc-button--show-other-payment, #fc .input-group-btn > .fc-action--checkout--button, #fc .input-group-btn > .fc-sidecart-button, #fc .fc-input-group__button > .btn, #fc .fc-input-group__button > .fc-button-link,
+#fc .fc-input-group__button > .fc-button--show-other-payment, #fc .fc-input-group__button > .fc-action--checkout--button, #fc .fc-input-group__button > .fc-sidecart-button, #fc .input-group-btn > .fc-button--minor, #fc .fc-input-group__button > .fc-button--minor, #fc .input-group-btn > .fc-button, #fc .fc-input-group__button > .fc-button {
   position: relative;
 }
-#fc .input-group-btn > .btn + .btn, #fc .input-group-btn > .fc-button-link + .btn, #fc .input-group-btn > .btn + .fc-button-link, #fc .input-group-btn > .fc-button-link + .fc-button-link, #fc .input-group-btn > .fc-action--checkout--button + .btn, #fc .input-group-btn > .fc-action--checkout--button + .fc-button-link, #fc .input-group-btn > .btn + .fc-action--checkout--button, #fc .input-group-btn > .fc-button-link + .fc-action--checkout--button, #fc .input-group-btn > .fc-action--checkout--button + .fc-action--checkout--button, #fc .input-group-btn > .fc-sidecart-button + .btn, #fc .input-group-btn > .fc-sidecart-button + .fc-button-link, #fc .input-group-btn > .fc-sidecart-button + .fc-action--checkout--button, #fc .input-group-btn > .btn + .fc-sidecart-button, #fc .input-group-btn > .fc-button-link + .fc-sidecart-button, #fc .input-group-btn > .fc-action--checkout--button + .fc-sidecart-button, #fc .input-group-btn > .fc-sidecart-button + .fc-sidecart-button, #fc .fc-input-group__button > .btn + .btn, #fc .fc-input-group__button > .fc-button-link + .btn, #fc .fc-input-group__button > .btn + .fc-button-link, #fc .fc-input-group__button > .fc-button-link + .fc-button-link, #fc .fc-input-group__button > .fc-action--checkout--button + .btn, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button-link, #fc .fc-input-group__button > .btn + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button-link + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-sidecart-button + .btn, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button-link, #fc .fc-input-group__button > .fc-sidecart-button + .fc-action--checkout--button, #fc .fc-input-group__button > .btn + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button-link + .fc-sidecart-button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-sidecart-button, #fc .fc-input-group__button > .fc-sidecart-button + .fc-sidecart-button, #fc .input-group-btn > .fc-button--minor + .btn, #fc .input-group-btn > .fc-button--minor + .fc-button-link, #fc .input-group-btn > .fc-button--minor + .fc-action--checkout--button, #fc .input-group-btn > .fc-button--minor + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button--minor + .btn, #fc .fc-input-group__button > .fc-button--minor + .fc-button-link, #fc .fc-input-group__button > .fc-button--minor + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button--minor + .fc-sidecart-button, #fc .input-group-btn > .btn + .fc-button--minor, #fc .input-group-btn > .fc-button-link + .fc-button--minor, #fc .input-group-btn > .fc-action--checkout--button + .fc-button--minor, #fc .input-group-btn > .fc-sidecart-button + .fc-button--minor, #fc .fc-input-group__button > .btn + .fc-button--minor, #fc .fc-input-group__button > .fc-button-link + .fc-button--minor, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button--minor, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button--minor, #fc .input-group-btn > .fc-button--minor + .fc-button--minor, #fc .fc-input-group__button > .fc-button--minor + .fc-button--minor, #fc .input-group-btn > .fc-button + .btn, #fc .input-group-btn > .fc-button + .fc-button-link, #fc .input-group-btn > .fc-button + .fc-action--checkout--button, #fc .input-group-btn > .fc-button + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button + .btn, #fc .fc-input-group__button > .fc-button + .fc-button-link, #fc .fc-input-group__button > .fc-button + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button + .fc-sidecart-button, #fc .input-group-btn > .fc-button + .fc-button--minor, #fc .fc-input-group__button > .fc-button + .fc-button--minor, #fc .input-group-btn > .btn + .fc-button, #fc .input-group-btn > .fc-button-link + .fc-button, #fc .input-group-btn > .fc-action--checkout--button + .fc-button, #fc .input-group-btn > .fc-sidecart-button + .fc-button, #fc .fc-input-group__button > .btn + .fc-button, #fc .fc-input-group__button > .fc-button-link + .fc-button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button, #fc .input-group-btn > .fc-button--minor + .fc-button, #fc .fc-input-group__button > .fc-button--minor + .fc-button, #fc .input-group-btn > .fc-button + .fc-button, #fc .fc-input-group__button > .fc-button + .fc-button {
+#fc .input-group-btn > .btn + .btn, #fc .input-group-btn > .fc-button-link + .btn,
+#fc .input-group-btn > .fc-button--show-other-payment + .btn, #fc .input-group-btn > .btn + .fc-button-link, #fc .input-group-btn > .fc-button-link + .fc-button-link,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-button-link,
+#fc .input-group-btn > .btn + .fc-button--show-other-payment,
+#fc .input-group-btn > .fc-button-link + .fc-button--show-other-payment,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-button--show-other-payment, #fc .input-group-btn > .fc-action--checkout--button + .btn, #fc .input-group-btn > .fc-action--checkout--button + .fc-button-link,
+#fc .input-group-btn > .fc-action--checkout--button + .fc-button--show-other-payment, #fc .input-group-btn > .btn + .fc-action--checkout--button, #fc .input-group-btn > .fc-button-link + .fc-action--checkout--button,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-action--checkout--button, #fc .input-group-btn > .fc-action--checkout--button + .fc-action--checkout--button, #fc .input-group-btn > .fc-sidecart-button + .btn, #fc .input-group-btn > .fc-sidecart-button + .fc-button-link,
+#fc .input-group-btn > .fc-sidecart-button + .fc-button--show-other-payment, #fc .input-group-btn > .fc-sidecart-button + .fc-action--checkout--button, #fc .input-group-btn > .btn + .fc-sidecart-button, #fc .input-group-btn > .fc-button-link + .fc-sidecart-button,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-sidecart-button, #fc .input-group-btn > .fc-action--checkout--button + .fc-sidecart-button, #fc .input-group-btn > .fc-sidecart-button + .fc-sidecart-button, #fc .fc-input-group__button > .btn + .btn, #fc .fc-input-group__button > .fc-button-link + .btn,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .btn, #fc .fc-input-group__button > .btn + .fc-button-link, #fc .fc-input-group__button > .fc-button-link + .fc-button-link,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-button-link,
+#fc .fc-input-group__button > .btn + .fc-button--show-other-payment,
+#fc .fc-input-group__button > .fc-button-link + .fc-button--show-other-payment,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-button--show-other-payment, #fc .fc-input-group__button > .fc-action--checkout--button + .btn, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button-link,
+#fc .fc-input-group__button > .fc-action--checkout--button + .fc-button--show-other-payment, #fc .fc-input-group__button > .btn + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button-link + .fc-action--checkout--button,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-sidecart-button + .btn, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button-link,
+#fc .fc-input-group__button > .fc-sidecart-button + .fc-button--show-other-payment, #fc .fc-input-group__button > .fc-sidecart-button + .fc-action--checkout--button, #fc .fc-input-group__button > .btn + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button-link + .fc-sidecart-button,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-sidecart-button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-sidecart-button, #fc .fc-input-group__button > .fc-sidecart-button + .fc-sidecart-button, #fc .input-group-btn > .fc-button--minor + .btn, #fc .input-group-btn > .fc-button--minor + .fc-button-link,
+#fc .input-group-btn > .fc-button--minor + .fc-button--show-other-payment, #fc .input-group-btn > .fc-button--minor + .fc-action--checkout--button, #fc .input-group-btn > .fc-button--minor + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button--minor + .btn, #fc .fc-input-group__button > .fc-button--minor + .fc-button-link,
+#fc .fc-input-group__button > .fc-button--minor + .fc-button--show-other-payment, #fc .fc-input-group__button > .fc-button--minor + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button--minor + .fc-sidecart-button, #fc .input-group-btn > .btn + .fc-button--minor, #fc .input-group-btn > .fc-button-link + .fc-button--minor,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-button--minor, #fc .input-group-btn > .fc-action--checkout--button + .fc-button--minor, #fc .input-group-btn > .fc-sidecart-button + .fc-button--minor, #fc .fc-input-group__button > .btn + .fc-button--minor, #fc .fc-input-group__button > .fc-button-link + .fc-button--minor,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-button--minor, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button--minor, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button--minor, #fc .input-group-btn > .fc-button--minor + .fc-button--minor, #fc .fc-input-group__button > .fc-button--minor + .fc-button--minor, #fc .input-group-btn > .fc-button + .btn, #fc .input-group-btn > .fc-button + .fc-button-link,
+#fc .input-group-btn > .fc-button + .fc-button--show-other-payment, #fc .input-group-btn > .fc-button + .fc-action--checkout--button, #fc .input-group-btn > .fc-button + .fc-sidecart-button, #fc .fc-input-group__button > .fc-button + .btn, #fc .fc-input-group__button > .fc-button + .fc-button-link,
+#fc .fc-input-group__button > .fc-button + .fc-button--show-other-payment, #fc .fc-input-group__button > .fc-button + .fc-action--checkout--button, #fc .fc-input-group__button > .fc-button + .fc-sidecart-button, #fc .input-group-btn > .fc-button + .fc-button--minor, #fc .fc-input-group__button > .fc-button + .fc-button--minor, #fc .input-group-btn > .btn + .fc-button, #fc .input-group-btn > .fc-button-link + .fc-button,
+#fc .input-group-btn > .fc-button--show-other-payment + .fc-button, #fc .input-group-btn > .fc-action--checkout--button + .fc-button, #fc .input-group-btn > .fc-sidecart-button + .fc-button, #fc .fc-input-group__button > .btn + .fc-button, #fc .fc-input-group__button > .fc-button-link + .fc-button,
+#fc .fc-input-group__button > .fc-button--show-other-payment + .fc-button, #fc .fc-input-group__button > .fc-action--checkout--button + .fc-button, #fc .fc-input-group__button > .fc-sidecart-button + .fc-button, #fc .input-group-btn > .fc-button--minor + .fc-button, #fc .fc-input-group__button > .fc-button--minor + .fc-button, #fc .input-group-btn > .fc-button + .fc-button, #fc .fc-input-group__button > .fc-button + .fc-button {
   margin-left: -1px;
 }
-#fc .input-group-btn > .btn:hover, #fc .input-group-btn > .fc-button-link:hover, #fc .input-group-btn > .fc-action--checkout--button:hover, #fc .input-group-btn > .fc-sidecart-button:hover, #fc .fc-input-group__button > .btn:hover, #fc .fc-input-group__button > .fc-button-link:hover, #fc .fc-input-group__button > .fc-action--checkout--button:hover, #fc .fc-input-group__button > .fc-sidecart-button:hover, #fc .input-group-btn > .fc-button--minor:hover, #fc .fc-input-group__button > .fc-button--minor:hover, #fc .input-group-btn > .fc-button:hover, #fc .fc-input-group__button > .fc-button:hover, #fc .input-group-btn > .btn:focus, #fc .input-group-btn > .fc-button-link:focus, #fc .input-group-btn > .fc-action--checkout--button:focus, #fc .input-group-btn > .fc-sidecart-button:focus, #fc .fc-input-group__button > .btn:focus, #fc .fc-input-group__button > .fc-button-link:focus, #fc .fc-input-group__button > .fc-action--checkout--button:focus, #fc .fc-input-group__button > .fc-sidecart-button:focus, #fc .input-group-btn > .fc-button--minor:focus, #fc .fc-input-group__button > .fc-button--minor:focus, #fc .input-group-btn > .fc-button:focus, #fc .fc-input-group__button > .fc-button:focus, #fc .input-group-btn > .btn:active, #fc .input-group-btn > .fc-button-link:active, #fc .input-group-btn > .fc-action--checkout--button:active, #fc .input-group-btn > .fc-sidecart-button:active, #fc .fc-input-group__button > .btn:active, #fc .fc-input-group__button > .fc-button-link:active, #fc .fc-input-group__button > .fc-action--checkout--button:active, #fc .fc-input-group__button > .fc-sidecart-button:active, #fc .input-group-btn > .fc-button--minor:active, #fc .fc-input-group__button > .fc-button--minor:active, #fc .input-group-btn > .fc-button:active, #fc .fc-input-group__button > .fc-button:active {
+#fc .input-group-btn > .btn:hover, #fc .input-group-btn > .fc-button-link:hover,
+#fc .input-group-btn > .fc-button--show-other-payment:hover, #fc .input-group-btn > .fc-action--checkout--button:hover, #fc .input-group-btn > .fc-sidecart-button:hover, #fc .fc-input-group__button > .btn:hover, #fc .fc-input-group__button > .fc-button-link:hover,
+#fc .fc-input-group__button > .fc-button--show-other-payment:hover, #fc .fc-input-group__button > .fc-action--checkout--button:hover, #fc .fc-input-group__button > .fc-sidecart-button:hover, #fc .input-group-btn > .fc-button--minor:hover, #fc .fc-input-group__button > .fc-button--minor:hover, #fc .input-group-btn > .fc-button:hover, #fc .fc-input-group__button > .fc-button:hover, #fc .input-group-btn > .btn:focus, #fc .input-group-btn > .fc-button-link:focus,
+#fc .input-group-btn > .fc-button--show-other-payment:focus, #fc .input-group-btn > .fc-action--checkout--button:focus, #fc .input-group-btn > .fc-sidecart-button:focus, #fc .fc-input-group__button > .btn:focus, #fc .fc-input-group__button > .fc-button-link:focus,
+#fc .fc-input-group__button > .fc-button--show-other-payment:focus, #fc .fc-input-group__button > .fc-action--checkout--button:focus, #fc .fc-input-group__button > .fc-sidecart-button:focus, #fc .input-group-btn > .fc-button--minor:focus, #fc .fc-input-group__button > .fc-button--minor:focus, #fc .input-group-btn > .fc-button:focus, #fc .fc-input-group__button > .fc-button:focus, #fc .input-group-btn > .btn:active, #fc .input-group-btn > .fc-button-link:active,
+#fc .input-group-btn > .fc-button--show-other-payment:active, #fc .input-group-btn > .fc-action--checkout--button:active, #fc .input-group-btn > .fc-sidecart-button:active, #fc .fc-input-group__button > .btn:active, #fc .fc-input-group__button > .fc-button-link:active,
+#fc .fc-input-group__button > .fc-button--show-other-payment:active, #fc .fc-input-group__button > .fc-action--checkout--button:active, #fc .fc-input-group__button > .fc-sidecart-button:active, #fc .input-group-btn > .fc-button--minor:active, #fc .fc-input-group__button > .fc-button--minor:active, #fc .input-group-btn > .fc-button:active, #fc .fc-input-group__button > .fc-button:active {
   z-index: 2;
 }
-#fc .input-group-btn:first-child > .btn, #fc .input-group-btn:first-child > .fc-button-link, #fc .input-group-btn:first-child > .fc-action--checkout--button, #fc .input-group-btn:first-child > .fc-sidecart-button, #fc .fc-input-group__button:first-child > .btn, #fc .fc-input-group__button:first-child > .fc-button-link, #fc .fc-input-group__button:first-child > .fc-action--checkout--button, #fc .fc-input-group__button:first-child > .fc-sidecart-button, #fc .input-group-btn:first-child > .fc-button--minor, #fc .fc-input-group__button:first-child > .fc-button--minor, #fc .input-group-btn:first-child > .fc-button, #fc .fc-input-group__button:first-child > .fc-button,
+#fc .input-group-btn:first-child > .btn, #fc .input-group-btn:first-child > .fc-button-link,
+#fc .input-group-btn:first-child > .fc-button--show-other-payment, #fc .input-group-btn:first-child > .fc-action--checkout--button, #fc .input-group-btn:first-child > .fc-sidecart-button, #fc .fc-input-group__button:first-child > .btn, #fc .fc-input-group__button:first-child > .fc-button-link,
+#fc .fc-input-group__button:first-child > .fc-button--show-other-payment, #fc .fc-input-group__button:first-child > .fc-action--checkout--button, #fc .fc-input-group__button:first-child > .fc-sidecart-button, #fc .input-group-btn:first-child > .fc-button--minor, #fc .fc-input-group__button:first-child > .fc-button--minor, #fc .input-group-btn:first-child > .fc-button, #fc .fc-input-group__button:first-child > .fc-button,
 #fc .input-group-btn:first-child > .btn-group,
 #fc .fc-input-group__button:first-child > .btn-group {
   margin-right: -1px;
 }
-#fc .input-group-btn:last-child > .btn, #fc .input-group-btn:last-child > .fc-button-link, #fc .input-group-btn:last-child > .fc-action--checkout--button, #fc .input-group-btn:last-child > .fc-sidecart-button, #fc .fc-input-group__button:last-child > .btn, #fc .fc-input-group__button:last-child > .fc-button-link, #fc .fc-input-group__button:last-child > .fc-action--checkout--button, #fc .fc-input-group__button:last-child > .fc-sidecart-button, #fc .input-group-btn:last-child > .fc-button--minor, #fc .fc-input-group__button:last-child > .fc-button--minor, #fc .input-group-btn:last-child > .fc-button, #fc .fc-input-group__button:last-child > .fc-button,
+#fc .input-group-btn:last-child > .btn, #fc .input-group-btn:last-child > .fc-button-link,
+#fc .input-group-btn:last-child > .fc-button--show-other-payment, #fc .input-group-btn:last-child > .fc-action--checkout--button, #fc .input-group-btn:last-child > .fc-sidecart-button, #fc .fc-input-group__button:last-child > .btn, #fc .fc-input-group__button:last-child > .fc-button-link,
+#fc .fc-input-group__button:last-child > .fc-button--show-other-payment, #fc .fc-input-group__button:last-child > .fc-action--checkout--button, #fc .fc-input-group__button:last-child > .fc-sidecart-button, #fc .input-group-btn:last-child > .fc-button--minor, #fc .fc-input-group__button:last-child > .fc-button--minor, #fc .input-group-btn:last-child > .fc-button, #fc .fc-input-group__button:last-child > .fc-button,
 #fc .input-group-btn:last-child > .btn-group,
 #fc .fc-input-group__button:last-child > .btn-group {
   margin-left: -1px;
@@ -3501,7 +3679,8 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .label:empty {
   display: none;
 }
-.btn #fc .label, #fc .fc-button-link #fc .label, #fc .fc-action--checkout--button #fc .label, #fc .fc-sidecart-button #fc .label, #fc .fc-button--minor #fc .label, #fc .fc-button #fc .label {
+.btn #fc .label, #fc .fc-button-link #fc .label,
+#fc .fc-button--show-other-payment #fc .label, #fc .fc-action--checkout--button #fc .label, #fc .fc-sidecart-button #fc .label, #fc .fc-button--minor #fc .label, #fc .fc-button #fc .label {
   position: relative;
   top: -1px;
 }
@@ -3749,9 +3928,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table:first-child > tbody:first-child > tr:first-child th:first-child,
 #fc .fc-checkout__main > .table:first-child > tbody:first-child > tr:first-child th:first-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:first-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:first-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
-#fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:first-child,
+#fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:first-child {
   border-top-left-radius: 3px;
 }
 #fc .panel > .table:first-child > thead:first-child > tr:first-child td:last-child, #fc .fc-receipt__main > .table:first-child > thead:first-child > tr:first-child td:last-child, #fc .fc-cart__main > .table:first-child > thead:first-child > tr:first-child td:last-child,
@@ -3769,9 +3960,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table:first-child > tbody:first-child > tr:first-child th:last-child,
 #fc .fc-checkout__main > .table:first-child > tbody:first-child > tr:first-child th:last-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child td:last-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > thead:first-child > tr:first-child th:last-child,
 #fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
-#fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child td:last-child,
+#fc .panel > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+#fc .fc-receipt__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+#fc .fc-cart__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child,
+#fc .fc-checkout__main > .table-responsive:first-child > .table:first-child > tbody:first-child > tr:first-child th:last-child {
   border-top-right-radius: 3px;
 }
 #fc .panel > .table:last-child, #fc .fc-receipt__main > .table:last-child, #fc .fc-cart__main > .table:last-child,
@@ -3798,9 +4001,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
 #fc .fc-checkout__main > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:first-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:first-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
-#fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:first-child,
+#fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:first-child {
   border-bottom-left-radius: 3px;
 }
 #fc .panel > .table:last-child > tbody:last-child > tr:last-child td:last-child, #fc .fc-receipt__main > .table:last-child > tbody:last-child > tr:last-child td:last-child, #fc .fc-cart__main > .table:last-child > tbody:last-child > tr:last-child td:last-child,
@@ -3818,9 +4033,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
 #fc .fc-checkout__main > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child td:last-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tbody:last-child > tr:last-child th:last-child,
 #fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
-#fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child td:last-child,
+#fc .panel > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+#fc .fc-receipt__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+#fc .fc-cart__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child,
+#fc .fc-checkout__main > .table-responsive:last-child > .table:last-child > tfoot:last-child > tr:last-child th:last-child {
   border-bottom-right-radius: 3px;
 }
 #fc .panel > .panel-body + .table, #fc .fc-receipt__main > .panel-body + .table, #fc .fc-cart__main > .panel-body + .table,
@@ -3870,11 +4097,29 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table-bordered > tfoot > tr > td:first-child,
 #fc .fc-checkout__main > .table-bordered > tfoot > tr > td:first-child,
 #fc .panel > .table-responsive > .table-bordered > thead > tr > th:first-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr > th:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr > th:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr > th:first-child,
 #fc .panel > .table-responsive > .table-bordered > thead > tr > td:first-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr > td:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr > td:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr > td:first-child,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr > th:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr > th:first-child,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr > td:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr > td:first-child,
 #fc .panel > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
-#fc .panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr > th:first-child,
+#fc .panel > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr > td:first-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr > td:first-child {
   border-left: 0;
 }
 #fc .panel > .table-bordered > thead > tr > th:last-child, #fc .fc-receipt__main > .table-bordered > thead > tr > th:last-child, #fc .fc-cart__main > .table-bordered > thead > tr > th:last-child,
@@ -3900,11 +4145,29 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table-bordered > tfoot > tr > td:last-child,
 #fc .fc-checkout__main > .table-bordered > tfoot > tr > td:last-child,
 #fc .panel > .table-responsive > .table-bordered > thead > tr > th:last-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr > th:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr > th:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr > th:last-child,
 #fc .panel > .table-responsive > .table-bordered > thead > tr > td:last-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr > td:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr > td:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr > td:last-child,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr > th:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr > th:last-child,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr > td:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr > td:last-child,
 #fc .panel > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
-#fc .panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr > th:last-child,
+#fc .panel > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr > td:last-child,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr > td:last-child {
   border-right: 0;
 }
 #fc .panel > .table-bordered > thead > tr:first-child > td, #fc .fc-receipt__main > .table-bordered > thead > tr:first-child > td, #fc .fc-cart__main > .table-bordered > thead > tr:first-child > td,
@@ -3922,9 +4185,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table-bordered > tbody > tr:first-child > th,
 #fc .fc-checkout__main > .table-bordered > tbody > tr:first-child > th,
 #fc .panel > .table-responsive > .table-bordered > thead > tr:first-child > td,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr:first-child > td,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr:first-child > td,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr:first-child > td,
 #fc .panel > .table-responsive > .table-bordered > thead > tr:first-child > th,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > thead > tr:first-child > th,
+#fc .fc-cart__main > .table-responsive > .table-bordered > thead > tr:first-child > th,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > thead > tr:first-child > th,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr:first-child > td,
-#fc .panel > .table-responsive > .table-bordered > tbody > tr:first-child > th {
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr:first-child > td,
+#fc .panel > .table-responsive > .table-bordered > tbody > tr:first-child > th,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr:first-child > th,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr:first-child > th,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr:first-child > th {
   border-bottom: 0;
 }
 #fc .panel > .table-bordered > tbody > tr:last-child > td, #fc .fc-receipt__main > .table-bordered > tbody > tr:last-child > td, #fc .fc-cart__main > .table-bordered > tbody > tr:last-child > td,
@@ -3942,9 +4217,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc .fc-cart__main > .table-bordered > tfoot > tr:last-child > th,
 #fc .fc-checkout__main > .table-bordered > tfoot > tr:last-child > th,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr:last-child > td,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr:last-child > td,
 #fc .panel > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tbody > tr:last-child > th,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tbody > tr:last-child > th,
 #fc .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
-#fc .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr:last-child > td,
+#fc .panel > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+#fc .fc-receipt__main > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+#fc .fc-cart__main > .table-responsive > .table-bordered > tfoot > tr:last-child > th,
+#fc .fc-checkout__main > .table-responsive > .table-bordered > tfoot > tr:last-child > th {
   border-bottom: 0;
 }
 #fc .panel > .table-responsive, #fc .fc-receipt__main > .table-responsive, #fc .fc-cart__main > .table-responsive,
@@ -4137,8 +4424,8 @@ fieldset[disabled] #fc .checkbox-inline {
     display: table-row !important;
   }
   #fc th.visible-xs, #fc th.fc-form-label--new-cc-cvv2,
-#fc td.visible-xs,
-#fc td.fc-form-label--new-cc-cvv2 {
+  #fc td.visible-xs,
+  #fc td.fc-form-label--new-cc-cvv2 {
     display: table-cell !important;
   }
 }
@@ -4168,7 +4455,7 @@ fieldset[disabled] #fc .checkbox-inline {
     display: table-row !important;
   }
   #fc th.visible-sm,
-#fc td.visible-sm {
+  #fc td.visible-sm {
     display: table-cell !important;
   }
 }
@@ -4198,7 +4485,7 @@ fieldset[disabled] #fc .checkbox-inline {
     display: table-row !important;
   }
   #fc th.visible-md,
-#fc td.visible-md {
+  #fc td.visible-md {
     display: table-cell !important;
   }
 }
@@ -4228,7 +4515,7 @@ fieldset[disabled] #fc .checkbox-inline {
     display: table-row !important;
   }
   #fc th.visible-lg,
-#fc td.visible-lg {
+  #fc td.visible-lg {
     display: table-cell !important;
   }
 }
@@ -4249,12 +4536,12 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (max-width: 767px) {
   #fc .hidden-xs, #fc .fc-pos-modal--header__label, #fc .fc-container__grid--label--multiship-select,
-#fc .fc-container__grid--label--name,
-#fc .fc-container__grid--label--tax-id,
-#fc .fc-container__grid--label--address, #fc .fc-section-counter, #fc .fc-cart__items__header,
-#fc .fc-logo,
-#fc .fc-cart__items__header__quantity,
-#fc .fc-cart__items__header__total {
+  #fc .fc-container__grid--label--name,
+  #fc .fc-container__grid--label--tax-id,
+  #fc .fc-container__grid--label--address, #fc .fc-section-counter, #fc .fc-cart__items__header,
+  #fc .fc-logo,
+  #fc .fc-cart__items__header__quantity,
+  #fc .fc-cart__items__header__total {
     display: none !important;
   }
 }
@@ -4287,7 +4574,7 @@ fieldset[disabled] #fc .checkbox-inline {
     display: table-row !important;
   }
   #fc th.visible-print,
-#fc td.visible-print {
+  #fc td.visible-print {
     display: table-cell !important;
   }
 }
@@ -4363,7 +4650,8 @@ fieldset[disabled] #fc .checkbox-inline {
   left: -9999px;
 }
 #fc html, #fc body {
-  height: 100%;
+  min-height: 100vh;
+  position: relative;
 }
 #fc body {
   background: #EEEEEE url(/static/themes/responsive/images/background-dark.png) repeat top left;
@@ -4463,16 +4751,16 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (max-width: 767px) {
   #fc .fc-cart__main,
-#fc #fc-checkout-container,
-#fc .fc-receipt-container {
+  #fc #fc-checkout-container,
+  #fc .fc-receipt-container {
     width: 100%;
     margin: 0 auto;
   }
 }
 @media (min-width: 768px) {
   #fc .fc-cart__main,
-#fc #fc-checkout-container,
-#fc .fc-receipt-container {
+  #fc #fc-checkout-container,
+  #fc .fc-receipt-container {
     min-height: 100%;
     overflow: hidden;
     clear: both;
@@ -4532,6 +4820,23 @@ fieldset[disabled] #fc .checkbox-inline {
   font-size: 0.875em;
   text-align: center;
 }
+#fc .fc-transaction-history {
+  padding-left: 10px;
+}
+#fc .fc-transaction-history h2 {
+  color: #1a1a1a;
+  font-size: 1.5em;
+}
+#fc .fc-info {
+  min-height: 65px;
+  text-align: right;
+  max-width: 500px;
+  float: right;
+  padding-top: 10px;
+  padding-right: 10px;
+  border: solid 2px #a19696;
+  background-color: #f6f6b5;
+}
 #fc .fc-transaction__total {
   font-weight: bold;
   font-size: 1.1em;
@@ -4590,7 +4895,7 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (min-width: 768px) {
   #fc .fc-context--cart-fullpage .fc-cart__title__header,
-#fc .fc-context--cart-fullpage .fc-order-quantity {
+  #fc .fc-context--cart-fullpage .fc-order-quantity {
     display: inline-block;
     margin-bottom: 10px;
   }
@@ -4875,8 +5180,7 @@ fieldset[disabled] #fc .checkbox-inline {
   -webkit-transition: all 0.1s linear;
   -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
-  line-height: 1.9;
-  /* to match the .fc-form-control elements */
+  line-height: 1.9; /* to match the .fc-form-control elements */
 }
 #fc .fc-form-control--static .fc-button {
   margin-top: -7px;
@@ -4887,8 +5191,7 @@ fieldset[disabled] #fc .checkbox-inline {
   padding-bottom: 1px;
 }
 #fc .fc-button {
-  background: #F9F9F9;
-  /* Old browsers */
+  background: #F9F9F9; /* Old browsers */
   background: -webkit-linear-gradient(#F9F9F9, #EEEEEE) top 0%;
   background: linear-gradient( #F9F9F9, #EEEEEE) top 0%;
   border: 1px solid #d5d5d5;
@@ -4897,8 +5200,7 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 #fc .fc-input-group__button > .fc-button:hover,
 #fc .fc-button:hover {
-  background: #F9F9F9;
-  /* Old browsers */
+  background: #F9F9F9; /* Old browsers */
   background: -webkit-linear-gradient(#F9F9F9, #EEEEEE) top 0%;
   background: linear-gradient( #F9F9F9, #EEEEEE) top 0%;
   color: #555555;
@@ -4916,7 +5218,7 @@ fieldset[disabled] #fc .checkbox-inline {
   background: -webkit-linear-gradient(top, #73b263 0%, #458c33 100%);
   background: linear-gradient(to bottom, #73b263 0%, #458c33 100%);
   /* W3C */
-  text-shadow: 1px 1px 0px #327123;
+  text-shadow: 1px 1px 0px rgb(50, 113, 35);
 }
 #fc .fc-action--checkout--button:hover, #fc .fc-action--checkout--button:focus,
 #fc .fc-button--subscription-cancel:hover,
@@ -4929,7 +5231,7 @@ fieldset[disabled] #fc .checkbox-inline {
   background: -webkit-linear-gradient(top, #458c33 0%, #458c33 100%);
   background: linear-gradient(to bottom, #458c33 0%, #458c33 100%);
   /* W3C */
-  text-shadow: 1px 1px 0px #327123;
+  text-shadow: 1px 1px 0px rgb(50, 113, 35);
   -webkit-transition: all 0.1s linear;
   -o-transition: all 0.1s linear;
   transition: all 0.1s linear;
@@ -5051,9 +5353,9 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (max-width: 767px) {
   #fc .fc-form-control--postal-code,
-#fc .fc-form-control--postal-code:focus,
-#fc .fc-coupon-entry--input .fc-form-control,
-#fc .fc-coupon-entry--input .fc-form-control:focus {
+  #fc .fc-form-control--postal-code:focus,
+  #fc .fc-coupon-entry--input .fc-form-control,
+  #fc .fc-coupon-entry--input .fc-form-control:focus {
     border-top: 1px solid #bbbbbb;
     box-shadow: inset 1px 1px 1px 0px rgba(0, 0, 0, 0.1);
     z-index: 0;
@@ -5067,14 +5369,12 @@ fieldset[disabled] #fc .checkbox-inline {
   height: auto;
 }
 #fc .fc-form-control--static {
-  line-height: 28px;
-  /* to match the .fc-form-control elements */
+  line-height: 28px; /* to match the .fc-form-control elements */
 }
 #fc .fc-form-group .fc-form-group .fc-form-label {
   line-height: 28px;
 }
-#fc .fc-form-group--postal-code {
-  /* To avoid double bottom margins when a .form-group containers more .form-group elements */
+#fc .fc-form-group--postal-code { /* To avoid double bottom margins when a .form-group containers more .form-group elements */
   margin-bottom: 0;
 }
 #fc .fc-alert--success .fc-input-group--customer-password__authenticated {
@@ -5747,6 +6047,18 @@ fieldset[disabled] #fc .checkbox-inline {
   -o-transition: all 0.2s ease-out 0.1s;
   transition: all 0.2s ease-out 0.1s;
 }
+#fc .fc-checkout__section--payment--uatp .fc-checkout__section--payment__method__logo {
+  opacity: 0.2;
+  -webkit-transition: all 0.2s ease-out 0.1s;
+  -o-transition: all 0.2s ease-out 0.1s;
+  transition: all 0.2s ease-out 0.1s;
+}
+#fc .fc-checkout__section--payment--uatp .fc-checkout__section--payment__method__logo.fc-checkout__section--payment__method__logo--uatp {
+  opacity: 1;
+  -webkit-transition: all 0.2s ease-out 0.1s;
+  -o-transition: all 0.2s ease-out 0.1s;
+  transition: all 0.2s ease-out 0.1s;
+}
 #fc .fc-container__grid--plastic-new-exp-month {
   padding-left: 10px;
   padding-right: 5px;
@@ -5778,7 +6090,7 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (max-width: 480px) {
   #fc .fc-container__grid--plastic-new-exp-month,
-#fc .fc-container__grid--plastic-new-exp-year {
+  #fc .fc-container__grid--plastic-new-exp-year {
     width: 35%;
   }
   #fc .fc-container__grid--plastic-new-csc {
@@ -5896,7 +6208,7 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (max-width: 991px) {
   #fc .fc-form-label__pos-masked-number,
-#fc .fc-form-label__pos-expiration {
+  #fc .fc-form-label__pos-expiration {
     text-align: left;
   }
 }
@@ -5983,6 +6295,14 @@ fieldset[disabled] #fc .checkbox-inline {
   color: #ffffff;
   float: right;
   padding-left: 5px;
+}
+#fc #fc-checkout__section--express-options {
+  margin-bottom: 5px;
+}
+#fc #fc-checkout__section--express-options .fc-express-option {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 0 5px 10px;
 }
 #fc span.fc-placeholder {
   font-size: 0.9em;
@@ -6376,6 +6696,21 @@ fieldset[disabled] #fc .checkbox-inline {
 #fc #fc-receipt__section--downloadables .fc-container__grid--static-input--downloadables {
   width: 100%;
 }
+#fc #fc-receipt__section--footer {
+  margin-bottom: 30px;
+}
+#fc #fc-receipt__section--transaction-history {
+  margin-top: 30px;
+}
+#fc #fc-receipt__section--transaction-history .fc-list--transaction-history__item {
+  font-size: 12px;
+}
+#fc #fc-receipt__section--transaction-history .fc-transaction-history__positive {
+  color: #267d00;
+}
+#fc #fc-receipt__section--transaction-history .fc-transaction-history__processor {
+  color: #999;
+}
 #fc #fc-receipt__section--receipt_messaging_and_actions {
   margin-top: 30px;
   margin-bottom: 15px;
@@ -6476,7 +6811,7 @@ fieldset[disabled] #fc .checkbox-inline {
     float: left;
   }
   #fc body,
-#fc #fc-receipt__section--header {
+  #fc #fc-receipt__section--header {
     background: none;
     padding-top: 0;
     padding-bottom: 0;
@@ -6491,17 +6826,17 @@ fieldset[disabled] #fc .checkbox-inline {
     max-width: 2in;
   }
   #fc #fc-receipt__section--receipt_messaging_and_actions,
-#fc .fc-cancel-continue-shopping {
+  #fc .fc-cancel-continue-shopping {
     display: none;
   }
   #fc #fc-receipt-container fieldset {
     margin: 0;
   }
   #fc #fc-receipt__section--general-information,
-#fc #fc-receipt__section--billing-information,
-#fc #fc-receipt__section--shipping-information,
-#fc #fc-receipt__section--custom-fields,
-#fc .fc-receipt__section--multiship-shipping-information {
+  #fc #fc-receipt__section--billing-information,
+  #fc #fc-receipt__section--shipping-information,
+  #fc #fc-receipt__section--custom-fields,
+  #fc .fc-receipt__section--multiship-shipping-information {
     width: 49%;
     display: inline-block;
   }
@@ -6642,7 +6977,6 @@ fieldset[disabled] #fc .checkbox-inline {
   }
 }
 #fc .fc-container__grid--authentication-button--amazon .fc-action--payment--or {
-  text-align: left;
   margin: -10px 0 5px 12px;
   color: #999;
 }
@@ -6659,8 +6993,8 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (min-width: 768px) {
   #fc #AmazonAddressBookWidget,
-#fc #AmazonWalletWidget,
-#fc #AmazonConsentWidget {
+  #fc #AmazonWalletWidget,
+  #fc #AmazonConsentWidget {
     height: 300px !important;
   }
 }
@@ -6687,6 +7021,7 @@ fieldset[disabled] #fc .checkbox-inline {
   width: 100%;
   height: 50px;
   border-radius: 5px;
+  border: none;
   background-image: -webkit-named-image(apple-pay-logo-white);
   background-position: 50% 50%;
   background-color: black;
@@ -7148,8 +7483,8 @@ fieldset[disabled] #fc .checkbox-inline {
 }
 @media (min-width: 768px) {
   #fc .fc-alert-container--error .fc-input-group-container--active .fc-input-group-container__title:before,
-#fc .fc-alert-container--error .fc-input-group-container--active .fc-input-group-container__no-title:before,
-#fc .fc-alert-container--error .fc-input-group-container--checkbox .fc-input-group-container__title:before {
+  #fc .fc-alert-container--error .fc-input-group-container--active .fc-input-group-container__no-title:before,
+  #fc .fc-alert-container--error .fc-input-group-container--checkbox .fc-input-group-container__title:before {
     -webkit-animation: fadeInErrorBorder 0.2s linear 0s 1;
     -o-animation: fadeInErrorBorder 0.2s linear 0s 1;
     animation: fadeInErrorBorder 0.2s linear 0s 1;
@@ -7333,7 +7668,7 @@ span.fc-skeleton {
 }
 @media (max-width: 767px) {
   [data-fc-sidecart] #fc .fc-cart__header,
-[data-fc-sidecart] #fc .fc-cart-container {
+  [data-fc-sidecart] #fc .fc-cart-container {
     margin-left: -7px;
     margin-right: -7px;
   }
@@ -7541,7 +7876,6 @@ body.logged-in.admin-bar {
   [data-fc-sidecart] .fc-sidecart-only-fixed {
     width: 310px;
   }
-
   [data-fc-with-sidecart=rotate-pusher].cart-visible {
     -webkit-transform: translate3d(-310px, 0, 0);
     -moz-transform: translate3d(-310px, 0, 0);
@@ -7549,9 +7883,8 @@ body.logged-in.admin-bar {
     -o-transform: translate3d(-310px, 0, 0);
     transform: translate3d(-310px, 0, 0);
   }
-
   [data-fc-with-sidecart=reveal].cart-visible [data-fc-store-page],
-[data-fc-with-sidecart=reveal].cart-visible [data-fc-ui-block] {
+  [data-fc-with-sidecart=reveal].cart-visible [data-fc-ui-block] {
     -webkit-transform: translate3d(-310px, 0, 0);
     -moz-transform: translate3d(-310px, 0, 0);
     -ms-transform: translate3d(-310px, 0, 0);
@@ -7583,7 +7916,6 @@ body.logged-in.admin-bar {
   [data-fc-sidecart] .fc-sidecart-only-fixed {
     width: 340px;
   }
-
   [data-fc-with-sidecart=rotate-pusher].cart-visible {
     -webkit-transform: translate3d(-340px, 0, 0);
     -moz-transform: translate3d(-340px, 0, 0);
@@ -7591,9 +7923,8 @@ body.logged-in.admin-bar {
     -o-transform: translate3d(-340px, 0, 0);
     transform: translate3d(-340px, 0, 0);
   }
-
   [data-fc-with-sidecart=reveal].cart-visible [data-fc-store-page],
-[data-fc-with-sidecart=reveal].cart-visible [data-fc-ui-block] {
+  [data-fc-with-sidecart=reveal].cart-visible [data-fc-ui-block] {
     -webkit-transform: translate3d(-340px, 0, 0);
     -moz-transform: translate3d(-340px, 0, 0);
     -ms-transform: translate3d(-340px, 0, 0);

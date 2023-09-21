@@ -57,6 +57,12 @@
                 {{ config.lang.checkout_payment_pending|raw }}
             </div>
             {% endif %}
+
+            {% if payment_is_authorized %}
+            <div class="fc-alert fc-alert--info">
+                {{ config.lang.receipt_message_authorized|raw }}
+            </div>
+            {% endif %}
         </div>
         {% endblock messaging %}
 
@@ -146,6 +152,16 @@
                     <p class="fc-form-control--static">{{ processor_response|raw }}</p>
                 </div>
             </div>
+            {% if processor_response_details %}
+                {% for detail in processor_response_details %}
+                    <div class="fc-form-group fc-form-group--static fc-form-group--receipt--processor-response-details--{{ detail.class }}">
+                        <label class="fc-form-label fc-container__grid--static-label--processor-response-details--{{ detail.class }}">{{ detail.label }}</label>
+                        <div class="fc-container__grid--static-input--processor-response-details--{{ detail.class }}">
+                            <p class="fc-form-control--static">{{ detail.value }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
         </fieldset><!-- #fc_receipt_general -->
     </div>
 {% endblock general_information %}
@@ -229,9 +245,14 @@
                 </div>
                 {% if has_taxes %}
                     {% for tax in multiship.taxes %}
+                    {% if tax.rate is null  %}
+                        {% set tax_rate = '' %}
+                    {% else %}
+                        {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate ~ '</span>%)' %}
+                    {% endif %}
                     <div class="fc-form-group fc-form-group--inline">
                         <label class="fc-form-label fc-container__grid--static-label--multiship-tax">
-                            {{ tax.name }} (<span class="fc_cart_foot_tax_rate">{{ tax.rate }}</span>%) {{ config.lang.cart_tax|raw }}
+                            {{ tax.name }}{{ tax_rate|raw }} {{ config.lang.cart_tax|raw }}
                         </label>
                         <div class="fc-container__grid--static-input--multiship-tax">
                             <p class="fc-form-control--static">{{ tax.amount|money_format }}</p>
@@ -281,7 +302,32 @@
         {% include 'cart.inc.twig' %}
     </div>
 
+    {% if transaction_history_data and transaction_history_data|length > 1 %}
+        <div id="fc-receipt__section--transaction-history" class="fc-receipt__section">
+            <fieldset>
+                <legend>{{ config.lang.receipt_transaction_history|raw }}</legend>
+                <div class="fc-form-group fc-form-group--static fc-form-group--receipt--transaction-history">
+                    <div class="fc-container__grid--static-input--transaction-history">
+                        <ul fc-list="fc-list fc-list--transaction-history">
+                            {% for historical_data in transaction_history_data %}
+                                {% set action = historical_data.request_type|split('_')[1] %}
+                                {% set amount = historical_data.amount|money_format ~ " " ~ (action|capitalize) %}
+                                {% if action in ['refund', 'void'] %}
+                                    {% set amount = "<span class=\"fc-transaction-history__positive\">" ~ amount ~ "</span>" %}
+                                {% endif %}
+                                <li class="fc-list--transaction-history__item"><strong>{{ historical_data.date }}:</strong>
+                                    {{ amount|raw }} <span class="fc-transaction-history__processor">({{ historical_data.processor_response }})</span>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </fieldset>
+        </div>
+    {% endif %}
+
 
 </div>{# .fc-container #}
+<div id="fc-receipt__section--footer">{{ config.lang.receipt_footer|raw }}</div>
 </div>{# #fc-receipt-container.fc-receipt__main.fc-receipt__row #}
 {% endblock receipt %}
