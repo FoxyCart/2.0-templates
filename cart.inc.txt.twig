@@ -75,7 +75,7 @@
 {% set coupon_code = key %}
 {% for i, coupon in coupon_data %}
 {% set coupon_label = coupon.name ~ " (" ~ coupon_code ~ ")" %}
-{{ coupon_label|pad(24) }} {{ coupon.amount|money_format }}
+{{ coupon_label|pad(24) }} {{ coupon.display }}
 {% endfor %}
 {% endfor %}
 {{ shipping_and_handling_label|pad(24) }} {{ total_shipping|money_format }}

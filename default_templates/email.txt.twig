@@ -19,7 +19,7 @@
 
 {% endif  %}
 {% if is_order %}
-{{ config.lang.email_text_message_order|raw }} https://{{ config.store_domain }}/cart?cart=updateinfo
+{{ config.lang.email_text_message_order|raw }}
 {% elseif is_subscription_dunning_reminder %}
 {% set sub = subscriptions|first %}
 {% if sub %}
@@ -139,13 +139,23 @@
 {% endfor %}{# multiship #}
 {% endif %}{# has multiship custom fields #}
 {% if not is_updateinfo %}
-    {{ config.lang.cart_subtotal|raw }}: {{ multiship.total_item_price|money_format }}
+    {{ config.lang.cart_subtotal|raw }}:
+    {% if has_inclusive_taxes %}
+        {{ multiship.total_item_with_tax_price|money_format }}
+    {% else %}
+        {{ multiship.total_item_price|money_format }}
+    {% endif %}
 {% endif %}
 {% if multiship.has_shippable_products %}
-{% if multiship.shipping_service_description %}
-    {{ multiship.shipping_service_description }}: {{ multiship.total_shipping|money_format }}
+{% if has_inclusive_taxes %}
+    {% set  multiship_total_shipping = multiship.total_shipping_with_tax_price %}
 {% else %}
-    {{ shipping_and_handling_label }}: {{ multiship.total_shipping|money_format }}
+    {% set  multiship_total_shipping = multiship.total_shipping %}
+{% endif %}
+{% if multiship.shipping_service_description %}
+    {{ multiship.shipping_service_description }}: {{ multiship_total_shipping|money_format }}
+{% else %}
+    {{ shipping_and_handling_label }}: {{ multiship_total_shipping|money_format }}
 {% endif %}
 {% endif %}
 {% if not is_updateinfo %}
