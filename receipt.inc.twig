@@ -234,13 +234,25 @@
                 <div class="fc-form-group fc-form-group--inline">
                     <label class="fc-form-label fc-container__grid--static-label--multiship-price">{{ config.lang.checkout_subtotal|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-price">
-                        <p class="fc-form-control--static">{{ multiship.total_item_price|money_format }}</p>
+                        <p class="fc-form-control--static">
+                            {% if has_inclusive_taxes %}
+                                {{ multiship.total_item_with_tax_price|money_format }}
+                            {% else %}
+                                {{ multiship.total_item_price|money_format }}
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
                 <div class="fc-form-group fc-form-group--inline">
                     <label class="fc-form-label fc-container__grid--static-label--multiship-shipping">{{ multiship.shipping_service_description|raw }}</label>
                     <div class="fc-container__grid--static-input--multiship-shipping">
-                        <p class="fc-form-control--static">{{ multiship.total_shipping|money_format }}</p>
+                        <p class="fc-form-control--static">
+                            {% if has_inclusive_taxes %}
+                                {{ multiship.total_shipping_with_tax_price|money_format }}
+                            {% else %}
+                                {{ multiship.total_shipping|money_format }}
+                            {% endif %}
+                        </p>
                     </div>
                 </div>
                 {% if has_taxes %}
@@ -248,11 +260,12 @@
                     {% if tax.rate is null  %}
                         {% set tax_rate = '' %}
                     {% else %}
-                        {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate ~ '</span>%)' %}
+                        {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate|round(2) ~ '</span>%)' %}
                     {% endif %}
+
                     <div class="fc-form-group fc-form-group--inline">
                         <label class="fc-form-label fc-container__grid--static-label--multiship-tax">
-                            {{ tax.name }}{{ tax_rate|raw }} {{ config.lang.cart_tax|raw }}
+                            {{ tax.name }}{{ tax_rate|raw }}
                         </label>
                         <div class="fc-container__grid--static-input--multiship-tax">
                             <p class="fc-form-control--static">{{ tax.amount|money_format }}</p>

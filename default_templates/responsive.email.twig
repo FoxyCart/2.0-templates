@@ -392,14 +392,26 @@
                                                             {% endif %}
 
                                                             {% if not is_updateinfo %}
-                                                                {{ config.lang.checkout_subtotal|raw }}: {{ multiship.total_item_price|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {{ config.lang.checkout_subtotal|raw }}:
+                                                                {% if has_inclusive_taxes %}
+                                                                    {{ multiship.total_item_with_tax_price|money_format }}
+                                                                {% else %}
+                                                                    {{ multiship.total_item_price|money_format }}
+                                                                {% endif %}
+                                                                <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                             {% endif %}
 
                                                             {% if multiship.has_shippable_products %}
-                                                                {% if multiship.shipping_service_description %}
-                                                                    {{ multiship.shipping_service_description|raw }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {% if has_inclusive_taxes %}
+                                                                    {% set  multiship_total_shipping = multiship.total_shipping_with_tax_price %}
                                                                 {% else %}
-                                                                    {{ shipping_and_handling_label }}: {{ multiship.total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                    {% set  multiship_total_shipping = multiship.total_shipping %}
+                                                                {% endif %}
+
+                                                                {% if multiship.shipping_service_description %}
+                                                                    {{ multiship.shipping_service_description|raw }}: {{ multiship_total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                {% else %}
+                                                                    {{ shipping_and_handling_label }}: {{ multiship_total_shipping|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                 {% endif %}
                                                             {% endif %}
 
@@ -412,7 +424,7 @@
                                                                             {% set tax_rate = ' (' ~ tax.rate ~ '%)' %}
                                                                         {% endif %}
                                                                         {{ tax.name }}{{ tax_rate }} {{ config.lang.cart_tax|raw }}:
-                                                                        {{ tax.amount|money_format }}<br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
+                                                                        {{ tax.amount|money_format }} <br style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">
                                                                     {% endfor %}
                                                                 {% endif %}
 
@@ -491,23 +503,45 @@
                                                 <tfoot style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;width: 540px;border-top: 2px solid #eeeeee;display: table-footer-group;">
                                                     <tr id="fc-cart-subtotal" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_subtotal|raw }}:</td>
-                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_item_price|money_format }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
+                                                            {% if has_inclusive_taxes %}
+                                                                {{ total_item_with_tax_price|money_format }}
+                                                            {% else %}
+                                                                {{ total_item_price|money_format }}
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
                                                     {% if shipping_address.has_shippable_products %}
                                                     <tr id="fc-cart-shipping" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ config.lang.cart_shipping_and_handling|raw }}</td>
-                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
+                                                            {% if has_inclusive_taxes %}
+                                                                {{ total_shipping_with_tax|money_format }}
+                                                            {% else %}
+                                                                {{ total_shipping|money_format }}
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
                                                     {% elseif total_shipping > 0 %}
                                                     <tr id="fc-cart-shipping" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                         <td width="440" class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">{{ shipping_and_handling_label|raw }}</td>
-                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ total_shipping|money_format }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
+                                                            {% if has_inclusive_taxes %}
+                                                                {{ total_shipping_with_tax|money_format }}:
+                                                            {% else %}
+                                                                {{ total_shipping|money_format }}:
+                                                            {% endif %}
+                                                        </td>
                                                     </tr>
                                                     {% endif %}
                                                     {% if has_multiship %}
                                                         <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                             <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
-                                                                {{ config.lang.cart_tax|raw }}
+                                                                {% if has_inclusive_taxes %}
+                                                                    {{ config.lang.cart_inclusive_tax|raw }}:
+                                                                {% else %}
+                                                                    {{ config.lang.cart_tax|raw }}:
+                                                                {% endif %}
                                                             </td>
                                                             <td class="fc-cart-subtotal-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">
                                                                 {{ total_tax|money_format }}
@@ -518,8 +552,9 @@
                                                         {% if tax.rate is null  %}
                                                             {% set tax_rate = '' %}
                                                         {% else %}
-                                                            {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">' ~ tax.rate ~ '</span>%)' %}
+                                                            {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;">' ~ tax.rate|round(2) ~ '</span>%)' %}
                                                         {% endif %}
+
                                                         <tr class="fc-cart-total-taxes" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;height: 30px;line-height: 30px;">
                                                             <td class="fc-cart-subtotal-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
                                                                 {{ tax.name }}{{ tax_rate|raw }}:
@@ -528,6 +563,7 @@
                                                                 {{ tax.amount|money_format }}
                                                             </td>
                                                         </tr>
+
                                                         {% endfor %}
                                                     {% endif %}
                                                     {% for key,coupon_data in coupons %}
@@ -540,7 +576,7 @@
                                                             <td class="fc-cart-total-label" colspan="4" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 0;text-align: right;">
                                                                 {{ coupon.name }}: {{ coupon_code }}
                                                             </td>
-                                                            <td class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ coupon.amount|money_format }}</td>
+                                                            <td class="fc-cart-total-value" style="margin: 0;padding: 0;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;text-align: right;padding-right: 14px;">{{ coupon.display }}</td>
                                                         </tr>
                                                         {% endfor %}
                                                     {% endfor %}
@@ -673,9 +709,18 @@
                                                             {# End block product_options #}
                                                             </div>
                                                         </td>
-                                                        <td width="70" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{% if item.quantity > 1 %}{{ item.price_each|money_format }}&nbsp;&times;{% endif %}</td>
+
+                                                        {% if has_inclusive_taxes %}
+                                                            {% set item_price_each = item.price_each_with_tax %}
+                                                            {% set item_price = item.price_with_tax %}
+                                                        {% else %}
+                                                            {% set item_price_each = item.price_each %}
+                                                            {% set item_price = item.price %}
+                                                        {% endif %}
+
+                                                        <td width="70" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{% if item.quantity > 1 %}{{ item_price_each|money_format }}&nbsp;&times;{% endif %}</td>
                                                         <td width="20" class="fc-cart-qty" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 0;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: center;">{{ item.quantity }}</td>
-                                                        <td width="{{ price_width }}" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{{ item.price|money_format }}</td>
+                                                        <td width="{{ price_width }}" class="fc-cart-price" style="margin: 0;padding: 20px 0px;font-family: Verdana, Helvetica, Arial, sans-serif;padding-left: 10px;padding-right: 14px;border-bottom: 1px solid #eeeeee;vertical-align: top;text-align: right;">{{ item_price|money_format }}</td>
                                                     </tr>
                                                 {% endfor %}
                                                 </tbody>
@@ -721,7 +766,7 @@
                                                                     {% for key,coupon in future_coupons %}
                                                                     <tr class="fc-cart-total-discounts">
                                                                         <td class="fc-cart-total-label"> {{ coupon.name }}: {{ key }} </td>
-                                                                        <td class="fc-cart-total-value"> {{ coupon.amount|money_format }} </td>
+                                                                        <td class="fc-cart-total-value"> {{ coupon.display }} </td>
                                                                     </tr>
                                                                     {% endfor %}
                                                                     {% if has_future_shipping %}

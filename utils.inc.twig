@@ -78,3 +78,19 @@
 {% macro address_changed(original, suggested) %}
 {% set address_validation_changed = '' %}{% if original != suggested %}fc-address-validation--changed{% endif %}
 {% endmacro %}
+
+{% macro taxes(tax, config) %}
+{% if tax.rate is null  %}
+    {% set tax_rate = '' %}
+{% else %}
+    {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate|round(2) ~ '</span>%)' %}
+{% endif %}
+<tr class="fc-subtotal--row">
+    <td class="fc-subtotal__label">
+        {{ tax.name }}{{ tax_rate|raw }}:
+    </td>
+    <td class="fc-subtotal__value">
+        {{ tax.amount|money_format }}
+    </td>
+</tr>
+{% endmacro %}

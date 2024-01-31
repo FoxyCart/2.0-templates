@@ -306,17 +306,29 @@
                     <div class="fc-cart__item__totals">
                         <div class="fc-container__row">
                             <div class="fc-cart__item__total">
-                                {% if item.parent_code == '' or (item.parent_code != '' and item.price > 0) %}
-                                <p>
-                                    {{ item.price|money_format }}{% if item.price_is_fractional %}<span title="{{ item.price }}">…</span>{% endif %}
-                                </p>
+                                {% if has_inclusive_taxes %}
+                                    {% if item.parent_code == '' or (item.parent_code != '' and item.price_with_tax > 0) %}
+                                    <p>
+                                        {{ item.price_with_tax|money_format }}{% if item.price_with_tax_is_fractional %}<span title="{{ item.price_with_tax }}">…</span>{% endif %}
+                                    </p>
+                                    {% endif %}
+                                {% else %}
+                                    {% if item.parent_code == '' or (item.parent_code != '' and item.price > 0) %}
+                                    <p>
+                                        {{ item.price|money_format }}{% if item.price_is_fractional %}<span title="{{ item.price }}">…</span>{% endif %}
+                                    </p>
+                                    {% endif %}
                                 {% endif %}
                             </div>
 
                             <div class="fc-cart__item__price">
                                 {% if item.quantity != 1 %}
                                 <p class="fc-cart__item__price__each">
-                                    {{ item.price_each|money_format }}{% if item.price_each_is_fractional %}<span title="{{ item.price_each }}">…</span>{% endif %}
+                                    {% if has_inclusive_taxes %}
+                                        {{ item.price_each_with_tax|money_format }}{% if item.price_each_with_tax_is_fractional %}<span title="{{ item.price_each_with_tax }}">…</span>{% endif %}
+                                    {% else %}
+                                        {{ item.price_each|money_format }}{% if item.price_each_is_fractional %}<span title="{{ item.price_each }}">…</span>{% endif %}
+                                    {% endif %}
                                     <small>
                                         {{ config.lang.cart_each|raw }}
                                     </small>
@@ -430,7 +442,11 @@
                     <table>
                         <tr class="fc-subtotal--row">
                             <td class="fc-subtotal__label"><h5>{{ config.lang.cart_subtotal|raw }}</h5></td>
-                            <td class="fc-subtotal__value">{{ total_item_price|money_format }}</td>
+                            {% if has_inclusive_taxes %}
+                                <td class="fc-subtotal__value">{{ total_item_with_tax_price|money_format }}</td>
+                            {% else %}
+                                <td class="fc-subtotal__value">{{ total_item_price|money_format }}</td>
+                            {% endif %}
                         </tr>
                     </table>
                 </li>
@@ -466,16 +482,23 @@
                         <tr class="fc-subtotal--row">
                             <td class="fc-subtotal__label">{{ shipping_service_label|raw }}</td>
                             <td class="fc-subtotal__value">
+                            {% if has_inclusive_taxes %}
+                                {% set total_shipping_value = total_shipping_with_tax %}
+                            {% else %}
+                                {% set total_shipping_value = total_shipping %}
+                            {% endif %}
+
                             {% if show_shipping_tbd %}
                                 {{ config.lang.cart_tbd|raw }}
                             {% else %}
-                                {{ total_shipping|money_format }}
+                                {{ total_shipping_value|money_format }}
                             {% endif %}
+
                             <input
                                 id="total_shipping"
                                 type="hidden"
                                 name="total_shipping"
-                                value="{{ total_shipping }}"
+                                value="{{ total_shipping_value }}"
                             />
                             <input
                                 id="total_future_shipping"
@@ -592,7 +615,7 @@
                                         </span>
                                         {% endif %}
                                     </td>
-                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
+                                    <td class="fc-subtotal__value">{{ coupon.display }}</td>
                                 </tr>
                             {% endfor %}
                         {% endfor %}
@@ -644,7 +667,13 @@
 
                     {% if show_tax_header %}
                     <div class="fc-transaction__ui">
-                        <h5 class="fc-transaction__ui__header">{{ config.lang.cart_tax|raw }}</h5>
+                        <h5 class="fc-transaction__ui__header">
+                            {% if has_inclusive_taxes %}
+                                {{ config.lang.cart_inclusive_tax|raw }}
+                            {% else %}
+                                {{ config.lang.cart_tax|raw }}
+                            {% endif %}
+                        </h5>
                     </div>
                         {% if loading_taxes %}
                             <div class="fc-spinner">
@@ -658,13 +687,12 @@
                         <tbody data-fc-id="taxes" class="fc-subtotal--taxes">
                         {% block taxes %}
                         {% if has_multiple_addresses %}
-                            {% if context == 'checkout' %}
-                                {% for multiship in multiship_data %}
-                                    {% for tax in multiship.taxes %}
+                            {% for multiship in multiship_data %}
+                                {% for tax in multiship.taxes %}
                                     {% if tax.rate is null  %}
                                         {% set tax_rate = '' %}
                                     {% else %}
-                                        {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate ~ '</span>%)' %}
+                                        {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate|round(2) ~ '</span>%)' %}
                                     {% endif %}
                                     <tr class="fc-subtotal--row">
                                         <td class="fc-subtotal__label">
@@ -674,52 +702,11 @@
                                             {{ tax.amount|money_format }}
                                         </td>
                                     </tr>
-                                    {% endfor %}
                                 {% endfor %}
-                            {% endif %}
-                            {% if context == 'receipt' %}
-                                {% if shipping_address.taxes|length == 0 %}
-                                <tr class="fc-subtotal--row">
-                                    <td class="fc-subtotal__label">
-                                        {{ config.lang.cart_tax|raw }}
-                                    </td>
-                                    <td class="fc-subtotal__value">
-                                        {{ total_tax|money_format }}
-                                    </td>
-                                </tr>
-                                {% endif %}
-
-                                {% for tax in shipping_address.taxes %}
-                                {% if tax.rate is null  %}
-                                    {% set tax_rate = '' %}
-                                {% else %}
-                                    {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate ~ '</span>%)' %}
-                                {% endif %}
-                                <tr class="fc-subtotal--row">
-                                    <td class="fc-subtotal__label">
-                                        {{ tax.name }}{{ tax_rate|raw }}:
-                                    </td>
-                                    <td class="fc-subtotal__value">
-                                        {{ tax.amount|money_format }}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                            {% endif %}
+                            {% endfor %}
                         {% endif %}
                         {% for tax in shipping_address.taxes %}
-                        <tr class="fc-subtotal--row">
-                            {% if tax.rate is null  %}
-                                {% set tax_rate = '' %}
-                            {% else %}
-                                {% set tax_rate = ' (<span class="fc_cart_foot_tax_rate">' ~ tax.rate ~ '</span>%)' %}
-                            {% endif %}
-                            <td class="fc-subtotal__label">
-                                {{ tax.name }}{{ tax_rate|raw }}:
-                            </td>
-                            <td class="fc-subtotal__value">
-                                {{ tax.amount|money_format }}
-                            </td>
-                        </tr>
+                            {{ utils.taxes(tax, config) }}
                         {% endfor %}
                         {% endblock %}
                         </tbody>
@@ -749,14 +736,22 @@
                     <h5 class="fc-transaction__ui__header">{{ config.lang.cart_shipto|raw }}{{ multiship.address_name }}
                         <span class="fc-transaction__ui__header__value">{{ multiship.total_price|money_format }}</span></h5>
                     {% if show_multiship_details %}
+                        {% if has_inclusive_taxes %}
+                            {% set m_total_item_price = multiship.total_item_with_tax_price %}
+                            {% set m_total_shipping = multiship.total_shipping_with_tax_price %}
+                        {% else %}
+                            {% set m_total_item_price = multiship.total_item_price %}
+                            {% set m_total_shipping = multiship.total_shipping %}
+                        {% endif %}
+
                         <table>
                             <tr class="fc-subtotal--row">
                                 <td class="fc-subtotal__label"> {{ config.lang.checkout_shipment_subtotal|raw }}: </td>
-                                <td class="fc-subtotal__value"> {{ multiship.total_item_price|money_format }} </td>
+                                <td class="fc-subtotal__value"> {{ m_total_item_price|money_format }} </td>
                             </tr>
                             <tr class="fc-subtotal--row">
                                 <td class="fc-subtotal__label"> {{ multiship.shipping_service_description|raw }}: </td>
-                                <td class="fc-subtotal__value"> {{ multiship.total_shipping|money_format }} </td>
+                                <td class="fc-subtotal__value"> {{ m_total_shipping|money_format }} </td>
                             </tr>
                             <tr class="fc-subtotal--row">
                                 <td class="fc-subtotal__label"> {{ config.lang.checkout_shipment_tax|raw }}: </td>
@@ -802,25 +797,37 @@
                             <table>
                                 <tr class="fc-subtotal--row">
                                     <td class="fc-subtotal__label"> {{ config.lang.cart_subtotal|raw }}: </td>
-                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_item_price|money_format }} </td>
+                                    <td class="fc-subtotal__value">
+                                    {% if has_inclusive_taxes %}
+                                        {{ subscription_item_total.total_item_with_tax_price|money_format }}
+                                    {% else %}
+                                        {{ subscription_item_total.total_item_price|money_format }}
+                                    {% endif %}
+                                    </td>
                                 </tr>
                                 {% for key,coupon in future_coupons %}
                                 <tr class="fc-subtotal--row fc-transaction--future__discounts">
                                     <td class="fc-subtotal__label">{{ coupon.name }}: {{ key }}</td>
-                                    <td class="fc-subtotal__value">{{ coupon.amount|money_format }}</td>
+                                    <td class="fc-subtotal__value">{{ coupon.display }}</td>
                                 </tr>
                                 {% endfor %}
                                 {% if has_future_shipping %}
                                 <tr class="fc-subtotal--row">
                                     <td class="fc-subtotal__label"> {{ shipping_address.future_shipping_service_description|raw }}: </td>
-                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_shipping|money_format }} </td>
+                                    <td class="fc-subtotal__value">
+                                    {% if has_inclusive_taxes %}
+                                        {{ subscription_item_total.total_shipping_with_tax_price|money_format }}
+                                    {% else %}
+                                        {{ subscription_item_total.total_shipping|money_format }}
+                                    {% endif %}
+                                    </td>
                                 </tr>
                                 {% endif %}
                                 {% if has_future_taxes %}
-                                <tr class="fc-subtotal--row">
-                                    <td class="fc-subtotal__label"> {{ config.lang.cart_tax|raw }}: </td>
-                                    <td class="fc-subtotal__value"> {{ subscription_item_total.total_tax|money_format }} </td>
-                                </tr>
+                                    <tr class="fc-subtotal--row">
+                                        <td class="fc-subtotal__label"> {{ config.lang.cart_tax|raw }}: </td>
+                                        <td class="fc-subtotal__value"> {{ subscription_item_total.total_tax|money_format }} </td>
+                                    </tr>
                                 {% endif %}
                                 <tr class="fc-subtotal--row">
                                     <td class="fc-subtotal__label"> {{ config.lang.cart_total|raw }}: </td>
