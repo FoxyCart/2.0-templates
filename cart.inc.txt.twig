@@ -78,6 +78,15 @@
 {{ coupon_label|pad(24) }} {{ coupon.display }}
 {% endfor %}
 {% endfor %}
+{% for key, gift_card_data in gift_cards %}
+  {% if gift_card_data is not array %}
+    {% set gift_card_data = [gift_card_data] %}
+  {% endif %}
+  {% set gift_card_code = key %}
+  {% for i, gift_card in gift_card_data %}
+    {{ gift_card.name }} | {{ gift_card_code }}: {{ gift_card.amount|money_format }}
+  {% endfor %}
+{% endfor %}
 {{ shipping_and_handling_label|pad(24) }} {{ total_shipping|money_format }}
 {% if has_future_products and show_future_shipping_and_handling %}
 {% set future_shipping_handling_label = lang.cart_future_subscriptions ~ " " ~ shipping_and_handling_label %}
