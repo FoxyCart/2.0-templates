@@ -444,7 +444,9 @@
   }
 }
 #fc {
-  /*! normalize.css v3.0.1 | MIT License | git.io/normalize */ /* Postal Code specific elements */ /* First and Last name inputs on the same line */
+  /*! normalize.css v3.0.1 | MIT License | git.io/normalize */
+  /* Postal Code specific elements */
+  /* First and Last name inputs on the same line */
   /* Company + Phone inputs optionally on the same line */
   /* Postal Code + Select autocomplete */
   /* City + State inputs */
@@ -4663,13 +4665,13 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   }
 }
 #fc a {
-  color: #666666;
+  color: #4d4d4d;
 }
 #fc .text-info {
-  color: #262626;
+  color: #0d0d0d;
 }
 #fc h1 {
-  color: #666;
+  color: #4D4D4D;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #fc h2,
@@ -4680,21 +4682,21 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.9);
 }
 #fc h2 {
-  color: #666;
+  color: #4D4D4D;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 #fc h3 {
-  color: gray;
+  color: #676767;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 22px;
 }
 #fc h4 {
-  color: #999999;
+  color: gray;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 18px;
 }
 #fc h5 {
-  color: gray;
+  color: #676767;
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-size: 13px;
   font-weight: bold;
@@ -4719,7 +4721,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   margin: 30px 0;
 }
 #fc legend, #fc #fc-receipt-container #fc-cart--responsive .fc-cart__title__header {
-  color: #333333;
+  color: #1a1a1a;
   font-weight: thin;
   border-bottom: none;
   margin-bottom: 20px;
@@ -4848,7 +4850,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 #fc .fc-transaction__total .fc-subtotal__value {
   font-size: 16px;
   font-weight: bold;
-  color: gray;
+  color: #676767;
 }
 #fc .fc-sidebar--cart .fc-transaction,
 #fc .fc-sidebar--cart .fc-address-entry,
@@ -4907,7 +4909,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   border-width: 2px;
 }
 #fc .fc-transaction {
-  color: #666;
+  color: #4D4D4D;
   font-size: 13px;
 }
 #fc .fc-transaction table {
@@ -4936,7 +4938,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 }
 #fc .fc-subtotal__label {
   text-align: left;
-  color: #666;
+  color: #4D4D4D;
   font-size: 12px;
   padding-left: 5px;
 }
@@ -4946,22 +4948,22 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 }
 #fc .fc-subtotal__value {
   text-align: right;
-  color: #666;
+  color: #4D4D4D;
   vertical-align: bottom;
 }
 #fc .fc-logotype {
   text-align: center;
   font-size: 28px;
-  color: #666;
+  color: #4D4D4D;
   margin-top: 2em;
 }
 #fc .fc-section-counter {
   height: 36px;
   width: 36px;
-  background: #333333;
+  background: #1a1a1a;
   color: #ffffff;
   font-size: 1.25em;
-  border-color: #333333;
+  border-color: #1a1a1a;
   border-radius: 20px;
   display: inline-block;
   margin: -2px 3px 0;
@@ -5269,7 +5271,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 }
 #fc .fc-subtotal--row--inactive .fc-subtotal__label,
 #fc .fc-subtotal--row--inactive .fc-subtotal__value {
-  color: #666666;
+  color: #4d4d4d;
 }
 #fc [data-fc-error-notifier] {
   position: fixed;
@@ -5385,7 +5387,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 }
 #fc .fc-form-label {
   font-weight: normal;
-  color: #666;
+  color: #4D4D4D;
   -webkit-transition: opacity 0.2s linear;
   -o-transition: opacity 0.2s linear;
   transition: opacity 0.2s linear;
@@ -5600,7 +5602,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   padding-left: 0;
 }
 #fc .fc-form-label--tos a {
-  color: #262626;
+  color: #0d0d0d;
   text-decoration: underline;
 }
 #fc .fc-foxycomplete {
@@ -5739,7 +5741,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   display: block;
   height: 12px;
   width: 9px;
-  fill: #666;
+  fill: #4D4D4D;
 }
 #fc .fa-caret-left {
   height: 14px;
@@ -5813,12 +5815,12 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   border-bottom: 1px solid #fff;
 }
 #fc .fc-cart__multiship-header__ship-to {
-  color: #262626;
+  color: #0d0d0d;
   padding-left: 5px;
 }
 #fc .fc-cart__multiship-header__text {
   font-size: 14px;
-  color: #666;
+  color: #4D4D4D;
 }
 @media (min-width: 768px) {
   #fc .fc-cart__multiship-header h4 {
@@ -6345,7 +6347,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   font-size: 12px;
 }
 #fc .fc-cart__items .fc-cart__item__remove a {
-  color: #666;
+  color: #4D4D4D;
   opacity: 0.6;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -6516,10 +6518,10 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 #fc .fc-cart__item__name {
   margin-bottom: 5px;
   font-weight: bold;
-  color: #1a1a1a;
+  color: #010101;
 }
 #fc .fc-cart__item__option__value {
-  color: #666;
+  color: #4D4D4D;
   white-space: inherit;
 }
 #fc .fc-cart__item__option--subscription-details ul {
@@ -6561,7 +6563,7 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
 }
 #fc .fc-cart__item__total p {
   margin-bottom: 0;
-  color: #262626;
+  color: #0d0d0d;
   font-weight: bold;
 }
 #fc .fc-cart__item__total,
@@ -7021,12 +7023,36 @@ fieldset[disabled] #fc .fc-button--show-other-payment:focus, fieldset[disabled] 
   width: 100%;
   height: 50px;
   border-radius: 5px;
-  border: none;
-  background-image: -webkit-named-image(apple-pay-logo-white);
-  background-position: 50% 50%;
-  background-color: black;
-  background-size: 60%;
-  background-repeat: no-repeat;
+}
+#fc #apple-pay-express {
+  width: 150px;
+  height: 30px;
+  border-radius: 5px;
+}
+@supports (-webkit-appearance: -apple-pay-button) {
+  #fc #apple-pay,
+  #fc #apple-pay-express {
+    -webkit-appearance: -apple-pay-button;
+    -apple-pay-button-type: plain;
+    -apple-pay-button-style: black;
+  }
+}
+@supports not (-webkit-appearance: -apple-pay-button) {
+  #fc #apple-pay,
+  #fc #apple-pay-express {
+    border: none;
+    background-image: -webkit-named-image(apple-pay-logo-white);
+    background-position: 50% 50%;
+    background-color: black;
+    background-size: 100% 60%;
+    background-repeat: no-repeat;
+  }
+}
+#fc .apple_pay_amount_text {
+  background-color: #F0FFFF;
+  padding: 5px;
+  border-radius: 5px;
+  margin-bottom: 10px;
 }
 #fc .fc-stripe-element {
   margin-top: 15px;
