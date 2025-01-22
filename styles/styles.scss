@@ -1,6 +1,10 @@
 @import 'bourbon/bourbon';
 @import 'src/variables';
-// @inject via store_config
+
+$primary: #4D4D4D;
+$secondary: #FFFFFF;
+$tertiary: #FFFFFF;
+
 @import 'src/custom-colors';
 
 @import 'src/animations';

@@ -89,6 +89,14 @@ CONVENTIONS:
         </div><!-- data-fc-id="required-hidden-fields" -->
 
 
+{# {% if is_apple_pay_enabled %}
+    <section data-fc-id="payment_login_field" id="fc-payment-login-field">
+        {% block payment_login_field %}
+            <div class="fc-button fc-button--submit" style="display:none;" data-fc-id="payment-login-button">
+            </div>
+        {% endblock payment_login_field %}
+    </section>
+{% endif %} #}
 
 <section data-fc-id="block-login-register" id="fc-checkout__section--email">
 {% block login_register %}
@@ -367,7 +375,7 @@ CONVENTIONS:
     {% block payment_method %}
         {% set show_payment_type_block = config.supports_pay_with_plastic or config.supports_purchase_order or hosted_payment_gateways|length > 0 or config.supports_pay_with_stripe_connect or config.supports_pay_with_adyen_embedded or config.supports_pay_with_klarna or config.supports_pay_with_square_up or config.supports_pay_with_square_platform or config.supports_pay_with_pp_platform or show_paypal_express_payment_option %}
         {% if show_payment_type_block %}
-            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc or adyen_embedded_data.has_saved_cc or square_data.has_saved_cc or is_apple_pay_enabled ? 'radio' : 'hidden' %}
+            {% set payment_method_input_type = config.has_multiple_payment_options or has_saved_cc or stripe_connect_data.has_saved_cc or adyen_embedded_data.has_saved_cc or square_data.has_saved_cc or is_apple_pay_enabled or square_data.cash_app_enabled or square_data.apple_pay_enabled ? 'radio' : 'hidden' %}
             {% set show_no_payment_needed_msg = true %}
 
             <fieldset id="fc-payment" data-fc-container="payment">
@@ -649,12 +657,39 @@ CONVENTIONS:
                                         {{ config.lang["checkout_validation_square_platform_error"]|raw }}
                                     {% endif %}
                                 </div>
+                                {% if (square_data.cash_app_enabled) and (shipping_address.country == 'US' or billing_address.country == 'US') %}
+                                    <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == square_data.payment_platform ~ '_cash_app_pay' %}fc-input-group-container--active{% endif %}">
+                                        <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                            <input type="radio" id="fc_{{ square_data.payment_platform }}_cash_app_pay" {{ checked(payment_method_type, square_data.payment_platform ~ '_cash_app_pay') }} name="fc_payment_method" value="{{ square_data.payment_platform }}_cash_app_pay" autocomplete="off" class="fc-form-control fc_{{ square_data.payment_platform }}_payment_selector">
+                                            {{config.lang.checkout_pay_with_square_up_cash_app}}
+                                        </label>
+                                        {% if payment_method_type == square_data.payment_platform ~ '_cash_app_pay' %}
+                                            <div id="cash-app-container">
+                                                {{config.lang.checkout_payment_method_cash_app}}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                                {% if square_data.apple_pay_enabled %}
+                                    <div class="fc-input-group-container fc-input-group-container--radio {% if payment_method_type == square_data.payment_platform ~ '_apple_pay' %}fc-input-group-container--active{% endif %}">
+                                        <label class="{% if payment_method_input_type != 'radio' %}fc-input-group-container__title fc-input-group-container__title--forced{% else %} fc-input-group-container__title{% endif %}">
+                                            <input type="radio" id="fc_{{ square_data.payment_platform }}_apple_pay" {{ checked(payment_method_type, square_data.payment_platform ~ '_apple_pay') }} name="fc_payment_method" value="{{ square_data.payment_platform }}_apple_pay" autocomplete="off" class="fc-form-control fc_{{ square_data.payment_platform }}_payment_selector">
+                                            {{config.lang.checkout_pay_with_apple_pay_auth_net | raw}}
+                                        </label>
+                                        {% if payment_method_type == square_data.payment_platform ~ '_apple_pay' %}
+                                            <div id="apple-pay-container">
+                                                {{config.lang.checkout_payment_method_apple}}
+                                            </div>
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
                             </div>
                         </div>
                     {% endif %}
                 {% endif %}{# square_data #}
 
                 {% if show_paypal_platform_cc_form %}
+                {% if payment_info_required %}
                 {% set show_no_payment_needed_msg = false %}
                 {% if paypal_platform_data.has_saved_cc %}
                 {% set error_string = utils.get_error_string('cc_cvv2_saved',messages.errors) %}
@@ -807,6 +842,7 @@ CONVENTIONS:
                         </div>
                     </div>
                 </div>
+                {% endif %}
                 {% endif %}{# paypal_platform #}
 
                 {% if not is_updateinfo and payment_info_required %}
@@ -1282,6 +1318,9 @@ CONVENTIONS:
     {# SUBMIT BUTTON ===================================================== #}
     <section data-fc-id="block-submit-button" class="fc-checkout__section--submit">
     {% block submit_button %}
+        {% if show_apple_pay_amount_change %}
+            <div id="apple_pay_amount_change_text" class="apple_pay_amount_text">{{config.lang.checkout_apple_pay_amount_change}}</div>
+        {% endif %}
         <div class="fc-form-group">
             {% if payment_method_type in ["plastic_new", "plastic_saved"] %}
                 {% if config.template_config.use_checkout_confirmation_window.usage == "required" %}
